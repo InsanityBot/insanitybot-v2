@@ -8,5 +8,6 @@ namespace InsanityBot
     {
         public static String Token { get; set; }
         public static String Prefix { get; set; }
+        public static String HomeGuildId { get; set; }
     }
 }

@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 
 using DSharpPlus;
+using DSharpPlus.Entities;
 
 namespace InsanityBot
 {
     public partial class InsanityBot
     {
-        public static DiscordConfiguration ClientConfiguration = new DiscordConfiguration
+        public static DiscordConfiguration ClientConfiguration;
+        public static DiscordClient Client;
+
+        public static DiscordGuild HomeGuild;
+        
+        public static class Config
         {
-            AutoReconnect = true,
-            Token = MainConfig.Token,
-            TokenType = TokenType.Bot
+
         }
-        public static DiscordClient Client = new DiscordClient();
     }
 }
