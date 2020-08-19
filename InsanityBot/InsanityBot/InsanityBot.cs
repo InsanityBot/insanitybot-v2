@@ -12,11 +12,6 @@ namespace InsanityBot
         public static DiscordConfiguration ClientConfiguration;
         public static DiscordClient Client;
 
-        public static DiscordGuild HomeGuild;
-        
-        public static class Config
-        {
-
-        }
+        public static DiscordGuild HomeGuild;    
     }
 }
