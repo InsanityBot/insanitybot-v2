@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "Nested Types are being usef for smoother code structuring here", Scope = "type", Target = "~T:InsanityBot.InsanityBot.Config")]
+[assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "<Pending>", Scope = "type", Target = "~T:InsanityBot.InsanityBot.CommandLine")]

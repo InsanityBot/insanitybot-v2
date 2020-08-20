@@ -15,6 +15,7 @@ namespace InsanityBot
 
             public static CommandOption InitializeOnStartup { get; private set; }
             public static CommandOption HardResetOnStartup { get; private set; }
+            public static CommandOption UseDatafixes { get; private set; }
 
             internal static void InitializeCommandLine()
             {
@@ -46,6 +47,12 @@ namespace InsanityBot
                 HardResetOnStartup = InsanityBotApplication.Option("-r|--reset",
                     "Causes the bot to create all necessary files from scratch, including configuration, modlog, experience and all other file-driven data. " +
                     "Recommended to run once when setting up the bot or when repurposing the server.",
+                    CommandOptionType.NoValue);
+
+                //register datafixes option
+                UseDatafixes = InsanityBotApplication.Option("-d|--datafix",
+                    "Causes the bot to try to install all datafixes to the current configuration files to keep them up-to-date. " +
+                    "Always recommended.",
                     CommandOptionType.NoValue);
             }
         }
