@@ -25,7 +25,7 @@ namespace InsanityBot
                     Name = "InsanityBot",
                     Description = "C# Discord bot by ExaInsanity#1870",
                     ExtendedHelpText = "A C#-based, fully configurable Discord Bot using .NET Core 3.1 and DSharpPlus 4.0.0. " +
-                    "Used in the Insanity Network Discord server and its related servers."
+                    "Primarily developed and maintained for Insanity Network and its associated servers."
                 };
 
                 //register the Help option

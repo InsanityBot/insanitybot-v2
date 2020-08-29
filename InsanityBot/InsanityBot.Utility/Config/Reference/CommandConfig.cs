@@ -6,5 +6,7 @@ namespace InsanityBot.Utility.Config.Reference
 {
     public class CommandConfig
     {
+        public CommandToggles Toggles { get; set; }
+        public CommandSettings Settings { get; set; }
     }
 }
