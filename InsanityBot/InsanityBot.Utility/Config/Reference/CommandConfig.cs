@@ -8,5 +8,6 @@ namespace InsanityBot.Utility.Config.Reference
     {
         public CommandToggles Toggles { get; set; }
         public CommandSettings Settings { get; set; }
+        public MessageConfig Messages { get; set; }
     }
 }
