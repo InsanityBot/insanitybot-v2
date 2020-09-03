@@ -187,6 +187,7 @@ namespace InsanityBot.Utility.Modlogs
         /// <summary>
         /// Sets the UserModlog instance of this member. Only intended for low-level data manipulation and testing,
         /// not for inclusion in production releases.
+        /// </summary>
         public static void SetUserModlog(this DiscordMember member, UserModlog user)
             => Serialize(user, member.Id);
     }
