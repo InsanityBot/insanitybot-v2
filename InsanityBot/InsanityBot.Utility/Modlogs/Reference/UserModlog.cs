@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace InsanityBot.Utility.Modlogs.Reference
 {
-    public class ModlogUser
+    public class UserModlog
     {
         [XmlAttribute]
         public String Username { get; set; }

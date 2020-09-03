@@ -22,10 +22,10 @@ namespace InsanityBot.Utility.Modlogs
         /// </summary>
         /// <param name="user">Modlog instance to serialize</param>
         /// <param name="UserId">ID of the user whose modlog gets serialized. Used to tell apart different modlog files</param>
-        private static void Serialize(ModlogUser user, UInt64 UserId)
+        private static void Serialize(UserModlog user, UInt64 UserId)
         {
             FileStream writer = new FileStream($"./data/{UserId}/modlog.xml", FileMode.Truncate);
-            XmlSerializer serializer = new XmlSerializer(typeof(ModlogUser));
+            XmlSerializer serializer = new XmlSerializer(typeof(UserModlog));
 
             serializer.Serialize(writer, user);
             writer.Close();
@@ -36,12 +36,12 @@ namespace InsanityBot.Utility.Modlogs
         /// </summary>
         /// <param name="UserId">ID of the user whose modlog gets called. Used to get the correct modlog file</param>
         /// <returns>The modlog instance of the user</returns>
-        private static ModlogUser Deserialize(UInt64 UserId)
+        private static UserModlog Deserialize(UInt64 UserId)
         {
             StreamReader reader = new StreamReader($"./data/{UserId}/modlog.xml");
-            XmlSerializer deserializer = new XmlSerializer(typeof(ModlogUser));
+            XmlSerializer deserializer = new XmlSerializer(typeof(UserModlog));
 
-            ModlogUser returnValue = (ModlogUser)deserializer.Deserialize(reader);
+            UserModlog returnValue = (UserModlog)deserializer.Deserialize(reader);
 
             reader.Close();
             return returnValue;
@@ -55,7 +55,7 @@ namespace InsanityBot.Utility.Modlogs
         /// <param name="modlogEntry">The ModlogEntry instance to add to file</param>
         public static void AddModlogEntry(this DiscordMember member, ModlogEntry modlogEntry)
         {
-            ModlogUser user = Deserialize(member.Id);
+            UserModlog user = Deserialize(member.Id);
             user.Modlog.Add(modlogEntry);
             user.ModlogEntryCount++;
             Serialize(user, member.Id);
@@ -68,7 +68,7 @@ namespace InsanityBot.Utility.Modlogs
         /// <param name="reason">Reason for the infraction</param>
         public static void AddModlogEntry(this DiscordMember member, ModlogEntryType type, String reason)
         {
-            ModlogUser user = Deserialize(member.Id);
+            UserModlog user = Deserialize(member.Id);
             user.Modlog.Add(new ModlogEntry
             {
                 Type = type,
@@ -85,7 +85,7 @@ namespace InsanityBot.Utility.Modlogs
         /// <param name="verbalEntry">VerbalModlogEntry instance to add to file</param>
         public static void AddVerbalModlogEntry(this DiscordMember member, VerbalModlogEntry verbalEntry)
         {
-            ModlogUser user = Deserialize(member.Id);
+            UserModlog user = Deserialize(member.Id);
             user.VerbalLog.Add(verbalEntry);
             user.VerbalLogEntryCount++;
             Serialize(user, member.Id);
@@ -97,7 +97,7 @@ namespace InsanityBot.Utility.Modlogs
         /// <param name="reason">Reason for the infraction</param>
         public static void AddVerbalModlogEntry(this DiscordMember member, String reason)
         {
-            ModlogUser user = Deserialize(member.Id);
+            UserModlog user = Deserialize(member.Id);
             user.VerbalLog.Add(new VerbalModlogEntry
             {
                 Reason = reason,
@@ -112,7 +112,7 @@ namespace InsanityBot.Utility.Modlogs
         /// </summary>
         public static DiscordEmbed GetModlogDiscordEmbed(this DiscordMember member)
         {
-            ModlogUser user = Deserialize(member.Id);
+            UserModlog user = Deserialize(member.Id);
             if (user.ModlogEntryCount == 0) // user has no modlog entries
             {
                 DiscordEmbedBuilder embedBuilder2 = new DiscordEmbedBuilder
@@ -147,7 +147,7 @@ namespace InsanityBot.Utility.Modlogs
         /// </summary>
         public static DiscordEmbed GetVerbalLogDiscordEmbed(this DiscordMember member)
         {
-            ModlogUser user = Deserialize(member.Id);
+            UserModlog user = Deserialize(member.Id);
             if (user.VerbalLogEntryCount == 0) // user has no log entries
             {
                 DiscordEmbedBuilder embedBuilder2 = new DiscordEmbedBuilder
@@ -176,5 +176,18 @@ namespace InsanityBot.Utility.Modlogs
 
             return embedBuilder;
         }
+
+        /// <summary>
+        /// Gets the UserModlog instance of this member. Only intended for low-level data manipulation and testing, 
+        /// not for inclusion in production releases.
+        /// </summary>
+        public static UserModlog GetUserModlog(this DiscordMember member)
+            => Deserialize(member.Id);
+
+        /// <summary>
+        /// Sets the UserModlog instance of this member. Only intended for low-level data manipulation and testing,
+        /// not for inclusion in production releases.
+        public static void SetUserModlog(this DiscordMember member, UserModlog user)
+            => Serialize(user, member.Id);
     }
 }
