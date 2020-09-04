@@ -2,7 +2,7 @@
 name: Support Request
 about: Need help with something? This is the issue type for you!
 title: ''
-labels: support request
+labels: support request, awaiting review
 assignees: ''
 
 ---
