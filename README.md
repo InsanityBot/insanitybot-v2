@@ -63,6 +63,13 @@
 <br>
 </ul>
 <h2>
+  :computer: Commands :computer:
+</h2>
+<p>
+:construction: Coming Soon :construction:
+</p>
+<br>
+<h2>
   :electric_plug: Installation :electric_plug:
 </h2>
 <p>
