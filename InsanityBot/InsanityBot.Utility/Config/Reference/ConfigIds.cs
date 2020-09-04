@@ -27,5 +27,6 @@ namespace InsanityBot.Utility.Config.Reference
         // tickets
         public UInt64 TicketReactionMessageId { get; set; }
         public UInt64 TicketReactionEmoteId { get; set; }
+        public UInt64 TicketCategoryId { get; set; }
     }
 }
