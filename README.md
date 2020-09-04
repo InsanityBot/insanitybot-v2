@@ -76,8 +76,8 @@
   The fastest way to get support is via our <a href="https://discord.gg/8TKJaGs">Discord server</a>. Alternatively you can open a GitHub issue <a href="https://github.com/InsanityNetwork/InsanityBot/issues/new/choose">here</a>, however, you will likely have to wait longer to get a reply.
   <br>
   <strong><em>NOTE:</strong> We reserve the right to refuse support to anyone.</em>
-  <br>
 </p>
+<br>
 <h2>
   :scroll: Licence & Copyright :scroll:
 </h2>
