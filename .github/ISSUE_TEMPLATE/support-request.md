@@ -6,6 +6,7 @@ labels: support request, awaiting review
 assignees: ''
 
 ---
+***PLEASE NOTE:* You will get a much faster response if you ask for help via our [Discord server](https://discord.gg/8TKJaGs).
 
 **Describe the problem**
 Please describe your issue in as much detail as possible.
