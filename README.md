@@ -1,8 +1,14 @@
-# :robot: InsanityBot :robot:
-## :memo: *Advanced C# Discord Bot* :memo:
 
+## :memo: *Advanced C# Discord Bot* :memo:
+<h1 align="center">
+  <br>
+  :robot: InsanityBot :robot:
+  <br>
+  :memo: <em>Advanced C# Discord Bot</em> :memo:
+  <br>
+</h1>
 ### :construction: THIS REPO IS INCOMPLETE AND IN IT'S CURRENT STATE _WILL NOT RUN_. THE BOT IS ALSO STILL IN DEVELOPMENT SO ISN'T RECCOMMENDED FOR USE IN A COMMERCIAL ENVIRONMENT :construction: 
-<br></br>
+<br>
 ## :heavy_check_mark: Features :heavy_check_mark:
 ### Moderation
 * Warns
