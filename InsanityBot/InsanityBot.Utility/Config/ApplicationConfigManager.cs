@@ -175,6 +175,22 @@ namespace InsanityBot.Utility.Config
         }
         #endregion
 
+        public static void DeleteApplication(String Identifier)
+        {
+            FileStream updater = new FileStream($"./config/apps/applications.xml", FileMode.Open);
+            XmlSerializer serializer = new XmlSerializer(typeof(List<String>));
+
+            Applications = (List<String>)serializer.Deserialize(updater);
+            Applications.Remove(Identifier.ToLower());
+
+            updater.SetLength(0);
+            updater.Flush(); // clear the file to avoid corruption
+
+            serializer.Serialize(updater, Applications);
+
+            File.Delete($"./config/apps/{Identifier.ToLower()}.xml");
+        }
+
 
         // dont use these for registering new entries, the registration performs additional validity checks and caches it
 
