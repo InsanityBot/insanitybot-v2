@@ -7,7 +7,8 @@
   <br>
   <br>
   <img alt="Discord" src="https://img.shields.io/discord/743925984708919296"> <img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/InsanityNetwork/InsanityBot/total"> <img alt="GitHub release (latest by date including pre-releases)" src="https://img.shields.io/github/v/release/InsanityNetwork/InsanityBot?include_prereleases"> <img alt="GitHub commits since latest release (by date including pre-releases)" src="https://img.shields.io/github/commits-since/InsanityNetwork/InsanityBot/latest?include_prereleases"> <img alt="GitHub" src="https://img.shields.io/github/license/InsanityNetwork/InsanityBot"> <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/InsanityNetwork/InsanityBot"> <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/InsanityNetwork/InsanityBot"> <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/InsanityNetwork/InsanityBot"><br> <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/InsanityNetwork/InsanityBot"> <img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed-raw/InsanityNetwork/InsanityBot"> <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr-raw/InsanityNetwork/InsanityBot"> <img alt="GitHub closed pull requests" src="https://img.shields.io/github/issues-pr-closed-raw/InsanityNetwork/InsanityBot"><br>
-  <p align="center">
+</h1>
+<h3 align="center">
   <a href="https://github.com/InsanityNetwork/InsanityBot#--heavy_check_mark-features-heavy_check_mark">Features</a>
   •
   <a href="https://github.com/InsanityNetwork/InsanityBot#--computer-commands-computer">Commands</a>
@@ -17,9 +18,7 @@
   <a href="https://github.com/InsanityNetwork/InsanityBot#--question-support-question">Support</a>
   •
   <a href="https://github.com/InsanityNetwork/InsanityBot#--scroll-licence--copyright-scroll">Licence & Copyright</a>
-</p>
-
-</h1>
+</h3>
 <h3 align="center">
   :construction: THIS REPO IS INCOMPLETE AND IN IT'S CURRENT STATE <em>WILL NOT RUN</em>. THE BOT IS ALSO STILL IN DEVELOPMENT SO ISN'T RECCOMMENDED FOR USE IN A COMMERCIAL ENVIRONMENT :construction: 
 <br>
