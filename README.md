@@ -134,7 +134,7 @@
 <p>
   <a href="https://github.com/InsanityNetwork/InsanityBot">InsanityBot</a> is licenced under the <a href="https://github.com/InsanityNetwork/InsanityBot/blob/master/LICENSE"><code>MIT Licence</code></a>.
   <br><br>
-  Our TOS can be viewed <a href="https://bot.insanity.network/tos/">here</a>.
+  Our TOS can be viewed <a href="https://bot.insanity.network/tos/" target="_blank">here</a>. <i class="fa fa-external-link"></i>
   <br><br>
   Copyright &copy; 2020 ExaInsanity
 </p>
