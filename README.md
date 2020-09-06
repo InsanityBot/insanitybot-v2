@@ -47,7 +47,7 @@
   •
   <a href="#--question-support-question">Support</a>
   •
-  <a href="#--scroll-licence--copyright--tos-scroll">Licence & Copyright</a>
+  <a href="#--scroll-licence-copyright--tos-scroll">Licence & Copyright</a>
 </p>
 <h3 align="center">
   :construction: THIS REPO IS INCOMPLETE AND IN IT'S CURRENT STATE <em>WILL NOT RUN</em>. THE BOT IS ALSO STILL IN DEVELOPMENT SO ISN'T RECCOMMENDED FOR USE IN A COMMERCIAL ENVIRONMENT :construction: 
