@@ -47,7 +47,7 @@
   •
   <a href="#--question-support-question">Support</a>
   •
-  <a href="#--scroll-licence--copyright-scroll">Licence & Copyright</a>
+  <a href="#--scroll-licence--copyright--tos-scroll">Licence & Copyright</a>
 </p>
 <h3 align="center">
   :construction: THIS REPO IS INCOMPLETE AND IN IT'S CURRENT STATE <em>WILL NOT RUN</em>. THE BOT IS ALSO STILL IN DEVELOPMENT SO ISN'T RECCOMMENDED FOR USE IN A COMMERCIAL ENVIRONMENT :construction: 
@@ -129,10 +129,12 @@
 </p>
 <br>
 <h2>
-  :scroll: Licence & Copyright :scroll:
+  :scroll: Licence, Copyright & TOS :scroll:
 </h2>
 <p>
   <a href="https://github.com/InsanityNetwork/InsanityBot">InsanityBot</a> is licenced under the <a href="https://github.com/InsanityNetwork/InsanityBot/blob/master/LICENSE"><code>MIT Licence</code></a>.
+  <br><br>
+  Our TOS can be viewed <a href="https://bot.insanity.network/tos/">here</a>.
   <br><br>
   Copyright &copy; 2020 ExaInsanity
 </p>
