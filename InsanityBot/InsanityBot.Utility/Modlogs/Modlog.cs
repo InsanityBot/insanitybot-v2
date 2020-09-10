@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Xml.Serialization;
 
 using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Modlogs.Reference;
+
+using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Modlogs
 {
@@ -24,11 +25,12 @@ namespace InsanityBot.Utility.Modlogs
         /// <param name="UserId">ID of the user whose modlog gets serialized. Used to tell apart different modlog files</param>
         private static void Serialize(UserModlog user, UInt64 UserId)
         {
-            FileStream writer = new FileStream($"./data/{UserId}/modlog.xml", FileMode.Truncate);
-            XmlSerializer serializer = new XmlSerializer(typeof(UserModlog));
+            FileStream file = new FileStream($"./data/{UserId}/modlog.xml", FileMode.Truncate);
+            StreamWriter writer = new StreamWriter(file);
 
-            serializer.Serialize(writer, user);
-            writer.Close();
+            writer.Write(JsonConvert.SerializeObject(user));
+
+            file.Close();
         }
 
         /// <summary>
@@ -39,12 +41,8 @@ namespace InsanityBot.Utility.Modlogs
         private static UserModlog Deserialize(UInt64 UserId)
         {
             StreamReader reader = new StreamReader($"./data/{UserId}/modlog.xml");
-            XmlSerializer deserializer = new XmlSerializer(typeof(UserModlog));
-
-            UserModlog returnValue = (UserModlog)deserializer.Deserialize(reader);
-
-            reader.Close();
-            return returnValue;
+            
+            return (UserModlog)JsonConvert.DeserializeObject(reader.ReadToEnd());
         }
 
         // extension methods for DiscordMember to allow easier accessibility

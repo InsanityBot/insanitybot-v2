@@ -7,13 +7,10 @@ namespace InsanityBot.Utility.Modlogs.Reference
 {
     public class UserModlog
     {
-        [XmlAttribute]
         public String Username { get; set; }
 
-        [XmlAttribute]
         public UInt16 ModlogEntryCount { get; set; }
 
-        [XmlAttribute]
         public Byte VerbalLogEntryCount { get; set; }
 
 

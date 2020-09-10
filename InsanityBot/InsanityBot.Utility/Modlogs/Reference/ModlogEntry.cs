@@ -7,13 +7,10 @@ namespace InsanityBot.Utility.Modlogs.Reference
 {
     public struct ModlogEntry
     {
-        [XmlAttribute]
         public ModlogEntryType Type { get; set; }
 
-        [XmlAttribute]
         public DateTime Time { get; set; }
 
-        [XmlAttribute]
         public String Reason { get; set; }
 
         public override Boolean Equals(Object obj)

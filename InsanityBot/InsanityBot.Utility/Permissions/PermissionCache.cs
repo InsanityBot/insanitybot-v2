@@ -88,6 +88,8 @@ namespace InsanityBot.Utility.Permissions
             StreamWriter writer = new StreamWriter(file);
 
             writer.Write(JsonConvert.SerializeObject(permissions));
+
+            file.Close();
         }
 
         /// <summary>
@@ -126,6 +128,7 @@ namespace InsanityBot.Utility.Permissions
                     return;
                 case 1:
                     UserPermissions.Remove(v.First());
+                    Serialize(permissions);
                     return;
                 default:
                     throw new InvalidOperationException("InsanityBot.Utility.Permissions.PermissionCache.cs: Duplicate cache entries");
