@@ -6,14 +6,13 @@
 
   <ItemGroup>
     <Folder Include="Datafixes\" />
-    <Folder Include="Permissions\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00719" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00719" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00719" />
-    <PackageReference Include="DSharpPlus.Lavalink" Version="4.0.0-nightly-00719" />
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00721" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00721" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00721" />
+    <PackageReference Include="DSharpPlus.Lavalink" Version="4.0.0-nightly-00721" />
   </ItemGroup>
 
 </Project>
