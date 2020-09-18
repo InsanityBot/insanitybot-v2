@@ -4,6 +4,8 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 
+using Newtonsoft.Json;
+
 namespace InsanityBot.Utility.Config
 {
     /// <summary>
@@ -16,11 +18,12 @@ namespace InsanityBot.Utility.Config
         /// </summary>
         public static void Serialize(TicketConfig config)
         {
-            FileStream writer = new FileStream("./config/tickets.xml", FileMode.Truncate);
-            XmlSerializer serializer = new XmlSerializer(typeof(TicketConfig));
+            FileStream file = new FileStream("./config/tickets.xml", FileMode.Truncate);
+            StreamWriter writer = new StreamWriter(file);
 
-            serializer.Serialize(writer, config);
-            writer.Close();
+            writer.Write(JsonConvert.SerializeObject(config));
+
+            file.Close();
         }
 
         /// <summary>
@@ -29,11 +32,8 @@ namespace InsanityBot.Utility.Config
         public static TicketConfig Deserialize()
         {
             StreamReader reader = new StreamReader("./config/tickets.xml");
-            XmlSerializer deserializer = new XmlSerializer(typeof(TicketConfig));
 
-            var returnValue = (TicketConfig)deserializer.Deserialize(reader);
-            reader.Close();
-            return returnValue;
+            return (TicketConfig)JsonConvert.DeserializeObject(reader.ReadToEnd());
         }
     }
 }
