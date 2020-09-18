@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Config\ApplicationConfigManager.cs~RF297fd839.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Datafixes\" />
   </ItemGroup>
 

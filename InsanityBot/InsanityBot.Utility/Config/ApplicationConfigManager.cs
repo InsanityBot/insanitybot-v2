@@ -8,6 +8,8 @@ using System.Xml.Serialization;
 using InsanityBot.Utility.Config.Exceptions;
 using InsanityBot.Utility.Config.Reference;
 
+using Newtonsoft.Json;
+
 namespace InsanityBot.Utility.Config
 {
     /// <summary>
@@ -25,12 +27,12 @@ namespace InsanityBot.Utility.Config
                 Directory.CreateDirectory("./config/apps");
 
             if (!Exists(entry.Identifier.ToLower()))
-                File.Create($"./config/apps/{entry.Identifier.ToLower()}.xml");
+                File.Create($"./config/apps/{entry.Identifier.ToLower()}.json");
 
             // serialize full data
-            FileStream writer = new FileStream($"./config/apps/{entry.Identifier.ToLower()}.xml", FileMode.Truncate);
-            XmlSerializer serializer = new XmlSerializer(typeof(ApplicationConfigEntry));
-            serializer.Serialize(writer, entry);
+            FileStream file = new FileStream($"./config/apps/{entry.Identifier.ToLower()}.json", FileMode.Truncate);
+            StreamWriter writer = new StreamWriter(file);
+            writer.Write(JsonConvert.SerializeObject(entry));
             writer.Close();
         }
 
@@ -39,9 +41,8 @@ namespace InsanityBot.Utility.Config
             if (!Exists(Identifier.ToLower()))
                 throw new ArgumentException($"No config with the identifier {Identifier.ToLower()} could be found.");
 
-            StreamReader reader = new StreamReader($"./config/apps/{Identifier.ToLower()}.xml");
-            XmlSerializer deserializer = new XmlSerializer(typeof(ApplicationConfigEntry));
-            ApplicationConfigEntry returnValue = (ApplicationConfigEntry)deserializer.Deserialize(reader);
+            StreamReader reader = new StreamReader($"./config/apps/{Identifier.ToLower()}.json");
+            ApplicationConfigEntry returnValue = (ApplicationConfigEntry)JsonConvert.DeserializeObject(reader.ReadToEnd());
 
             reader.Close();
             return returnValue;
@@ -50,34 +51,34 @@ namespace InsanityBot.Utility.Config
         private static void RegisterNewApplication(String Identifier)
         {
             // update the list
-            FileStream updater = new FileStream($"./config/apps/applications.xml", FileMode.Open);
-            XmlSerializer serializer = new XmlSerializer(typeof(List<String>));
+            FileStream updater = new FileStream($"./config/apps/applications.json", FileMode.Open);
+            StreamReader reader = new StreamReader(updater);
+            StreamWriter writer = new StreamWriter(updater);
 
-            Applications = ((List<String>)serializer.Deserialize(updater))
+            Applications = ((List<String>)JsonConvert.DeserializeObject(reader.ReadToEnd()))
                 .Append(Identifier.ToLower())
                 .ToList(); //update the list
 
             updater.SetLength(0);
             updater.Flush(); // clear the file to avoid corruption
 
-            serializer.Serialize(updater, Applications);
+            writer.Write(JsonConvert.SerializeObject(Applications));
         }
 
         /// <summary>
         /// Returns whether the specified application identifier has a corresponding file
         /// </summary>
         public static Boolean Exists(String Identifier)
-            => File.Exists($"./config/apps/{Identifier}.xml");
+            => File.Exists($"./config/apps/{Identifier}.json");
 
         /// <summary>
         /// Should be called when loading the bot. Will cache existing applications to provide faster validity checks.
         /// </summary>
         public static void Initialize()
         {
-            StreamReader reader = new StreamReader("./config/apps/applications.xml");
-            XmlSerializer deserializer = new XmlSerializer(typeof(List<String>));
+            StreamReader reader = new StreamReader("./config/apps/applications.json");
 
-            Applications = (List<String>)deserializer.Deserialize(reader);
+            Applications = (List<String>)JsonConvert.DeserializeObject(reader.ReadToEnd());
             reader.Close();
         }
 
@@ -90,7 +91,7 @@ namespace InsanityBot.Utility.Config
             if (Applications.Contains(entry.Identifier.ToLower()))
                 throw new ApplicationOverrideException
                 {
-                    File = new Uri($"./config/apps/{entry.Identifier.ToLower()}.xml")
+                    File = new Uri($"./config/apps/{entry.Identifier.ToLower()}.json")
                 };
 
             RegisterNewApplication(entry.Identifier);
@@ -177,16 +178,17 @@ namespace InsanityBot.Utility.Config
 
         public static void DeleteApplication(String Identifier)
         {
-            FileStream updater = new FileStream($"./config/apps/applications.xml", FileMode.Open);
-            XmlSerializer serializer = new XmlSerializer(typeof(List<String>));
+            FileStream updater = new FileStream($"./config/apps/applications.json", FileMode.Open);
+            StreamReader reader = new StreamReader(updater);
+            StreamWriter writer = new StreamWriter(updater);
 
-            Applications = (List<String>)serializer.Deserialize(updater);
+            Applications = (List<String>)JsonConvert.DeserializeObject(reader.ReadToEnd());
             Applications.Remove(Identifier.ToLower());
 
             updater.SetLength(0);
             updater.Flush(); // clear the file to avoid corruption
 
-            serializer.Serialize(updater, Applications);
+            writer.Write(JsonConvert.SerializeObject(Applications));
 
             File.Delete($"./config/apps/{Identifier.ToLower()}.xml");
         }
