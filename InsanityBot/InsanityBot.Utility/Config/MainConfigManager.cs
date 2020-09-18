@@ -6,6 +6,8 @@ using System.Xml.Serialization;
 
 using InsanityBot.Utility.Config.Reference;
 
+using Newtonsoft.Json;
+
 namespace InsanityBot.Utility.Config
 {
     /// <summary>
@@ -110,10 +112,9 @@ namespace InsanityBot.Utility.Config
         /// </summary>
         public static MainConfig DeserializeMainConfiguration()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(MainConfig));
-            StreamReader reader = new StreamReader("./config/main.xml");
+            StreamReader reader = new StreamReader("./config/main.json");
 
-            MainConfig value = (MainConfig)serializer.Deserialize(reader);
+            MainConfig value = (MainConfig)JsonConvert.DeserializeObject(reader.ReadToEnd());
             reader.Close();
             return value;
         }
@@ -124,10 +125,11 @@ namespace InsanityBot.Utility.Config
         /// <param name="config">Configuration instance to be serialized</param>
         public static void SerializeMainConfiguration(MainConfig config)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(MainConfig));
-            FileStream writer = new FileStream("./config/main.xml", FileMode.Truncate);
+            FileStream file = new FileStream("./config/main.json", FileMode.Truncate);
+            StreamWriter writer = new StreamWriter(file);
 
-            serializer.Serialize(writer, config);
+            writer.Write(JsonConvert.SerializeObject(config));
+            
             writer.Close();
         }
 
@@ -136,11 +138,7 @@ namespace InsanityBot.Utility.Config
         /// </summary>
         public static void SerializeMainConfiguration()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(MainConfig));
-            FileStream writer = new FileStream("./config/main.xml", FileMode.Truncate);
-
-            serializer.Serialize(writer, DefaultMainConfiguration);
-            writer.Close();
+            SerializeMainConfiguration(DefaultMainConfiguration);
         }
     }
 }
