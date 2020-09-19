@@ -10,6 +10,7 @@ namespace InsanityBot.Utility.Config
         public String Token { get; set; }
         public List<String> MainPrefix { get; set; }
         public List<String> AdminPrefix { get; set; }
+        public Int32 Port { get; set; }
 
         public CommandConfig CommandConfig { get; set; }
 

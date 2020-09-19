@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -74,7 +78,7 @@ namespace InsanityBot
             FormatHelpCommand();
 
             //handle TCP Connections for services like HetrixTools
-            HandleTCPConnections();
+            _ = HandleTCPConnections(Config.Port);
 
             //initialization finished, abort main thread, who needs it anyway
             await Task.Delay(-1);
@@ -95,9 +99,45 @@ namespace InsanityBot
             throw new NotImplementedException();
         }
 
-        private static void HandleTCPConnections()
+        private static async Task HandleTCPConnections(Int32 Port)
         {
-            throw new NotImplementedException();
+            TcpListener listener = new TcpListener(IPAddress.Parse("0.0.0.0"), Port);
+
+            try
+            {
+                listener.Start();
+
+                Byte[] bytes = new Byte[256];
+                TcpClient client = null;
+                NetworkStream stream = null;
+                Int32 i = 0;
+
+                while (true)
+                {
+                    client = null;
+                    stream = null;
+
+                    client = await listener.AcceptTcpClientAsync();
+                    stream = client.GetStream();
+
+                    while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                    {
+                        bytes = Encoding.ASCII.GetBytes("200");
+
+                        stream.Write(bytes, 0, bytes.Length);
+                    }
+
+                    client.Close();
+                }
+            }
+            catch (SocketException e)
+            {
+                Client.Logger.LogCritical(e.Message);
+            }
+            finally
+            {
+                listener.Stop();
+            }
         }
     }
 }
