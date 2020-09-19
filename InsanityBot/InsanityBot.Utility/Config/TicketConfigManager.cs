@@ -33,7 +33,7 @@ namespace InsanityBot.Utility.Config
         {
             StreamReader reader = new StreamReader("./config/tickets.xml");
 
-            return (TicketConfig)JsonConvert.DeserializeObject(reader.ReadToEnd());
+            return (TicketConfig)JsonConvert.DeserializeObject(reader.ReadToEnd()); 
         }
     }
 }
