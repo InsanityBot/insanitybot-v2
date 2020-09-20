@@ -21,5 +21,10 @@ namespace InsanityBot
 
         public static CommandsNextExtension CommandsExtension;
         public static CommandsNextConfiguration CommandConfiguration;
+
+        private static void InitializeDefaultObjects()
+        {
+
+        }
     }
 }

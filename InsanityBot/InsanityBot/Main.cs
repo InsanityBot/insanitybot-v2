@@ -40,7 +40,7 @@ namespace InsanityBot
                 AutoReconnect = true,
                 Token = Config.Token,
                 TokenType = TokenType.Bot,
-                MessageCacheSize = 2048,
+                MessageCacheSize = 4096,
 #if DEBUG
                 MinimumLogLevel = LogLevel.Debug
 #else
@@ -54,6 +54,8 @@ namespace InsanityBot
 
             //set home guild to speed up bot performance later
             HomeGuild = await Client.GetGuildAsync(Config.DiscordConfig.Identifiers.GuildId);
+            InitializeDefaultObjects();
+            Client.Logger.LogInformation("Initializing default channels and roles...");
 
             //initialize config
             CommandConfiguration = new CommandsNextConfiguration
@@ -64,21 +66,26 @@ namespace InsanityBot
                     .ToList()
             };
             Client.UseCommandsNext(CommandConfiguration);
+            Client.Logger.LogInformation("Initializing command handler...");
 
             //get command framework extension
             CommandsExtension = Client.GetCommandsNext();
 
             //register all top-level command classes
             RegisterAllCommands();
+            Client.Logger.LogInformation("Registering commands...");
 
             //register all client events to their respective methods
             RegisterAllEvents();
+            Client.Logger.LogInformation("Registering events...");
 
             //change help command formatting
             FormatHelpCommand();
+            Client.Logger.LogInformation("Registering Help command...");
 
             //handle TCP Connections for services like HetrixTools
             _ = HandleTCPConnections(Config.Port);
+            Client.Logger.LogInformation("Starting TCP Listener...");
 
             //initialization finished, abort main thread, who needs it anyway
             await Task.Delay(-1);
@@ -101,6 +108,10 @@ namespace InsanityBot
 
         private static async Task HandleTCPConnections(Int32 Port)
         {
+            if (Port == -1)
+                return;
+
+
             TcpListener listener = new TcpListener(IPAddress.Parse("0.0.0.0"), Port);
 
             try
