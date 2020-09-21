@@ -82,6 +82,7 @@ namespace InsanityBot.Utility.Config
                     TicketLogChannelId = 0,
                     ApplicationLogChannelId = 0,
                     JoinLeaveLogChannelId = 0,
+                    MessageLogChannelId = 0,
                     SuggestionChannelId = 0,
                     DeniedSuggestionChannelId = 0,
                     AcceptedSuggestionChannelId = 0,
@@ -89,6 +90,7 @@ namespace InsanityBot.Utility.Config
                     SuggestionDownvoteEmoteId = 0,
                     SuggestionAcceptEmoteId = 0,
                     SuggestionDenyEmoteId = 0,
+                    TicketCategoryId = 0,
                     TicketReactionMessageId = 0,
                     TicketReactionEmoteId = 0
                 },

@@ -14,6 +14,7 @@ namespace InsanityBot.Utility.Config.Reference
         public UInt64 TicketLogChannelId { get; set; }
         public UInt64 ApplicationLogChannelId { get; set; }
         public UInt64 JoinLeaveLogChannelId { get; set; }
+        public UInt64 MessageLogChannelId { get; set; }
 
         // suggestions
         public UInt64 SuggestionChannelId { get; set; }
