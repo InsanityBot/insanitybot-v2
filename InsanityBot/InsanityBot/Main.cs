@@ -54,7 +54,7 @@ namespace InsanityBot
 
             //set home guild to speed up bot performance later
             HomeGuild = await Client.GetGuildAsync(Config.DiscordConfig.Identifiers.GuildId);
-            InitializeDefaultObjects();
+            _ = InitializeDefaultObjects();
             Client.Logger.LogInformation("Initializing default channels and roles...");
 
             //initialize config

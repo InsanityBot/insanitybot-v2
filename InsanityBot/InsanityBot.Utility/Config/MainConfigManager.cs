@@ -129,6 +129,7 @@ namespace InsanityBot.Utility.Config
         {
             FileStream file = new FileStream("./config/main.json", FileMode.Truncate);
             StreamWriter writer = new StreamWriter(file);
+            file.Close();
 
             writer.Write(JsonConvert.SerializeObject(config));
             

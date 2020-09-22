@@ -27,9 +27,9 @@ namespace InsanityBot
             if (!Directory.Exists("./data"))
                 Directory.CreateDirectory("./data");
 
-            if (!File.Exists("./data/config.xml"))
+            if (!File.Exists("./config/main.json"))
             {
-                File.Create("./data/config.xml");
+                File.Create("./config/main.json");
                 await CreateMainConfig();
             }
         }
@@ -38,7 +38,7 @@ namespace InsanityBot
         public static async Task CreateMainConfig()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            
+            MainConfigManager.SerializeMainConfiguration();
         }
     }
 }
