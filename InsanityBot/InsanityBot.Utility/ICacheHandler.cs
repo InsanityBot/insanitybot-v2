@@ -6,14 +6,14 @@ using System.Timers;
 
 namespace InsanityBot.Utility
 {
-    interface ICacheHandler
+    interface ICacheHandler<T> where T : ICacheable
     {
-        public IEnumerable<ICacheable> Cache { get; protected set; }
+        public IEnumerable<T> Cache { get; protected set; }
         protected Timer CacheIterationTimer { get; set; }
 
-        public Task<IEnumerable<ICacheable>> GetCacheEntry();
+        public Task<IEnumerable<T>> GetCacheEntry();
         protected Task RemoveUnusedCacheEntries();
-        protected Task<IEnumerable<ICacheable>> AddCacheEntry();
-        protected Task<IEnumerable<ICacheable>> RemoveCacheEntry();
+        protected Task<IEnumerable<T>> AddCacheEntry();
+        protected Task<IEnumerable<T>> RemoveCacheEntry();
     }
 }
