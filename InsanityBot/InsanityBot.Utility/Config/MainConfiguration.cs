@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace InsanityBot.Utility
+namespace InsanityBot.Utility.Config
 {
-    public interface IConfiguration
+    public class MainConfiguration : IConfiguration
     {
         public String DataVersion { get; set; }
         public Dictionary<String, Object> Configuration { get; set; }
+
+        public String Token { get; set; }
+        public String GuildId { get; set; }
     }
 }

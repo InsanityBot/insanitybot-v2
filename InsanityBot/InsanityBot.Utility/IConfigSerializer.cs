@@ -4,9 +4,9 @@ using System.Text;
 
 namespace InsanityBot.Utility
 {
-    interface IConfigSerializer
+    interface IConfigSerializer<T> where T : IConfiguration
     {
-        public IConfiguration Deserialize();
-        public void Serialize(IConfiguration Config);
+        public T Deserialize(String Filename);
+        public void Serialize(T Config, String Filename);
     }
 }

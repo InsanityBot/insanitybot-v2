@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
+using InsanityBot.Utility.Reference;
+
 namespace InsanityBot.Utility
 {
-    interface IConfigBuilder
+    public interface IConfigBuilder<ConfigType, ConfigBuilder> : IConfigBuilder
+        where ConfigType : IConfiguration where ConfigBuilder : IConfigBuilder
     {
-        protected IConfiguration Config { get; set; }
-        public IConfigBuilder AddConfigEntry(String Identifier, Object DefaultValue);
-        public IConfigBuilder RemoveConfigEntry(String Identifier);
+        public ConfigType Config { get; set; }
+        public ConfigBuilder AddConfigEntry(String Identifier, Object DefaultValue);
+        public ConfigBuilder RemoveConfigEntry(String Identifier);
     }
 }
