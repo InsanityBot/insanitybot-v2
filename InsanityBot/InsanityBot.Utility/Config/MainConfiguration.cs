@@ -10,7 +10,7 @@ namespace InsanityBot.Utility.Config
         public Dictionary<String, Object> Configuration { get; set; }
 
         public String Token { get; set; }
-        public String GuildId { get; set; }
+        public UInt64 GuildId { get; set; }
 
         public Object this[String Identifier]
         {
