@@ -13,7 +13,7 @@ namespace InsanityBot.Utility.Config
     {
         public MainConfiguration Config { get; set; }
 
-        public MainConfigurationManager AddConfigEntry(String Identifier, Object DefaultValue)
+        public MainConfigurationManager AddConfigEntry<T>(String Identifier, T DefaultValue)
         {
             Config.Configuration.Add(Identifier, DefaultValue);
             return this;
