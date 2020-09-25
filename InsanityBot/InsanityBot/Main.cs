@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using DSharpPlus;
@@ -32,7 +33,12 @@ namespace InsanityBot
                 await Initialize();
 
             //load main config
-            Config = MainConfigManager.DeserializeMainConfiguration();
+            ConfigManager = new MainConfigurationManager();
+
+            //deserialize main config
+            if (!File.Exists("./config/main.json"))
+                await CreateMainConfig();
+            Config = ConfigManager.Deserialize("./config/main.json");
 
             //create discord config; increase the cache size if you want though itll take more RAM
             ClientConfiguration = new DiscordConfiguration
@@ -52,43 +58,39 @@ namespace InsanityBot
             Client = new DiscordClient(ClientConfiguration);
             await Client.ConnectAsync();
 
-            //set home guild to speed up bot performance later
-            HomeGuild = await Client.GetGuildAsync(Config.DiscordConfig.Identifiers.GuildId);
-            _ = InitializeDefaultObjects();
-            Client.Logger.LogInformation("Initializing default channels and roles...");
-
-            //initialize config
+            //load command configuration
             CommandConfiguration = new CommandsNextConfiguration
             {
                 CaseSensitive = false,
-                StringPrefixes = Config.MainPrefix
-                    .Concat(Config.AdminPrefix)
-                    .ToList()
+                StringPrefixes = (List<String>)Config["insanitybot.commands.prefixes"],
+                DmHelp = (Boolean)Config["insanitybot.commands.help.send_dms"],
+                IgnoreExtraArguments = true
             };
-            Client.UseCommandsNext(CommandConfiguration);
-            Client.Logger.LogInformation("Initializing command handler...");
 
-            //get command framework extension
+            //create and register command client
+            Client.UseCommandsNext(CommandConfiguration);
             CommandsExtension = Client.GetCommandsNext();
 
-            //register all top-level command classes
+            //register commands and events
             RegisterAllCommands();
-            Client.Logger.LogInformation("Registering commands...");
-
-            //register all client events to their respective methods
             RegisterAllEvents();
-            Client.Logger.LogInformation("Registering events...");
 
-            //change help command formatting
+            //register default help format
             FormatHelpCommand();
-            Client.Logger.LogInformation("Registering Help command...");
 
-            //handle TCP Connections for services like HetrixTools
-            _ = HandleTCPConnections(Config.Port);
-            Client.Logger.LogInformation("Starting TCP Listener...");
+            //start offthread TCP connection
+            _ = HandleTCPConnections((Int32)Config["insanitybot.tcp_port"]);
 
-            //initialization finished, abort main thread, who needs it anyway
-            await Task.Delay(-1);
+            //start offthread XP management
+            if ((Boolean)Config["insanitybot.commands.modules.experience"])
+                ; // not implemented yet
+
+            //start offthread console management
+            if ((Boolean)Config["insanitybot.console.enable"])
+                ; // not implemented yet
+
+            //abort main thread, who needs it anyway
+            Thread.Sleep(-1);
         }
 
         private static void RegisterAllCommands()
