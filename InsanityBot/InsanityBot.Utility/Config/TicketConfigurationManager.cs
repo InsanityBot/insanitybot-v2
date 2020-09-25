@@ -11,7 +11,7 @@ namespace InsanityBot.Utility.Config
     {
         public TicketConfiguration Config { get; set; }
 
-        public TicketConfigurationManager AddConfigEntry(String Identifier, Object DefaultValue)
+        public TicketConfigurationManager AddConfigEntry<T>(String Identifier, T DefaultValue)
         {
             Config.Configuration.Add(Identifier, DefaultValue);
             return this;
