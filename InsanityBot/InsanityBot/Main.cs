@@ -37,7 +37,12 @@ namespace InsanityBot
 
             //deserialize main config
             if (!File.Exists("./config/main.json"))
+            {
                 await CreateMainConfig();
+                Console.WriteLine("Please fill out the configuration file with your preferred values. Token and GuildId are required. " +
+                    "The file is located at .\\config\\main.json");
+                return;
+            }
             Config = ConfigManager.Deserialize("./config/main.json");
 
             //create discord config; increase the cache size if you want though itll take more RAM

@@ -80,6 +80,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.logging.log_member_join", true)
                 .AddConfigEntry("insanitybot.logging.log_member_leave", true)
                 .AddConfigEntry("insanitybot.logging.log_commands", false)
+                .AddConfigEntry("insanitybot.logging.members.use_mentions", true)
                 .AddConfigEntry("insanitybot.miscellaneous.join_roles", true)
                 .AddConfigEntry("insanitybot.miscellaneous.block_say_role_pings", true)
                 .AddConfigEntry("insanitybot.miscellaneous.block_say_user_pings", false)
