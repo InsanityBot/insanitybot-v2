@@ -98,7 +98,7 @@ namespace InsanityBot
                 ; // not implemented yet
 
             //start offthread console management
-            if ((Boolean)Config["insanitybot.console.enable"])
+            if ((Boolean)Config["insanitybot.modules.console"])
                 ; // not implemented yet
 
             //abort main thread, who needs it anyway
@@ -107,7 +107,7 @@ namespace InsanityBot
 
         private static void RegisterAllCommands()
         {
-            if((Boolean)Config["insanitybot.module.miscellaneous"])
+            if((Boolean)Config["insanitybot.modules.miscellaneous"])
             {
                 CommandsExtension.RegisterCommands<Say>();
             }

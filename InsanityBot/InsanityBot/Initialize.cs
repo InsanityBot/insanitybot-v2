@@ -50,6 +50,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.modules.tags", true)
                 .AddConfigEntry("insanitybot.modules.tickets", true)
                 .AddConfigEntry("insanitybot.modules.admin", true)
+                .AddConfigEntry("insanitybot.modules.console", true)
 
                 .AddConfigEntry("insanitybot.commands.prefixes", new List<String>().Append("i.").Append("admin."))
                 .AddConfigEntry("insanitybot.commands.help.send_dms", true)
