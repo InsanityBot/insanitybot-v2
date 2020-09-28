@@ -39,9 +39,13 @@ namespace InsanityBot
             //deserialize main config
             if (!File.Exists("./config/main.json"))
             {
+                if (!Directory.Exists("./config"))
+                    Directory.CreateDirectory("./config");
+                File.Create("./config/main.json").Close();
                 await CreateMainConfig();
                 Console.WriteLine("Please fill out the configuration file with your preferred values. Token and GuildId are required. " +
                     "The file is located at .\\config\\main.json");
+                Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
                 return;
             }

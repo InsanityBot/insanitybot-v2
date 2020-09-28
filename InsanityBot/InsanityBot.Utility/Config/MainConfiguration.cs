@@ -17,5 +17,13 @@ namespace InsanityBot.Utility.Config
             get => Configuration[Identifier];
             set => Configuration[Identifier] = value;
         }
+
+        public MainConfiguration()
+        {
+            DataVersion = "2.0.0.0";
+            Configuration = new Dictionary<String, Object>();
+            Token = " ";
+            GuildId = 0;
+        }
     }
 }

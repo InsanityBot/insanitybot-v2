@@ -39,8 +39,7 @@ namespace InsanityBot
         public static async Task CreateMainConfig()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            ConfigManager.Config.Token = "";
-            ConfigManager.Config.GuildId = 0;
+            ConfigManager.Config = new MainConfiguration();
 
             ConfigManager
                 .AddConfigEntry("insanitybot.modules.logging", true)
