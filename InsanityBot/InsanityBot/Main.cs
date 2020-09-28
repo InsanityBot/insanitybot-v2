@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 
+using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Utility.Config;
 
 using Microsoft.Extensions.Logging;
@@ -41,6 +42,7 @@ namespace InsanityBot
                 await CreateMainConfig();
                 Console.WriteLine("Please fill out the configuration file with your preferred values. Token and GuildId are required. " +
                     "The file is located at .\\config\\main.json");
+                Console.ReadKey();
                 return;
             }
             Config = ConfigManager.Deserialize("./config/main.json");
@@ -86,8 +88,9 @@ namespace InsanityBot
             //start offthread TCP connection
             _ = HandleTCPConnections((Int32)Config["insanitybot.tcp_port"]);
 
+#pragma warning disable CS0642
             //start offthread XP management
-            if ((Boolean)Config["insanitybot.commands.modules.experience"])
+            if ((Boolean)Config["insanitybot.modules.experience"])
                 ; // not implemented yet
 
             //start offthread console management
@@ -100,7 +103,10 @@ namespace InsanityBot
 
         private static void RegisterAllCommands()
         {
-            throw new NotImplementedException();
+            if((Boolean)Config["insanitybot.module.miscellaneous"])
+            {
+                CommandsExtension.RegisterCommands<Say>();
+            }
         }
 
         private static void RegisterAllEvents()
