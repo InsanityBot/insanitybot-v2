@@ -31,7 +31,7 @@ namespace InsanityBot.Utility.Permissions
 
             if(e.Member.PermissionsIn(e.Guild.GetDefaultChannel()).HasPermission(DSharpPlus.Permissions.KickMembers))
             {
-                UserPermission permission = e.Member.GetPermissions();
+                UserPermissions permission = e.Member.GetPermissions();
                 permission.Permissions.VerbalWarn = true;
                 permission.Permissions.Warn = true;
                 permission.Permissions.Unwarn = true;
@@ -46,7 +46,7 @@ namespace InsanityBot.Utility.Permissions
 
             if(e.Member.PermissionsIn(e.Guild.GetDefaultChannel()).HasPermission(DSharpPlus.Permissions.BanMembers))
             {
-                UserPermission permission = e.Member.GetPermissions();
+                UserPermissions permission = e.Member.GetPermissions();
                 permission.Permissions.Ban = true;
                 permission.Permissions.Tempban = true;
                 permission.Permissions.Unban = true;
@@ -56,7 +56,7 @@ namespace InsanityBot.Utility.Permissions
 
             if(e.Member.PermissionsIn(e.Guild.GetDefaultChannel()).HasPermission(DSharpPlus.Permissions.Administrator))
             {
-                UserPermission permission = e.Member.GetPermissions();
+                UserPermissions permission = e.Member.GetPermissions();
                 permission.Permissions.SuggestionAccept = true;
                 permission.Permissions.SuggestionDeny = true;
                 permission.Permissions.TicketApplyAccept = true;

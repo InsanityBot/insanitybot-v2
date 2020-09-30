@@ -8,12 +8,11 @@ namespace InsanityBot.Utility
 {
     interface ICacheHandler<T> where T : ICacheable
     {
-        public IEnumerable<T> Cache { get; protected set; }
-        protected Timer CacheIterationTimer { get; set; }
+        public IEnumerable<T> Cache { get; set; }
 
-        public Task<IEnumerable<T>> GetCacheEntry();
-        protected Task RemoveUnusedCacheEntries();
-        protected Task<IEnumerable<T>> AddCacheEntry();
-        protected Task<IEnumerable<T>> RemoveCacheEntry();
+        public Task<T> GetCacheEntry();
+        public Task RemoveUnusedCacheEntries();
+        public Task AddCacheEntry();
+        public Task RemoveCacheEntry();
     }
 }

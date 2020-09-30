@@ -3,136 +3,41 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions.Serialization;
+using InsanityBot.Utility.Permissions.Reference;
 
 using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Permissions
 {
-    public static class PermissionCache
+#pragma warning disable CA1822
+    public class PermissionCache : ICacheHandler<UserPermissions>
     {
-        private static List<UserPermission> UserPermissions { get; set; }
+        public IEnumerable<UserPermissions> Cache { get; set; }
 
-        private static Timer CacheHeartbeat { get; set; }
-
-        private static void CacheHeartbeat_Elapsed(Object sender, ElapsedEventArgs e)
+        public Task AddCacheEntry()
         {
-            foreach(var p in UserPermissions)
-            {
-                if (p.HeartbeatsUnused == 5)
-                    UserPermissions.Remove(p);
-                else
-                    p.HeartbeatsUnused++;
-            }
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Initializes the Timer and the Cache
-        /// </summary>
-        public static void Initialize()
+        public Task<UserPermissions> GetCacheEntry()
         {
-            CacheHeartbeat = new Timer
-            {
-                AutoReset = true,
-                Interval = 30000
-            };
-            CacheHeartbeat.Elapsed += CacheHeartbeat_Elapsed;
-
-            UserPermissions = new List<UserPermission>();
+            throw new NotImplementedException();
         }
 
-        private static UserPermission LoadNew(UInt64 Id)
+        public Task RemoveCacheEntry()
         {
-            StreamReader reader = new StreamReader($"./data/{Id}/permissions.json");
-            UserPermission permissions = (UserPermission)JsonConvert.DeserializeObject(reader.ReadToEnd());
-
-            permissions.UserID = Id;
-            permissions.HeartbeatsUnused = 0;
-
-            UserPermissions.Add(permissions);
-            return permissions;
+            throw new NotImplementedException();
         }
 
-        // not happy with this one, someone please improve it
-
-        /// <summary>
-        /// Fetches the UserPermission object for a certain member
-        /// </summary>
-        public static UserPermission GetUserPermission(UInt64 Id)
+        public Task RemoveUnusedCacheEntries()
         {
-            var v = from vx in UserPermissions
-                    where vx.UserID == Id
-                    select vx;
-
-            UserPermission returnValue = (v.Count()) switch
-            {
-                0 => LoadNew(Id),
-                1 => v.First(),
-                _ => throw new InvalidOperationException("InsanityBot.Utility.Permissions.PermissionCache.cs: Duplicate cache entries")
-            };
-
-            UserPermissions.Remove(returnValue);
-            returnValue.HeartbeatsUnused = 0;
-            UserPermissions.Add(returnValue);
-
-            return returnValue;
-        }
-
-        private static void Serialize(UserPermission permissions)
-        {
-            FileStream file = new FileStream($"./data/{permissions.UserID}/permissions.json", FileMode.Truncate);
-            StreamWriter writer = new StreamWriter(file);
-
-            writer.Write(JsonConvert.SerializeObject(permissions));
-
-            file.Close();
-        }
-
-        /// <summary>
-        /// Fetches the UserPermission object for this member.
-        /// </summary>
-        public static UserPermission GetPermissions(this DiscordMember member)
-        {
-            var v = from vx in UserPermissions
-                    where vx.UserID == member.Id
-                    select vx;
-
-            UserPermission returnValue = (v.Count()) switch
-            {
-                0 => LoadNew(member.Id),
-                1 => v.First(),
-                _ => throw new InvalidOperationException("InsanityBot.Utility.Permissions.PermissionCache.cs: Duplicate cache entries")
-            };
-
-            UserPermissions.Remove(returnValue);
-            returnValue.HeartbeatsUnused = 0;
-            UserPermissions.Add(returnValue);
-
-            return returnValue;
-        }
-
-        public static void SetPermissions(this DiscordMember member, UserPermission permissions)
-        {
-            var v = from vx in UserPermissions
-                    where vx.UserID == member.Id
-                    select vx;
-
-            switch (v.Count())
-            {
-                case 0:
-                    Serialize(permissions);
-                    return;
-                case 1:
-                    UserPermissions.Remove(v.First());
-                    Serialize(permissions);
-                    return;
-                default:
-                    throw new InvalidOperationException("InsanityBot.Utility.Permissions.PermissionCache.cs: Duplicate cache entries");
-            }
+            throw new NotImplementedException();
         }
     }
+#pragma warning restore CA1822
 }
