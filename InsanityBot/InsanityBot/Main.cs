@@ -49,7 +49,18 @@ namespace InsanityBot
                 Console.ReadKey();
                 return;
             }
+
+            //read config from file
             Config = ConfigManager.Deserialize("./config/main.json");
+
+            if (String.IsNullOrWhiteSpace(Config.Token))
+            {
+                Console.WriteLine("Invalid Token. Please provide a valid token in .\\config\\main.json" +
+                    "\nPress any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+
 
             //create discord config; increase the cache size if you want though itll take more RAM
             ClientConfiguration = new DiscordConfiguration
