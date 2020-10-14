@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
-using InsanityBot.Utility.Permissions.Serialization;
+using InsanityBot.Utility.Permissions.Reference;
 
 using Newtonsoft.Json;
 
@@ -17,6 +19,7 @@ namespace InsanityBot.Utility.Permissions
 {
     public static class DiscordClientBinding
     {
+        private static PermissionCache cache = new PermissionCache();
         public static void InitializePermissionFramework(this DiscordClient client)
         {
             client.GuildMemberAdded += GuildMemberAdded;
@@ -26,46 +29,15 @@ namespace InsanityBot.Utility.Permissions
 
         private static async Task GuildMemberUpdated(GuildMemberUpdateEventArgs e)
         {
-            if (e.RolesBefore == e.RolesAfter)
-                return;
+            List<DiscordRole> RolesAdded = (from v in e.RolesAfter
+                                            where !e.RolesBefore.Contains(v)
+                                            select v)
+                                            .ToList();
 
-            if(e.Member.PermissionsIn(e.Guild.GetDefaultChannel()).HasPermission(DSharpPlus.Permissions.KickMembers))
-            {
-                UserPermissions permission = e.Member.GetPermissions();
-                permission.Permissions.VerbalWarn = true;
-                permission.Permissions.Warn = true;
-                permission.Permissions.Unwarn = true;
-                permission.Permissions.Mute = true;
-                permission.Permissions.Tempmute = true;
-                permission.Permissions.Unmute = true;
-                permission.Permissions.Blacklist = true;
-                permission.Permissions.Whitelist = true;
-                permission.Permissions.Kick = true;
-                permission.Permissions.Slowmode = true;
-            }
-
-            if(e.Member.PermissionsIn(e.Guild.GetDefaultChannel()).HasPermission(DSharpPlus.Permissions.BanMembers))
-            {
-                UserPermissions permission = e.Member.GetPermissions();
-                permission.Permissions.Ban = true;
-                permission.Permissions.Tempban = true;
-                permission.Permissions.Unban = true;
-                permission.Permissions.Lock = true;
-                permission.Permissions.Unlock = true;
-            }
-
-            if(e.Member.PermissionsIn(e.Guild.GetDefaultChannel()).HasPermission(DSharpPlus.Permissions.Administrator))
-            {
-                UserPermissions permission = e.Member.GetPermissions();
-                permission.Permissions.SuggestionAccept = true;
-                permission.Permissions.SuggestionDeny = true;
-                permission.Permissions.TicketApplyAccept = true;
-                permission.Permissions.TicketApplyDeny = true;
-
-                permission.Permissions.Archive = true;
-                permission.Permissions.Config = true;
-                permission.Permissions.Permission = true;
-            }
+            List<DiscordRole> RolesRemoved = (from v in e.RolesBefore
+                                              where !e.RolesAfter.Contains(v)
+                                              select v)
+                                              .ToList();
         }
 
         private static async Task GuildMemberRemoved(GuildMemberRemoveEventArgs e)
@@ -81,7 +53,7 @@ namespace InsanityBot.Utility.Permissions
             FileStream file = new FileStream($"./data/{e.Member.Id}/permissions.json", FileMode.Truncate);
             StreamWriter writer = new StreamWriter(file);
 
-            Serialization.Reference.Permissions permissions = new Serialization.Reference.Permissions();
+            UserPermissions permissions = new UserPermissions(e.Member.Id);
 
             await writer.WriteAsync(JsonConvert.SerializeObject(permissions));
         }
