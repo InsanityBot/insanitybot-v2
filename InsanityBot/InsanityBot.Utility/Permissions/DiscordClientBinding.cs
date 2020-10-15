@@ -22,7 +22,6 @@ namespace InsanityBot.Utility.Permissions
         private static PermissionCache cache = new PermissionCache();
         public static void InitializePermissionFramework(this DiscordClient client)
         {
-            client.GuildMemberAdded += GuildMemberAdded;
             client.GuildMemberRemoved += GuildMemberRemoved;
             client.GuildMemberUpdated += GuildMemberUpdated;
         }
@@ -43,19 +42,6 @@ namespace InsanityBot.Utility.Permissions
         private static async Task GuildMemberRemoved(GuildMemberRemoveEventArgs e)
         {
             Directory.Delete($"./data/{e.Member.Id}", true);
-        }
-
-        private static async Task GuildMemberAdded(GuildMemberAddEventArgs e)
-        {
-            Directory.CreateDirectory($"./data/{e.Member.Id}");
-            File.Create($"./data/{e.Member.Id}/permissions.json");
-
-            FileStream file = new FileStream($"./data/{e.Member.Id}/permissions.json", FileMode.Truncate);
-            StreamWriter writer = new StreamWriter(file);
-
-            UserPermissions permissions = new UserPermissions(e.Member.Id);
-
-            await writer.WriteAsync(JsonConvert.SerializeObject(permissions));
         }
     }
 }

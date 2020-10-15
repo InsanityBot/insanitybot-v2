@@ -12,7 +12,7 @@ namespace InsanityBot.Utility
 
         public Task<T> GetCacheEntry(U id);
         public Task RemoveUnusedCacheEntries();
-        public Task AddCacheEntry(U id);
+        public Task<T> AddCacheEntry(U id);
         public Task RemoveCacheEntry(T entry);
     }
 }

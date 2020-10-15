@@ -24,9 +24,22 @@ namespace InsanityBot.Utility.Permissions
         public System.Timers.Timer Timer { get; set; }
         private Boolean CacheLocked { get; set; }
 
-        public Task AddCacheEntry(UInt64 Id)
+        public async Task<UserPermissions> AddCacheEntry(UInt64 Id)
         {
-            throw new NotImplementedException();
+            if (File.Exists($"./data/{Id}/permissions.json"))
+            {
+                StreamReader reader = new StreamReader(File.OpenRead($"./data/{Id}/permissions.json"));
+                UserPermissions permissions = JsonConvert.DeserializeObject<UserPermissions>(reader.ReadToEnd());
+                Cache.Append(permissions);
+                return permissions;
+            }
+
+            StreamWriter writer = new StreamWriter(File.Open($"./data/{Id}/permissions.json", FileMode.Truncate));
+            UserPermissions NewPermissions = new UserPermissions(Id);
+
+            Cache.Append(NewPermissions);
+            writer.Write(JsonConvert.SerializeObject(NewPermissions));
+            return NewPermissions;
         }
 
         public async Task<UserPermissions> GetCacheEntry(UInt64 Id)
@@ -37,8 +50,7 @@ namespace InsanityBot.Utility.Permissions
             if((c = Cache.FirstOrDefault((p) => p.SnowflakeIdentifier == Id)) != null)
                 return c;
 
-            await AddCacheEntry(Id);
-            return Cache.FirstOrDefault((p) => p.SnowflakeIdentifier == Id);
+            return await AddCacheEntry(Id);
         }
 
         public async Task RemoveCacheEntry(UserPermissions entry)
