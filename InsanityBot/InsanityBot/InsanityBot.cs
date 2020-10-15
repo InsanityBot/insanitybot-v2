@@ -8,6 +8,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Config;
+using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
@@ -25,5 +26,7 @@ namespace InsanityBot
 
         public static CommandsNextExtension CommandsExtension;
         public static CommandsNextConfiguration CommandConfiguration;
+
+        public static PermissionCache PermissionManager;
     }
 }

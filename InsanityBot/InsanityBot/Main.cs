@@ -12,6 +12,7 @@ using DSharpPlus.CommandsNext;
 
 using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Utility.Config;
+using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
@@ -35,6 +36,9 @@ namespace InsanityBot
 
             //load main config
             ConfigManager = new MainConfigurationManager();
+
+            //instantiate permissions
+            PermissionManager = new PermissionCache();
 
             //deserialize main config
             if (!File.Exists("./config/main.json"))
@@ -79,6 +83,9 @@ namespace InsanityBot
             //create and connect client
             Client = new DiscordClient(ClientConfiguration);
             await Client.ConnectAsync();
+
+            //load perms :b
+            Client.InitializePermissionFramework();
 
             //load command configuration
             CommandConfiguration = new CommandsNextConfiguration
