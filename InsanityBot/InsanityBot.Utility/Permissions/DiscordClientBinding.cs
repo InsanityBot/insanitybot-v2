@@ -19,14 +19,13 @@ namespace InsanityBot.Utility.Permissions
 {
     public static class DiscordClientBinding
     {
-        private static PermissionCache cache = new PermissionCache();
         public static void InitializePermissionFramework(this DiscordClient client)
         {
             client.GuildMemberRemoved += GuildMemberRemoved;
             client.GuildMemberUpdated += GuildMemberUpdated;
         }
 
-        private static async Task GuildMemberUpdated(GuildMemberUpdateEventArgs e)
+        private static async Task GuildMemberUpdated(DiscordClient client, GuildMemberUpdateEventArgs e)
         {
             List<DiscordRole> RolesAdded = (from v in e.RolesAfter
                                             where !e.RolesBefore.Contains(v)
@@ -39,7 +38,7 @@ namespace InsanityBot.Utility.Permissions
                                               .ToList();
         }
 
-        private static async Task GuildMemberRemoved(GuildMemberRemoveEventArgs e)
+        private static async Task GuildMemberRemoved(DiscordClient client, GuildMemberRemoveEventArgs e)
         {
             Directory.Delete($"./data/{e.Member.Id}", true);
         }
