@@ -12,6 +12,7 @@ using DSharpPlus.CommandsNext;
 
 using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Utility.Config;
+using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
@@ -36,6 +37,7 @@ namespace InsanityBot
 
             //load main config
             ConfigManager = new MainConfigurationManager();
+            LanguageManager = new LanguageConfigurationManager();
 
             //instantiate permissions
             PermissionManager = new PermissionCache();
@@ -64,6 +66,21 @@ namespace InsanityBot
                 Console.ReadKey();
                 return;
             }
+
+            //deserialize language config
+            if(!File.Exists("./config/lang.json"))
+            {
+                if (!Directory.Exists("./config"))
+                    Directory.CreateDirectory("./config");
+                File.Create("./config/lang.json").Close();
+                await CreateLangConfig();
+                Console.WriteLine("Please fill out the language file with your preferred messages. The file is located at .\\config\\main.json");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+
+            LanguageConfig = LanguageManager.Deserialize("./config/lang.json");
 
 
             //create discord config; increase the cache size if you want though itll take more RAM

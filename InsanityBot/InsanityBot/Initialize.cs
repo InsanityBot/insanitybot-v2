@@ -37,7 +37,6 @@ namespace InsanityBot
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public static async Task CreateMainConfig()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             ConfigManager.Config = new MainConfiguration();
 
@@ -104,5 +103,11 @@ namespace InsanityBot
 
                 .Serialize(ConfigManager.Config, "./config/main.json");
         }
+
+        public static async Task CreateLangConfig()
+        {
+
+        }
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     }
 }
