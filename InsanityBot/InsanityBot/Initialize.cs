@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using InsanityBot.Utility.Config;
+using InsanityBot.Utility.Language;
 
 namespace InsanityBot
 {
@@ -106,7 +107,18 @@ namespace InsanityBot
 
         public static async Task CreateLangConfig()
         {
+            LanguageManager.Config = new LanguageConfiguration();
 
+            LanguageManager.AddConfigEntry("insanitybot.error.lacking_permission",
+                "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.")
+                .AddConfigEntry("insanitybot.error.generic",
+                "The command failed to execute. Please retry or contact your administrators.")
+                .AddConfigEntry("insanitybot.moderation.success",
+                "{MENTION} was {OPERATION} successfully.")
+                .AddConfigEntry("insanitybot.moderation.failure",
+                "{MENTION} could not be {OPERATION}.")
+
+                .Serialize(LanguageManager.Config, "./config/lang.json");
         }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     }
