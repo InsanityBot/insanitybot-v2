@@ -11,7 +11,7 @@ namespace InsanityBot.Utility
         where ConfigBuilder : IConfigBuilder
     {
         public ConfigType Config { get; set; }
-        public ConfigBuilder AddConfigEntry<T>(String Identifier, T DefaultValue);
+        public ConfigBuilder AddConfigEntry(String Identifier, U DefaultValue);
         public ConfigBuilder RemoveConfigEntry(String Identifier);
     }
 }
