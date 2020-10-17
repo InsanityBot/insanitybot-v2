@@ -9,11 +9,12 @@ using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Config
 {
-    public class MainConfigurationManager : IConfigSerializer<MainConfiguration>, IConfigBuilder<MainConfiguration, MainConfigurationManager>
+    public class MainConfigurationManager : IConfigSerializer<MainConfiguration, Object>, 
+        IConfigBuilder<MainConfiguration, MainConfigurationManager, Object>
     {
         public MainConfiguration Config { get; set; }
 
-        public MainConfigurationManager AddConfigEntry<T>(String Identifier, T DefaultValue)
+        public MainConfigurationManager AddConfigEntry(String Identifier, Object DefaultValue)
         {
             Config.Configuration.Add(Identifier, DefaultValue);
             return this;

@@ -7,11 +7,12 @@ using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Config
 {
-    public class TicketConfigurationManager : IConfigSerializer<TicketConfiguration>, IConfigBuilder<TicketConfiguration, TicketConfigurationManager>
+    public class TicketConfigurationManager : IConfigSerializer<TicketConfiguration, Object>, 
+        IConfigBuilder<TicketConfiguration, TicketConfigurationManager, Object>
     {
         public TicketConfiguration Config { get; set; }
 
-        public TicketConfigurationManager AddConfigEntry<T>(String Identifier, T DefaultValue)
+        public TicketConfigurationManager AddConfigEntry(String Identifier, Object DefaultValue)
         {
             Config.Configuration.Add(Identifier, DefaultValue);
             return this;

@@ -7,12 +7,12 @@ using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Config
 {
-    public class ApplicationConfigurationManager : IConfigSerializer<ApplicationConfiguration>, 
-        IConfigBuilder<ApplicationConfiguration, ApplicationConfigurationManager>
+    public class ApplicationConfigurationManager : IConfigSerializer<ApplicationConfiguration, Object>, 
+        IConfigBuilder<ApplicationConfiguration, ApplicationConfigurationManager, Object>
     {
         public ApplicationConfiguration Config { get; set; }
 
-        public ApplicationConfigurationManager AddConfigEntry<T>(String Identifier, T DefaultValue)
+        public ApplicationConfigurationManager AddConfigEntry(String Identifier, Object DefaultValue)
         {
             Config.Configuration.Add(Identifier, DefaultValue);
             return this;
