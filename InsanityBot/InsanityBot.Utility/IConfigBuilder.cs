@@ -6,8 +6,9 @@ using InsanityBot.Utility.Reference;
 
 namespace InsanityBot.Utility
 {
-    public interface IConfigBuilder<ConfigType, ConfigBuilder> : IConfigBuilder
-        where ConfigType : IConfiguration where ConfigBuilder : IConfigBuilder
+    public interface IConfigBuilder<ConfigType, ConfigBuilder, U> : IConfigBuilder
+        where ConfigType : IConfiguration<U> 
+        where ConfigBuilder : IConfigBuilder
     {
         public ConfigType Config { get; set; }
         public ConfigBuilder AddConfigEntry<T>(String Identifier, T DefaultValue);

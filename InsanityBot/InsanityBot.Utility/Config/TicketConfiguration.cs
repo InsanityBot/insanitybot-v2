@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InsanityBot.Utility.Config
 {
-    public class TicketConfiguration : IConfiguration
+    public class TicketConfiguration : IConfiguration<Object>
     {
         public String DataVersion { get; set; }
         public Dictionary<String, Object> Configuration { get; set; }
