@@ -4,4 +4,20 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Config\ApplicationConfigManager.cs~RF297fd839.TMP" />
+    <None Remove="Permissions\Reference\UserPermissions.cs~RF293abf42.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Datafixes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00743" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00743" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00743" />
+    <PackageReference Include="DSharpPlus.Lavalink" Version="4.0.0-nightly-00743" />
+  </ItemGroup>
+
 </Project>
