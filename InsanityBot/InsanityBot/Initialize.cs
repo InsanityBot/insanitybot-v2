@@ -101,6 +101,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.identifiers.logging.member_join_log_channel_id", 0)
                 .AddConfigEntry("insanitybot.identifiers.logging.member_leave_log_channel_id", 0)
                 .AddConfigEntry("insanitybot.identifiers.miscellaneous.join_role_ids", new List<Int64>().Append(0))
+                .AddConfigEntry("insanitybot.identifiers.moderation.mute_role_id", 0)
 
                 .Serialize(ConfigManager.Config, "./config/main.json");
         }
@@ -117,6 +118,8 @@ namespace InsanityBot
                 "{MENTION} was {OPERATION} successfully.")
                 .AddConfigEntry("insanitybot.moderation.failure",
                 "{MENTION} could not be {OPERATION}.")
+                .AddConfigEntry("insanitybot.moderation.no_reason_given",
+                "No reason given.")
 
                 .Serialize(LanguageManager.Config, "./config/lang.json");
         }
