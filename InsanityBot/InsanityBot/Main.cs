@@ -19,6 +19,8 @@ using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
 
+using Newtonsoft.Json.Linq;
+
 namespace InsanityBot
 {
     public partial class InsanityBot
@@ -110,7 +112,7 @@ namespace InsanityBot
             CommandConfiguration = new CommandsNextConfiguration
             {
                 CaseSensitive = false,
-                StringPrefixes = (List<String>)Config["insanitybot.commands.prefixes"],
+                StringPrefixes = Config.Prefixes,
                 DmHelp = (Boolean)Config["insanitybot.commands.help.send_dms"],
                 IgnoreExtraArguments = true
             };
