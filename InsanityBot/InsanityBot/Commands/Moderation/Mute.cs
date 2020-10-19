@@ -35,11 +35,13 @@ namespace InsanityBot.Commands.Moderation
             }
 
             //actually do something with the usedefault value
-            String MuteReason = Reason;
-            if (Reason == "usedefault")
-                MuteReason = InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"];
+            String MuteReason = Reason switch
+            {
+                "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"],
+                                ctx, member),
+                _ => GetFormattedString(Reason, ctx, member)
+            };
 
-            MuteReason = GetFormattedString(MuteReason, ctx, member);
             DiscordEmbedBuilder embedBuilder = null;
 
             DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
@@ -54,7 +56,7 @@ namespace InsanityBot.Commands.Moderation
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
                 .AddField("Member", member.Mention, true)
-                .AddField("Reason", Reason, true);
+                .AddField("Reason", MuteReason, true);
 
             try
             {
