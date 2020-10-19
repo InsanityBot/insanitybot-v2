@@ -11,6 +11,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 
 using InsanityBot.Commands.Miscellaneous;
+using InsanityBot.Commands.Moderation;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
@@ -145,6 +146,10 @@ namespace InsanityBot
             if((Boolean)Config["insanitybot.modules.miscellaneous"])
             {
                 CommandsExtension.RegisterCommands<Say>();
+            }
+            if((Boolean)Config["insanitybot.modules.moderation"])
+            {
+                CommandsExtension.RegisterCommands<Mute>();
             }
         }
 
