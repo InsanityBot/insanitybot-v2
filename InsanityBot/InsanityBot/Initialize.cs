@@ -104,6 +104,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.identifiers.logging.member_leave_log_channel_id", 0)
                 .AddConfigEntry("insanitybot.identifiers.miscellaneous.join_role_ids", new List<Int64>().Append(0))
                 .AddConfigEntry("insanitybot.identifiers.moderation.mute_role_id", 0)
+                .AddConfigEntry("insanitybot.tcp_port", 0)
 
                 .Serialize(ConfigManager.Config, "./config/main.json");
         }

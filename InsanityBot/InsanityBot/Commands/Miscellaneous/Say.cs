@@ -25,7 +25,7 @@ namespace InsanityBot.Commands.Miscellaneous
             _ = ctx.RespondAsync(text);
         }
 
-        [Command("say embed")]
+        [Command("sayembed")]
         public async Task SayEmbedCommand(CommandContext ctx,
             [RemainingText]
             String text)

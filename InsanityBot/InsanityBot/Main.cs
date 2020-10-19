@@ -78,7 +78,7 @@ namespace InsanityBot
                     Directory.CreateDirectory("./config");
                 File.Create("./config/lang.json").Close();
                 await CreateLangConfig();
-                Console.WriteLine("Please fill out the language file with your preferred messages. The file is located at .\\config\\main.json");
+                Console.WriteLine("Please fill out the language file with your preferred messages. The file is located at .\\config\\lang.json");
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
                 return;
@@ -126,13 +126,13 @@ namespace InsanityBot
 
             //register commands and events
             RegisterAllCommands();
-            RegisterAllEvents();
+            // RegisterAllEvents();
 
             //register default help format
-            FormatHelpCommand();
+            // FormatHelpCommand();
 
             //start offthread TCP connection
-            _ = HandleTCPConnections((Int32)Config["insanitybot.tcp_port"]);
+            _ = HandleTCPConnections((Int64)Config["insanitybot.tcp_port"]);
 
 #pragma warning disable CS0642
             //start offthread XP management
@@ -170,13 +170,13 @@ namespace InsanityBot
             throw new NotImplementedException();
         }
 
-        private static async Task HandleTCPConnections(Int32 Port)
+        private static async Task HandleTCPConnections(Int64 Port)
         {
             if (Port == 0)
                 return;
 
 
-            TcpListener listener = new TcpListener(IPAddress.Parse("0.0.0.0"), Port);
+            TcpListener listener = new TcpListener(IPAddress.Parse("0.0.0.0"), (Int32)Port);
 
             try
             {
