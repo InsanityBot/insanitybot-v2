@@ -165,7 +165,7 @@ namespace InsanityBot
 
         private static async Task HandleTCPConnections(Int32 Port)
         {
-            if (Port == -1)
+            if (Port == 0)
                 return;
 
 
