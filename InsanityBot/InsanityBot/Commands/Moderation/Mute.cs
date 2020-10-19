@@ -28,6 +28,12 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String Reason = "usedefault")
         {
+            if (!(await InsanityBot.PermissionManager.GetCacheEntry(ctx.Member.Id))["insanitybot.moderation.mute"])
+            {
+                await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                return;
+            }
+
             //actually do something with the usedefault value
             String MuteReason = Reason;
             if (Reason == "usedefault")

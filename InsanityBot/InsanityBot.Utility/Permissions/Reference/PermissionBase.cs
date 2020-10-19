@@ -12,7 +12,8 @@ namespace InsanityBot.Utility.Permissions.Reference
             return new Dictionary<String, Boolean>
             {
                 { "insanitybot.miscellaneous.say", false },
-                { "insanitybot.miscellaneous.say.embed", true }
+                { "insanitybot.miscellaneous.say.embed", false },
+                { "insanitybot.moderation.mute", false }
             };
         }
 
