@@ -15,6 +15,7 @@ using InsanityBot.Commands.Moderation;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
+using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
 
@@ -117,6 +118,9 @@ namespace InsanityBot
             //create and register command client
             Client.UseCommandsNext(CommandConfiguration);
             CommandsExtension = Client.GetCommandsNext();
+
+            //start timer framework
+            TimeHandler.Start();
 
             //register commands and events
             RegisterAllCommands();
