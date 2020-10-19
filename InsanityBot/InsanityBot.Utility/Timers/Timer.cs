@@ -18,7 +18,10 @@ namespace InsanityBot.Utility.Timers
                 await TimerExpiredEvent(this);
         }
 
-        public Timer(DateTime Expiry)
-            => this.Expiry = Expiry;
+        public Timer(DateTime Expiry, String Identifier)
+        {
+            this.Expiry = Expiry;
+            this.Identifier = Identifier;
+        }
     }
 }
