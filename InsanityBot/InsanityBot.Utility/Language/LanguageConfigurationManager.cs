@@ -32,8 +32,10 @@ namespace InsanityBot.Utility.Language
 
         public void Serialize(LanguageConfiguration Config, String Filename)
         {
-            StreamWriter writer = new StreamWriter(File.Open(Filename, FileMode.Truncate));
-            writer.Write(JsonConvert.SerializeObject(Config));
+            using StreamWriter writer = new StreamWriter(File.OpenWrite(Filename));
+            writer.BaseStream.SetLength(0);
+            writer.Flush();
+            writer.Write(JsonConvert.SerializeObject(Config, Formatting.Indented));
         }
     }
 }

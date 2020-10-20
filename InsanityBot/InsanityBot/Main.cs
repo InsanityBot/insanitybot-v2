@@ -11,11 +11,15 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 
 using InsanityBot.Commands.Miscellaneous;
+using InsanityBot.Commands.Moderation;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
+using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
+
+using Newtonsoft.Json.Linq;
 
 namespace InsanityBot
 {
@@ -74,7 +78,7 @@ namespace InsanityBot
                     Directory.CreateDirectory("./config");
                 File.Create("./config/lang.json").Close();
                 await CreateLangConfig();
-                Console.WriteLine("Please fill out the language file with your preferred messages. The file is located at .\\config\\main.json");
+                Console.WriteLine("Please fill out the language file with your preferred messages. The file is located at .\\config\\lang.json");
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
                 return;
@@ -108,7 +112,7 @@ namespace InsanityBot
             CommandConfiguration = new CommandsNextConfiguration
             {
                 CaseSensitive = false,
-                StringPrefixes = (List<String>)Config["insanitybot.commands.prefixes"],
+                StringPrefixes = Config.Prefixes,
                 DmHelp = (Boolean)Config["insanitybot.commands.help.send_dms"],
                 IgnoreExtraArguments = true
             };
@@ -117,15 +121,18 @@ namespace InsanityBot
             Client.UseCommandsNext(CommandConfiguration);
             CommandsExtension = Client.GetCommandsNext();
 
+            //start timer framework
+            TimeHandler.Start();
+
             //register commands and events
             RegisterAllCommands();
-            RegisterAllEvents();
+            // RegisterAllEvents();
 
             //register default help format
-            FormatHelpCommand();
+            // FormatHelpCommand();
 
             //start offthread TCP connection
-            _ = HandleTCPConnections((Int32)Config["insanitybot.tcp_port"]);
+            _ = HandleTCPConnections((Int64)Config["insanitybot.tcp_port"]);
 
 #pragma warning disable CS0642
             //start offthread XP management
@@ -146,6 +153,11 @@ namespace InsanityBot
             {
                 CommandsExtension.RegisterCommands<Say>();
             }
+            if((Boolean)Config["insanitybot.modules.moderation"])
+            {
+                CommandsExtension.RegisterCommands<Mute>();
+                CommandsExtension.RegisterCommands<Tempmute>();
+            }
         }
 
         private static void RegisterAllEvents()
@@ -158,13 +170,13 @@ namespace InsanityBot
             throw new NotImplementedException();
         }
 
-        private static async Task HandleTCPConnections(Int32 Port)
+        private static async Task HandleTCPConnections(Int64 Port)
         {
-            if (Port == -1)
+            if (Port == 0)
                 return;
 
 
-            TcpListener listener = new TcpListener(IPAddress.Parse("0.0.0.0"), Port);
+            TcpListener listener = new TcpListener(IPAddress.Parse("0.0.0.0"), (Int32)Port);
 
             try
             {

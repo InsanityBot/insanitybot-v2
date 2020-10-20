@@ -9,6 +9,8 @@ namespace InsanityBot.Utility.Config
         public String DataVersion { get; set; }
         public Dictionary<String, Object> Configuration { get; set; }
 
+        public List<String> Prefixes { get; set; }
+
         public String Token { get; set; } 
         public UInt64 GuildId { get; set; } 
 

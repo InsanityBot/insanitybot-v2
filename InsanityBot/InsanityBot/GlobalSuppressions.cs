@@ -5,5 +5,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "Nested Types are required by the Discord API Wrapper", Scope = "namespaceanddescendants", Target = "~N:InsanityBot")]
-[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Discord API Wrapper requires non-static methods", Scope = "namespaceanddescendants", Target = "~N:InsanityBot.Commands")]
+[assembly: SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification = "Nested Types are required by the Discord API Wrapper")]
+[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Discord API Wrapper requires non-static methods")]
+[assembly: SuppressMessage("Design", "CA1031:Catch specific exception types", Justification = "No point. Just no point.")]

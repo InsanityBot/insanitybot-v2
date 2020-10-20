@@ -34,11 +34,17 @@ namespace InsanityBot.Utility.Permissions
                 return permissions;
             }
 
-            StreamWriter writer = new StreamWriter(File.Open($"./data/{Id}/permissions.json", FileMode.Truncate));
+            if (!Directory.Exists($"./data/{Id}"))
+                Directory.CreateDirectory($"./data/{Id}");
+
+            StreamWriter writer = new StreamWriter(File.Create($"./data/{Id}/permissions.json"));
             UserPermissions NewPermissions = new UserPermissions(Id);
 
             Cache.Append(NewPermissions);
-            writer.Write(JsonConvert.SerializeObject(NewPermissions));
+            writer.BaseStream.SetLength(0);
+            writer.Flush();
+            writer.Write(JsonConvert.SerializeObject(NewPermissions, Formatting.Indented));
+            writer.Close();
             return NewPermissions;
         }
 

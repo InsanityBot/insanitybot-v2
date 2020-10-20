@@ -40,9 +40,17 @@ namespace InsanityBot.Utility.Modlogs
         /// <returns>The modlog instance of the user</returns>
         private static UserModlog Deserialize(UInt64 UserId)
         {
+            if(!File.Exists($"./data/{UserId}/modlog.xml"))
+            {
+                StreamWriter writer = new StreamWriter($"./data/{UserId}/modlog.xml");
+                UserModlog modlog = new UserModlog();
+
+                writer.Write(JsonConvert.SerializeObject(modlog));
+                return modlog;
+            }
             StreamReader reader = new StreamReader($"./data/{UserId}/modlog.xml");
             
-            return (UserModlog)JsonConvert.DeserializeObject(reader.ReadToEnd());
+            return JsonConvert.DeserializeObject<UserModlog>(reader.ReadToEnd());
         }
 
         // extension methods for DiscordMember to allow easier accessibility

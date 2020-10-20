@@ -39,7 +39,10 @@ namespace InsanityBot
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public static async Task CreateMainConfig()
         {
-            ConfigManager.Config = new MainConfiguration();
+            ConfigManager.Config = new MainConfiguration
+            {
+                Prefixes = new List<String>().Append("i.").Append("admin.").ToList()
+            };
 
             ConfigManager
                 .AddConfigEntry("insanitybot.modules.logging", true)
@@ -52,7 +55,6 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.modules.admin", true)
                 .AddConfigEntry("insanitybot.modules.console", true)
 
-                .AddConfigEntry("insanitybot.commands.prefixes", new List<String>().Append("i.").Append("admin."))
                 .AddConfigEntry("insanitybot.commands.help.send_dms", true)
                 .AddConfigEntry("insanitybot.commands.moderation.allow_minor_warns", true)
                 .AddConfigEntry("insanitybot.commands.moderation.minor_warns_equal_full_warn", 3)
@@ -101,6 +103,8 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.identifiers.logging.member_join_log_channel_id", 0)
                 .AddConfigEntry("insanitybot.identifiers.logging.member_leave_log_channel_id", 0)
                 .AddConfigEntry("insanitybot.identifiers.miscellaneous.join_role_ids", new List<Int64>().Append(0))
+                .AddConfigEntry("insanitybot.identifiers.moderation.mute_role_id", 0)
+                .AddConfigEntry("insanitybot.tcp_port", 0)
 
                 .Serialize(ConfigManager.Config, "./config/main.json");
         }
@@ -117,6 +121,8 @@ namespace InsanityBot
                 "{MENTION} was {OPERATION} successfully.")
                 .AddConfigEntry("insanitybot.moderation.failure",
                 "{MENTION} could not be {OPERATION}.")
+                .AddConfigEntry("insanitybot.moderation.no_reason_given",
+                "No reason given.")
 
                 .Serialize(LanguageManager.Config, "./config/lang.json");
         }
