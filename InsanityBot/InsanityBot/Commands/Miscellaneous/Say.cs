@@ -15,7 +15,7 @@ namespace InsanityBot.Commands.Miscellaneous
             [RemainingText]
             String text)
         {
-            if (!(await InsanityBot.PermissionManager.GetCacheEntry(ctx.Member.Id))["insanitybot.miscellaneous.misc.say"])
+            if (!(await InsanityBot.PermissionManager.GetCacheEntry(ctx.Member.Id))["insanitybot.miscellaneous.say"])
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -30,7 +30,7 @@ namespace InsanityBot.Commands.Miscellaneous
             [RemainingText]
             String text)
         {
-            if(!(await InsanityBot.PermissionManager.GetCacheEntry(ctx.Member.Id))["insanitybot.miscellaneous.misc.say.embed"])
+            if(!(await InsanityBot.PermissionManager.GetCacheEntry(ctx.Member.Id))["insanitybot.miscellaneous.say.embed"])
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;

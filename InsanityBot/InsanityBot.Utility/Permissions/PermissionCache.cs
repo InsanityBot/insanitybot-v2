@@ -44,6 +44,7 @@ namespace InsanityBot.Utility.Permissions
             writer.BaseStream.SetLength(0);
             writer.Flush();
             writer.Write(JsonConvert.SerializeObject(NewPermissions, Formatting.Indented));
+            writer.Close();
             return NewPermissions;
         }
 
