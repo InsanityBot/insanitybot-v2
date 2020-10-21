@@ -1,71 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Text;
+
+using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Permissions.Reference
 {
-    public class PermissionBase
+    public abstract class PermissionBase
     {
-        protected static Dictionary<String, Boolean> GetDefaultPermissions()
+        public UInt64 SnowflakeIdentifier { get; set; }
+        public Dictionary<String, Boolean> Permissions { get; set; }
+
+        [JsonIgnore]
+        public static Dictionary<String, Boolean> DefaultPermissions = new Dictionary<String, Boolean>
         {
-            return new Dictionary<String, Boolean>
-            {
-                { "insanitybot.miscellaneous.say", false },
-                { "insanitybot.miscellaneous.say.embed", false },
-                { "insanitybot.moderation.mute", false },
-                { "insanitybot.moderation.tempmute", false }
-            };
+            { "insanitybot.miscellaneous.say", false },
+            { "insanitybot.miscellaneous.say.embed", false },
+            { "insanitybot.moderation.mute", false },
+            { "insanitybot.moderation.tempmute", true }
+        };
+
+        protected PermissionBase(UInt64 Id, Dictionary<String, Boolean> Permissions)
+        {
+            this.SnowflakeIdentifier = Id;
+            this.Permissions = Permissions;
         }
 
-        public UInt64 SnowflakeIdentifier { get; protected set; }
+        protected PermissionBase(UInt64 Id) : this(Id, GetDefaultPermissions()) { }
 
-        public Dictionary<String, Boolean> Permissions = new Dictionary<String, Boolean>();
 
-        public Boolean this[String parameter]
-        {
-            get => Permissions[parameter];
-            set => Permissions[parameter] = value;
-        }
+        private static Dictionary<String, Boolean> GetDefaultPermissions()
+            => DefaultPermissions;    
+
 
         public static PermissionBase operator + (PermissionBase left, PermissionBase right)
         {
-            PermissionBase returnValue = new PermissionBase(left.SnowflakeIdentifier);
+            foreach(var v in right.Permissions)
+            {
+                if (v.Value)
+                    left.Permissions[v.Key] = true;
+            }
 
-            foreach(var v in left.Permissions)
-                if (v.Value && !right[v.Key])
-                    returnValue[v.Key] = true;
-
-            return returnValue;
+            return left;
         }
 
         public static PermissionBase operator - (PermissionBase left, PermissionBase right)
         {
-            PermissionBase returnValue = new PermissionBase(left.SnowflakeIdentifier);
+            foreach(var v in right.Permissions)
+            {
+                if (!v.Value)
+                    left.Permissions[v.Key] = false;
+            }
 
-            foreach (var v in left.Permissions)
-                if (!v.Value && right[v.Key])
-                    returnValue[v.Key] = true;
-
-            return returnValue;
+            return left;
         }
 
-        protected PermissionBase()
+        public Boolean this[String Key]
         {
-            this.SnowflakeIdentifier = 0;
-            this.Permissions = GetDefaultPermissions();
-        }
-
-        protected PermissionBase(UInt64 SnowflakeIdentifier)
-        {
-            this.SnowflakeIdentifier = SnowflakeIdentifier;
-            this.Permissions = GetDefaultPermissions();
-        }
-
-        protected PermissionBase(UInt64 SnowflakeIdentifier, Dictionary<String, Boolean> Permissions)
-        {
-            this.SnowflakeIdentifier = SnowflakeIdentifier;
-            this.Permissions = GetDefaultPermissions();
+            get => this.Permissions[Key];
+            set => this.Permissions[Key] = value;
         }
     }
 }

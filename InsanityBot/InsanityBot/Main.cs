@@ -43,9 +43,6 @@ namespace InsanityBot
             ConfigManager = new MainConfigurationManager();
             LanguageManager = new LanguageConfigurationManager();
 
-            //instantiate permissions
-            PermissionManager = new PermissionCache();
-
             //deserialize main config
             if (!File.Exists("./config/main.json"))
             {
