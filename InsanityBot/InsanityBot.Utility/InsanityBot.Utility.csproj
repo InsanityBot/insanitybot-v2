@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <None Remove="Config\ApplicationConfigManager.cs~RF297fd839.TMP" />
-    <None Remove="Permissions\Reference\UserPermissions.cs~RF293abf42.TMP" />
   </ItemGroup>
 
   <ItemGroup>

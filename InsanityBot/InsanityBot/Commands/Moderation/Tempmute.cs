@@ -9,6 +9,7 @@ using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using static InsanityBot.Commands.StringUtilities;
@@ -32,7 +33,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String Reason = "usedefault")
         {
-            if (!(await InsanityBot.PermissionManager.GetCacheEntry(ctx.Member.Id))["insanitybot.moderation.tempmute"])
+            if (!ctx.Member.HasPermission("insanitybot.moderation.tempmute"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;

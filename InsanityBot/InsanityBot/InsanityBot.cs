@@ -28,8 +28,6 @@ namespace InsanityBot
         public static CommandsNextExtension CommandsExtension;
         public static CommandsNextConfiguration CommandConfiguration;
 
-        public static PermissionCache PermissionManager;
-
         public static LanguageConfigurationManager LanguageManager;
         public static LanguageConfiguration LanguageConfig;
     }

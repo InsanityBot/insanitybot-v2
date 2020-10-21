@@ -45,6 +45,7 @@ namespace InsanityBot
             };
 
             ConfigManager
+                .AddConfigEntry("insanitybot.modules.experience", true)
                 .AddConfigEntry("insanitybot.modules.logging", true)
                 .AddConfigEntry("insanitybot.modules.miscellaneous", true)
                 .AddConfigEntry("insanitybot.modules.moderation", true)

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+using InsanityBot.Utility.Permissions;
+
 namespace InsanityBot.Commands.Miscellaneous
 {
     public class Say : BaseCommandModule
@@ -15,7 +17,7 @@ namespace InsanityBot.Commands.Miscellaneous
             [RemainingText]
             String text)
         {
-            if (!(await InsanityBot.PermissionManager.GetCacheEntry(ctx.Member.Id))["insanitybot.miscellaneous.say"])
+            if (!ctx.Member.HasPermission("insanitybot.miscellaneous.say"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -25,12 +27,12 @@ namespace InsanityBot.Commands.Miscellaneous
             _ = ctx.RespondAsync(text);
         }
 
-        [Command("sayembed")]
+        [Command("embed")]
         public async Task SayEmbedCommand(CommandContext ctx,
             [RemainingText]
             String text)
         {
-            if(!(await InsanityBot.PermissionManager.GetCacheEntry(ctx.Member.Id))["insanitybot.miscellaneous.say.embed"])
+            if(!ctx.Member.HasPermission("insanitybot.miscellaneous.say.embed"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
