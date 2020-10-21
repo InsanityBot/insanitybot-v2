@@ -1,6 +1,7 @@
 {
   "DataVersion": "2.0.0.0",
   "Configuration": {
+    "insanitybot.modules.experience": true,
     "insanitybot.modules.logging": true,
     "insanitybot.modules.miscellaneous": true,
     "insanitybot.modules.moderation": true,
@@ -9,10 +10,7 @@
     "insanitybot.modules.tags": true,
     "insanitybot.modules.tickets": true,
     "insanitybot.modules.admin": true,
-    "insanitybot.commands.prefixes": [
-      "i.",
-      "admin."
-    ],
+    "insanitybot.modules.console": true,
     "insanitybot.commands.help.send_dms": true,
     "insanitybot.commands.moderation.allow_minor_warns": true,
     "insanitybot.commands.moderation.minor_warns_equal_full_warn": 3,
@@ -61,8 +59,14 @@
     "insanitybot.identifiers.logging.member_leave_log_channel_id": 0,
     "insanitybot.identifiers.miscellaneous.join_role_ids": [
       0
-    ]
+    ],
+    "insanitybot.identifiers.moderation.mute_role_id": 0,
+    "insanitybot.tcp_port": 0
   },
+  "Prefixes": [
+    "i.",
+    "admin."
+  ],
   "Token": " ",
   "GuildId": 0
 }
