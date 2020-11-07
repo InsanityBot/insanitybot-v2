@@ -17,7 +17,7 @@ namespace InsanityBot.Utility.Permissions.Reference
             { "insanitybot.miscellaneous.say", false },
             { "insanitybot.miscellaneous.say.embed", false },
             { "insanitybot.moderation.mute", false },
-            { "insanitybot.moderation.tempmute", true }
+            { "insanitybot.moderation.tempmute", false }
         };
 
         protected PermissionBase(UInt64 Id, Dictionary<String, Boolean> Permissions)
@@ -25,6 +25,9 @@ namespace InsanityBot.Utility.Permissions.Reference
             this.SnowflakeIdentifier = Id;
             this.Permissions = Permissions;
         }
+
+        public PermissionBase()
+        { }
 
         protected PermissionBase(UInt64 Id) : this(Id, GetDefaultPermissions()) { }
 

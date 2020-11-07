@@ -15,11 +15,14 @@ namespace InsanityBot.Utility.Permissions.Reference
         public UserPermissions(UInt64 Id) : base(Id)
         { }
 
-        public static PermissionBase Deserialize(UInt64 Identifier)
+        public UserPermissions() : base()
+        { }
+
+        public static UserPermissions Deserialize(UInt64 Identifier)
         {
             PermissionManager.GeneratePermissionFile(Identifier, PermissionFileType.User);
             StreamReader reader = new StreamReader($"./data/{Identifier}/permissions.json");
-            return JsonConvert.DeserializeObject<PermissionBase>(reader.ReadToEnd());
+            return JsonConvert.DeserializeObject<UserPermissions>(reader.ReadToEnd());
         }
 
         public static void Serialize(PermissionBase permissions)

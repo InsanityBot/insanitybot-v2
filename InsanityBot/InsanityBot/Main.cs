@@ -131,7 +131,6 @@ namespace InsanityBot
             //start offthread TCP connection
             _ = HandleTCPConnections((Int64)Config["insanitybot.tcp_port"]);
 
-#pragma warning disable CS0642
             //start offthread XP management
             if ((Boolean)Config["insanitybot.modules.experience"])
                 ; // not implemented yet

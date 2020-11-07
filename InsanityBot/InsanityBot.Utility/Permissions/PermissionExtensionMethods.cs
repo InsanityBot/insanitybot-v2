@@ -19,7 +19,7 @@ namespace InsanityBot.Utility.Permissions
 
         public static Boolean HasPermission(this DiscordMember member, String PermissionId)
         {
-            UserPermissions permissions = (UserPermissions)UserPermissions.Deserialize(member.Id);
+            UserPermissions permissions = UserPermissions.Deserialize(member.Id);
             return permissions[PermissionId];
         }
     }
