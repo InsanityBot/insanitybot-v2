@@ -22,7 +22,9 @@ namespace InsanityBot.Utility.Permissions.Reference
         {
             PermissionManager.GeneratePermissionFile(Identifier, PermissionFileType.User);
             StreamReader reader = new StreamReader($"./data/{Identifier}/permissions.json");
-            return JsonConvert.DeserializeObject<UserPermissions>(reader.ReadToEnd());
+            String text = reader.ReadToEnd();
+            reader.Close();
+            return JsonConvert.DeserializeObject<UserPermissions>(text);
         }
 
         public static void Serialize(PermissionBase permissions)
