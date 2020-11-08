@@ -54,7 +54,6 @@ namespace InsanityBot.Utility.Modlogs
 
         public static UserModlog Create(String UserName, UInt64 UserId)
         {
-#if !DEBUG
             if (!Directory.Exists($"./data/{UserId}"))
                 Directory.CreateDirectory($"./data/{UserId}");
 
@@ -68,22 +67,6 @@ namespace InsanityBot.Utility.Modlogs
                 return modlog;
             }
             return null;
-#else
-            if (!Directory.Exists($"./data/{UserId}"))
-                Directory.CreateDirectory($"./data/{UserId}");
-
-            if (!File.Exists($"./data/{UserId}/modlog.json"))
-            {
-                StreamWriter writer = new StreamWriter(File.Create($"./data/{UserId}/modlog.json"));
-                UserModlog modlog = new UserModlog(UserName);
-
-                Console.WriteLine(JsonConvert.SerializeObject(modlog, Formatting.Indented));
-                writer.Write(JsonConvert.SerializeObject(modlog, Formatting.Indented));
-                writer.Close();
-                return modlog;
-            }
-            return null;
-#endif
         }
 
         // extension methods for DiscordMember to allow easier accessibility
@@ -107,7 +90,6 @@ namespace InsanityBot.Utility.Modlogs
         /// <param name="reason">Reason for the infraction</param>
         public static void AddModlogEntry(this DiscordMember member, ModlogEntryType type, String reason)
         {
-#if DEBUG
             try
             {
                 UserModlog user = Deserialize(member.Username, member.Id);
@@ -127,17 +109,6 @@ namespace InsanityBot.Utility.Modlogs
                 Console.WriteLine($"{e}: {e.Message}\n\n{e.StackTrace}");
             }
         }
-#else
-        UserModlog user = Deserialize(member.Username, member.Id);
-        user.Modlog.Add(new ModlogEntry
-        {
-            Type = type,
-            Time = DateTime.UtcNow,
-            Reason = reason
-        });
-        user.ModlogEntryCount++;
-        Serialize(user, member.Id);
-#endif
 
         /// <summary>
         /// Adds a new verbal log entry to the file
