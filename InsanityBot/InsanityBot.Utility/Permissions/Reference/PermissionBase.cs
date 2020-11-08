@@ -10,6 +10,7 @@ namespace InsanityBot.Utility.Permissions.Reference
     {
         public UInt64 SnowflakeIdentifier { get; set; }
         public Dictionary<String, Boolean> Permissions { get; set; }
+        public Boolean IsAdministrator { get; set; }
 
         [JsonIgnore]
         public static Dictionary<String, Boolean> DefaultPermissions = new Dictionary<String, Boolean>
