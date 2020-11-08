@@ -116,14 +116,20 @@ namespace InsanityBot
 
             LanguageManager.AddConfigEntry("insanitybot.error.lacking_permission",
                 "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.")
-                .AddConfigEntry("insanitybot.error.generic",
-                "The command failed to execute. Please retry or contact your administrators.")
-                .AddConfigEntry("insanitybot.moderation.success",
-                "{MENTION} was {OPERATION} successfully.")
-                .AddConfigEntry("insanitybot.moderation.failure",
-                "{MENTION} could not be {OPERATION}.")
-                .AddConfigEntry("insanitybot.moderation.no_reason_given",
-                "No reason given.")
+                .AddConfigEntry("insanitybot.error.generic", "The command failed to execute. Please retry or contact your administrators.")
+
+                .AddConfigEntry("insanitybot.moderation.warn.success", "{MENTION} was warned successfully.")
+                .AddConfigEntry("insanitybot.moderation.mute.success", "{MENTION} was muted successfully.")
+                .AddConfigEntry("insanitybot.moderation.blacklist.success", "{MENTION} was blacklisted successfully.")
+                .AddConfigEntry("insanitybot.moderation.kick.success", "{MENTION} was kicked successfully.")
+                .AddConfigEntry("insanitybot.moderation.ban.success", "{MENTION} was banned successfully.")
+                .AddConfigEntry("insanitybot.moderation.warn.failure", "{MENTION} could not be warned.")
+                .AddConfigEntry("insanitybot.moderation.mute.failure", "{MENTION} could not be muted.")
+                .AddConfigEntry("insanitybot.moderation.blacklist.failure", "{MENTION} could not be blacklisted.")
+                .AddConfigEntry("insanitybot.moderation.kick.failure", "{MENTION} could not be kicked.")
+                .AddConfigEntry("insanitybot.moderation.ban.failure", "{MENTION} could not be banned.")
+
+                .AddConfigEntry("insanitybot.moderation.no_reason_given", "No reason given.")
 
                 .Serialize(LanguageManager.Config, "./config/lang.json");
         }

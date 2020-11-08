@@ -26,22 +26,5 @@ namespace InsanityBot.Commands
                 .Replace("{CHANNEL}", context.Channel.Mention)
                 .Replace("{CHANNELNAME}", context.Channel.Name);
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static String GetFormattedString(String value, CommandContext context, DiscordMember commandTarget, 
-            ModlogEntryType entryType)
-        {
-            return value.Replace("{MENTION}", commandTarget.Mention)
-                .Replace("{USERNAME}", commandTarget.Username)
-                .Replace("{NICKNAME}", commandTarget.Nickname)
-                .Replace("{ID}", commandTarget.Id.ToString())
-                .Replace("{MODMENTION}", context.Member.Mention)
-                .Replace("{MODUSERNAME}", context.Member.Username)
-                .Replace("{MODNICKNAME}", context.Member.Nickname)
-                .Replace("{MODID}", context.Member.Id.ToString())
-                .Replace("{CHANNEL}", context.Channel.Mention)
-                .Replace("{CHANNELNAME}", context.Channel.Name)
-                .Replace("{OPERATION}", entryType.ToString());
-        }
     }
 }

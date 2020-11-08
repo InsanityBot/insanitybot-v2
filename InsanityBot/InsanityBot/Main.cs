@@ -102,6 +102,9 @@ namespace InsanityBot
             //load perms :b
             Client.InitializePermissionFramework();
 
+            //create home guild so commands can use it
+            HomeGuild = await Client.GetGuildAsync(Convert.ToUInt64(Config.GuildId));
+
             //load command configuration
             CommandConfiguration = new CommandsNextConfiguration
             {
