@@ -12,6 +12,9 @@ using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 
+using Microsoft.Extensions.Logging;
+
+using static System.Convert;
 using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
@@ -64,7 +67,8 @@ namespace InsanityBot.Commands.Moderation
                 member.AddModlogEntry(ModlogEntryType.mute, Reason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = InsanityBot.LanguageConfig["insanitybot.moderation.success"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.success"],
+                        ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
@@ -72,22 +76,24 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
                 _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
-                    (UInt64)InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"]),
+                    ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"])),
                     MuteReason);
-                _ = InsanityBot.HomeGuild.GetChannel((UInt64)InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"])
+                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());
             }
-            catch
+            catch(Exception e)
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = InsanityBot.LanguageConfig["insanitybot.moderation.failure"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.failure"],
+                        ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         Text = "InsanityBot - ExaInsanity 2020"
                     }
                 };
+                InsanityBot.Client.Logger.LogError($"{e}: {e.Message}\n\n{e.StackTrace}");
             }
             finally
             {

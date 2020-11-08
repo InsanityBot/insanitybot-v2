@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Permissions;
 
@@ -37,6 +38,18 @@ namespace InsanityBot.Commands.Miscellaneous
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
+
+            _ = ctx.Message.DeleteAsync();
+            DiscordEmbedBuilder embedBuilder = new DiscordEmbedBuilder
+            {
+                Description = text,
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    Text = "https://github.com/InsanityNetwork/InsanityBot"
+                },
+                Color = DiscordColor.Blurple
+            };
+            _ = ctx.RespondAsync(embed: embedBuilder.Build());
         }
     }
 }

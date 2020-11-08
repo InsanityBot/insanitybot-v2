@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -18,8 +17,6 @@ using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
-
-using Newtonsoft.Json.Linq;
 
 namespace InsanityBot
 {
@@ -104,6 +101,9 @@ namespace InsanityBot
 
             //load perms :b
             Client.InitializePermissionFramework();
+
+            //create home guild so commands can use it
+            HomeGuild = await Client.GetGuildAsync(Convert.ToUInt64(Config.GuildId));
 
             //load command configuration
             CommandConfiguration = new CommandsNextConfiguration
