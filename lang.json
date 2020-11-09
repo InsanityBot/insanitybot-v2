@@ -1,10 +1,18 @@
 {
-  "DataVersion": "2.0.0.0-dev.00001",
+  "DataVersion": "2.0.0.0-dev.00006",
   "Configuration": {
     "insanitybot.error.lacking_permission": "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.",
     "insanitybot.error.generic": "The command failed to execute. Please retry or contact your administrators.",
-    "insanitybot.moderation.success": "{MENTION} was {OPERATION} successfully.",
-    "insanitybot.moderation.failure": "{MENTION} could not be {OPERATION}.",
+    "insanitybot.moderation.warn.success": "{MENTION} was warned successfully.",
+    "insanitybot.moderation.mute.success": "{MENTION} was muted successfully.",
+    "insanitybot.moderation.blacklist.success": "{MENTION} was blacklisted successfully.",
+    "insanitybot.moderation.kick.success": "{MENTION} was kicked successfully.",
+    "insanitybot.moderation.ban.success": "{MENTION} was banned successfully.",
+    "insanitybot.moderation.warn.failure": "{MENTION} could not be warned.",
+    "insanitybot.moderation.mute.failure": "{MENTION} could not be muted.",
+    "insanitybot.moderation.blacklist.failure": "{MENTION} could not be blacklisted.",
+    "insanitybot.moderation.kick.failure": "{MENTION} could not be kicked.",
+    "insanitybot.moderation.ban.failure": "{MENTION} could not be banned.",
     "insanitybot.moderation.no_reason_given": "No reason given."
   }
 }
