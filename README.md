@@ -18,7 +18,7 @@
     <img alt="GitHub latest release" src="https://img.shields.io/github/v/release/InsanityNetwork/InsanityBot?include_prereleases">
   </a>
   <a href="https://github.com/InsanityNetwork/InsanityBot/commits/master">
-     <img alt="GitHub commits since latest release" src="https://img.shields.io/github/commits-since/InsanityNetwork/InsanityBot/latest?include_prereleases"> 
+     <img alt="GitHub commits since latest release" src="https://img.shields.io/github/commits-since/InsanityNetwork/InsanityBot/latest/2.0.0-dev?include_prereleases"> 
   </a>
   <a href="https://github.com/InsanityNetwork/InsanityBot/graphs/contributors">
    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/InsanityNetwork/InsanityBot"> 
