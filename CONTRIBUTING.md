@@ -26,7 +26,7 @@ It's awesome to know you wish to contribute to the InsanityBot project! Before y
 
 By submitting changes to this repository, you are hereby agreeing that:
 
-- Your contributions will be licensed irrecoverably under the [MIT](https://opensource.org/licenses/MIT).
+- Your contributions will be licensed irrecoverably under the [MIT license](https://opensource.org/licenses/MIT).
 - Your contributions are of your own work and free of legal restrictions (such as patents and copyrights) or other
 issues which would pose issues for inclusion or distribution under the above license.
 
