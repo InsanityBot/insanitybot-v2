@@ -151,6 +151,7 @@ namespace InsanityBot
             }
             if((Boolean)Config["insanitybot.modules.moderation"])
             {
+                CommandsExtension.RegisterCommands<Warn>();
                 CommandsExtension.RegisterCommands<Mute>();
                 CommandsExtension.RegisterCommands<Tempmute>();
             }
