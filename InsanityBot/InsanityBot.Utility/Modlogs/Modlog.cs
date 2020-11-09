@@ -43,8 +43,6 @@ namespace InsanityBot.Utility.Modlogs
             String text = reader.ReadToEnd();
             reader.Close();
 
-            Console.WriteLine(text);
-
             return JsonConvert.DeserializeObject<UserModlog>(text);
         }
 
