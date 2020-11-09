@@ -64,7 +64,7 @@ namespace InsanityBot.Commands.Moderation
 
             try
             {
-                member.AddModlogEntry(ModlogEntryType.mute, Reason);
+                member.AddModlogEntry(ModlogEntryType.mute, MuteReason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.success"],
@@ -93,7 +93,7 @@ namespace InsanityBot.Commands.Moderation
                         Text = "InsanityBot - ExaInsanity 2020"
                     }
                 };
-                InsanityBot.Client.Logger.LogError($"{e}: {e.Message}\n\n{e.StackTrace}");
+                InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally
             {
