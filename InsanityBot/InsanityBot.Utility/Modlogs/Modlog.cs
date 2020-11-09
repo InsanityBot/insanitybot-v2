@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Modlogs.Reference;
 
 using Newtonsoft.Json;
