@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Modlogs.Reference;
 
 using Newtonsoft.Json;
@@ -46,8 +42,6 @@ namespace InsanityBot.Utility.Modlogs
             StreamReader reader = new StreamReader($"./data/{UserId}/modlog.json");
             String text = reader.ReadToEnd();
             reader.Close();
-
-            Console.WriteLine(text);
 
             return JsonConvert.DeserializeObject<UserModlog>(text);
         }

@@ -26,5 +26,11 @@ namespace InsanityBot.Commands
                 .Replace("{CHANNEL}", context.Channel.Mention)
                 .Replace("{CHANNELNAME}", context.Channel.Name);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static String GetReason(String value, String reason)
+        {
+            return value.Replace("{REASON}", reason);
+        }
     }
 }

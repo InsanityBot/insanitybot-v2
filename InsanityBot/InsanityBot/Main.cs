@@ -29,11 +29,11 @@ namespace InsanityBot
             CommandLine.InsanityBotApplication.Execute(args);
 
             //reset if reset flag is set
-            if (CommandLine.HardResetOnStartup.HasValue())
+            if (CommandLine.HardResetOnStartup.Value() == "on")
                 await HardReset();
 
             //initialize if init flag is set
-            if (CommandLine.InitializeOnStartup.HasValue())
+            if (CommandLine.InitializeOnStartup.Value() == "on")
                 await Initialize();
 
             //load main config
@@ -151,6 +151,7 @@ namespace InsanityBot
             }
             if((Boolean)Config["insanitybot.modules.moderation"])
             {
+                CommandsExtension.RegisterCommands<Warn>();
                 CommandsExtension.RegisterCommands<Mute>();
                 CommandsExtension.RegisterCommands<Tempmute>();
             }
