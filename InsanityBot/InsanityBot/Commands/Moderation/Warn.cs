@@ -42,15 +42,15 @@ namespace InsanityBot.Commands.Moderation
             //create the command parser
             CommandLineApplication WarnSyntaxParser = new CommandLineApplication(false);
 
-            CommandOption ReasonOption = WarnSyntaxParser.Option("--reason|-r", "nothing since this isnt visible anyways", CommandOptionType.MultipleValue);
+            CommandOption ReasonOption = WarnSyntaxParser.Option("--reason|-r", "nothing since this isnt visible anyways", CommandOptionType.SingleValue);
             CommandOption SilentOption = WarnSyntaxParser.Option("--silent|-s", "nothing since this isnt visible either", CommandOptionType.NoValue);
             CommandOption DmMemberOption = WarnSyntaxParser.Option("--dmmember|-dm", "nothing, why would there", CommandOptionType.NoValue);
 
             WarnSyntaxParser.Execute(arguments);
 
-            Boolean Silent = SilentOption.HasValue();
-            Boolean DmMember = DmMemberOption.HasValue();
-            String Reason = String.Join(' ', ReasonOption.Values);
+            Boolean Silent = SilentOption.Value() == "on";
+            Boolean DmMember = DmMemberOption.Value() == "on";
+            String Reason = ReasonOption.Value() ?? InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"];
 
             await ExecuteWarn(ctx, target, Reason, Silent, DmMember);
         }
