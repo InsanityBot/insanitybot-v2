@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
@@ -9,57 +12,42 @@ using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 
-using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 
-using static System.Convert;
 using static InsanityBot.Commands.StringUtilities;
+using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
-    // supports command line argument syntax :blobaww:
-    public class Warn : BaseCommandModule
+    public class Blacklist
     {
-        [Command("warn")]
-        public async Task WarnCommand(CommandContext ctx,
-            DiscordMember target,
+        [Command("blacklist")]
+        public async Task BlacklistCommand(CommandContext ctx,
+            DiscordMember member,
 
             [RemainingText]
-            String arguments = "usedefault")
+            String Reason = "usedefault")
         {
-            await ExecuteWarn(ctx, target, arguments, false, false);
-        }
-
-        private async Task ExecuteWarn(CommandContext ctx,
-            DiscordMember target,
-            String reason,
-            Boolean silent, 
-            Boolean dmMember)
-        {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.warn"))
+            if (!ctx.Member.HasPermission("insanitybot.moderation.blacklist"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
-            //if silent - delete the warn command
-            if (silent)
-                await ctx.Message.DeleteAsync();
-
             //actually do something with the usedefault value
-            String WarnReason = reason switch
+            String BlacklistReason = Reason switch
             {
                 "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"],
-                                ctx, target),
-                _ => GetFormattedString(reason, ctx, target)
+                                ctx, member),
+                _ => GetFormattedString(Reason, ctx, member)
             };
 
             DiscordEmbedBuilder embedBuilder = null;
 
             DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
             {
-                Title = "Warn",
-                Color = DiscordColor.Yellow,
+                Title = "BLACKLIST",
+                Color = DiscordColor.Black,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     Text = "InsanityBot - ExaInsanity 2020"
@@ -67,22 +55,25 @@ namespace InsanityBot.Commands.Moderation
             };
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
-                .AddField("Member", target.Mention, true)
-                .AddField("Reason", WarnReason, true);
+                .AddField("Member", member.Mention, true)
+                .AddField("Reason", BlacklistReason, true);
 
             try
             {
-                target.AddModlogEntry(ModlogEntryType.warn, WarnReason);
+                member.AddModlogEntry(ModlogEntryType.mute, BlacklistReason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.warn.success"],
-                        ctx, target),
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.blacklist.success"],
+                        ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         Text = "InsanityBot - ExaInsanity 2020"
                     }
                 };
+                _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
+                    ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.blacklist_role_id"])),
+                    BlacklistReason);
                 _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());
             }
@@ -90,8 +81,8 @@ namespace InsanityBot.Commands.Moderation
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.warn.failure"],
-                        ctx, target),
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.blacklist.failure"],
+                        ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
@@ -102,13 +93,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if(!silent)
-                    await ctx.RespondAsync(embed: embedBuilder.Build());
-                if(dmMember)
-                {
-                    embedBuilder.Description = GetReason(InsanityBot.LanguageConfig["insanitybot.moderation.warn.reason"], WarnReason);
-                    await (await target.CreateDmChannelAsync()).SendMessageAsync(embed: embedBuilder.Build());
-                }
+                await ctx.RespondAsync(embed: embedBuilder.Build());
             }
         }
     }
