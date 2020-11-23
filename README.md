@@ -49,8 +49,6 @@
   •
   <a href="#--scroll-licence-copyright--tos-scroll">Licence & Copyright</a>
 </p>
-<h3 align="center">
-  :construction: THIS REPO IS INCOMPLETE AND IN IT'S CURRENT STATE <em>WILL NOT RUN</em>. THE BOT IS ALSO STILL IN DEVELOPMENT SO ISN'T RECCOMMENDED FOR USE IN A COMMERCIAL ENVIRONMENT :construction: 
 <br>
 </h3>
 <h2>
@@ -109,14 +107,17 @@
   :computer: Commands :computer:
 </h2>
 <p>
-:construction: Coming Soon :construction:
+View the InsanityBot commands <a href="https://docs.insanity.network/en/InsanityBot/Commands">here</a>.
 </p>
 <br>
 <h2>
   :electric_plug: Installation :electric_plug:
 </h2>
 <p>
-:construction: Coming Soon :construction:
+<a href="https://docs.insanity.network/en/InsanityBot/Linux-Installation">Linux</a> | 
+<a href="https://docs.insanity.network/en/InsanityBot/Windows-Installation">Windows</a> | 
+<a href="https://docs.insanity.network/en/InsanityBot/MacOS-Installation">MacOS</a> | 
+<a href="https://docs.insanity.network/en/InsanityBot/Pterodactyl">Pterodactyl</a>
 </p>
 <br>
 <h2>
@@ -138,7 +139,3 @@
   <br><br>
   Copyright &copy; 2020 ExaInsanity
 </p>
-<br>
-<h2 align="center">
-  :construction: THIS README IS STILL A WORK IN PROGRESS :construction:
-</h2>
