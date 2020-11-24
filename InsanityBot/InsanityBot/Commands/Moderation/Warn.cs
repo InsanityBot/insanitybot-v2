@@ -17,7 +17,6 @@ using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
-    // supports command line argument syntax :blobaww:
     public class Warn : BaseCommandModule
     {
         [Command("warn")]
@@ -27,32 +26,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String arguments = "usedefault")
         {
-            if (arguments.StartsWith('-'))
-            {
-                await ParseWarnSyntax(ctx, target, arguments);
-                return;
-            }
             await ExecuteWarn(ctx, target, arguments, false, false);
-        }
-
-        private async Task ParseWarnSyntax(CommandContext ctx,
-            DiscordMember target,
-            String arguments)
-        {
-            //create the command parser
-            CommandLineApplication WarnSyntaxParser = new CommandLineApplication(false);
-
-            CommandOption ReasonOption = WarnSyntaxParser.Option("--reason|-r", "nothing since this isnt visible anyways", CommandOptionType.SingleValue);
-            CommandOption SilentOption = WarnSyntaxParser.Option("--silent|-s", "nothing since this isnt visible either", CommandOptionType.NoValue);
-            CommandOption DmMemberOption = WarnSyntaxParser.Option("--dmmember|-dm", "nothing, why would there", CommandOptionType.NoValue);
-
-            WarnSyntaxParser.Execute(arguments);
-
-            Boolean Silent = SilentOption.Value() == "on";
-            Boolean DmMember = DmMemberOption.Value() == "on";
-            String Reason = ReasonOption.Value() ?? InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"];
-
-            await ExecuteWarn(ctx, target, Reason, Silent, DmMember);
         }
 
         private async Task ExecuteWarn(CommandContext ctx,

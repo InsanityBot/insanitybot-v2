@@ -17,8 +17,11 @@ namespace InsanityBot.Utility.Permissions.Reference
         {
             { "insanitybot.miscellaneous.say", false },
             { "insanitybot.miscellaneous.say.embed", false },
+            { "insanitybot.moderation.warn", false },
             { "insanitybot.moderation.mute", false },
-            { "insanitybot.moderation.tempmute", false }
+            { "insanitybot.moderation.tempmute", false },
+            { "insanitybot.moderation.blacklist", false },
+            { "insanitybot.moderation.whitelist", false }
         };
 
         protected PermissionBase(UInt64 Id, Dictionary<String, Boolean> Permissions)

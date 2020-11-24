@@ -154,6 +154,7 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<Warn>();
                 CommandsExtension.RegisterCommands<Mute>();
                 CommandsExtension.RegisterCommands<Tempmute>();
+                CommandsExtension.RegisterCommands<Blacklist>();
             }
         }
 
