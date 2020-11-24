@@ -17,7 +17,6 @@ using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
-    // supports command line argument syntax :blobaww:
     public class Warn : BaseCommandModule
     {
         [Command("warn")]

@@ -19,7 +19,7 @@ using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
-    public class Blacklist
+    public class Blacklist : BaseCommandModule
     {
         [Command("blacklist")]
         public async Task BlacklistCommand(CommandContext ctx,
