@@ -97,6 +97,7 @@ namespace InsanityBot.Commands.Moderation
             }
         }
 
+        [Command("whitelist")]
         public async Task WhitelistCommand(CommandContext ctx,
             DiscordMember member,
 
@@ -104,7 +105,7 @@ namespace InsanityBot.Commands.Moderation
             String Reason = "usedefault")
         {
 
-            if (!member.HasPermission("insanitybot.moderation.whitelist"))
+            if (!ctx.Member.HasPermission("insanitybot.moderation.whitelist"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
