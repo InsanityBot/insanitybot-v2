@@ -33,6 +33,12 @@ namespace InsanityBot
                     CommandLineOptions = o;
                 });
 
+            if (CommandLineOptions.Initialize)
+                await Initialize();
+
+            if (CommandLineOptions.HardReset)
+                await HardReset();
+
             //load main config
             ConfigManager = new MainConfigurationManager();
             LanguageManager = new LanguageConfigurationManager();
