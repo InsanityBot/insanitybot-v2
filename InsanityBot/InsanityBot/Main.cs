@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using CommandLine;
+
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 
@@ -24,17 +26,12 @@ namespace InsanityBot
     {
         public static async Task Main(String[] args)
         {
-            //load command line arguments
-            CommandLine.InitializeCommandLine();
-            CommandLine.InsanityBotApplication.Execute(args);
-
-            //reset if reset flag is set
-            if (CommandLine.HardResetOnStartup.Value() == "on")
-                await HardReset();
-
-            //initialize if init flag is set
-            if (CommandLine.InitializeOnStartup.Value() == "on")
-                await Initialize();
+            //run command line parser
+            Parser.Default.ParseArguments<CommandLineOptions>(args)
+                .WithParsed<CommandLineOptions>(o =>
+                {
+                    CommandLineOptions = o;
+                });
 
             //load main config
             ConfigManager = new MainConfigurationManager();

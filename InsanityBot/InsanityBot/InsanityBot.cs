@@ -13,10 +13,13 @@ using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
+#pragma warning disable CA2211
 namespace InsanityBot
 {
     public partial class InsanityBot
     {
+        public static CommandLineOptions CommandLineOptions;
+
         public static MainConfigurationManager ConfigManager;
         public static MainConfiguration Config;
 
@@ -32,3 +35,4 @@ namespace InsanityBot
         public static LanguageConfiguration LanguageConfig;
     }
 }
+#pragma warning restore CA2211

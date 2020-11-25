@@ -9,7 +9,6 @@ using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 
-using Microsoft.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 
 using static System.Convert;
