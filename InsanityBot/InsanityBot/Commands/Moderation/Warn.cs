@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -25,7 +28,44 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String arguments = "usedefault")
         {
+            if (arguments.StartsWith('-'))
+            {
+                await ParseWarnCommand(ctx, target, arguments);
+                return;
+            }
             await ExecuteWarn(ctx, target, arguments, false, false);
+        }
+
+        private async Task ParseWarnCommand(CommandContext ctx, DiscordMember target, String arguments)
+        {
+            String cmdArguments = arguments;
+            try
+            {
+                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                    cmdArguments += " --reason usedefault";
+
+                await Parser.Default.ParseArguments<WarnOptions>(cmdArguments.Split(' '))
+                    .WithParsedAsync(async o =>
+                    {
+                        await ExecuteWarn(ctx, target, String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                    });
+            }
+            catch(Exception e)
+            {
+                DiscordEmbedBuilder failed = new DiscordEmbedBuilder
+                {
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.warn.failure"],
+                        ctx, target),
+                    Color = DiscordColor.Red,
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        Text = "InsanityBot - ExaInsanity 2020"
+                    }
+                };
+                InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
+
+                await ctx.RespondAsync(embed: failed.Build());
+            }
         }
 
         private async Task ExecuteWarn(CommandContext ctx,
@@ -109,5 +149,11 @@ namespace InsanityBot.Commands.Moderation
                 }
             }
         }
+    }
+
+
+    public class WarnOptions : ModerationOptionBase
+    {
+        
     }
 }
