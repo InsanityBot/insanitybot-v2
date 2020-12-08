@@ -173,4 +173,9 @@ namespace InsanityBot.Commands.Moderation
             }
         }
     }
+
+    public class BlacklistOptions : ModerationOptionBase
+    {
+
+    }
 }
