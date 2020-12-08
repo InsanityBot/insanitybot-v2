@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InsanityBot.Utility\InsanityBot.Utility.csproj" />
+    <ProjectReference Include="..\InsanityBot\InsanityBot.csproj" />
+  </ItemGroup>
+
+</Project>
