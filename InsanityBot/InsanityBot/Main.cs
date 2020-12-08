@@ -10,6 +10,7 @@ using CommandLine;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Exceptions;
 
 using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Commands.Moderation;
@@ -105,8 +106,19 @@ namespace InsanityBot
             //load perms :b
             Client.InitializePermissionFramework();
 
-            //create home guild so commands can use it
-            HomeGuild = await Client.GetGuildAsync(Convert.ToUInt64(Config.GuildId));
+            try
+            {
+                //create home guild so commands can use it
+                HomeGuild = await Client.GetGuildAsync(Convert.ToUInt64(Config.GuildId));
+            }
+            catch (UnauthorizedException e)
+            {
+                Client.Logger.LogCritical("Your GuildId is either invalid or InsanityBot has not been invited to the server yet.");
+            }
+            catch
+            {
+                throw;
+            }
 
             //load command configuration
             CommandConfiguration = new CommandsNextConfiguration
@@ -156,7 +168,6 @@ namespace InsanityBot
             {
                 CommandsExtension.RegisterCommands<Warn>();
                 CommandsExtension.RegisterCommands<Mute>();
-                CommandsExtension.RegisterCommands<Tempmute>();
                 CommandsExtension.RegisterCommands<Blacklist>();
             }
         }
