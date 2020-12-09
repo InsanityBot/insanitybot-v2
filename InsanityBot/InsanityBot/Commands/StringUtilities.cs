@@ -32,5 +32,10 @@ namespace InsanityBot.Commands
         {
             return value.Replace("{REASON}", reason);
         }
+
+        public static TimeSpan ParseTimeSpan(this String value)
+        {
+            return new TimeSpan();
+        }
     }
 }

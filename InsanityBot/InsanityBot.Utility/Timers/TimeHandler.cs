@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 using Newtonsoft.Json;
@@ -12,6 +13,8 @@ namespace InsanityBot.Utility.Timers
     {
         public static void Start()
         {
+            ActiveTimers = new List<Timer>();
+
             if (!Directory.Exists("./data/timers"))
             {
                 Directory.CreateDirectory("./data/timers");

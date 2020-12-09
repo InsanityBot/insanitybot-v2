@@ -8,7 +8,8 @@ namespace InsanityBot.Utility.Timers
     public class Timer
     {
         public DateTime Expiry { get; set; }
-        public String Identifier { get; internal set; }
+        public String Identifier { get; set; }
+        public Guid Guid { get; set; }
 
         public static event TimerExpiredDelegate TimerExpiredEvent;
 
@@ -22,6 +23,7 @@ namespace InsanityBot.Utility.Timers
         {
             this.Expiry = Expiry;
             this.Identifier = Identifier;
+            this.Guid = Guid.NewGuid();
         }
     }
 }

@@ -138,7 +138,10 @@ namespace InsanityBot
 
             //register commands and events
             RegisterAllCommands();
-            // RegisterAllEvents();
+            RegisterAllEvents();
+
+            //initialize various parts of InsanityBots framework
+            InitializeAll();
 
             //register default help format
             // FormatHelpCommand();
@@ -174,7 +177,12 @@ namespace InsanityBot
 
         private static void RegisterAllEvents()
         {
-            throw new NotImplementedException();
+            Utility.Timers.Timer.TimerExpiredEvent += Mute.InitializeUnmute;
+        }
+
+        private static void InitializeAll()
+        {
+            TimeHandler.Start();
         }
 
         private static void FormatHelpCommand()
