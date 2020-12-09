@@ -77,7 +77,7 @@ namespace InsanityBot.Utility.Timers
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
-        public static List<Timer> ActiveTimers { get; set; }
+        public static List<Timer> ActiveTimers{ get; set; }
         private static System.Timers.Timer Countdown { get; set; }
     }
 }

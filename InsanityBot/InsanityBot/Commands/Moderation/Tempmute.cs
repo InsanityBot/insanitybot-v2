@@ -126,7 +126,7 @@ namespace InsanityBot.Commands.Moderation
                 member.AddModlogEntry(ModlogEntryType.mute, MuteReason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.tempmute.success"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.success"],
                         ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -145,7 +145,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = InsanityBot.LanguageConfig["insanitybot.moderation.tempmute.failure"],
+                    Description = InsanityBot.LanguageConfig["insanitybot.moderation.mute.failure"],
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
@@ -155,6 +155,10 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
+                if(embedBuilder == null)
+                {
+                    InsanityBot.Client.Logger.LogError("Could not execute tempmute command, an unknown exception occured.");
+                }
                 await ctx.RespondAsync(embed: embedBuilder.Build());
             }
         }
