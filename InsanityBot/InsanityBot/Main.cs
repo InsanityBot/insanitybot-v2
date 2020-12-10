@@ -111,7 +111,9 @@ namespace InsanityBot
                 //create home guild so commands can use it
                 HomeGuild = await Client.GetGuildAsync(Convert.ToUInt64(Config.GuildId));
             }
+#pragma warning disable CS0168
             catch (UnauthorizedException e)
+#pragma warning restore CS0168
             {
                 Client.Logger.LogCritical("Your GuildId is either invalid or InsanityBot has not been invited to the server yet.");
             }

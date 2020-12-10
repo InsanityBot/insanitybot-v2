@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Exceptions;
 
 namespace InsanityBot.Commands
 {
@@ -33,9 +35,16 @@ namespace InsanityBot.Commands
             return value.Replace("{REASON}", reason);
         }
 
-        public static TimeSpan ParseTimeSpan(this String value)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Nullable<TimeSpan> ParseTimeSpan(this String value)
         {
-            return new TimeSpan();
+            if (TimeSpan.TryParse(value, out var result))
+                if(result.TotalDays <= 7)
+                    return result;
+                else
+                    throw new DurationTooLongException("Temp-Mutes and Temp-Bans cannot exceed seven days");
+
+            return null;
         }
     }
 }

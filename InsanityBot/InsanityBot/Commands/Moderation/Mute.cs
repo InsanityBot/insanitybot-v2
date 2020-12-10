@@ -58,7 +58,9 @@ namespace InsanityBot.Commands.Moderation
                         if (o.Time == "default")
                             await ExecuteMuteCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                         else
-                            await ExecuteTempmuteCommand(ctx, member, o.Time.ParseTimeSpan(), String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                            await ExecuteTempmuteCommand(ctx, member, 
+                                (o.Time.ParseTimeSpan() ?? (TimeSpan)InsanityBot.Config["insanitybot.commands.moderation.default_mute_time"]),
+                                String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
             catch (Exception e)
