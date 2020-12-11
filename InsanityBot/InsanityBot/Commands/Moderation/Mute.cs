@@ -59,7 +59,7 @@ namespace InsanityBot.Commands.Moderation
                             await ExecuteMuteCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                         else
                             await ExecuteTempmuteCommand(ctx, member, 
-                                (o.Time.ParseTimeSpan() ?? (TimeSpan)InsanityBot.Config["insanitybot.commands.moderation.default_mute_time"]),
+                                o.Time.ParseTimeSpan(),
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }

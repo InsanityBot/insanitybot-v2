@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -36,7 +37,7 @@ namespace InsanityBot.Commands
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Nullable<TimeSpan> ParseTimeSpan(this String value)
+        public static TimeSpan ParseTimeSpan(this String value)
         {
             if (TimeSpan.TryParse(value, out var result))
                 if(result.TotalDays <= 7)
@@ -44,7 +45,9 @@ namespace InsanityBot.Commands
                 else
                     throw new DurationTooLongException("Temp-Mutes and Temp-Bans cannot exceed seven days");
 
-            return null;
+            //this will return the default of 00:00:00 if the conversion fails
+            TimeSpan.TryParse((String)InsanityBot.Config["insanitybot.commands.default_mute_time"], out TimeSpan defaultValue);
+            return defaultValue;
         }
     }
 }

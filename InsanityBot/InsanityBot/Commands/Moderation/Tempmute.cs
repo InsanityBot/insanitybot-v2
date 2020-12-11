@@ -40,12 +40,12 @@ namespace InsanityBot.Commands.Moderation
         {
             if(time.StartsWith('-'))
             {
-                await ParseTempmuteCommand(ctx, member, String.Join(' ', Reason, time));
+                await ParseTempmuteCommand(ctx, member, String.Join(' ', time, Reason));
                 return;
             }
             await ExecuteTempmuteCommand(ctx, member,
-                                (time.ParseTimeSpan() ?? (TimeSpan)InsanityBot.Config["insanitybot.commands.moderation.default_mute_time"]),
-                                String.Join(' ', Reason), false, false);
+                                time.ParseTimeSpan(),
+                                Reason, false, false);
         }
 
         private async Task ParseTempmuteCommand(CommandContext ctx,
@@ -62,7 +62,7 @@ namespace InsanityBot.Commands.Moderation
                     .WithParsedAsync(async o =>
                     {
                         await ExecuteTempmuteCommand(ctx, member,
-                                (o.Time.ParseTimeSpan() ?? (TimeSpan)InsanityBot.Config["insanitybot.commands.moderation.default_mute_time"]),
+                                o.Time.ParseTimeSpan(),
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
