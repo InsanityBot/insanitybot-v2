@@ -37,17 +37,29 @@ namespace InsanityBot.Commands
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TimeSpan ParseTimeSpan(this String value)
+        public static TimeSpan ParseTimeSpan(this String value, Nullable<TemporaryPunishmentType> Type = null)
         {
-            if (TimeSpan.TryParse(value, out var result))
-                if(result.TotalDays <= 7)
-                    return result;
-                else
-                    throw new DurationTooLongException("Temp-Mutes and Temp-Bans cannot exceed seven days");
+            if (TimeSpan.TryParse(value, out var time))
+                return time;
+            switch (Type)
+            {
+                case TemporaryPunishmentType.Mute:
+                    if (TimeSpan.TryParse((String)InsanityBot.Config["insanitybot.commands.default_mute_time"], out var muteDefault))
+                        return muteDefault;
+                    else
+                        break;
+                case TemporaryPunishmentType.Ban:
+                    if (TimeSpan.TryParse((String)InsanityBot.Config["insanitybot.commands.default_ban_time"], out var banDefault))
+                        return banDefault;
+                    else
+                        break;
+                default:
+                    //hardcoded fallback default in case the config fails
+                    return new TimeSpan(00, 30, 00);
+            }
 
-            //this will return the default of 00:00:00 if the conversion fails
-            TimeSpan.TryParse((String)InsanityBot.Config["insanitybot.commands.default_mute_time"], out TimeSpan defaultValue);
-            return defaultValue;
+            //even more hardcoded fallback of a fallback, this method should just never fail
+            return new TimeSpan(00, 30, 00);
         }
     }
 }
