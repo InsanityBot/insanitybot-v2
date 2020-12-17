@@ -145,9 +145,6 @@ namespace InsanityBot
             //initialize various parts of InsanityBots framework
             InitializeAll();
 
-            //register default help format
-            // FormatHelpCommand();
-
             //start offthread TCP connection
             _ = HandleTCPConnections((Int64)Config["insanitybot.tcp_port"]);
 
@@ -185,11 +182,6 @@ namespace InsanityBot
         private static void InitializeAll()
         {
             TimeHandler.Start();
-        }
-
-        private static void FormatHelpCommand()
-        {
-            throw new NotImplementedException();
         }
 
         private static async Task HandleTCPConnections(Int64 Port)
