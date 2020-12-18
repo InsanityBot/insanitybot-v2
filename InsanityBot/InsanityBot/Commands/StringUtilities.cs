@@ -9,7 +9,10 @@ using System.Text;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
+using InsanityBot.Commands.Services.Converters.Time;
 using InsanityBot.Utility.Exceptions;
+
+using Microsoft.Extensions.Logging;
 
 namespace InsanityBot.Commands
 {
@@ -37,29 +40,23 @@ namespace InsanityBot.Commands
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TimeSpan ParseTimeSpan(this String value, Nullable<TemporaryPunishmentType> Type = null)
+        public static TimeSpan ParseTimeSpan(this String value, Nullable<TemporaryPunishmentType> type = null)
         {
-            if (TimeSpan.TryParse(value, out var time))
-                return time;
-            switch (Type)
+            try
             {
-                case TemporaryPunishmentType.Mute:
-                    if (TimeSpan.TryParse((String)InsanityBot.Config["insanitybot.commands.default_mute_time"], out var muteDefault))
-                        return muteDefault;
-                    else
-                        break;
-                case TemporaryPunishmentType.Ban:
-                    if (TimeSpan.TryParse((String)InsanityBot.Config["insanitybot.commands.default_ban_time"], out var banDefault))
-                        return banDefault;
-                    else
-                        break;
-                default:
-                    //hardcoded fallback default in case the config fails
-                    return new TimeSpan(00, 30, 00);
+                return new TimeSpanParser().ConvertToTimeSpan(value);
             }
-
-            //even more hardcoded fallback of a fallback, this method should just never fail
-            return new TimeSpan(00, 30, 00);
+            catch
+            {
+                InsanityBot.Client.Logger.LogError(new EventId(0010, "Parser"), $"Could not parse {value}");
+            }            
+            return type switch
+            {
+                TemporaryPunishmentType.Mute => TimeSpan.Parse((String)InsanityBot.Config["insanitybot.commands.default_mute_time"]),
+                TemporaryPunishmentType.Ban => TimeSpan.Parse((String)InsanityBot.Config["insanitybot.commands.default_ban_time"]),
+                _ => new TimeSpan(00, 30, 00)
+            };
+            
         }
     }
 }

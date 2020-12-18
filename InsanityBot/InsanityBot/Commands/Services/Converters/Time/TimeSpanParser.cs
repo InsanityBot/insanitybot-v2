@@ -45,28 +45,28 @@ namespace InsanityBot.Commands.Services.Converters.Time
             {
                 if (ValueArray[b].IsBasicDigit())
                 {
-                    //we are parsing an integer, dont worry about it
+                    //we are parsing an integer anyways, dont worry about it
                     if (IntegerSection)
                         continue;
 
-                    //we met a letter, worry about it
+                    //we met a new integer, worry about it
                     else
                     {
-                        IntegerSection = false;
+                        IntegerSection = true;
                         Indices[IndexPosition] = b;
                         IndexPosition++;
                     }
                 }
                 else if (ValueArray[b].IsBasicLetter() || ValueArray[b] == ' ')
                 {
-                    //we are parsing a letter, dont worry about it
+                    //we are parsing a letter anyways, dont worry about it
                     if (!IntegerSection)
                         continue;
 
-                    //we met an integer, panic!
+                    //we met a new letter, panic!
                     else
                     {
-                        IntegerSection = true;
+                        IntegerSection = false;
                         Indices[IndexPosition] = b;
                         IndexPosition++;
                     }
