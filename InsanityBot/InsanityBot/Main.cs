@@ -115,7 +115,8 @@ namespace InsanityBot
             catch (UnauthorizedException e)
 #pragma warning restore CS0168
             {
-                Client.Logger.LogCritical("Your GuildId is either invalid or InsanityBot has not been invited to the server yet.");
+                Client.Logger.LogCritical(new EventId(0000, "Main"), 
+                    "Your GuildId is either invalid or InsanityBot has not been invited to the server yet.");
             }
             catch
             {

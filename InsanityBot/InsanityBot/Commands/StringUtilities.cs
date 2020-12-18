@@ -48,7 +48,7 @@ namespace InsanityBot.Commands
             }
             catch
             {
-                InsanityBot.Client.Logger.LogError(new EventId(0010, "Parser"), $"Could not parse {value}");
+                InsanityBot.Client.Logger.LogError(new EventId(0010, "TimeSpanParser"), $"Could not parse {value}");
             }            
             return type switch
             {
