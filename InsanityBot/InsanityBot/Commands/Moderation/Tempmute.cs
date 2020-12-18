@@ -44,7 +44,7 @@ namespace InsanityBot.Commands.Moderation
                 return;
             }
             await ExecuteTempmuteCommand(ctx, member,
-                                time.ParseTimeSpan(),
+                                time.ParseTimeSpan(TemporaryPunishmentType.Mute),
                                 Reason, false, false);
         }
 
@@ -62,7 +62,7 @@ namespace InsanityBot.Commands.Moderation
                     .WithParsedAsync(async o =>
                     {
                         await ExecuteTempmuteCommand(ctx, member,
-                                o.Time.ParseTimeSpan(),
+                                o.Time.ParseTimeSpan(TemporaryPunishmentType.Mute),
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
