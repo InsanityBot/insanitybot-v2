@@ -9,10 +9,11 @@ using System.Text;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
-using InsanityBot.Commands.Services.Converters.Time;
 using InsanityBot.Utility.Exceptions;
 
 using Microsoft.Extensions.Logging;
+
+using TimeSpanParserUtil;
 
 namespace InsanityBot.Commands
 {
@@ -42,21 +43,15 @@ namespace InsanityBot.Commands
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TimeSpan ParseTimeSpan(this String value, Nullable<TemporaryPunishmentType> type = null)
         {
-            try
-            {
-                return new TimeSpanParser().ConvertToTimeSpan(value);
-            }
-            catch
-            {
-                InsanityBot.Client.Logger.LogError(new EventId(0010, "TimeSpanParser"), $"Could not parse {value}");
-            }            
-            return type switch
-            {
-                TemporaryPunishmentType.Mute => TimeSpan.Parse((String)InsanityBot.Config["insanitybot.commands.default_mute_time"]),
-                TemporaryPunishmentType.Ban => TimeSpan.Parse((String)InsanityBot.Config["insanitybot.commands.default_ban_time"]),
-                _ => new TimeSpan(00, 30, 00)
-            };
-            
+            if (TimeSpanParser.TryParse(value, out var time))
+                return time;
+            else
+                return type switch
+                {
+                    TemporaryPunishmentType.Mute => TimeSpan.Parse((String)InsanityBot.Config["insanitybot.commands.default_mute_time"]),
+                    TemporaryPunishmentType.Ban => TimeSpan.Parse((String)InsanityBot.Config["insanitybot.commands.default_ban_time"]),
+                    _ => new TimeSpan(00, 30, 00)
+                };
         }
     }
 }
