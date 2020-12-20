@@ -125,7 +125,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 Timer callbackTimer = new Timer(DateTime.Now.Add(time), $"tempmute_{member.Id}");
                 moderationEmbedBuilder.AddField("Timer GUID", callbackTimer.Guid.ToString(), true);
-                TimeHandler.ActiveTimers.Add(callbackTimer);
+                TimeHandler.AddTimer(callbackTimer);
 
                 member.AddModlogEntry(ModlogEntryType.mute, MuteReason);
                 embedBuilder = new DiscordEmbedBuilder

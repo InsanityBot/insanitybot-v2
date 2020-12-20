@@ -49,8 +49,18 @@ namespace InsanityBot.Utility.Timers
             Countdown.Elapsed += CountdownElapsed;
         }
 
-        public static void Stop()
+        private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
         {
+            foreach (Timer t in ActiveTimers)
+                t.CheckExpiry();
+            //and here we restore the warning again
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        }
+
+        public static void AddTimer(Timer timer)
+        {
+            ActiveTimers.Add(timer);
+
             if (!Directory.Exists("./data/timers"))
                 Directory.CreateDirectory("./data/timers");
 
@@ -69,15 +79,7 @@ namespace InsanityBot.Utility.Timers
             }
         }
 
-        private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
-        {
-            foreach (Timer t in ActiveTimers)
-                t.CheckExpiry();
-            //and here we restore the warning again
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-        }
-
-        public static List<Timer> ActiveTimers{ get; set; }
+        private static List<Timer> ActiveTimers{ get; set; }
         private static System.Timers.Timer Countdown { get; set; }
     }
 }
