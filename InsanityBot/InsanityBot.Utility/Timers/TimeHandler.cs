@@ -64,19 +64,14 @@ namespace InsanityBot.Utility.Timers
             if (!Directory.Exists("./data/timers"))
                 Directory.CreateDirectory("./data/timers");
 
-            if (ActiveTimers.Count == 0)
-                return;
-
             StreamWriter writer;
+            
+            if (!File.Exists($"./data/timers/{timer.Identifier}"))
+                File.Create($"./data/timers/{timer.Identifier}").Close();
+            writer = new StreamWriter(File.Open($"./data/timers/{timer.Identifier}", FileMode.Truncate));
 
-            foreach (Timer t in ActiveTimers)
-            {
-                if (File.Exists($"./data/timers/{t.Identifier}"))
-                    File.Create($"./data/timers/{t.Identifier}").Close();
-                writer = new StreamWriter(File.Open($"./data/timers/{t.Identifier}", FileMode.Truncate));
-
-                writer.Write(JsonConvert.SerializeObject(t));
-            }
+            writer.Write(JsonConvert.SerializeObject(timer));
+            
         }
 
         private static List<Timer> ActiveTimers{ get; set; }
