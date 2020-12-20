@@ -71,7 +71,8 @@ namespace InsanityBot.Utility.Timers
             writer = new StreamWriter(File.Open($"./data/timers/{timer.Identifier}", FileMode.Truncate));
 
             writer.Write(JsonConvert.SerializeObject(timer));
-            
+
+            writer.Close();           
         }
 
         private static List<Timer> ActiveTimers{ get; set; }
