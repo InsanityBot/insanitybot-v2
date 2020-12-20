@@ -13,10 +13,15 @@ namespace InsanityBot.Utility.Timers
 
         public static event TimerExpiredDelegate TimerExpiredEvent;
 
-        public async Task CheckExpiry()
+        private static void CallExpiredEvent(String Identifier, Guid guid)
+        {
+            TimerExpiredEvent?.Invoke(Identifier, guid);
+        }
+
+        public void CheckExpiry()
         {
             if (DateTime.UtcNow.Subtract(Expiry) <= TimeSpan.Zero)
-                await TimerExpiredEvent(this);
+                CallExpiredEvent(this.Identifier, this.Guid);
         }
 
         public Timer(DateTime Expiry, String Identifier)

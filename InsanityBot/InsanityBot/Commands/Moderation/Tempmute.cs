@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 
 using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
+using System.IO;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -168,9 +169,26 @@ namespace InsanityBot.Commands.Moderation
             }
         }
 
-        public static async Task InitializeUnmute(Timer timer)
+        public static async Task InitializeUnmute(String Identifier, Guid guid)
         {
+            if (!Identifier.StartsWith("tempmute_"))
+                return;
 
+            DiscordMember toUnmute = null;
+
+            try
+            {
+                toUnmute = await InsanityBot.HomeGuild.GetMemberAsync(ToUInt64(Identifier[9..]));
+                await toUnmute.RevokeRoleAsync(InsanityBot.HomeGuild.GetRole(
+                    ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"])));
+
+                File.Delete($"./data/timers/{Identifier}");
+            }
+            catch(Exception e)
+            {
+                InsanityBot.Client.Logger.LogError(new EventId(1132, "Unmute"), $"Could not unmute user {toUnmute.Id}");
+                Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
+            }
         }
     }
 

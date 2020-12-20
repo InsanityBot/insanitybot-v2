@@ -15,7 +15,7 @@ namespace InsanityBot.Utility.Timers
         {
             ActiveTimers = new List<Timer>();
 
-            if (!Directory.Exists("./data/timers"))
+             if (!Directory.Exists("./data/timers"))
             {
                 Directory.CreateDirectory("./data/timers");
                 return;
@@ -28,13 +28,15 @@ namespace InsanityBot.Utility.Timers
 
             //ok, it exists and has file contents. time to read.
 
-            StreamReader reader;
+            StreamReader reader = null;
 
             foreach (String s in Directory.GetFiles("./data/timers"))
             {
                 reader = new StreamReader(File.OpenRead(s));
                 ActiveTimers.Add(JsonConvert.DeserializeObject<Timer>(reader.ReadToEnd()));
             }
+
+            reader.Close();
 
             foreach (Timer t in ActiveTimers)
                 //disable the warning, why tf would it exist; this isnt an async method
