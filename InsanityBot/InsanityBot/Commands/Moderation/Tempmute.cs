@@ -174,19 +174,16 @@ namespace InsanityBot.Commands.Moderation
             if (!Identifier.StartsWith("tempmute_"))
                 return;
 
-            DiscordMember toUnmute = null;
-
             try
             {
-                toUnmute = await InsanityBot.HomeGuild.GetMemberAsync(ToUInt64(Identifier[9..]));
-                await toUnmute.RevokeRoleAsync(InsanityBot.HomeGuild.GetRole(
-                    ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"])));
+                await new Mute().ExecuteUnmuteCommand(null, await InsanityBot.HomeGuild.GetMemberAsync(ToUInt64(Identifier[9..])),
+                    true, false, true, "timer_guid", guid);
 
                 File.Delete($"./data/timers/{Identifier}");
             }
             catch(Exception e)
             {
-                InsanityBot.Client.Logger.LogError(new EventId(1132, "Unmute"), $"Could not unmute user {toUnmute.Id}");
+                InsanityBot.Client.Logger.LogError(new EventId(1132, "Unmute"), $"Could not unmute user {Identifier[9..]}");
                 Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
             }
         }

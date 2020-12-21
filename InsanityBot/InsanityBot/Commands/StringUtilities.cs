@@ -35,6 +35,15 @@ namespace InsanityBot.Commands
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static String GetFormattedString(String value, DiscordMember commandTarget)
+        {
+            return value.Replace("{MENTION}", commandTarget.Mention)
+                   .Replace("{USERNAME}", commandTarget.Username)
+                   .Replace("{NICKNAME}", commandTarget.Nickname)
+                   .Replace("{ID}", commandTarget.Id.ToString());
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static String GetReason(String value, String reason)
         {
             return value.Replace("{REASON}", reason);
