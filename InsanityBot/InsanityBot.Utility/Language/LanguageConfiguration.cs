@@ -11,7 +11,7 @@ namespace InsanityBot.Utility.Language
 
         public LanguageConfiguration()
         {
-            DataVersion = "2.0.0.0-dev.00008";
+            DataVersion = "2.0.0.0-dev.00009";
             Configuration = new Dictionary<String, String>();
         }
 

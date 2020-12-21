@@ -20,6 +20,7 @@ namespace InsanityBot.Utility.Permissions.Reference
             { "insanitybot.moderation.warn", false },
             { "insanitybot.moderation.mute", false },
             { "insanitybot.moderation.tempmute", false },
+            { "insanitybot.moderation.unmute", false },
             { "insanitybot.moderation.blacklist", false },
             { "insanitybot.moderation.whitelist", false }
         };
