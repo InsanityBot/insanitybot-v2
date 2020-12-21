@@ -77,7 +77,10 @@ namespace InsanityBot.Commands.Moderation
             }
         }
 
-        //ctx can be null if silent is true, its only used to respond to the command which doesnt happen when silent mode is enabled
+        /* ctx can be null if automated is true since ctx is only used for two purposes
+         * its used to respond to the command execution, which does not happen when silent mode is enabled
+         * (silent is enforced by auto mode)
+         * and its used to verify permissions, but that check is never called when auto mode is enabled */
         private async Task ExecuteUnmuteCommand(CommandContext ctx,
             DiscordMember member,
             Boolean silent,
