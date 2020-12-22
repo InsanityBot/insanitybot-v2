@@ -178,6 +178,7 @@ namespace InsanityBot
         private static void RegisterAllEvents()
         {
             Utility.Timers.Timer.TimerExpiredEvent += Mute.InitializeUnmute;
+            Mute.UnmuteCompletedEvent += TimeHandler.ReenableTimer;
         }
 
         private static void InitializeAll()

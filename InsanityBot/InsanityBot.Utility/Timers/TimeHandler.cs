@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
@@ -15,7 +18,18 @@ namespace InsanityBot.Utility.Timers
         {
             ActiveTimers = new List<Timer>();
 
-             if (!Directory.Exists("./data/timers"))
+            Countdown = new System.Timers.Timer
+            {
+                Interval = 3000
+            };
+            Countdown.Elapsed += CountdownElapsed;
+
+            Countdown.Start();
+        }
+
+        private static async void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (!Directory.Exists("./data/timers"))
             {
                 Directory.CreateDirectory("./data/timers");
                 return;
@@ -39,24 +53,14 @@ namespace InsanityBot.Utility.Timers
             reader.Close();
 
             foreach (Timer t in ActiveTimers)
-                //disable the warning, why tf would it exist; this isnt an async method
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                t.CheckExpiry();
-
-            Countdown = new System.Timers.Timer
             {
-                AutoReset = true,
-                Interval = 500
-            };
-            Countdown.Elapsed += CountdownElapsed;
-        }
+                if (!await t.CheckExpiry())
+                    continue;
+                else
+                    return;
+            }
 
-        private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
-        {
-            foreach (Timer t in ActiveTimers)
-                t.CheckExpiry();
-            //and here we restore the warning again
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            Countdown.Start();
         }
 
         public static void AddTimer(Timer timer)
@@ -77,6 +81,13 @@ namespace InsanityBot.Utility.Timers
             writer.Close();           
         }
 
+        public static void ReenableTimer()
+        {
+            Thread.Sleep(250);
+
+            Countdown.Start();
+        }
+        
         private static List<Timer> ActiveTimers{ get; set; }
         private static System.Timers.Timer Countdown { get; set; }
     }

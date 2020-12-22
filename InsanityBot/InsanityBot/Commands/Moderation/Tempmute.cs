@@ -169,6 +169,7 @@ namespace InsanityBot.Commands.Moderation
             }
         }
 
+
         public static async Task InitializeUnmute(String Identifier, Guid guid)
         {
             if (!Identifier.StartsWith("tempmute_"))
@@ -180,6 +181,8 @@ namespace InsanityBot.Commands.Moderation
                     true, false, true, "timer_guid", guid);
 
                 File.Delete($"./data/timers/{Identifier}");
+
+                UnmuteCompletedEvent();
             }
             catch(Exception e)
             {
@@ -187,6 +190,8 @@ namespace InsanityBot.Commands.Moderation
                 Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
             }
         }
+
+        public static event UnmuteCompletedDelegate UnmuteCompletedEvent;
     }
 
     public class TempmuteOptions : ModerationOptionBase
