@@ -170,14 +170,14 @@ namespace InsanityBot.Commands.Moderation
         }
 
 
-        public static async Task InitializeUnmute(String Identifier, Guid guid)
+        public static void InitializeUnmute(String Identifier, Guid guid)
         {
             if (!Identifier.StartsWith("tempmute_"))
                 return;
 
             try
             {
-                await new Mute().ExecuteUnmuteCommand(null, await InsanityBot.HomeGuild.GetMemberAsync(ToUInt64(Identifier[9..])),
+                new Mute().ExecuteUnmuteCommand(null, getMember(Identifier),
                     true, false, true, "timer_guid", guid);
 
                 File.Delete($"./data/timers/{Identifier}");
@@ -189,6 +189,12 @@ namespace InsanityBot.Commands.Moderation
                 InsanityBot.Client.Logger.LogError(new EventId(1132, "Unmute"), $"Could not unmute user {Identifier[9..]}");
                 Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
             }
+        }
+
+        private static DiscordMember getMember(String Identifier)
+        {
+            Task<DiscordMember> thing = InsanityBot.HomeGuild.GetMemberAsync(ToUInt64(Identifier[9..]));
+            return thing.GetAwaiter().GetResult();
         }
 
         public static event UnmuteCompletedDelegate UnmuteCompletedEvent;

@@ -27,7 +27,7 @@ namespace InsanityBot.Utility.Timers
             Countdown.Start();
         }
 
-        private static async void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
+        private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
         {
             if (!Directory.Exists("./data/timers"))
             {
@@ -54,7 +54,7 @@ namespace InsanityBot.Utility.Timers
 
             foreach (Timer t in ActiveTimers)
             {
-                if (!await t.CheckExpiry())
+                if (!t.CheckExpiry())
                     continue;
                 else
                     return;
