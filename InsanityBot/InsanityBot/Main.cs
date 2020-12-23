@@ -6,8 +6,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using CommandLine;
+
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Exceptions;
 
 using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Commands.Moderation;
@@ -24,17 +27,18 @@ namespace InsanityBot
     {
         public static async Task Main(String[] args)
         {
-            //load command line arguments
-            CommandLine.InitializeCommandLine();
-            CommandLine.InsanityBotApplication.Execute(args);
+            //run command line parser
+            Parser.Default.ParseArguments<CommandLineOptions>(args)
+                .WithParsed<CommandLineOptions>(o =>
+                {
+                    CommandLineOptions = o;
+                });
 
-            //reset if reset flag is set
-            if (CommandLine.HardResetOnStartup.Value() == "on")
-                await HardReset();
-
-            //initialize if init flag is set
-            if (CommandLine.InitializeOnStartup.Value() == "on")
+            if (CommandLineOptions.Initialize)
                 await Initialize();
+
+            if (CommandLineOptions.HardReset)
+                await HardReset();
 
             //load main config
             ConfigManager = new MainConfigurationManager();
@@ -102,8 +106,22 @@ namespace InsanityBot
             //load perms :b
             Client.InitializePermissionFramework();
 
-            //create home guild so commands can use it
-            HomeGuild = await Client.GetGuildAsync(Convert.ToUInt64(Config.GuildId));
+            try
+            {
+                //create home guild so commands can use it
+                HomeGuild = await Client.GetGuildAsync(Convert.ToUInt64(Config.GuildId));
+            }
+#pragma warning disable CS0168
+            catch (UnauthorizedException e)
+#pragma warning restore CS0168
+            {
+                Client.Logger.LogCritical(new EventId(0000, "Main"), 
+                    "Your GuildId is either invalid or InsanityBot has not been invited to the server yet.");
+            }
+            catch
+            {
+                throw;
+            }
 
             //load command configuration
             CommandConfiguration = new CommandsNextConfiguration
@@ -123,10 +141,10 @@ namespace InsanityBot
 
             //register commands and events
             RegisterAllCommands();
-            // RegisterAllEvents();
+            RegisterAllEvents();
 
-            //register default help format
-            // FormatHelpCommand();
+            //initialize various parts of InsanityBots framework
+            InitializeAll();
 
             //start offthread TCP connection
             _ = HandleTCPConnections((Int64)Config["insanitybot.tcp_port"]);
@@ -153,19 +171,19 @@ namespace InsanityBot
             {
                 CommandsExtension.RegisterCommands<Warn>();
                 CommandsExtension.RegisterCommands<Mute>();
-                CommandsExtension.RegisterCommands<Tempmute>();
                 CommandsExtension.RegisterCommands<Blacklist>();
             }
         }
 
         private static void RegisterAllEvents()
         {
-            throw new NotImplementedException();
+            Utility.Timers.Timer.TimerExpiredEvent += Mute.InitializeUnmute;
+            Mute.UnmuteCompletedEvent += TimeHandler.ReenableTimer;
         }
 
-        private static void FormatHelpCommand()
+        private static void InitializeAll()
         {
-            throw new NotImplementedException();
+            TimeHandler.Start();
         }
 
         private static async Task HandleTCPConnections(Int64 Port)

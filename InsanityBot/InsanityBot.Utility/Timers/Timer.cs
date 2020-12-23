@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,20 +9,31 @@ namespace InsanityBot.Utility.Timers
     public class Timer
     {
         public DateTime Expiry { get; set; }
-        public String Identifier { get; internal set; }
+        public String Identifier { get; set; }
+        public Guid Guid { get; set; }
 
         public static event TimerExpiredDelegate TimerExpiredEvent;
 
-        public async Task CheckExpiry()
+        private static void CallExpiredEvent(String Identifier, Guid guid)
         {
-            if (DateTime.UtcNow.Subtract(Expiry) <= TimeSpan.Zero)
-                await TimerExpiredEvent(this);
+            TimerExpiredEvent?.Invoke(Identifier, guid);
+        }
+
+        public Boolean CheckExpiry()
+        {
+            if (DateTime.Now <= Expiry)
+            {
+                CallExpiredEvent(this.Identifier, this.Guid);
+                return true;
+            }
+            return false;
         }
 
         public Timer(DateTime Expiry, String Identifier)
         {
             this.Expiry = Expiry;
             this.Identifier = Identifier;
+            this.Guid = Guid.NewGuid();
         }
     }
 }

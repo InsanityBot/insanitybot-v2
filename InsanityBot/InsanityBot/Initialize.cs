@@ -121,6 +121,7 @@ namespace InsanityBot
 
                 .AddConfigEntry("insanitybot.moderation.warn.success", "{MENTION} was warned successfully.")
                 .AddConfigEntry("insanitybot.moderation.mute.success", "{MENTION} was muted successfully.")
+                .AddConfigEntry("insanitybot.moderation.unmute.success", "{MENTION} was unmuted successfully.")
                 .AddConfigEntry("insanitybot.moderation.blacklist.success", "{MENTION} was blacklisted successfully.")
                 .AddConfigEntry("insanitybot.moderation.whitelist.success", "{MENTION} was whitelisted successfully.")
                 .AddConfigEntry("insanitybot.moderation.kick.success", "{MENTION} was kicked successfully.")
@@ -128,6 +129,7 @@ namespace InsanityBot
 
                 .AddConfigEntry("insanitybot.moderation.warn.failure", "{MENTION} could not be warned.")
                 .AddConfigEntry("insanitybot.moderation.mute.failure", "{MENTION} could not be muted.")
+                .AddConfigEntry("insanitybot.moderation.unmute.failure", "{MENTION} could not be unmuted.")
                 .AddConfigEntry("insanitybot.moderation.blacklist.failure", "{MENTION} could not be blacklisted.")
                 .AddConfigEntry("insanitybot.moderation.whitelist.failure", "{MENTION} could not be whitelisted.")
                 .AddConfigEntry("insanitybot.moderation.kick.failure", "{MENTION} could not be kicked.")
