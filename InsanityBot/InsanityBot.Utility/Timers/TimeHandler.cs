@@ -46,14 +46,21 @@ namespace InsanityBot.Utility.Timers
 
             foreach (String s in Directory.GetFiles("./data/timers"))
             {
-                reader = new StreamReader(File.OpenRead(s));
-                ActiveTimers.Add(JsonConvert.DeserializeObject<Timer>(reader.ReadToEnd()));
+                //keep this from throwing a fatal error
+                //if an exception occurs, it just means the timer adding procedure took a little longer than usual
+                try
+                {
+                    reader = new StreamReader(File.OpenRead(s));
+                    ActiveTimers.Add(JsonConvert.DeserializeObject<Timer>(reader.ReadToEnd()));
+                    reader.Close();
+                }
+                catch { }
             }
-
-            reader.Close();
 
             foreach (Timer t in ActiveTimers)
             {
+                if (t == null)
+                    continue;
                 if (!t.CheckExpiry())
                     continue;
                 else
@@ -65,7 +72,7 @@ namespace InsanityBot.Utility.Timers
 
         public static void AddTimer(Timer timer)
         {
-            ActiveTimers.Add(timer);
+            Countdown.Stop();
 
             if (!Directory.Exists("./data/timers"))
                 Directory.CreateDirectory("./data/timers");
@@ -78,7 +85,9 @@ namespace InsanityBot.Utility.Timers
 
             writer.Write(JsonConvert.SerializeObject(timer));
 
-            writer.Close();           
+            writer.Close();
+
+            Countdown.Start();
         }
 
         public static void ReenableTimer()
