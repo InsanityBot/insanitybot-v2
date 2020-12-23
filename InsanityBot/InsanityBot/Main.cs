@@ -146,6 +146,8 @@ namespace InsanityBot
             //initialize various parts of InsanityBots framework
             InitializeAll();
 
+            Client.Logger.LogInformation(new EventId(1000, "Main"), "Startup successful!");
+
             //start offthread TCP connection
             _ = HandleTCPConnections((Int64)Config["insanitybot.tcp_port"]);
 
