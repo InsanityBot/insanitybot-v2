@@ -71,7 +71,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 DiscordEmbedBuilder failed = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.warn.failure"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.tempmute.failure"],
                         ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -179,8 +179,8 @@ namespace InsanityBot.Commands.Moderation
             {
                 File.Delete($"./data/timers/{Identifier}");
 
-                new Mute().ExecuteUnmuteCommand(null, getMember(Identifier),
-                    true, false, true, "timer_guid", guid);
+                new Mute().ExecuteUnmuteCommand(null, GetMember(Identifier),
+                    true, false, true, "timer_guid", guid).GetAwaiter().GetResult();
 
                 UnmuteCompletedEvent();
             }
@@ -191,7 +191,7 @@ namespace InsanityBot.Commands.Moderation
             }
         }
 
-        private static DiscordMember getMember(String Identifier)
+        private static DiscordMember GetMember(String Identifier)
         {
             Task<DiscordMember> thing = InsanityBot.HomeGuild.GetMemberAsync(ToUInt64(Identifier[9..]));
             return thing.GetAwaiter().GetResult();

@@ -22,7 +22,7 @@
     "insanitybot.moderation.blacklist.reason": "You were blacklisted for {REASON}.",
     "insanitybot.moderation.whitelist.reason": "You were whitelisted!",
     "insanitybot.moderation.kick.reason": "You were kicked for {REASON}.",
-    "insanitybot.moderation.ban.reason": "You were banned for {REASON}",
-    "insanitybot.moderation.no_reason_given": "No reason given."
+    "insanitybot.moderation.ban.reason": "You were banned for {REASON}.",
+    "insanitybot.moderation.no_reason_given": "No reason given"
   }
 }

@@ -140,9 +140,9 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.blacklist.reason", "You were blacklisted for {REASON}.")
                 .AddConfigEntry("insanitybot.moderation.whitelist.reason", "You were whitelisted!")
                 .AddConfigEntry("insanitybot.moderation.kick.reason", "You were kicked for {REASON}.")
-                .AddConfigEntry("insanitybot.moderation.ban.reason", "You were banned for {REASON}")
+                .AddConfigEntry("insanitybot.moderation.ban.reason", "You were banned for {REASON}.")
 
-                .AddConfigEntry("insanitybot.moderation.no_reason_given", "No reason given.")
+                .AddConfigEntry("insanitybot.moderation.no_reason_given", "No reason given")
 
                 .Serialize(LanguageManager.Config, "./config/lang.json");
         }
