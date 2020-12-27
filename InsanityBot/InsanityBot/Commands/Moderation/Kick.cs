@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -16,33 +16,29 @@ using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using static System.Convert;
 using static InsanityBot.Commands.StringUtilities;
+using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
-    public partial class Mute : BaseCommandModule
+    class Kick : BaseCommandModule
     {
-        [Command("mute")]
-        [Description("Mutes the tagged user.")]
-        public async Task MuteCommand(CommandContext ctx,
-
-            [Description("Mention the user you want to mute")]
+        [Command("kick")]
+        public async Task KickCommand(CommandContext ctx,
             DiscordMember member,
-            
-            [Description("Give a reason for the mute")]
+
             [RemainingText]
-            String Reason = "usedefault")
+            String arguments = "usedefault")
         {
-            if(Reason.StartsWith('-'))
+            if(arguments.StartsWith('-'))
             {
-                await ParseMuteCommand(ctx, member, Reason);
+                await ParseKickCommand(ctx, member, arguments);
                 return;
             }
-            await ExecuteMuteCommand(ctx, member, Reason, false, false);
+            await ExecuteKickCommand(ctx, member, arguments, false, false, false);
         }
 
-        private async Task ParseMuteCommand(CommandContext ctx,
+        private async Task ParseKickCommand(CommandContext ctx,
             DiscordMember member,
             String arguments)
         {
@@ -52,22 +48,17 @@ namespace InsanityBot.Commands.Moderation
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
                     cmdArguments += " --reason usedefault";
 
-                await Parser.Default.ParseArguments<MuteOptions>(cmdArguments.Split(' '))
+                await Parser.Default.ParseArguments<KickOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        if (o.Time == "default")
-                            await ExecuteMuteCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
-                        else
-                            await ExecuteTempmuteCommand(ctx, member, 
-                                o.Time.ParseTimeSpan(TemporaryPunishmentType.Mute),
-                                String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                        await ExecuteKickCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember, o.SendInvite);
                     });
             }
             catch (Exception e)
             {
                 DiscordEmbedBuilder failed = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.failure"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.failure"],
                         ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -81,20 +72,21 @@ namespace InsanityBot.Commands.Moderation
             }
         }
 
-        private async Task ExecuteMuteCommand(CommandContext ctx, 
+        private async Task ExecuteKickCommand(CommandContext ctx,
             DiscordMember member,
             String Reason,
             Boolean Silent,
-            Boolean DmMember)
+            Boolean DmMember,
+            Boolean Invite)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.mute"))
+            if (!ctx.Member.HasPermission("insanitybot.moderation.kick"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
             //actually do something with the usedefault value
-            String MuteReason = Reason switch
+            String KickReason = Reason switch
             {
                 "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"],
                                 ctx, member),
@@ -105,7 +97,7 @@ namespace InsanityBot.Commands.Moderation
 
             DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
             {
-                Title = "MUTE",
+                Title = "KICK",
                 Color = DiscordColor.Red,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
@@ -115,14 +107,14 @@ namespace InsanityBot.Commands.Moderation
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
                 .AddField("Member", member.Mention, true)
-                .AddField("Reason", MuteReason, true);
+                .AddField("Reason", KickReason, true);
 
             try
             {
-                member.AddModlogEntry(ModlogEntryType.mute, MuteReason);
+                member.AddModlogEntry(ModlogEntryType.kick, KickReason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.success"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.success"],
                         ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -130,9 +122,19 @@ namespace InsanityBot.Commands.Moderation
                         Text = "InsanityBot - ExaInsanity 2020"
                     }
                 };
-                _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
-                    ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"])),
-                    MuteReason);
+
+                if(Invite || DmMember)
+                {
+                    var channel = await member.CreateDmChannelAsync();
+                    if (DmMember)
+                        await channel.SendMessageAsync(GetReason(GetFormattedString(
+                            InsanityBot.LanguageConfig["insanitybot.moderation.kick.reason"],
+                            ctx, member), KickReason));
+                    if(Invite)
+                        await channel.SendMessageAsync((await ctx.Channel.CreateInviteAsync()).ToString());
+                }
+
+                _ = member.RemoveAsync(KickReason);
                 _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());
             }
@@ -140,7 +142,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.failure"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.failure"],
                         ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -152,13 +154,15 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                await ctx.RespondAsync(embed: embedBuilder.Build());
+                if(!Silent)
+                    await ctx.RespondAsync(embed: embedBuilder.Build());
             }
         }
     }
 
-    public class MuteOptions : TempmuteOptions
+    public class KickOptions : ModerationOptionBase
     {
-
+        [Option('i', "invite", Default = false, Required = false)]
+        public Boolean SendInvite { get; set; }
     }
 }
