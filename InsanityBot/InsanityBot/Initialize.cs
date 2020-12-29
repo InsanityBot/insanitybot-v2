@@ -126,6 +126,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.whitelist.success", "{MENTION} was whitelisted successfully.")
                 .AddConfigEntry("insanitybot.moderation.kick.success", "{MENTION} was kicked successfully.")
                 .AddConfigEntry("insanitybot.moderation.ban.success", "{MENTION} was banned successfully.")
+                .AddConfigEntry("insanitybot.moderation.unban.success", "{ID} was unbanned successfully.")
 
                 .AddConfigEntry("insanitybot.moderation.warn.failure", "{MENTION} could not be warned.")
                 .AddConfigEntry("insanitybot.moderation.mute.failure", "{MENTION} could not be muted.")
@@ -134,9 +135,11 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.whitelist.failure", "{MENTION} could not be whitelisted.")
                 .AddConfigEntry("insanitybot.moderation.kick.failure", "{MENTION} could not be kicked.")
                 .AddConfigEntry("insanitybot.moderation.ban.failure", "{MENTION} could not be banned.")
+                .AddConfigEntry("insanitybot.moderation.unban.failure", "{ID} could not be unbanned.")
 
                 .AddConfigEntry("insanitybot.moderation.warn.reason", "You were warned for {REASON}.")
                 .AddConfigEntry("insanitybot.moderation.mute.reason", "You were muted for {REASON}.")
+                .AddConfigEntry("insanitybot.moderation.unmute.reason", "You were unmuted!")
                 .AddConfigEntry("insanitybot.moderation.blacklist.reason", "You were blacklisted for {REASON}.")
                 .AddConfigEntry("insanitybot.moderation.whitelist.reason", "You were whitelisted!")
                 .AddConfigEntry("insanitybot.moderation.kick.reason", "You were kicked for {REASON}.")

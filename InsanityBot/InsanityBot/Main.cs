@@ -175,6 +175,7 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<Mute>();
                 CommandsExtension.RegisterCommands<Blacklist>();
                 CommandsExtension.RegisterCommands<Kick>();
+                CommandsExtension.RegisterCommands<Ban>();
             }
         }
 
@@ -182,6 +183,12 @@ namespace InsanityBot
         {
             Utility.Timers.Timer.TimerExpiredEvent += Mute.InitializeUnmute;
             Mute.UnmuteCompletedEvent += TimeHandler.ReenableTimer;
+
+            Utility.Timers.Timer.TimerExpiredEvent += Ban.InitializeUnban;
+            Ban.UnbanCompletedEvent += TimeHandler.ReenableTimer;
+
+            Mute.MuteStartingEvent += TimeHandler.DisableTimer;
+            Ban.BanStartingEvent += TimeHandler.DisableTimer;
         }
 
         private static void InitializeAll()
