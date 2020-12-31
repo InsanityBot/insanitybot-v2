@@ -137,5 +137,5 @@ View the InsanityBot commands <a href="https://docs.insanity.network/en/Insanity
   <br><br>
   Our TOS can be viewed <a href="https://bot.insanity.network/tos/" target="_blank">here</a>.
   <br><br>
-  Copyright &copy; 2020 ExaInsanity
+  Copyright &copy; 2020 - 2021 ExaInsanity
 </p>
