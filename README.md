@@ -107,17 +107,17 @@
   :computer: Commands :computer:
 </h2>
 <p>
-View the InsanityBot commands <a href="https://docs.insanity.network/en/InsanityBot/Commands">here</a>.
+View the InsanityBot commands <a href="https://docs.bot.insanity.network/en/InsanityBot/Commands">here</a>.
 </p>
 <br>
 <h2>
   :electric_plug: Installation :electric_plug:
 </h2>
 <p>
-<a href="https://docs.insanity.network/en/InsanityBot/Linux-Installation">Linux</a> | 
-<a href="https://docs.insanity.network/en/InsanityBot/Windows-Installation">Windows</a> | 
-<a href="https://docs.insanity.network/en/InsanityBot/MacOS-Installation">MacOS</a> | 
-<a href="https://docs.insanity.network/en/InsanityBot/Pterodactyl">Pterodactyl</a>
+<a href="https://docs.bot.insanity.network/en/InsanityBot/Linux-Installation">Linux</a> | 
+<a href="https://docs.bot.insanity.network/en/InsanityBot/Windows-Installation">Windows</a> | 
+<a href="https://docs.bot.insanity.network/en/InsanityBot/MacOS-Installation">MacOS</a> | 
+<a href="https://docs.bot.insanity.network/en/InsanityBot/Pterodactyl">Pterodactyl</a>
 </p>
 <br>
 <h2>
