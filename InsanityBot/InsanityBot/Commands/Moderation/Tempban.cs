@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -9,47 +7,39 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
-using InsanityBot.Utility.Modlogs.Reference;
-using InsanityBot.Utility.Permissions;
-using InsanityBot.Utility.Timers;
-
-using Microsoft.Extensions.Logging;
-
 using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
+using InsanityBot.Utility.Timers;
+using Microsoft.Extensions.Logging;
+using InsanityBot.Utility.Permissions;
+using InsanityBot.Utility.Modlogs;
+using InsanityBot.Utility.Modlogs.Reference;
 using System.IO;
 
 namespace InsanityBot.Commands.Moderation
 {
-    public partial class Mute : BaseCommandModule
+    public partial class Ban
     {
-        [Command("tempmute")]
-        [Aliases("temp-mute")]
-        [Description("Temporarily mutes an user.")]
-        public async Task TempmuteCommand(CommandContext ctx,
-            
-            [Description("The user to mute")]
+        [Command("tempban")]
+        [Aliases("temp-ban")]
+        public async Task TempbanCommand(CommandContext ctx,
             DiscordMember member,
-            
-            [Description("Duration of the mute")]
             String time,
-            
-            [Description("Reason of the mute")]
+
             [RemainingText]
             String Reason = "usedefault")
         {
-            if(time.StartsWith('-'))
+            if (time.StartsWith('-'))
             {
-                await ParseTempmuteCommand(ctx, member, String.Join(' ', time, Reason));
+                await ParseTempbanCommand(ctx, member, String.Join(' ', time, Reason));
                 return;
             }
-            await ExecuteTempmuteCommand(ctx, member,
-                                time.ParseTimeSpan(TemporaryPunishmentType.Mute),
+            await ExecuteTempbanCommand(ctx, member,
+                                time.ParseTimeSpan(TemporaryPunishmentType.Ban),
                                 Reason, false, false);
         }
 
-        private async Task ParseTempmuteCommand(CommandContext ctx,
+        private async Task ParseTempbanCommand(CommandContext ctx,
             DiscordMember member,
             String arguments)
         {
@@ -59,11 +49,11 @@ namespace InsanityBot.Commands.Moderation
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
                     cmdArguments += " --reason usedefault";
 
-                await Parser.Default.ParseArguments<TempmuteOptions>(cmdArguments.Split(' '))
+                await Parser.Default.ParseArguments<TempbanOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteTempmuteCommand(ctx, member,
-                                o.Time.ParseTimeSpan(TemporaryPunishmentType.Mute),
+                        await ExecuteTempbanCommand(ctx, member,
+                                o.Time.ParseTimeSpan(TemporaryPunishmentType.Ban),
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
@@ -71,7 +61,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 DiscordEmbedBuilder failed = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.tempmute.failure"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.ban.failure"],
                         ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -85,20 +75,20 @@ namespace InsanityBot.Commands.Moderation
             }
         }
 
-        private async Task ExecuteTempmuteCommand(CommandContext ctx,
+        private async Task ExecuteTempbanCommand(CommandContext ctx,
             DiscordMember member,
             TimeSpan time,
             String Reason,
             Boolean Silent,
             Boolean DmMember)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.tempmute"))
+            if (!ctx.Member.HasPermission("insanitybot.moderation.tempban"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
-            String MuteReason = Reason switch
+            String BanReason = Reason switch
             {
                 "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"],
                                 ctx, member),
@@ -109,7 +99,7 @@ namespace InsanityBot.Commands.Moderation
 
             DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
             {
-                Title = "TEMPMUTE",
+                Title = "TEMPBAN",
                 Color = DiscordColor.Red,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
@@ -120,20 +110,20 @@ namespace InsanityBot.Commands.Moderation
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
                 .AddField("Member", member.Mention, true)
                 .AddField("Duration", time.ToString(), true)
-                .AddField("Reason", MuteReason, true);
+                .AddField("Reason", BanReason, true);
 
             try
             {
-                MuteStartingEvent();
+                BanStartingEvent();
 
-                Timer callbackTimer = new Timer(DateTime.Now.Add(time), $"tempmute_{member.Id}");
+                Timer callbackTimer = new Timer(DateTime.Now.Add(time), $"tempban_{member.Id}");
                 moderationEmbedBuilder.AddField("Timer GUID", callbackTimer.Guid.ToString(), true);
                 TimeHandler.AddTimer(callbackTimer);
 
-                member.AddModlogEntry(ModlogEntryType.mute, MuteReason);
+                member.AddModlogEntry(ModlogEntryType.ban, BanReason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.success"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.ban.success"],
                         ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -141,9 +131,7 @@ namespace InsanityBot.Commands.Moderation
                         Text = "InsanityBot - ExaInsanity 2020"
                     }
                 };
-                _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
-                    ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"])),
-                    MuteReason);
+                _ = InsanityBot.HomeGuild.BanMemberAsync(member, 0, BanReason);
                 _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());
 
@@ -152,7 +140,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.failure"], ctx, member),
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.ban.failure"], ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
@@ -162,32 +150,32 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if(embedBuilder == null)
-                    InsanityBot.Client.Logger.LogError(new EventId(1131, "Tempmute"),
-                        "Could not execute tempmute command, an unknown exception occured.");
+                if (embedBuilder == null)
+                    InsanityBot.Client.Logger.LogError(new EventId(1151, "Tempban"),
+                        "Could not execute tempban command, an unknown exception occured.");
                 else
                     await ctx.RespondAsync(embed: embedBuilder.Build());
             }
         }
 
 
-        public static void InitializeUnmute(String Identifier, Guid guid)
+        public static void InitializeUnban(String Identifier, Guid guid)
         {
-            if (!Identifier.StartsWith("tempmute_"))
+            if (!Identifier.StartsWith("tempban_"))
                 return;
 
             try
             {
                 File.Delete($"./data/timers/{Identifier}");
 
-                new Mute().ExecuteUnmuteCommand(null, GetMember(Identifier),
+                new Ban().ExecuteUnbanCommand(null, ToUInt64(Identifier),
                     true, false, true, "timer_guid", guid).GetAwaiter().GetResult();
 
-                UnmuteCompletedEvent();
+                UnbanCompletedEvent();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                InsanityBot.Client.Logger.LogError(new EventId(1132, "Unmute"), $"Could not unmute user {Identifier[9..]}");
+                InsanityBot.Client.Logger.LogError(new EventId(1152, "Unban"), $"Could not unban user {Identifier[9..]}");
                 Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
             }
         }
@@ -198,11 +186,11 @@ namespace InsanityBot.Commands.Moderation
             return thing.GetAwaiter().GetResult();
         }
 
-        public static event UnmuteCompletedDelegate UnmuteCompletedEvent;
-        public static event MuteStartingDelegate MuteStartingEvent;
+        public static event UnbanCompletedDelegate UnbanCompletedEvent;
+        public static event BanStartingDelegate BanStartingEvent;
     }
 
-    public class TempmuteOptions : ModerationOptionBase
+    public class TempbanOptions : ModerationOptionBase
     {
         [Option('t', "time", Default = "default", Required = false)]
         public String Time { get; set; }

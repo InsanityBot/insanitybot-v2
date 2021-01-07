@@ -16,17 +16,16 @@ namespace InsanityBot.Utility.Timers
     {
         public static void Start()
         {
-            ActiveTimers = new List<Timer>();
-
             Countdown = new System.Timers.Timer
             {
-                Interval = 3000
+                Interval = 250
             };
             Countdown.Elapsed += CountdownElapsed;
 
             Countdown.Start();
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
         {
             if (!Directory.Exists("./data/timers"))
@@ -41,6 +40,8 @@ namespace InsanityBot.Utility.Timers
                 return;
 
             //ok, it exists and has file contents. time to read.
+
+            List<Timer> ActiveTimers = new List<Timer>();
 
             StreamReader reader = null;
 
@@ -74,11 +75,8 @@ namespace InsanityBot.Utility.Timers
         {
             Countdown.Stop();
 
-            if (!Directory.Exists("./data/timers"))
-                Directory.CreateDirectory("./data/timers");
-
             StreamWriter writer;
-            
+
             if (!File.Exists($"./data/timers/{timer.Identifier}"))
                 File.Create($"./data/timers/{timer.Identifier}").Close();
             writer = new StreamWriter(File.Open($"./data/timers/{timer.Identifier}", FileMode.Truncate));
@@ -87,6 +85,7 @@ namespace InsanityBot.Utility.Timers
 
             writer.Close();
 
+            Thread.Sleep(50);
             Countdown.Start();
         }
 
@@ -96,8 +95,12 @@ namespace InsanityBot.Utility.Timers
 
             Countdown.Start();
         }
-        
-        private static List<Timer> ActiveTimers{ get; set; }
+
+        public static void DisableTimer()
+        {
+            Countdown.Stop();
+        }
+
         private static System.Timers.Timer Countdown { get; set; }
     }
 }

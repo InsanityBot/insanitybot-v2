@@ -22,7 +22,11 @@ namespace InsanityBot.Utility.Permissions.Reference
             { "insanitybot.moderation.tempmute", false },
             { "insanitybot.moderation.unmute", false },
             { "insanitybot.moderation.blacklist", false },
-            { "insanitybot.moderation.whitelist", false }
+            { "insanitybot.moderation.whitelist", false },
+            { "insanitybot.moderation.kick", false },
+            { "insanitybot.moderation.ban", false },
+            { "insanitybot.moderation.tempban", false },
+            { "insanitybot.moderation.unban", false }
         };
 
         protected PermissionBase(UInt64 Id, Dictionary<String, Boolean> Permissions)
