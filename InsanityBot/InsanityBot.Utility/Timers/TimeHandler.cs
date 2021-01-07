@@ -18,7 +18,7 @@ namespace InsanityBot.Utility.Timers
         {
             Countdown = new System.Timers.Timer
             {
-                Interval = 5000
+                Interval = 250
             };
             Countdown.Elapsed += CountdownElapsed;
 
@@ -75,9 +75,6 @@ namespace InsanityBot.Utility.Timers
         {
             Countdown.Stop();
 
-            if (!Directory.Exists("./data/timers"))
-                Directory.CreateDirectory("./data/timers");
-
             StreamWriter writer;
 
             if (!File.Exists($"./data/timers/{timer.Identifier}"))
@@ -88,7 +85,7 @@ namespace InsanityBot.Utility.Timers
 
             writer.Close();
 
-            Thread.Sleep(500);
+            Thread.Sleep(50);
             Countdown.Start();
         }
 
