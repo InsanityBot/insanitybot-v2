@@ -17,6 +17,7 @@ namespace InsanityBot.Utility.Permissions.Reference
         {
             { "insanitybot.miscellaneous.say", false },
             { "insanitybot.miscellaneous.say.embed", false },
+            { "insanitybot.moderation.verbal_warn", false },
             { "insanitybot.moderation.warn", false },
             { "insanitybot.moderation.mute", false },
             { "insanitybot.moderation.tempmute", false },
