@@ -60,6 +60,15 @@ namespace InsanityBot.Commands
             return value.Replace("{REASON}", reason);
         }
 
+        public static String GetMemberReason(String value, String reason, DiscordMember member)
+        {
+            return value.Replace("{REASON}", reason)
+                .Replace("{MENTION}", member.Mention)
+                .Replace("{NICKNAME}", member.Nickname)
+                .Replace("{USERNAME}", member.Username)
+                .Replace("{ID}", member.Id.ToString());
+        }
+
         /// <summary>
         /// This method will fall back to 00:30:00 if both input value and the config-defined defaults fail to parse
         /// </summary>

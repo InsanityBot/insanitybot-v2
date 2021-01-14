@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0-dev.00008",
+  "DataVersion": "2.0.0-dev.00013",
   "Configuration": {
     "insanitybot.modules.experience": true,
     "insanitybot.modules.logging": true,
@@ -13,6 +13,7 @@
     "insanitybot.modules.console": true,
     "insanitybot.commands.help.send_dms": true,
     "insanitybot.commands.moderation.allow_minor_warns": true,
+    "insanitybot.commands.moderation.convert_minor_warns_into_full_warn": true,
     "insanitybot.commands.moderation.minor_warns_equal_full_warn": 3,
     "insanitybot.commands.moderation.default_mute_time": "00:30:00",
     "insanitybot.commands.moderation.default_ban_time": "00:30:00",

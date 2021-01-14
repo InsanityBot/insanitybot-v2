@@ -58,6 +58,7 @@ namespace InsanityBot
 
                 .AddConfigEntry("insanitybot.commands.help.send_dms", true)
                 .AddConfigEntry("insanitybot.commands.moderation.allow_minor_warns", true)
+                .AddConfigEntry("insanitybot.commands.moderation.convert_minor_warns_into_full_warn", true)
                 .AddConfigEntry("insanitybot.commands.moderation.minor_warns_equal_full_warn", 3)
                 .AddConfigEntry("insanitybot.commands.moderation.default_mute_time", new TimeSpan(0, 30, 0))
                 .AddConfigEntry("insanitybot.commands.moderation.default_ban_time", new TimeSpan(0, 30, 0))
@@ -128,6 +129,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.ban.success", "{MENTION} was banned successfully.")
                 .AddConfigEntry("insanitybot.moderation.unban.success", "{ID} was unbanned successfully.")
 
+                .AddConfigEntry("insanitybot.moderation.verbal_warn.failure", "{MENTION} could not be verbally warned.")
                 .AddConfigEntry("insanitybot.moderation.warn.failure", "{MENTION} could not be warned.")
                 .AddConfigEntry("insanitybot.moderation.mute.failure", "{MENTION} could not be muted.")
                 .AddConfigEntry("insanitybot.moderation.unmute.failure", "{MENTION} could not be unmuted.")
@@ -137,6 +139,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.ban.failure", "{MENTION} could not be banned.")
                 .AddConfigEntry("insanitybot.moderation.unban.failure", "{ID} could not be unbanned.")
 
+                .AddConfigEntry("insanitybot.moderation.verbal_warn.reason", "{MENTION}, {REASON}")
                 .AddConfigEntry("insanitybot.moderation.warn.reason", "You were warned for {REASON}.")
                 .AddConfigEntry("insanitybot.moderation.mute.reason", "You were muted for {REASON}.")
                 .AddConfigEntry("insanitybot.moderation.unmute.reason", "You were unmuted!")
