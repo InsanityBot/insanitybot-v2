@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0.0-dev.00009",
+  "DataVersion": "2.0.0.0-dev.00013",
   "Configuration": {
     "insanitybot.error.lacking_permission": "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.",
     "insanitybot.error.generic": "The command failed to execute. Please retry or contact your administrators.",
@@ -10,6 +10,8 @@
     "insanitybot.moderation.whitelist.success": "{MENTION} was whitelisted successfully.",
     "insanitybot.moderation.kick.success": "{MENTION} was kicked successfully.",
     "insanitybot.moderation.ban.success": "{MENTION} was banned successfully.",
+    "insanitybot.moderation.unban.success": "{ID} was unbanned successfully.",
+    "insanitybot.moderation.verbal_warn.failure": "{MENTION} could not be verbally warned.",
     "insanitybot.moderation.warn.failure": "{MENTION} could not be warned.",
     "insanitybot.moderation.mute.failure": "{MENTION} could not be muted.",
     "insanitybot.moderation.unmute.failure": "{MENTION} could not be unmuted.",
@@ -17,8 +19,11 @@
     "insanitybot.moderation.whitelist.failure": "{MENTION} could not be whitelisted.",
     "insanitybot.moderation.kick.failure": "{MENTION} could not be kicked.",
     "insanitybot.moderation.ban.failure": "{MENTION} could not be banned.",
+    "insanitybot.moderation.unban.failure": "{ID} could not be unbanned.",
+    "insanitybot.moderation.verbal_warn.reason": "{MENTION}, {REASON}",
     "insanitybot.moderation.warn.reason": "You were warned for {REASON}.",
     "insanitybot.moderation.mute.reason": "You were muted for {REASON}.",
+    "insanitybot.moderation.unmute.reason": "You were unmuted!",
     "insanitybot.moderation.blacklist.reason": "You were blacklisted for {REASON}.",
     "insanitybot.moderation.whitelist.reason": "You were whitelisted!",
     "insanitybot.moderation.kick.reason": "You were kicked for {REASON}.",
