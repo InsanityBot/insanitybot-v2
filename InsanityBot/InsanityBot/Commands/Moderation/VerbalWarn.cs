@@ -153,7 +153,7 @@ namespace InsanityBot.Commands.Moderation
 
                 if ((Boolean)InsanityBot.Config["insanitybot.commands.moderation.convert_minor_warns_into_full_warn"])
                 {
-                    if(member.GetUserModlog().VerbalLog.Count % 
+                    if(member.GetUserModlog().VerbalLogEntryCount % 
                         (Int32)InsanityBot.Config["insanitybot.commands.moderation.minor_warns_equals_full_warn"] == 0)
                     {
                         await new Warn().WarnCommand(ctx, member, $"--silent --reason Too many verbal warns, count since last warn exceeded " +

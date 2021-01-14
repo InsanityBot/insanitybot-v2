@@ -11,9 +11,9 @@ namespace InsanityBot.Utility.Modlogs.Reference
     {
         public String Username { get; set; }
 
-        public UInt16 ModlogEntryCount { get; set; }
+        public UInt32 ModlogEntryCount { get; set; }
 
-        public Byte VerbalLogEntryCount { get; set; }
+        public UInt32 VerbalLogEntryCount { get; set; }
 
 
         public List<ModlogEntry> Modlog { get; set; }
