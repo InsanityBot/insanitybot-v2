@@ -29,9 +29,13 @@
     "insanitybot.moderation.kick.reason": "You were kicked for {REASON}.",
     "insanitybot.moderation.ban.reason": "You were banned for {REASON}.",
     "insanitybot.moderation.no_reason_given": "No reason given",
-    "insanitybot.commands.modlog.embed_title": "Modlog of {MENTION}",
+    "insanitybot.commands.modlog.embed_title": "Modlog of {USERNAME}",
     "insanitybot.commands.modlog.empty_modlog": ":white_check_mark: This member has no modlog entries",
     "insanitybot.commands.modlog.overflow": "... and more entries",
-    "insanitybot.commands.modlog.failed": "Could not retrieve modlog for {MENTION}"
+    "insanitybot.commands.modlog.failed": "Could not retrieve modlog for {MENTION}",
+    "insanitybot.commands.verbal_log.embed_title": "Verbal Log of {USERNAME}",
+    "insanitybot.commands.verbal_log.empty_modlog": ":white_check_mark: This member has no verbal log entries",
+    "insanitybot.commands.verbal_log.overflow": "... and more entries",
+    "insanitybot.commands.verbal_log.failed": "Could not retrieve verbal log for {MENTION}"
   }
 }
