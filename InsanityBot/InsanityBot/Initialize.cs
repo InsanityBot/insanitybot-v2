@@ -156,6 +156,10 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.commands.modlog.empty_modlog", ":white_check_mark: This member has no modlog entries")
                 .AddConfigEntry("insanitybot.commands.modlog.overflow", "... and more entries")
                 .AddConfigEntry("insanitybot.commands.modlog.failed", "Could not retrieve modlog for {MENTION}")
+                .AddConfigEntry("insanitybot.commands.verbal_log.embed_title", "Verbal Log of {USERNAME}")
+                .AddConfigEntry("insanitybot.commands.verbal_log.empty_modlog", ":white_check_mark: This member has no verbal log entries")
+                .AddConfigEntry("insanitybot.commands.verbal_log.overflow", "... and more entries")
+                .AddConfigEntry("insanitybot.commands.verbal_log.failed", "Could not retrieve verbal log for {MENTION}")
 
                 .Serialize(LanguageManager.Config, "./config/lang.json");
         }

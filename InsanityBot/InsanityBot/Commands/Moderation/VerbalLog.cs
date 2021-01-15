@@ -8,19 +8,20 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Modlogs;
+
+using Microsoft.Extensions.Logging;
 
 using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
-using Microsoft.Extensions.Logging;
 
 namespace InsanityBot.Commands.Moderation
 {
-    public partial class Modlog : BaseCommandModule
+    public partial class Modlog
     {
-        [Command("modlog")]
-        public async Task ModlogCommand(CommandContext ctx,
+        [Command("verballog")]
+        public async Task VerbalLogCommand(CommandContext ctx, 
             DiscordMember user)
         {
             try
@@ -29,7 +30,7 @@ namespace InsanityBot.Commands.Moderation
 
                 DiscordEmbedBuilder modlogEmbed = new DiscordEmbedBuilder
                 {
-                    Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.embed_title"],
+                    Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.embed_title"],
                         ctx, user),
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
@@ -37,38 +38,38 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
 
-                if(modlog.Modlog.Count == 0)
+                if (modlog.VerbalLog.Count == 0)
                 {
                     modlogEmbed.Color = DiscordColor.SpringGreen;
-                    modlogEmbed.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.empty_modlog"],
+                    modlogEmbed.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.empty_modlog"],
                         ctx, user);
                 }
                 else
                 {
                     modlogEmbed.Color = DiscordColor.Red;
-                    for(Byte b = 0; b < ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"])
-                        && b < modlog.Modlog.Count; b++)
+                    for (Byte b = 0; b < ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_verballog_entries_per_embed"])
+                        && b < modlog.VerbalLog.Count; b++)
                     {
-                        modlogEmbed.Description += $"{modlog.Modlog[b].Type.ToString().ToUpper()}: {modlog.Modlog[b].Time} - {modlog.Modlog[b].Reason}\n";
+                        modlogEmbed.Description += $"{modlog.VerbalLog[b].Time} - {modlog.VerbalLog[b].Reason}\n";
                     }
-                    
-                    if(modlog.Modlog.Count > ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]))
+
+                    if (modlog.VerbalLog.Count > ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_verballog_entries_per_embed"]))
                     {
-                        modlogEmbed.Description += GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.overflow"],
+                        modlogEmbed.Description += GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.overflow"],
                             ctx, user);
                     }
                 }
 
                 await ctx.RespondAsync(embed: modlogEmbed.Build());
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                InsanityBot.Client.Logger.LogError(new EventId(1170, "Modlog"), $"Could not retrieve modlogs: {e}: {e.Message}");
+                InsanityBot.Client.Logger.LogError(new EventId(1171, "VerbalLog"), $"Could not retrieve verbal logs: {e}: {e.Message}");
 
                 DiscordEmbedBuilder failedModlog = new DiscordEmbedBuilder
                 {
                     Color = DiscordColor.Red,
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.failed"], ctx, user),
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.failed"], ctx, user),
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         Text = "InsanityBot - ExaInsanity 2020-2021"
@@ -78,8 +79,7 @@ namespace InsanityBot.Commands.Moderation
             }
         }
 
-        [Command("modlog")]
-        public async Task ModlogCommand(CommandContext ctx)
-            => await ModlogCommand(ctx, ctx.Member);
+        public async Task VerbalLogCommand(CommandContext ctx)
+            => await VerbalLogCommand(ctx, ctx.Member);
     }
 }
