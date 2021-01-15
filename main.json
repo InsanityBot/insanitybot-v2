@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0-dev.00013",
+  "DataVersion": "2.0.0-dev.00014",
   "Configuration": {
     "insanitybot.modules.experience": true,
     "insanitybot.modules.logging": true,
@@ -17,6 +17,8 @@
     "insanitybot.commands.moderation.minor_warns_equal_full_warn": 3,
     "insanitybot.commands.moderation.default_mute_time": "00:30:00",
     "insanitybot.commands.moderation.default_ban_time": "00:30:00",
+    "insanitybot.commands.modlog.max_modlog_entries_per_embed": 25,
+    "insanitybot.commands.modlog.max_verballog_entries_per_embed": 20,
     "insanitybot.commands.suggestions.allow_community_denial": true,
     "insanitybot.commands.suggestions.denial_by_downvote_percentage": false,
     "insanitybot.commands.suggestions.percentage_for_community_denial": 0,
