@@ -28,7 +28,7 @@ namespace InsanityBot.Utility.Permissions.Reference
             { "insanitybot.moderation.ban", false },
             { "insanitybot.moderation.tempban", false },
             { "insanitybot.moderation.unban", false },
-            { "insanitybot.moderation.verballog", false },
+            { "insanitybot.moderation.verballog", true },
             { "insanitybot.moderation.modlog", true }
         };
 
