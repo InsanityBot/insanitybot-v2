@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0.0-dev.00013",
+  "DataVersion": "2.0.0.0-dev.00014",
   "Configuration": {
     "insanitybot.error.lacking_permission": "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.",
     "insanitybot.error.generic": "The command failed to execute. Please retry or contact your administrators.",
@@ -28,6 +28,7 @@
     "insanitybot.moderation.whitelist.reason": "You were whitelisted!",
     "insanitybot.moderation.kick.reason": "You were kicked for {REASON}.",
     "insanitybot.moderation.ban.reason": "You were banned for {REASON}.",
-    "insanitybot.moderation.no_reason_given": "No reason given"
+    "insanitybot.moderation.no_reason_given": "No reason given",
+    "insanitybot.commands.modlog.embed_title": "Modlog of {MENTION}"
   }
 }
