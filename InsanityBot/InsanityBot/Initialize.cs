@@ -62,6 +62,8 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.commands.moderation.minor_warns_equal_full_warn", 3)
                 .AddConfigEntry("insanitybot.commands.moderation.default_mute_time", new TimeSpan(0, 30, 0))
                 .AddConfigEntry("insanitybot.commands.moderation.default_ban_time", new TimeSpan(0, 30, 0))
+                .AddConfigEntry("insanitybot.commands.modlog.max_modlog_entries_per_embed", 25)
+                .AddConfigEntry("insanitybot.commands.modlog.max_verballog_entries_per_embed", 20)
                 .AddConfigEntry("insanitybot.commands.suggestions.allow_community_denial", true)
                 .AddConfigEntry("insanitybot.commands.suggestions.denial_by_downvote_percentage", false)
                 .AddConfigEntry("insanitybot.commands.suggestions.percentage_for_community_denial", 0)
@@ -149,6 +151,15 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.ban.reason", "You were banned for {REASON}.")
 
                 .AddConfigEntry("insanitybot.moderation.no_reason_given", "No reason given")
+
+                .AddConfigEntry("insanitybot.commands.modlog.embed_title", "Modlog of {USERNAME}")
+                .AddConfigEntry("insanitybot.commands.modlog.empty_modlog", ":white_check_mark: This member has no modlog entries")
+                .AddConfigEntry("insanitybot.commands.modlog.overflow", "... and more entries")
+                .AddConfigEntry("insanitybot.commands.modlog.failed", "Could not retrieve modlog for {MENTION}")
+                .AddConfigEntry("insanitybot.commands.verbal_log.embed_title", "Verbal Log of {USERNAME}")
+                .AddConfigEntry("insanitybot.commands.verbal_log.empty_modlog", ":white_check_mark: This member has no verbal log entries")
+                .AddConfigEntry("insanitybot.commands.verbal_log.overflow", "... and more entries")
+                .AddConfigEntry("insanitybot.commands.verbal_log.failed", "Could not retrieve verbal log for {MENTION}")
 
                 .Serialize(LanguageManager.Config, "./config/lang.json");
         }
