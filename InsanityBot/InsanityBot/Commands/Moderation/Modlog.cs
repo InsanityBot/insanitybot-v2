@@ -10,10 +10,12 @@ using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Permissions;
+
+using Microsoft.Extensions.Logging;
 
 using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
-using Microsoft.Extensions.Logging;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -23,6 +25,12 @@ namespace InsanityBot.Commands.Moderation
         public async Task ModlogCommand(CommandContext ctx,
             DiscordMember user)
         {
+            if (!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
+            {
+                await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                return;
+            }
+
             try
             {
                 UserModlog modlog = user.GetUserModlog();
