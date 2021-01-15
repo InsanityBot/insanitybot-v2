@@ -27,7 +27,8 @@ namespace InsanityBot.Utility.Permissions.Reference
             { "insanitybot.moderation.kick", false },
             { "insanitybot.moderation.ban", false },
             { "insanitybot.moderation.tempban", false },
-            { "insanitybot.moderation.unban", false }
+            { "insanitybot.moderation.unban", false },
+            { "insanitybot.moderation.modlog", true }
         };
 
         protected PermissionBase(UInt64 Id, Dictionary<String, Boolean> Permissions)

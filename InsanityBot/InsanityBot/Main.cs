@@ -177,6 +177,8 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<Blacklist>();
                 CommandsExtension.RegisterCommands<Kick>();
                 CommandsExtension.RegisterCommands<Ban>();
+
+                CommandsExtension.RegisterCommands<Modlog>();
             }
         }
 

@@ -152,7 +152,10 @@ namespace InsanityBot
 
                 .AddConfigEntry("insanitybot.moderation.no_reason_given", "No reason given")
 
-                .AddConfigEntry("insanitybot.commands.modlog.embed_title", "Modlog of {MENTION}")
+                .AddConfigEntry("insanitybot.commands.modlog.embed_title", "Modlog of {USERNAME}")
+                .AddConfigEntry("insanitybot.commands.modlog.empty_modlog", ":white_check_mark: This member has no modlog entries")
+                .AddConfigEntry("insanitybot.commands.modlog.overflow", "... and more entries")
+                .AddConfigEntry("insanitybot.commands.modlog.failed", "Could not retrieve modlog for {MENTION}")
 
                 .Serialize(LanguageManager.Config, "./config/lang.json");
         }
