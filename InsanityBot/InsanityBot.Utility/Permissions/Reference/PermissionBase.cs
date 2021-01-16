@@ -13,7 +13,7 @@ namespace InsanityBot.Utility.Permissions.Reference
         public Boolean IsAdministrator { get; set; }
 
         [JsonIgnore]
-        public static Dictionary<String, Boolean> DefaultPermissions = new Dictionary<String, Boolean>
+        public static readonly Dictionary<String, Boolean> DefaultPermissions = new Dictionary<String, Boolean>
         {
             { "insanitybot.miscellaneous.say", false },
             { "insanitybot.miscellaneous.say.embed", false },
