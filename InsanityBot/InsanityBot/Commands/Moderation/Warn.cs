@@ -19,7 +19,7 @@ using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
-    public class Warn : BaseCommandModule
+    public partial class Warn : BaseCommandModule
     {
         [Command("warn")]
         public async Task WarnCommand(CommandContext ctx,

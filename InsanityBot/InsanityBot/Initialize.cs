@@ -123,6 +123,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.error.generic", "The command failed to execute. Please retry or contact your administrators.")
 
                 .AddConfigEntry("insanitybot.moderation.warn.success", "{MENTION} was warned successfully.")
+                .AddConfigEntry("insanitybot.moderation.unwarn.success", "{MENTION} was unwarned successfully")
                 .AddConfigEntry("insanitybot.moderation.mute.success", "{MENTION} was muted successfully.")
                 .AddConfigEntry("insanitybot.moderation.unmute.success", "{MENTION} was unmuted successfully.")
                 .AddConfigEntry("insanitybot.moderation.blacklist.success", "{MENTION} was blacklisted successfully.")
@@ -132,6 +133,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.unban.success", "{ID} was unbanned successfully.")
 
                 .AddConfigEntry("insanitybot.moderation.verbal_warn.failure", "{MENTION} could not be verbally warned.")
+                .AddConfigEntry("insanitybot.moderation.unwarn.failure", "{MENTION} could not be unwarned.")
                 .AddConfigEntry("insanitybot.moderation.warn.failure", "{MENTION} could not be warned.")
                 .AddConfigEntry("insanitybot.moderation.mute.failure", "{MENTION} could not be muted.")
                 .AddConfigEntry("insanitybot.moderation.unmute.failure", "{MENTION} could not be unmuted.")
