@@ -19,6 +19,7 @@ namespace InsanityBot.Utility.Permissions.Reference
             { "insanitybot.miscellaneous.say.embed", false },
             { "insanitybot.moderation.verbal_warn", false },
             { "insanitybot.moderation.warn", false },
+            { "insanitybot.moderation.unwarn", false },
             { "insanitybot.moderation.mute", false },
             { "insanitybot.moderation.tempmute", false },
             { "insanitybot.moderation.unmute", false },
@@ -29,7 +30,8 @@ namespace InsanityBot.Utility.Permissions.Reference
             { "insanitybot.moderation.tempban", false },
             { "insanitybot.moderation.unban", false },
             { "insanitybot.moderation.verballog", true },
-            { "insanitybot.moderation.modlog", true }
+            { "insanitybot.moderation.modlog", true },
+            { "insanitybot.moderation.export_modlog", true }
         };
 
         protected PermissionBase(UInt64 Id, Dictionary<String, Boolean> Permissions)
