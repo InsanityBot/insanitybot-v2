@@ -11,6 +11,8 @@ using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Permissions;
 
+using Microsoft.Extensions.Logging;
+
 using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
@@ -22,27 +24,34 @@ namespace InsanityBot.Commands.Moderation
             DiscordMember member,
             Boolean dmFile = false)
         {
-            if(!member.HasPermission("insanitybot.moderation.export_modlog"))
+            try
             {
-                await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
-                return;
+                if (!ctx.Member.HasPermission("insanitybot.moderation.export_modlog"))
+                {
+                    await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                    return;
+                }
+
+                DiscordChannel exportChannel;
+
+                if (!dmFile)
+                    exportChannel = ctx.Channel;
+                else
+                    exportChannel = await ctx.Member.CreateDmChannelAsync();
+
+                if (!File.Exists($"./data/{member.Id}/modlog.json"))
+                {
+                    await ctx.RespondAsync(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.export_modlog.no_modlog"],
+                        ctx, member));
+                    return;
+                }
+
+                await exportChannel.SendFileAsync($"./data/{member.Id}/modlog.json");
             }
-
-            DiscordChannel exportChannel;
-
-            if (!dmFile)
-                exportChannel = ctx.Channel;
-            else
-                exportChannel = await ctx.Member.CreateDmChannelAsync();
-
-            if(!File.Exists($"./data/{member.Id}/modlog.json"))
+            catch(Exception e)
             {
-                await ctx.RespondAsync(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.export_modlog.no_modlog"],
-                    ctx, member));
-                return;
+                InsanityBot.Client.Logger.LogError(new EventId(1181, "ExportModlog"), $"{e}: {e.Message}\n{e.StackTrace}");
             }
-
-            await exportChannel.SendFileAsync($"./data/{member.Id}/modlog.json");
         }
 
         [Command("exportmodlog")]

@@ -131,6 +131,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.kick.success", "{MENTION} was kicked successfully.")
                 .AddConfigEntry("insanitybot.moderation.ban.success", "{MENTION} was banned successfully.")
                 .AddConfigEntry("insanitybot.moderation.unban.success", "{ID} was unbanned successfully.")
+                .AddConfigEntry("insanitybot.moderation.clear_modlog.success", "{MENTION}'s modlog was cleared successfully.")
 
                 .AddConfigEntry("insanitybot.moderation.verbal_warn.failure", "{MENTION} could not be verbally warned.")
                 .AddConfigEntry("insanitybot.moderation.unwarn.failure", "{MENTION} could not be unwarned.")
@@ -142,6 +143,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.kick.failure", "{MENTION} could not be kicked.")
                 .AddConfigEntry("insanitybot.moderation.ban.failure", "{MENTION} could not be banned.")
                 .AddConfigEntry("insanitybot.moderation.unban.failure", "{ID} could not be unbanned.")
+                .AddConfigEntry("insanitybot.moderation.clear_modlog.failure", "{MENTION}'s modlog could not be cleared.")
 
                 .AddConfigEntry("insanitybot.moderation.verbal_warn.reason", "{MENTION}, {REASON}")
                 .AddConfigEntry("insanitybot.moderation.warn.reason", "You were warned for {REASON}.")
