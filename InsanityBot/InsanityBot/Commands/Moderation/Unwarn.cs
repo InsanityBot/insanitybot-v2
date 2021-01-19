@@ -36,6 +36,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 UserModlog modlog = member.GetUserModlog();
                 modlog.Modlog.RemoveAt(WarningIndex);
+                modlog.ModlogEntryCount--;
                 member.SetUserModlog(modlog);
 
                 embedBuilder = new DiscordEmbedBuilder

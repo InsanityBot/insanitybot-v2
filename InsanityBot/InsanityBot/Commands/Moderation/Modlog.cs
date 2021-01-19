@@ -55,12 +55,12 @@ namespace InsanityBot.Commands.Moderation
                 {
                     modlogEmbed.Color = DiscordColor.Red;
                     for(Byte b = 0; b < ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"])
-                        && b < modlog.Modlog.Count; b++)
+                        && b < modlog.ModlogEntryCount; b++)
                     {
                         modlogEmbed.Description += $"{modlog.Modlog[b].Type.ToString().ToUpper()}: {modlog.Modlog[b].Time} - {modlog.Modlog[b].Reason}\n";
                     }
                     
-                    if(modlog.Modlog.Count > ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]))
+                    if(modlog.ModlogEntryCount > ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]))
                     {
                         modlogEmbed.Description += GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.overflow"],
                             ctx, user);
