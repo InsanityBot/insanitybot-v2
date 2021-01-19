@@ -34,5 +34,12 @@ namespace InsanityBot.Commands.Moderation
 
             await exportChannel.SendFileAsync($"./data/{member.Id}/modlog.json");
         }
+
+        [Command("exportmodlog")]
+        public async Task ExportModlogCommand(CommandContext ctx,
+            Boolean dmFile = false)
+        {
+            await ExportModlogCommand(ctx, ctx.Member, dmFile);
+        }
     }
 }
