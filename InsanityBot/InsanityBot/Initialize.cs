@@ -155,7 +155,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.ban.reason", "You were banned for {REASON}.")
 
                 .AddConfigEntry("insanitybot.moderation.no_reason_given", "No reason given")
-                .AddConfigEntry("insanitybot.moderation.export_modlog.no_modlog", "{MENTION} does not have an existing modlog.")
+                .AddConfigEntry("insanitybot.moderation.export_modlog.no_modlog", "{MENTION} does not have an existing modlog file.")
 
                 .AddConfigEntry("insanitybot.commands.modlog.embed_title", "Modlog of {USERNAME}")
                 .AddConfigEntry("insanitybot.commands.modlog.empty_modlog", ":white_check_mark: This member has no modlog entries")
