@@ -38,7 +38,7 @@ namespace InsanityBot.Commands.Moderation
             if(!File.Exists($"./data/{member.Id}/modlog.json"))
             {
                 await ctx.RespondAsync(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.export_modlog.no_modlog"],
-                    ctx, member);
+                    ctx, member));
                 return;
             }
 
