@@ -179,6 +179,10 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<Ban>();
 
                 CommandsExtension.RegisterCommands<Modlog>();
+                CommandsExtension.RegisterCommands<ExportModlog>();
+                CommandsExtension.RegisterCommands<ClearModlog>();
+
+                CommandsExtension.RegisterCommands<Purge>();
             }
         }
 

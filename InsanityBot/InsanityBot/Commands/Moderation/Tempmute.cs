@@ -76,7 +76,7 @@ namespace InsanityBot.Commands.Moderation
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
-                        Text = "InsanityBot - ExaInsanity 2020"
+                        Text = "InsanityBot - ExaInsanity 2020-2021"
                     }
                 };
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
@@ -113,7 +113,7 @@ namespace InsanityBot.Commands.Moderation
                 Color = DiscordColor.Red,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
-                    Text = "InsanityBot - ExaInsanity 2020"
+                    Text = "InsanityBot - ExaInsanity 2020-2021"
                 }
             };
 
@@ -138,7 +138,7 @@ namespace InsanityBot.Commands.Moderation
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
-                        Text = "InsanityBot - ExaInsanity 2020"
+                        Text = "InsanityBot - ExaInsanity 2020-2021"
                     }
                 };
                 _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
@@ -156,7 +156,7 @@ namespace InsanityBot.Commands.Moderation
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
-                        Text = "InsanityBot - ExaInsanity 2020"
+                        Text = "InsanityBot - ExaInsanity 2020-2021"
                     }
                 };
             }

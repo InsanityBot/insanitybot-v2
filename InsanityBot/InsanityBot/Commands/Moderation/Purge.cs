@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -8,35 +11,35 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
-using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
 using static System.Convert;
-using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
-    public partial class Warn : BaseCommandModule
+    public class Purge : BaseCommandModule
     {
-        [Command("warn")]
-        public async Task WarnCommand(CommandContext ctx,
-            DiscordMember target,
+        [Command("purge")]
+        [Aliases("clear")]
+        public async Task PurgeCommand(CommandContext ctx,
+            Int32 messageCount,
 
             [RemainingText]
             String arguments = "usedefault")
         {
-            if (arguments.StartsWith('-'))
+            if(arguments.StartsWith('-'))
             {
-                await ParseWarnCommand(ctx, target, arguments);
+                await ParsePurgeCommand(ctx, messageCount, arguments);
                 return;
             }
-            await ExecuteWarn(ctx, target, arguments, false, false);
+            await ExecutePurgeCommand(ctx, messageCount, false, arguments);
         }
 
-        private async Task ParseWarnCommand(CommandContext ctx, DiscordMember target, String arguments)
+        private async Task ParsePurgeCommand(CommandContext ctx,
+            Int32 messageCount,
+            String arguments)
         {
             String cmdArguments = arguments;
             try
@@ -44,59 +47,54 @@ namespace InsanityBot.Commands.Moderation
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
                     cmdArguments += " --reason usedefault";
 
-                await Parser.Default.ParseArguments<WarnOptions>(cmdArguments.Split(' '))
+                await Parser.Default.ParseArguments<PurgeOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteWarn(ctx, target, String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                        await ExecutePurgeCommand(ctx, messageCount, o.Silent, String.Join(' ', o.Reason));
                     });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 DiscordEmbedBuilder failed = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.warn.failure"],
-                        ctx, target),
+                    Description = InsanityBot.LanguageConfig["insanitybot.moderation.purge.failure"],
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         Text = "InsanityBot - ExaInsanity 2020-2021"
                     }
                 };
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                 await ctx.RespondAsync(embed: failed.Build());
             }
         }
 
-        private async Task ExecuteWarn(CommandContext ctx,
-            DiscordMember target,
-            String reason,
-            Boolean silent, 
-            Boolean dmMember)
+        private async Task ExecutePurgeCommand(CommandContext ctx,
+            Int32 messageCount,
+            Boolean silent,
+            String reason)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.warn"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.purge"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
-            //if silent - delete the warn command
+            //if silent delete command
             if (silent)
                 await ctx.Message.DeleteAsync();
 
-            //actually do something with the usedefault value
-            String WarnReason = reason switch
+            String ModlogEmbedReason = reason switch
             {
-                "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"],
-                                ctx, target),
-                _ => GetFormattedString(reason, ctx, target)
+                "usedefault" => InsanityBot.LanguageConfig["insanitybot.moderation.purge.default_reason"],
+                _ => reason
             };
 
-            DiscordEmbedBuilder embedBuilder = null;
-
-            DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder tmpEmbedBuilder = null, moderationEmbedBuilder = new DiscordEmbedBuilder
             {
-                Title = "Warn",
+                Title = "Purge",
                 Color = DiscordColor.Yellow,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
@@ -105,31 +103,43 @@ namespace InsanityBot.Commands.Moderation
             };
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
-                .AddField("Member", target.Mention, true)
-                .AddField("Reason", WarnReason, true);
+                .AddField("Messages", messageCount.ToString(), true)
+                .AddField("Reason", ModlogEmbedReason, true);
 
             try
             {
-                target.AddModlogEntry(ModlogEntryType.warn, WarnReason);
-                embedBuilder = new DiscordEmbedBuilder
+                Byte batches = (Byte)(messageCount / 100), 
+                    leftover = (Byte)((messageCount % 100) + 1);
+
+                IReadOnlyList<DiscordMessage> messageHolder = null;
+
+                for(Byte b = 0; b < batches; b++)
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.warn.success"],
-                        ctx, target),
+                    messageHolder = await ctx.Channel.GetMessagesAsync(100);
+                    _ = ctx.Channel.DeleteMessagesAsync(messageHolder);
+                }
+
+                messageHolder = await ctx.Channel.GetMessagesAsync(leftover);
+                _ = ctx.Channel.DeleteMessagesAsync(messageHolder);
+
+                tmpEmbedBuilder = new DiscordEmbedBuilder
+                {
+                    Description = InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"],
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         Text = "InsanityBot - ExaInsanity 2020-2021"
                     }
                 };
+
                 _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                embedBuilder = new DiscordEmbedBuilder
+                tmpEmbedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.warn.failure"],
-                        ctx, target),
+                    Description = InsanityBot.LanguageConfig["insanitybot.moderation.purge.failure"],
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
@@ -141,19 +151,17 @@ namespace InsanityBot.Commands.Moderation
             finally
             {
                 if(!silent)
-                    await ctx.RespondAsync(embed: embedBuilder.Build());
-                if(dmMember)
                 {
-                    embedBuilder.Description = GetReason(InsanityBot.LanguageConfig["insanitybot.moderation.warn.reason"], WarnReason);
-                    await (await target.CreateDmChannelAsync()).SendMessageAsync(embed: embedBuilder.Build());
+                    var msg = await ctx.RespondAsync(embed: tmpEmbedBuilder.Build());
+                    Thread.Sleep(5000);
+                    await msg.DeleteAsync();
                 }
             }
         }
     }
 
-
-    public class WarnOptions : ModerationOptionBase
+    public class PurgeOptions : ModerationOptionBase
     {
-        
+
     }
 }

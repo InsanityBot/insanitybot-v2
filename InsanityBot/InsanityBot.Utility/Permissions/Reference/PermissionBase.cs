@@ -13,12 +13,13 @@ namespace InsanityBot.Utility.Permissions.Reference
         public Boolean IsAdministrator { get; set; }
 
         [JsonIgnore]
-        public static Dictionary<String, Boolean> DefaultPermissions = new Dictionary<String, Boolean>
+        public static readonly Dictionary<String, Boolean> DefaultPermissions = new Dictionary<String, Boolean>
         {
             { "insanitybot.miscellaneous.say", false },
             { "insanitybot.miscellaneous.say.embed", false },
             { "insanitybot.moderation.verbal_warn", false },
             { "insanitybot.moderation.warn", false },
+            { "insanitybot.moderation.unwarn", false },
             { "insanitybot.moderation.mute", false },
             { "insanitybot.moderation.tempmute", false },
             { "insanitybot.moderation.unmute", false },
@@ -28,8 +29,11 @@ namespace InsanityBot.Utility.Permissions.Reference
             { "insanitybot.moderation.ban", false },
             { "insanitybot.moderation.tempban", false },
             { "insanitybot.moderation.unban", false },
-            { "insanitybot.moderation.verballog", false },
-            { "insanitybot.moderation.modlog", true }
+            { "insanitybot.moderation.verballog", true },
+            { "insanitybot.moderation.modlog", true },
+            { "insanitybot.moderation.export_modlog", true },
+            { "insanitybot.moderation.clear_modlog", false },
+            { "insanitybot.moderation.purge", false }
         };
 
         protected PermissionBase(UInt64 Id, Dictionary<String, Boolean> Permissions)

@@ -68,7 +68,7 @@ namespace InsanityBot.Commands.Moderation
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
-                        Text = "InsanityBot - ExaInsanity 2020"
+                        Text = "InsanityBot - ExaInsanity 2020-2021"
                     }
                 };
                 InsanityBot.Client.Logger.LogError(new EventId(1134, "Unmute"), $"{e}: {e.Message}");
@@ -117,7 +117,7 @@ namespace InsanityBot.Commands.Moderation
                 Color = DiscordColor.SpringGreen,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
-                    Text = "InsanityBot - ExaInsanity 2020"
+                    Text = "InsanityBot - ExaInsanity 2020-2021"
                 }
             };
 
@@ -156,7 +156,7 @@ namespace InsanityBot.Commands.Moderation
                         Color = DiscordColor.Green,
                         Footer = new DiscordEmbedBuilder.EmbedFooter
                         {
-                            Text = "InsanityBot - ExaInsanity 2020"
+                            Text = "InsanityBot - ExaInsanity 2020-2021"
                         }
                     };
 
@@ -187,7 +187,7 @@ namespace InsanityBot.Commands.Moderation
                         Color = DiscordColor.Red,
                         Footer = new DiscordEmbedBuilder.EmbedFooter
                         {
-                            Text = "InsanityBot - ExaInsanity 2020"
+                            Text = "InsanityBot - ExaInsanity 2020-2021"
                         }
                     };
                 InsanityBot.Client.Logger.LogError(new EventId(1134, "Unmute"), $"{e}: {e.Message}");
