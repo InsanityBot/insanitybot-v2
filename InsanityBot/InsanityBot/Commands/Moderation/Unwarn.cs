@@ -12,6 +12,8 @@ using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 
+using Microsoft.Extensions.Logging;
+
 using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
@@ -62,6 +64,7 @@ namespace InsanityBot.Commands.Moderation
                         Text = "InsanityBot - ExaInsanity 2020-2021"
                     }
                 };
+                InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally
             {

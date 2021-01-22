@@ -181,6 +181,8 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<Modlog>();
                 CommandsExtension.RegisterCommands<ExportModlog>();
                 CommandsExtension.RegisterCommands<ClearModlog>();
+
+                CommandsExtension.RegisterCommands<Purge>();
             }
         }
 

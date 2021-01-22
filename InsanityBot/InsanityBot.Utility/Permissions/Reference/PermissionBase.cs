@@ -32,7 +32,8 @@ namespace InsanityBot.Utility.Permissions.Reference
             { "insanitybot.moderation.verballog", true },
             { "insanitybot.moderation.modlog", true },
             { "insanitybot.moderation.export_modlog", true },
-            { "insanitybot.moderation.clear_modlog", false }
+            { "insanitybot.moderation.clear_modlog", false },
+            { "insanitybot.moderation.purge", false }
         };
 
         protected PermissionBase(UInt64 Id, Dictionary<String, Boolean> Permissions)

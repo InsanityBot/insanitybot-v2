@@ -132,6 +132,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.ban.success", "{MENTION} was banned successfully.")
                 .AddConfigEntry("insanitybot.moderation.unban.success", "{ID} was unbanned successfully.")
                 .AddConfigEntry("insanitybot.moderation.clear_modlog.success", "{MENTION}'s modlog was cleared successfully.")
+                .AddConfigEntry("insanitybot.moderation.purge.success", "Messages were deleted successfully.")
 
                 .AddConfigEntry("insanitybot.moderation.verbal_warn.failure", "{MENTION} could not be verbally warned.")
                 .AddConfigEntry("insanitybot.moderation.unwarn.failure", "{MENTION} could not be unwarned.")
@@ -144,6 +145,7 @@ namespace InsanityBot
                 .AddConfigEntry("insanitybot.moderation.ban.failure", "{MENTION} could not be banned.")
                 .AddConfigEntry("insanitybot.moderation.unban.failure", "{ID} could not be unbanned.")
                 .AddConfigEntry("insanitybot.moderation.clear_modlog.failure", "{MENTION}'s modlog could not be cleared.")
+                .AddConfigEntry("insanitybot.moderation.purge.failure", "Messages could not be deleted.")
 
                 .AddConfigEntry("insanitybot.moderation.verbal_warn.reason", "{MENTION}, {REASON}")
                 .AddConfigEntry("insanitybot.moderation.warn.reason", "You were warned for {REASON}.")
@@ -156,6 +158,7 @@ namespace InsanityBot
 
                 .AddConfigEntry("insanitybot.moderation.no_reason_given", "No reason given")
                 .AddConfigEntry("insanitybot.moderation.export_modlog.no_modlog", "{MENTION} does not have an existing modlog file.")
+                .AddConfigEntry("insanitybot.moderation.purge.default_reason", "No reason given.")
 
                 .AddConfigEntry("insanitybot.commands.modlog.embed_title", "Modlog of {USERNAME}")
                 .AddConfigEntry("insanitybot.commands.modlog.empty_modlog", ":white_check_mark: This member has no modlog entries")
