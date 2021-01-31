@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
+using InsanityBot.Utility.Datafixers;
+
 namespace InsanityBot.Utility
 {
-    public interface IConfiguration<T>
+    public interface IConfiguration<T> : IDatafixable
     {
-        public String DataVersion { get; set; }
-
         public Dictionary<String, T> Configuration { get; set; }
     }
 }
