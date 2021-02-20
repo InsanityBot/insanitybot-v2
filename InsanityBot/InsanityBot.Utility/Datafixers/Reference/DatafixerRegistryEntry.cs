@@ -5,27 +5,30 @@ using System.Text;
 using System.Threading.Tasks;
 
 using InsanityBot.Utility.Exceptions;
+using InsanityBot.Utility.Reference;
 
 namespace InsanityBot.Utility.Datafixers.Reference
 {
     public struct DatafixerRegistryEntry
     {
-        public Type Datafixable { get; set; }
-        public Type Datafixer { get; set; }
+        public Guid DatafixerGuid { get; init; }
 
-        public DatafixerRegistryEntry(Type Datafixable, Type Datafixer)
+        // this is just an instance to skip some slow reflection nonsense, technically passing a type would work too
+        // try not leaking any ram in your IDatafixer implementation since the instance doesnt get destroyed at runtime
+        public IDatafixer Datafixer { get; init; }
+        public Type DatafixerTarget { get; init; }
+        public Boolean BreakingChange { get; init; }
+        public UInt32 DatafixerId { get; init; } // please dont attempt to datafix IDatafixable's you didnt implement, thatll just cause confusion
+
+        public SortedDatafixerRegistryEntry ToSortedDatafixerRegistryEntry()
         {
-            if (Datafixable.GetInterfaces().Contains(typeof(IDatafixable)))
-                this.Datafixable = Datafixable;
-            else
-                throw new InvalidDatafixerRegistryEntryException(Datafixable, Datafixer,
-                    "Error creating datafixer registry entry: the passed datafixable does not implement InsanityBot.Utility.Datafixers.IDatafixable");
-
-            if (Datafixer.GetInterfaces().Contains(typeof(IDatafixer)))
-                this.Datafixer = Datafixer;
-            else
-                throw new InvalidDatafixerRegistryEntryException(Datafixable, Datafixer,
-                    "Error creating datafixer registry entry: the passed datafixer does not implement InsanityBot.Utility.Datafixers.IDatafixer");
+            return new SortedDatafixerRegistryEntry
+            {
+                DatafixerGuid = this.DatafixerGuid,
+                Datafixer = this.Datafixer,
+                BreakingChange = this.BreakingChange,
+                DatafixerId = this.DatafixerId
+            };
         }
     }
 }

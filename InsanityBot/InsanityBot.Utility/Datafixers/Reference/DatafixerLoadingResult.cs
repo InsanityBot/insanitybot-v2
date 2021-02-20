@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace InsanityBot.Utility.Datafixers.Reference
 {
-    public enum DatafixerLoadingResult
+    public enum DatafixerLoadingResult : Int16
     {
         Success,
         CouldNotLoad,
-        CouldNotInstantiate,
-        ExceededTime //used if the datafixer just doesnt want to return a load state
+        ExceededTime 
     }
 }

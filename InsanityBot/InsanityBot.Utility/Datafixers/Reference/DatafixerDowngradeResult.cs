@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InsanityBot.Utility.Datafixers.Reference
 {
-    public enum DatafixerDowngradeResult
+    public enum DatafixerDowngradeResult : Int16
     {
         Success,
         PartialSuccess,
