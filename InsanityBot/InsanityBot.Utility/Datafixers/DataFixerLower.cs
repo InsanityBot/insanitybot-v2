@@ -18,5 +18,6 @@ namespace InsanityBot.Utility.Datafixers
             Registry = new DatafixerRegistry(registryMode);
         }
         
+
     }
 }

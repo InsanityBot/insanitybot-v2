@@ -156,5 +156,33 @@ namespace InsanityBot.Utility.Datafixers
             RegistryItemRemovedEvent(this);
         }
         #endregion
+
+        // interact with the private registry
+        #region API
+        public IEnumerable<DatafixerRegistryEntry> GetDatafixers(Type type)
+        {
+            return GetRequiredDatafixersByTypeMethodHandler(type);
+        }
+
+        public IEnumerable<DatafixerRegistryEntry> GetDatafixers(String typename)
+        {
+            return GetRequiredDatafixersByStringMethodHandler(typename);
+        }
+
+        public void SortDatafixers()
+        {
+            SortRawRegistryMethodHandler();
+        }
+
+        public void AddDatafixer(DatafixerRegistryEntry datafixer)
+        {
+            AddRegistryItemMethodHandler(datafixer);
+        }
+
+        public void RemoveDatafixer(DatafixerRegistryEntry datafixer)
+        {
+            RemoveRegistryItemMethodHandler(datafixer);
+        }
+        #endregion
     }
 }
