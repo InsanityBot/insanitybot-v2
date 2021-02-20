@@ -12,6 +12,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Configs\lang.json" />
+    <None Remove="Configs\main.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Configs\lang.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configs\main.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
     <PackageReference Include="System.IO.Compression" Version="4.3.0" />
     <PackageReference Include="TimeSpanParserUtil" Version="1.2.0" />
