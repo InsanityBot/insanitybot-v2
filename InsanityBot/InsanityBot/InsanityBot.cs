@@ -8,6 +8,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Config;
+using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
 
@@ -33,6 +34,8 @@ namespace InsanityBot
 
         public static LanguageConfigurationManager LanguageManager;
         public static LanguageConfiguration LanguageConfig;
+
+        public static DataFixerLower DataFixerLower;
     }
 }
 #pragma warning restore CA2211

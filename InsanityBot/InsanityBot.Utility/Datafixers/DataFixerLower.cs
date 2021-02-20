@@ -13,9 +13,9 @@ namespace InsanityBot.Utility.Datafixers
     {
         private readonly DatafixerRegistry Registry;
 
-        public DataFixerLower()
+        public DataFixerLower(Byte registryMode)
         {
-            Registry = new DatafixerRegistry(0);
+            Registry = new DatafixerRegistry(registryMode);
         }
         
     }

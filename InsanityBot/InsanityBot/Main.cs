@@ -15,6 +15,7 @@ using DSharpPlus.Exceptions;
 using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Commands.Moderation;
 using InsanityBot.Utility.Config;
+using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
@@ -168,6 +169,7 @@ namespace InsanityBot
         private static void InitializeAll()
         {
             TimeHandler.Start();
+            DataFixerLower = new DataFixerLower(Convert.ToByte(Config["insanitybot.datafixers.registry_mode"]));
         }
 
         private static async Task HandleTCPConnections(Int64 Port)

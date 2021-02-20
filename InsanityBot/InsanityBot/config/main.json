@@ -36,6 +36,7 @@
     "insanitybot.commands.tickets.presets.allow_create_command": true,
     "insanitybot.commands.tickets.presets.allow_delete_command": true,
     "insanitybot.commands.tickets.presets.allow_creation_by_preset_identifier": true,
+    "insanitybot.datafixers.registry_mode": 0,
     "insanitybot.logging.log_message_delete": true,
     "insanitybot.logging.log_message_edit": true,
     "insanitybot.logging.log_member_join": true,
