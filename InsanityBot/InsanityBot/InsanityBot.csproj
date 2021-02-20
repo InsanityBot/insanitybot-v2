@@ -12,15 +12,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Configs\lang.json" />
-    <None Remove="Configs\main.json" />
+    <None Remove="config\lang.json" />
+    <None Remove="config\main.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Configs\lang.json">
+    <EmbeddedResource Include="config\lang.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Configs\main.json">
+    <EmbeddedResource Include="config\main.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
