@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,6 +76,8 @@ namespace InsanityBot.Utility.Datafixers
         {
             foreach(var v in RawRegistry)
             {
+                if (!SortedRegistry.ContainsKey(v.DatafixerTarget))
+                    SortedRegistry.Add(v.DatafixerTarget, new List<SortedDatafixerRegistryEntry>());
                 SortedRegistry[v.DatafixerTarget].Add(v.ToSortedDatafixerRegistryEntry());
                 RawRegistry.Remove(v);
             }
