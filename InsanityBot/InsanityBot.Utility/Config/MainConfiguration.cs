@@ -22,7 +22,7 @@ namespace InsanityBot.Utility.Config
 
         public MainConfiguration()
         {
-            DataVersion = "2.0.0-dev.00014";
+            DataVersion = "2.0.0-dev.00016";
             Configuration = new Dictionary<String, Object>();
             Token = " ";
             GuildId = 0;
