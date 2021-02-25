@@ -11,6 +11,6 @@ namespace InsanityBot.Utility.Datafixers.Reference
         Success,
         PartialSuccess,
         Failure,
-        AlreadyUpdated
+        AlreadyUpgraded
     }
 }
