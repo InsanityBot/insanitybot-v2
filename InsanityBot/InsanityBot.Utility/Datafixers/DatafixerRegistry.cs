@@ -19,10 +19,10 @@ namespace InsanityBot.Utility.Datafixers
         private delegate void AddRegistryItemDelegate(DatafixerRegistryEntry item);
         private delegate void RemoveRegistryItemDelegate(DatafixerRegistryEntry item);
 
-        internal delegate void RawRegistryDeletedEventHandler(DatafixerRegistry sender);
-        internal delegate void RegistrySortedEventHandler(DatafixerRegistry sender);
-        internal delegate void RegistryItemAddedEventHandler(DatafixerRegistry sender);
-        internal delegate void RegistryItemRemovedEventHandler(DatafixerRegistry sender);
+        internal delegate void RawRegistryDeletedEventHandler();
+        internal delegate void RegistrySortedEventHandler();
+        internal delegate void RegistryItemAddedEventHandler();
+        internal delegate void RegistryItemRemovedEventHandler();
 
 
         private readonly List<DatafixerRegistryEntry> RawRegistry;
@@ -92,7 +92,7 @@ namespace InsanityBot.Utility.Datafixers
                 RawRegistry.Remove(v);
             }
             IsSorted = true;
-            RegistrySortedEvent(this);
+            RegistrySortedEvent();
         }
 
         private void AddRegistryItem_Mode0(DatafixerRegistryEntry item)
@@ -100,7 +100,7 @@ namespace InsanityBot.Utility.Datafixers
             RawRegistry.Add(item);
             if (IsSorted)
                 IsSorted = false;
-            RegistryItemAddedEvent(this);
+            RegistryItemAddedEvent();
         }
 
         private void RemoveRegistryItem_Mode0(DatafixerRegistryEntry item)
@@ -114,7 +114,7 @@ namespace InsanityBot.Utility.Datafixers
             else
                 throw new DatafixerNotFoundException("Attempted to remove a datafixer from the registry that was not registered", item);
 
-            RegistryItemRemovedEvent(this);
+            RegistryItemRemovedEvent();
         }
         #endregion
 
@@ -139,21 +139,21 @@ namespace InsanityBot.Utility.Datafixers
             foreach(var v in RawRegistry)
                 SortedRegistry[v.DatafixerTarget].Add(v.ToSortedDatafixerRegistryEntry());
             IsSorted = true;
-            RegistrySortedEvent(this);
+            RegistrySortedEvent();
         }
 
         private void AddRegistryItem_Mode1(DatafixerRegistryEntry item)
         {
             RawRegistry.Add(item);
             SortedRegistry[item.DatafixerTarget].Add(item.ToSortedDatafixerRegistryEntry());
-            RegistryItemAddedEvent(this);
+            RegistryItemAddedEvent();
         }
 
         private void RemoveRegistryItem_Mode1(DatafixerRegistryEntry item)
         {
             RawRegistry.Remove(item);
             SortedRegistry[item.DatafixerTarget].Remove(item.ToSortedDatafixerRegistryEntry());
-            RegistryItemRemovedEvent(this);
+            RegistryItemRemovedEvent();
         }
         #endregion
 
