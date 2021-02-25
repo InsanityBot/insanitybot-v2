@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+using InsanityBot.Utility.Datafixers;
+
 using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Language
@@ -21,7 +23,9 @@ namespace InsanityBot.Utility.Language
         public LanguageConfiguration Deserialize(String Filename)
         {
             StreamReader reader = new StreamReader(File.OpenRead(Filename));
-            return JsonConvert.DeserializeObject<LanguageConfiguration>(reader.ReadToEnd());
+
+            LanguageConfiguration config = (LanguageConfiguration)JsonConvert.DeserializeObject(reader.ReadToEnd());
+            return (LanguageConfiguration)DataFixerLower.UpgradeData(config);
         }
 
         public LanguageConfigurationManager RemoveConfigEntry(String Identifier)

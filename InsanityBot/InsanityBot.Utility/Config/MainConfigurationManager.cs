@@ -5,6 +5,8 @@ using System.Text;
 
 using DSharpPlus.Entities;
 
+using InsanityBot.Utility.Datafixers;
+
 using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Config
@@ -29,7 +31,9 @@ namespace InsanityBot.Utility.Config
         public MainConfiguration Deserialize(String Filename)
         {
             using StreamReader reader = new StreamReader(File.OpenRead(Filename));
-            return JsonConvert.DeserializeObject<MainConfiguration>(reader.ReadToEnd());
+
+            MainConfiguration config = (MainConfiguration)JsonConvert.DeserializeObject(reader.ReadToEnd());
+            return (MainConfiguration)DataFixerLower.UpgradeData(config);
         }
 
         public void Serialize(MainConfiguration Config, String Filename)
