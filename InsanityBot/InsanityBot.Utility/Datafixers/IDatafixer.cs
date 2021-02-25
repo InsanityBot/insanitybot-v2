@@ -17,11 +17,6 @@ namespace InsanityBot.Utility.Datafixers
 
         public DatafixerDowngradeResult DowngradeData(ref Datafixable data);
 
-        public static DatafixerLoadingResult Load()
-        {
-            return DatafixerLoadingResult.Success;
-        }
-
         public Datafixable ExportUpgradedData(Datafixable data);
 
         public Datafixable ExportDowngradedData(Datafixable data);

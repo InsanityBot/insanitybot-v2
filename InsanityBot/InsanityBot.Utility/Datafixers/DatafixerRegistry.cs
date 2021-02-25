@@ -29,11 +29,11 @@ namespace InsanityBot.Utility.Datafixers
         private readonly Dictionary<Type, List<SortedDatafixerRegistryEntry>> SortedRegistry;
         private Boolean IsSorted;
 
-        private GetRequiredDatafixersByTypeDelegate GetRequiredDatafixersByTypeMethodHandler;
-        private GetRequiredDatafixersByStringDelegate GetRequiredDatafixersByStringMethodHandler;
-        private SortRawRegistryDelegate SortRawRegistryMethodHandler;
-        private AddRegistryItemDelegate AddRegistryItemMethodHandler;
-        private RemoveRegistryItemDelegate RemoveRegistryItemMethodHandler;
+        private readonly GetRequiredDatafixersByTypeDelegate GetRequiredDatafixersByTypeMethodHandler;
+        private readonly GetRequiredDatafixersByStringDelegate GetRequiredDatafixersByStringMethodHandler;
+        private readonly SortRawRegistryDelegate SortRawRegistryMethodHandler;
+        private readonly AddRegistryItemDelegate AddRegistryItemMethodHandler;
+        private readonly RemoveRegistryItemDelegate RemoveRegistryItemMethodHandler;
 
         public DatafixerRegistry(Byte RegistryMode)
         {
@@ -182,6 +182,12 @@ namespace InsanityBot.Utility.Datafixers
         public void RemoveDatafixer(DatafixerRegistryEntry datafixer)
         {
             RemoveRegistryItemMethodHandler(datafixer);
+        }
+
+        internal Dictionary<Type, List<SortedDatafixerRegistryEntry>> GetAllDatafixers()
+        {
+            SortRawRegistryMethodHandler();
+            return SortedRegistry;
         }
         #endregion
     }
