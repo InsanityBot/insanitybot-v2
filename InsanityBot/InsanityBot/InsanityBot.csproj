@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InsanityBot.Utility\InsanityBot.Utility.csproj" />
+    <ProjectReference Include="..\Insanitybot.Datafixers\Insanitybot.Datafixers.csproj" />
   </ItemGroup>
 
 </Project>

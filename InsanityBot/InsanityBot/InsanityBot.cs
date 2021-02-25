@@ -34,8 +34,6 @@ namespace InsanityBot
 
         public static LanguageConfigurationManager LanguageManager;
         public static LanguageConfiguration LanguageConfig;
-
-        public static DataFixerLower DataFixerLower;
     }
 }
 #pragma warning restore CA2211

@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0-dev.00014",
+  "DataVersion": "2.0.0-dev.00016",
   "Configuration": {
     "insanitybot.modules.experience": true,
     "insanitybot.modules.logging": true,

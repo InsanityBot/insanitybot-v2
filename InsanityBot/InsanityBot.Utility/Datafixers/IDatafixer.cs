@@ -20,10 +20,5 @@ namespace InsanityBot.Utility.Datafixers
         public Datafixable ExportUpgradedData(Datafixable data);
 
         public Datafixable ExportDowngradedData(Datafixable data);
-
-        public static String NewDataVersion { get; }
-        public static String OldDataVersion { get; }
-        public static UInt32 DatafixerId { get; }
-        public static Boolean BreakingChange { get; }
     }
 }

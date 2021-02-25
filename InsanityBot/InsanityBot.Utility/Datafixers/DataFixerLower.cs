@@ -6,24 +6,37 @@ using System.Threading.Tasks;
 using System.Reflection;
 
 using InsanityBot.Utility.Datafixers.Reference;
+using InsanityBot.Utility.Reference;
 
 namespace InsanityBot.Utility.Datafixers
 {
-    public class DataFixerLower //code style: capital F intended
+    public static class DataFixerLower //code style: capital F intended
     {
-        private readonly DatafixerRegistry Registry;
+        private static DatafixerRegistry Registry;
 
-        public DataFixerLower(Byte registryMode)
+        public static void Initialize(Byte registryMode)
         {
             Registry = new DatafixerRegistry(registryMode);
         }
 
-        public void SortRegistry()
+        public static void SortRegistry()
         {
             Registry.SortDatafixers();
         }
 
-        public void LoadAllDatafixers()
+        public static void AddDatafixer(IDatafixer datafixer, Type target)
+        {
+            Registry.AddDatafixer(new DatafixerRegistryEntry
+            {
+                Datafixer = datafixer,
+                BreakingChange = datafixer.BreakingChange,
+                DatafixerGuid = Guid.NewGuid(),
+                DatafixerId = datafixer.DatafixerId,
+                DatafixerTarget = target
+            });
+        }
+
+        public static void LoadAllDatafixers()
         {
             var datafixers = Registry.GetAllDatafixers();
             foreach(var v in datafixers)
@@ -35,7 +48,7 @@ namespace InsanityBot.Utility.Datafixers
             }
         }
 
-        public IDatafixable UpgradeData<Datafixable>(Datafixable data)
+        public static IDatafixable UpgradeData<Datafixable>(Datafixable data)
             where Datafixable : IDatafixable
         {
             Datafixable dataReference = data;
@@ -49,7 +62,7 @@ namespace InsanityBot.Utility.Datafixers
             return dataReference;
         }
 
-        public IDatafixable DowngradeData<Datafixable>(Datafixable data)
+        public static IDatafixable DowngradeData<Datafixable>(Datafixable data)
             where Datafixable : IDatafixable
         {
             Datafixable dataReference = data;
@@ -63,7 +76,7 @@ namespace InsanityBot.Utility.Datafixers
             return dataReference;
         }
 
-        public IDatafixable ExportUpgradedData<Datafixable>(Datafixable data)
+        public static IDatafixable ExportUpgradedData<Datafixable>(Datafixable data)
             where Datafixable : IDatafixable
         {
             Datafixable dataReference = data;
@@ -77,7 +90,7 @@ namespace InsanityBot.Utility.Datafixers
             return dataReference;
         }
 
-        public IDatafixable ExportDowngradedData<Datafixable>(Datafixable data)
+        public static IDatafixable ExportDowngradedData<Datafixable>(Datafixable data)
             where Datafixable : IDatafixable
         {
             Datafixable dataReference = data;

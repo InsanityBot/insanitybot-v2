@@ -169,7 +169,8 @@ namespace InsanityBot
         private static void InitializeAll()
         {
             TimeHandler.Start();
-            DataFixerLower = new DataFixerLower(Convert.ToByte(Config["insanitybot.datafixers.registry_mode"]));
+            DataFixerLower.Initialize(Convert.ToByte(Config["insanitybot.datafixers.registry_mode"]));
+            RegisterDatafixers();
         }
 
         private static async Task HandleTCPConnections(Int64 Port)

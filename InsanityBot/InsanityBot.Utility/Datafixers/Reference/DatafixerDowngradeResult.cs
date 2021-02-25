@@ -10,6 +10,7 @@ namespace InsanityBot.Utility.Datafixers.Reference
     {
         Success,
         PartialSuccess,
-        Failure
+        Failure,
+        AlreadyDowngraded
     }
 }
