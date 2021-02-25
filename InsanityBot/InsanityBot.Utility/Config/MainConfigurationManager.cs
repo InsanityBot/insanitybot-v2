@@ -32,7 +32,7 @@ namespace InsanityBot.Utility.Config
         {
             using StreamReader reader = new StreamReader(File.OpenRead(Filename));
 
-            MainConfiguration config = (MainConfiguration)JsonConvert.DeserializeObject(reader.ReadToEnd());
+            MainConfiguration config = JsonConvert.DeserializeObject<MainConfiguration>(reader.ReadToEnd());
             return (MainConfiguration)DataFixerLower.UpgradeData(config);
         }
 

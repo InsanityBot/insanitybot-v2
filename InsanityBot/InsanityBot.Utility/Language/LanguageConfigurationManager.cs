@@ -24,7 +24,7 @@ namespace InsanityBot.Utility.Language
         {
             StreamReader reader = new StreamReader(File.OpenRead(Filename));
 
-            LanguageConfiguration config = (LanguageConfiguration)JsonConvert.DeserializeObject(reader.ReadToEnd());
+            LanguageConfiguration config = JsonConvert.DeserializeObject<LanguageConfiguration>(reader.ReadToEnd());
             return (LanguageConfiguration)DataFixerLower.UpgradeData(config);
         }
 
