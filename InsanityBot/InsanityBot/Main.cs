@@ -14,6 +14,7 @@ using DSharpPlus.Exceptions;
 
 using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Commands.Moderation;
+using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
@@ -66,6 +67,12 @@ namespace InsanityBot
                 MinimumLogLevel = LogLevel.Information
 #endif
             };
+
+#if DEBUG
+            DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
+#else
+            DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Warning;
+#endif
 
             //create and connect client
             Client = new DiscordClient(ClientConfiguration);

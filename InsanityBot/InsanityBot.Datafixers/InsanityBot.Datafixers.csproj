@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Helium.Commons.Logging" Version="0.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\InsanityBot.Utility\InsanityBot.Utility.csproj" />
   </ItemGroup>
 
