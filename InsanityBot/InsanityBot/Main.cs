@@ -36,6 +36,16 @@ namespace InsanityBot
                     CommandLineOptions = o;
                 });
 
+            // initialize datafixers
+#if DEBUG
+            DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
+#else
+            DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Warning;
+#endif
+
+            DataFixerLower.Initialize(0); //this can be switched out for 1 if you need to, insanitybot default is 0
+            RegisterDatafixers();
+
             //load main config
             ConfigManager = new MainConfigurationManager();
             LanguageManager = new LanguageConfigurationManager();
@@ -67,12 +77,6 @@ namespace InsanityBot
                 MinimumLogLevel = LogLevel.Information
 #endif
             };
-
-#if DEBUG
-            DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
-#else
-            DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Warning;
-#endif
 
             //create and connect client
             Client = new DiscordClient(ClientConfiguration);
@@ -176,8 +180,6 @@ namespace InsanityBot
         private static void InitializeAll()
         {
             TimeHandler.Start();
-            DataFixerLower.Initialize(Convert.ToByte(Config["insanitybot.datafixers.registry_mode"]));
-            RegisterDatafixers();
         }
 
         private static async Task HandleTCPConnections(Int64 Port)
