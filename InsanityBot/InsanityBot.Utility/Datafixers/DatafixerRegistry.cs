@@ -19,12 +19,6 @@ namespace InsanityBot.Utility.Datafixers
         private delegate void AddRegistryItemDelegate(DatafixerRegistryEntry item);
         private delegate void RemoveRegistryItemDelegate(DatafixerRegistryEntry item);
 
-        internal delegate void RawRegistryDeletedEventHandler();
-        internal delegate void RegistrySortedEventHandler();
-        internal delegate void RegistryItemAddedEventHandler();
-        internal delegate void RegistryItemRemovedEventHandler();
-
-
         private readonly List<DatafixerRegistryEntry> RawRegistry;
         private readonly Dictionary<Type, List<SortedDatafixerRegistryEntry>> SortedRegistry;
         private Boolean IsSorted;
@@ -61,13 +55,6 @@ namespace InsanityBot.Utility.Datafixers
         }
         #endregion
 
-        #region Events
-        internal event RawRegistryDeletedEventHandler RawRegistryDeletedEvent;
-        internal event RegistrySortedEventHandler RegistrySortedEvent;
-        internal event RegistryItemAddedEventHandler RegistryItemAddedEvent;
-        internal event RegistryItemRemovedEventHandler RegistryItemRemovedEvent;
-        #endregion
-
         // DatafixerRegistry mode 0: sort on demand, keep sorted data   
         #region Registry Mode 0 
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode0(Type type)
@@ -92,7 +79,6 @@ namespace InsanityBot.Utility.Datafixers
                 RawRegistry.Remove(v);
             }
             IsSorted = true;
-            RegistrySortedEvent();
         }
 
         private void AddRegistryItem_Mode0(DatafixerRegistryEntry item)
@@ -100,7 +86,6 @@ namespace InsanityBot.Utility.Datafixers
             RawRegistry.Add(item);
             if (IsSorted)
                 IsSorted = false;
-            RegistryItemAddedEvent();
         }
 
         private void RemoveRegistryItem_Mode0(DatafixerRegistryEntry item)
@@ -113,8 +98,6 @@ namespace InsanityBot.Utility.Datafixers
 
             else
                 throw new DatafixerNotFoundException("Attempted to remove a datafixer from the registry that was not registered", item);
-
-            RegistryItemRemovedEvent();
         }
         #endregion
 
@@ -139,21 +122,18 @@ namespace InsanityBot.Utility.Datafixers
             foreach(var v in RawRegistry)
                 SortedRegistry[v.DatafixerTarget].Add(v.ToSortedDatafixerRegistryEntry());
             IsSorted = true;
-            RegistrySortedEvent();
         }
 
         private void AddRegistryItem_Mode1(DatafixerRegistryEntry item)
         {
             RawRegistry.Add(item);
             SortedRegistry[item.DatafixerTarget].Add(item.ToSortedDatafixerRegistryEntry());
-            RegistryItemAddedEvent();
         }
 
         private void RemoveRegistryItem_Mode1(DatafixerRegistryEntry item)
         {
             RawRegistry.Remove(item);
             SortedRegistry[item.DatafixerTarget].Remove(item.ToSortedDatafixerRegistryEntry());
-            RegistryItemRemovedEvent();
         }
         #endregion
 
