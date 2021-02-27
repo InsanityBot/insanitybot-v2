@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
+using InsanityBot.Utility.Converters;
 using InsanityBot.Utility.Datafixers.Reference;
 using InsanityBot.Utility.Exceptions;
 
@@ -62,14 +63,14 @@ namespace InsanityBot.Utility.Datafixers
         {
             if (!IsSorted)
                 SortRawRegistryMethodHandler();
-            return (IEnumerable<DatafixerRegistryEntry>)SortedRegistry[type];
+            return SortedRegistry[type].ToUnsorted(type);
         }
         
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode0(String typename)
         {
             if (!IsSorted)
                 SortRawRegistryMethodHandler();
-            return (IEnumerable<DatafixerRegistryEntry>)SortedRegistry[Type.GetType(typename)];
+            return SortedRegistry[Type.GetType(typename)].ToUnsorted(Type.GetType(typename));
         }
 
         private void SortRawRegistry_Mode0()
@@ -110,14 +111,14 @@ namespace InsanityBot.Utility.Datafixers
         {
             if (!IsSorted)
                 SortRawRegistryMethodHandler();
-            return (IEnumerable<DatafixerRegistryEntry>)SortedRegistry[type];
+            return SortedRegistry[type].ToUnsorted(type);
         }
 
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode1(String typename)
         {
             if (!IsSorted)
                 SortRawRegistryMethodHandler();
-            return (IEnumerable<DatafixerRegistryEntry>)SortedRegistry[Type.GetType(typename)];
+            return SortedRegistry[Type.GetType(typename)].ToUnsorted(Type.GetType(typename));
         }
 
         private void SortRawRegistry_Mode1()
