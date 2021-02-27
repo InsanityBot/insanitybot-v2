@@ -12,6 +12,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="config\lang.json" />
+    <None Remove="config\main.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="config\lang.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\main.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
     <PackageReference Include="System.IO.Compression" Version="4.3.0" />
     <PackageReference Include="TimeSpanParserUtil" Version="1.2.0" />
@@ -19,6 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InsanityBot.Utility\InsanityBot.Utility.csproj" />
+    <ProjectReference Include="..\Insanitybot.Datafixers\Insanitybot.Datafixers.csproj" />
   </ItemGroup>
 
 </Project>

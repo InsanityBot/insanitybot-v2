@@ -14,7 +14,9 @@ using DSharpPlus.Exceptions;
 
 using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Commands.Moderation;
+using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
+using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
@@ -34,29 +36,19 @@ namespace InsanityBot
                     CommandLineOptions = o;
                 });
 
-            if (CommandLineOptions.Initialize)
-                await Initialize();
+            // initialize datafixers
+#if DEBUG
+            DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
+#else
+            DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Warning;
+#endif
 
-            if (CommandLineOptions.HardReset)
-                await HardReset();
+            DataFixerLower.Initialize(0); //this can be switched out for 1 if you need to, insanitybot default is 0
+            RegisterDatafixers();
 
             //load main config
             ConfigManager = new MainConfigurationManager();
             LanguageManager = new LanguageConfigurationManager();
-
-            //deserialize main config
-            if (!File.Exists("./config/main.json"))
-            {
-                if (!Directory.Exists("./config"))
-                    Directory.CreateDirectory("./config");
-                File.Create("./config/main.json").Close();
-                await CreateMainConfig();
-                Console.WriteLine("Please fill out the configuration file with your preferred values. Token and GuildId are required. " +
-                    "The file is located at .\\config\\main.json");
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-                return;
-            }
 
             //read config from file
             Config = ConfigManager.Deserialize("./config/main.json");
@@ -65,19 +57,6 @@ namespace InsanityBot
             {
                 Console.WriteLine("Invalid Token. Please provide a valid token in .\\config\\main.json" +
                     "\nPress any key to continue...");
-                Console.ReadKey();
-                return;
-            }
-
-            //deserialize language config
-            if(!File.Exists("./config/lang.json"))
-            {
-                if (!Directory.Exists("./config"))
-                    Directory.CreateDirectory("./config");
-                File.Create("./config/lang.json").Close();
-                await CreateLangConfig();
-                Console.WriteLine("Please fill out the language file with your preferred messages. The file is located at .\\config\\lang.json");
-                Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
                 return;
             }

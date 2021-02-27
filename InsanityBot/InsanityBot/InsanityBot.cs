@@ -8,6 +8,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Config;
+using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
 
