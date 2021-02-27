@@ -25,7 +25,11 @@ namespace InsanityBot.Utility.Language
             StreamReader reader = new StreamReader(File.OpenRead(Filename));
 
             LanguageConfiguration config = JsonConvert.DeserializeObject<LanguageConfiguration>(reader.ReadToEnd());
-            return (LanguageConfiguration)DataFixerLower.UpgradeData(config);
+            config = (LanguageConfiguration)DataFixerLower.UpgradeData(config);
+            reader.Close();
+
+            Serialize(config, "./config/lang.json");
+            return config;
         }
 
         public LanguageConfigurationManager RemoveConfigEntry(String Identifier)
