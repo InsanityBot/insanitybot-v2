@@ -79,8 +79,8 @@ namespace InsanityBot.Utility.Datafixers
                 if (!SortedRegistry.ContainsKey(v.DatafixerTarget))
                     SortedRegistry.Add(v.DatafixerTarget, new List<SortedDatafixerRegistryEntry>());
                 SortedRegistry[v.DatafixerTarget].Add(v.ToSortedDatafixerRegistryEntry());
-                RawRegistry.Remove(v);
             }
+            RawRegistry.Clear();
             IsSorted = true;
         }
 
@@ -122,8 +122,12 @@ namespace InsanityBot.Utility.Datafixers
 
         private void SortRawRegistry_Mode1()
         {
-            foreach(var v in RawRegistry)
+            foreach (var v in RawRegistry)
+            {
+                if (!SortedRegistry.ContainsKey(v.DatafixerTarget))
+                    SortedRegistry.Add(v.DatafixerTarget, new List<SortedDatafixerRegistryEntry>());
                 SortedRegistry[v.DatafixerTarget].Add(v.ToSortedDatafixerRegistryEntry());
+            }
             IsSorted = true;
         }
 
