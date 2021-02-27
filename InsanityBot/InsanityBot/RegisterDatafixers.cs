@@ -14,7 +14,7 @@ namespace InsanityBot
     {
         public static void RegisterDatafixers()
         {
-            DataFixerLower.AddDatafixer(new Main0001_AddDatafixerRegistry(), typeof(MainConfiguration));
+            DataFixerLower.AddDatafixer(new Main0001_AddModlogScrolling(), typeof(MainConfiguration));
         }
     }
 }
