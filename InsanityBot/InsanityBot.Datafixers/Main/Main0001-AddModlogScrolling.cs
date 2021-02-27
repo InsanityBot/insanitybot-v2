@@ -10,6 +10,11 @@ using InsanityBot.Utility.Datafixers.Reference;
 
 namespace InsanityBot.Datafixers.Main
 {
+    /*
+     * Datafixer Identifier: 0.1.1
+     * Datafixer Upgrade: dev.00014 to dev.00016
+     * Datafixer Reason: Addition of modlog embed scrolling, requiring toggling and reaction emote IDs
+    */
     public class Main0001_AddModlogScrolling : IDatafixer<MainConfiguration>
     {
         public String NewDataVersion { get => "2.0.0-dev.00016"; }
@@ -31,7 +36,7 @@ namespace InsanityBot.Datafixers.Main
             data.Configuration.Remove("insanitybot.identifiers.modlog.scroll_left_emote_id");
             data.DataVersion = "2.0.0-dev.00014";
 
-            DatafixerLogger.LogInformation(new EventData(0, 0, 1, 1, "Downgrade"), "Downgraded successfully to version 2.0.0-dev.00014");
+            DatafixerLogger.LogInformation(new EventData(0, 1, 1, 1, "Downgrade"), "Downgraded successfully to version 2.0.0-dev.00014");
             return DatafixerDowngradeResult.Success;
         }
 
@@ -46,7 +51,7 @@ namespace InsanityBot.Datafixers.Main
             data.Configuration.Remove("insanitybot.identifiers.modlog.scroll_left_emote_id");
             data.DataVersion = "2.0.0-dev.00014";
 
-            DatafixerLogger.LogInformation(new EventData(0, 0, 1, 2, "DowngradeExport"), "Downgraded successfully to version 2.0.0-dev.00014");
+            DatafixerLogger.LogInformation(new EventData(0, 1, 1, 2, "DowngradeExport"), "Downgraded successfully to version 2.0.0-dev.00014");
             return data;
         }
 
@@ -61,7 +66,7 @@ namespace InsanityBot.Datafixers.Main
             data.Configuration.Add("insanitybot.identifiers.modlog.scroll_left_emote_id", 0);
             data.DataVersion = "2.0.0-dev.00016";
 
-            DatafixerLogger.LogInformation(new EventData(0, 0, 1, 3, "UpgradeExport"), "Upgraded successfully to version 2.0.0-dev.00016");
+            DatafixerLogger.LogInformation(new EventData(0, 1, 1, 3, "UpgradeExport"), "Upgraded successfully to version 2.0.0-dev.00016");
             return data;
         }
 
@@ -76,7 +81,7 @@ namespace InsanityBot.Datafixers.Main
             data.Configuration.Add("insanitybot.identifiers.modlog.scroll_left_emote_id", 0);
             data.DataVersion = "2.0.0-dev.00016";
 
-            DatafixerLogger.LogInformation(new EventData(0, 0, 1, 4, "Upgrade"), "Upgraded successfully to version 2.0.0-dev.00016");
+            DatafixerLogger.LogInformation(new EventData(0, 1, 1, 4, "Upgrade"), "Upgraded successfully to version 2.0.0-dev.00016");
             return DatafixerUpgradeResult.Success;
         }
     }
