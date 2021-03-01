@@ -63,6 +63,8 @@ namespace InsanityBot.Utility.Datafixers
         {
             if (!IsSorted)
                 SortRawRegistryMethodHandler();
+            if (!SortedRegistry.ContainsKey(type))
+                return null;
             return SortedRegistry[type].ToUnsorted(type);
         }
         
@@ -70,6 +72,8 @@ namespace InsanityBot.Utility.Datafixers
         {
             if (!IsSorted)
                 SortRawRegistryMethodHandler();
+            if (!SortedRegistry.ContainsKey(Type.GetType(typename)))
+                return null;
             return SortedRegistry[Type.GetType(typename)].ToUnsorted(Type.GetType(typename));
         }
 
@@ -111,6 +115,8 @@ namespace InsanityBot.Utility.Datafixers
         {
             if (!IsSorted)
                 SortRawRegistryMethodHandler();
+            if (!SortedRegistry.ContainsKey(type))
+                return null;
             return SortedRegistry[type].ToUnsorted(type);
         }
 
@@ -118,6 +124,8 @@ namespace InsanityBot.Utility.Datafixers
         {
             if (!IsSorted)
                 SortRawRegistryMethodHandler();
+            if (!SortedRegistry.ContainsKey(Type.GetType(typename)))
+                return null;
             return SortedRegistry[Type.GetType(typename)].ToUnsorted(Type.GetType(typename));
         }
 

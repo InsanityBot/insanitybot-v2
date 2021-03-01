@@ -54,6 +54,9 @@ namespace InsanityBot.Utility.Datafixers
             Datafixable dataReference = data;
             List<DatafixerRegistryEntry> datafixers = Registry.GetDatafixers(data.GetType()).ToList();
 
+            if (datafixers == null)
+                return dataReference;
+
             foreach(var v in datafixers)
             {
                 ((IDatafixer<Datafixable>)v.Datafixer).UpgradeData(ref dataReference);
@@ -67,6 +70,9 @@ namespace InsanityBot.Utility.Datafixers
         {
             Datafixable dataReference = data;
             List<DatafixerRegistryEntry> datafixers = Registry.GetDatafixers(data.GetType()).ToList();
+
+            if (datafixers == null)
+                return dataReference;
 
             foreach (var v in datafixers)
             {
@@ -82,6 +88,9 @@ namespace InsanityBot.Utility.Datafixers
             Datafixable dataReference = data;
             List<DatafixerRegistryEntry> datafixers = Registry.GetDatafixers(data.GetType()).ToList();
 
+            if (datafixers == null)
+                return dataReference;
+
             foreach (var v in datafixers)
             {
                 dataReference = ((IDatafixer<Datafixable>)v.Datafixer).ExportUpgradedData(dataReference);
@@ -95,6 +104,9 @@ namespace InsanityBot.Utility.Datafixers
         {
             Datafixable dataReference = data;
             List<DatafixerRegistryEntry> datafixers = Registry.GetDatafixers(data.GetType()).ToList();
+
+            if (datafixers == null)
+                return dataReference;
 
             foreach (var v in datafixers)
             {
