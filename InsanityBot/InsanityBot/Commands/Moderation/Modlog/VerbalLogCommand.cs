@@ -52,7 +52,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 }
                 else
                 {
-                    if (ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_verballog_scrolling"]))
+                    if (!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_verballog_scrolling"]))
                     {
                         modlogEmbed.Color = DiscordColor.Red;
                         modlogEmbed.Description = user.GetVerballogEntries(ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_verballog_entries_per_embed"]))

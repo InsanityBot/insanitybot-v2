@@ -22,9 +22,15 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
         public static List<ModlogEntry> GetModlogEntries(this DiscordUser user, UInt16 count, Byte page = 0)
         {
-            return ((DiscordMember)user).GetUserModlog().Modlog.GetRange(
-                page * Convert.ToUInt16(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]),
-                count);
+            UserModlog modlog = ((DiscordMember)user).GetUserModlog();
+
+            if (modlog.ModlogEntryCount >= page * Convert.ToUInt16(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]) + count)
+                return modlog.Modlog.GetRange(
+                    page * Convert.ToUInt16(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]),
+                    count);
+            else
+                return modlog.Modlog.GetRange(page * Convert.ToUInt16(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]),
+                    Convert.ToInt32(modlog.ModlogEntryCount - (page * Convert.ToUInt16(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]))));
         }
 
         public static List<VerbalModlogEntry> GetVerballogEntries(this DiscordUser user, Byte page = 0)
@@ -35,9 +41,15 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
         public static List<VerbalModlogEntry> GetVerballogEntries(this DiscordUser user, UInt16 count, Byte page = 0)
         {
-            return ((DiscordMember)user).GetUserModlog().VerbalLog.GetRange(
-                page * Convert.ToUInt16(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]),
-                count);
+            UserModlog modlog = ((DiscordMember)user).GetUserModlog();
+
+            if (modlog.VerbalLogEntryCount >= page * Convert.ToUInt16(InsanityBot.Config["insanitybot.commands.modlog.max_verballog_entries_per_embed"]) + count)
+                return modlog.VerbalLog.GetRange(
+                    page * Convert.ToUInt16(InsanityBot.Config["insanitybot.commands.modlog.max_verballog_entries_per_embed"]),
+                    count);
+            else
+                return modlog.VerbalLog.GetRange(page * Convert.ToUInt16(InsanityBot.Config["insanitybot.commands.modlog.max_verballog_entries_per_embed"]),
+                    Convert.ToInt32(modlog.VerbalLogEntryCount - (page * Convert.ToUInt16(InsanityBot.Config["insanitybot.commands.modlog.max_verballog_entries_per_embed"]))));
         }
 
         public static String ConvertToString(this ModlogEntry entry)
