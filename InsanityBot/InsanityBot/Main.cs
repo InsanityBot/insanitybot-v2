@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -14,6 +13,7 @@ using DSharpPlus.Exceptions;
 
 using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Commands.Moderation;
+using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -175,6 +175,8 @@ namespace InsanityBot
 
             Mute.MuteStartingEvent += TimeHandler.DisableTimer;
             Ban.BanStartingEvent += TimeHandler.DisableTimer;
+
+            Client.MessageReactionAdded += Modlog.ReactionAddedEventHandler;
         }
 
         private static void InitializeAll()
