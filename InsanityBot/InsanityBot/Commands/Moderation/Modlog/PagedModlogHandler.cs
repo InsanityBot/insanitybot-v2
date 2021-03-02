@@ -53,9 +53,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                                 Text = "InsanityBot - Exa 2020-2021"
                             },
                             Color = DiscordColor.Red,
-                            Description = message.Author.GetModlogEntries(ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]),
-                                ToByte(messageData.Page - 1))
-                                .ConvertToString()
+                            Description = message.Author.CreateModlogDescription(true, ToByte(messageData.Page - 1))
                         };
 
                         await message.ModifyAsync(embed: modlogEmbedBuilder.Build());
@@ -82,9 +80,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                                 Text = "InsanityBot - Exa 2020-2021"
                             },
                             Color = DiscordColor.Red,
-                            Description = message.Author.GetModlogEntries(ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]),
-                                ToByte(messageData.Page + 1))
-                                .ConvertToString()
+                            Description = message.Author.CreateModlogDescription(true, ToByte(messageData.Page + 1))
                         };
 
                         await message.ModifyAsync(embed: modlogEmbedBuilder.Build());
@@ -114,9 +110,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                                 Text = "InsanityBot - Exa 2020-2021"
                             },
                             Color = DiscordColor.Red,
-                            Description = message.Author.GetVerballogEntries(ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_verballog_entries_per_embed"]),
-                                ToByte(messageData.Page - 1))
-                                .ConvertToString()
+                            Description = message.Author.CreateVerballogDescription(true, ToByte(messageData.Page - 1))
                         };
 
                         await message.ModifyAsync(embed: modlogEmbedBuilder.Build());
@@ -143,9 +137,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                                 Text = "InsanityBot - Exa 2020-2021"
                             },
                             Color = DiscordColor.Red,
-                            Description = message.Author.GetVerballogEntries(ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_verballog_entries_per_embed"]),
-                                ToByte(messageData.Page + 1))
-                                .ConvertToString()
+                            Description = message.Author.CreateModlogDescription(true, ToByte(messageData.Page + 1))
                         };
 
                         await message.ModifyAsync(embed: modlogEmbedBuilder.Build());

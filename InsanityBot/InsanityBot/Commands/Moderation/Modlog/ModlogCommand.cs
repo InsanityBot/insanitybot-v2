@@ -57,7 +57,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     if (!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_scrolling"]))
                     {
                         modlogEmbed.Color = DiscordColor.Red;
-                        modlogEmbed.Description = user.GetModlogEntries().ConvertToString();
+                        modlogEmbed.Description = user.CreateModlogDescription(false);
 
                         if (modlog.ModlogEntryCount > ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]))
                         {
@@ -70,7 +70,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     else
                     {
                         modlogEmbed.Color = DiscordColor.Red;
-                        modlogEmbed.Description = user.GetModlogEntries().ConvertToString();
+                        modlogEmbed.Description = user.CreateModlogDescription();
                         if (ReactionForwards == null)
                         {
                             try
