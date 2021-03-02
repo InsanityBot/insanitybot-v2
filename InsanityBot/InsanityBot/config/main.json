@@ -19,6 +19,8 @@
     "insanitybot.commands.moderation.default_ban_time": "00:30:00",
     "insanitybot.commands.modlog.max_modlog_entries_per_embed": 25,
     "insanitybot.commands.modlog.max_verballog_entries_per_embed": 20,
+    "insanitybot.commands.modlog.allow_scrolling": true,
+    "insanitybot.commands.modlog.allow_verballog_scrolling": true,
     "insanitybot.commands.suggestions.allow_community_denial": true,
     "insanitybot.commands.suggestions.denial_by_downvote_percentage": false,
     "insanitybot.commands.suggestions.percentage_for_community_denial": 0,
@@ -65,6 +67,8 @@
     ],
     "insanitybot.identifiers.moderation.mute_role_id": 0,
     "insanitybot.identifiers.moderation.blacklist_role_id": 0,
+    "insanitybot.identifiers.modlog.scroll_right_emote_id": 0,
+    "insanitybot.identifiers.modlog.scroll_left_emote_id": 0,
     "insanitybot.tcp_port": 0
   },
   "Prefixes": [

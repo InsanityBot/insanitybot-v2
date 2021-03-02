@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0.0-beta.001",
+  "DataVersion": "2.0.0-dev.00016",
   "Configuration": {
     "insanitybot.error.lacking_permission": "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.",
     "insanitybot.error.generic": "The command failed to execute. Please retry or contact your administrators.",
@@ -46,11 +46,13 @@
     "insanitybot.commands.modlog.empty_modlog": ":white_check_mark: This member has no modlog entries",
     "insanitybot.commands.modlog.overflow": "... and more entries",
     "insanitybot.commands.modlog.failed": "Could not retrieve modlog for {MENTION}",
+    "insanitybot.commands.modlog.paged.page_number": "Page {PAGE}/{PAGE_TOTAL}",
 
     "insanitybot.commands.verbal_log.embed_title": "Verbal Log of {USERNAME}",
     "insanitybot.commands.verbal_log.empty_modlog": ":white_check_mark: This member has no verbal log entries",
     "insanitybot.commands.verbal_log.overflow": "... and more entries",
-    "insanitybot.commands.verbal_log.failed": "Could not retrieve verbal log for {MENTION}"
+    "insanitybot.commands.verbal_log.failed": "Could not retrieve verbal log for {MENTION}",
+    "insanitybot.commands.verbal_log.paged.page_number": "Page {PAGE}/{PAGE_TOTAL}"
   }
 }
 

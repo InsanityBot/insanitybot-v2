@@ -52,7 +52,23 @@ namespace InsanityBot.Utility.Datafixers
             where Datafixable : IDatafixable
         {
             Datafixable dataReference = data;
-            List<DatafixerRegistryEntry> datafixers = Registry.GetDatafixers(data.GetType()).ToList();
+            List<DatafixerRegistryEntry> datafixers;
+
+            try
+            {
+                datafixers = Registry.GetDatafixers(data.GetType()).ToList();
+            }
+            catch(ArgumentNullException)
+            {
+                return dataReference;
+            }
+            catch
+            {
+                throw;
+            }
+
+            if (datafixers == null)
+                return dataReference;
 
             foreach(var v in datafixers)
             {
@@ -66,7 +82,23 @@ namespace InsanityBot.Utility.Datafixers
             where Datafixable : IDatafixable
         {
             Datafixable dataReference = data;
-            List<DatafixerRegistryEntry> datafixers = Registry.GetDatafixers(data.GetType()).ToList();
+            List<DatafixerRegistryEntry> datafixers;
+
+            try
+            {
+                datafixers = Registry.GetDatafixers(data.GetType()).ToList();
+            }
+            catch (ArgumentNullException)
+            {
+                return dataReference;
+            }
+            catch
+            {
+                throw;
+            }
+
+            if (datafixers == null)
+                return dataReference;
 
             foreach (var v in datafixers)
             {
@@ -80,7 +112,23 @@ namespace InsanityBot.Utility.Datafixers
             where Datafixable : IDatafixable
         {
             Datafixable dataReference = data;
-            List<DatafixerRegistryEntry> datafixers = Registry.GetDatafixers(data.GetType()).ToList();
+            List<DatafixerRegistryEntry> datafixers;
+
+            try
+            {
+                datafixers = Registry.GetDatafixers(data.GetType()).ToList();
+            }
+            catch (ArgumentNullException)
+            {
+                return dataReference;
+            }
+            catch
+            {
+                throw;
+            }
+
+            if (datafixers == null)
+                return dataReference;
 
             foreach (var v in datafixers)
             {
@@ -94,7 +142,23 @@ namespace InsanityBot.Utility.Datafixers
             where Datafixable : IDatafixable
         {
             Datafixable dataReference = data;
-            List<DatafixerRegistryEntry> datafixers = Registry.GetDatafixers(data.GetType()).ToList();
+            List<DatafixerRegistryEntry> datafixers;
+
+            try
+            {
+                datafixers = Registry.GetDatafixers(data.GetType()).ToList();
+            }
+            catch (ArgumentNullException)
+            {
+                return dataReference;
+            }
+            catch
+            {
+                throw;
+            }
+
+            if (datafixers == null)
+                return dataReference;
 
             foreach (var v in datafixers)
             {

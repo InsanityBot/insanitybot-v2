@@ -37,7 +37,7 @@
   <a href="https://github.com/InsanityNetwork/InsanityBot/pulls?q=is%3Apr+is%3Aclosed">
     <img alt="GitHub closed pull requests" src="https://img.shields.io/github/issues-pr-closed-raw/InsanityNetwork/InsanityBot"><br>
   </a>
-</p>                                                                                                                         
+</p>
 <p align="center">
   <a href="#--heavy_check_mark-features-heavy_check_mark">Features</a>
   •
@@ -49,6 +49,9 @@
   •
   <a href="#--scroll-licence-copyright--tos-scroll">Licence & Copyright</a>
 </p>
+<h2 align="center">
+Estimated Code Completion Percentage for 2.0 Release: 1.5%
+</h2>
 <br>
 </h3>
 <h2>

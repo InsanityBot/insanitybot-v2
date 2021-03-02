@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 using static InsanityBot.Commands.StringUtilities;
 
-namespace InsanityBot.Commands.Moderation
+namespace InsanityBot.Commands.Moderation.Modlog
 {
     public class ExportModlog : BaseCommandModule
     {

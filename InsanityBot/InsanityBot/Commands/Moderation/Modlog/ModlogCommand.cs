@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
 
-namespace InsanityBot.Commands.Moderation
+namespace InsanityBot.Commands.Moderation.Modlog
 {
     public partial class Modlog : BaseCommandModule
     {
@@ -45,31 +45,62 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
 
-                if(modlog.Modlog.Count == 0)
+                if (modlog.ModlogEntryCount == 0)
                 {
                     modlogEmbed.Color = DiscordColor.SpringGreen;
                     modlogEmbed.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.empty_modlog"],
                         ctx, user);
+                    _ = ctx.RespondAsync(embed: modlogEmbed.Build());
                 }
                 else
                 {
-                    modlogEmbed.Color = DiscordColor.Red;
-                    for(Byte b = 0; b < ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"])
-                        && b < modlog.ModlogEntryCount; b++)
+                    if (!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_scrolling"]))
                     {
-                        modlogEmbed.Description += $"{modlog.Modlog[b].Type.ToString().ToUpper()}: {modlog.Modlog[b].Time} - {modlog.Modlog[b].Reason}\n";
+                        modlogEmbed.Color = DiscordColor.Red;
+                        modlogEmbed.Description = user.CreateModlogDescription(false);
+
+                        await ctx.RespondAsync(embed: modlogEmbed.Build());
                     }
-                    
-                    if(modlog.ModlogEntryCount > ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]))
+                    else
                     {
-                        modlogEmbed.Description += GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.overflow"],
-                            ctx, user);
+                        modlogEmbed.Color = DiscordColor.Red;
+                        modlogEmbed.Description = user.CreateModlogDescription();
+                        if (ReactionForwards == null)
+                        {
+                            try
+                            {
+                                ModlogMessageTracker.CreateTracker();
+
+                                ReactionForwards = await InsanityBot.HomeGuild.GetEmojiAsync(ToUInt64(
+                                    InsanityBot.Config["insanitybot.identifiers.modlog.scroll_right_emote_id"]));
+                                ReactionBackwards = await InsanityBot.HomeGuild.GetEmojiAsync(ToUInt64(
+                                    InsanityBot.Config["insanitybot.identifiers.modlog.scroll_left_emote_id"]));
+                            }
+                            catch
+                            {
+                                ReactionForwards = DiscordEmoji.FromName(InsanityBot.Client, ":arrow_forward:");
+                                ReactionBackwards = DiscordEmoji.FromName(InsanityBot.Client, ":arrow_backward:");
+                            }
+                        }
+
+                        var message = await ctx.RespondAsync(embed: modlogEmbed.Build());
+                        _ = message.CreateReactionAsync(ReactionBackwards);
+                        await Task.Delay(251); // delay the next reaction by 251ms to avoid getting ratelimited
+                        _ = message.CreateReactionAsync(ReactionForwards);
+
+                        await Task.Delay(500); // delay registering by 500ms to avoid false positives on reactions
+
+                        ModlogMessageTracker.AddTrackedMessage(new ModlogMessageTracker.MessageTrackerEntry
+                        {
+                            MessageId = message.Id,
+                            Page = 0,
+                            UserId = user.Id,
+                            Type = ModlogMessageTracker.LogType.Modlog
+                        });
                     }
                 }
-
-                await ctx.RespondAsync(embed: modlogEmbed.Build());
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1170, "Modlog"), $"Could not retrieve modlogs: {e}: {e.Message}");
 

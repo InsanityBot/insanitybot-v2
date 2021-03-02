@@ -18,7 +18,7 @@ using Microsoft.Extensions.Logging;
 using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
 
-namespace InsanityBot.Commands.Moderation
+namespace InsanityBot.Commands.Moderation.Modlog
 {
     public class ClearModlog : BaseCommandModule
     {
