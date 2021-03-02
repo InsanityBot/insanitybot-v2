@@ -90,9 +90,10 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
                         var message = await ctx.RespondAsync(embed: modlogEmbed.Build());
                         _ = message.CreateReactionAsync(ReactionBackwards);
+                        await Task.Delay(251); // delay the next reaction by 251ms to avoid getting ratelimited
                         _ = message.CreateReactionAsync(ReactionForwards);
 
-                        await Task.Delay(100);
+                        await Task.Delay(500); // delay registering by 500ms to avoid false positives on reactions
 
                         ModlogMessageTracker.AddTrackedMessage(new ModlogMessageTracker.MessageTrackerEntry
                         {
