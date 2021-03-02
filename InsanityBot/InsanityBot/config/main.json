@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0-dev.00016",
+  "DataVersion": "2.0.0-dev.00017",
   "Configuration": {
     "insanitybot.modules.experience": true,
     "insanitybot.modules.logging": true,
@@ -71,6 +71,7 @@
     ],
     "insanitybot.identifiers.moderation.mute_role_id": 0,
     "insanitybot.identifiers.moderation.blacklist_role_id": 0,
+    "insanitybot.identifiers.moderation.lock_exempt_role_id": 0,
     "insanitybot.identifiers.modlog.scroll_right_emote_id": 0,
     "insanitybot.identifiers.modlog.scroll_left_emote_id": 0,
     "insanitybot.tcp_port": 0

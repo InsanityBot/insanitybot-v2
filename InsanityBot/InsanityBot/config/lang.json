@@ -15,6 +15,7 @@
     "insanitybot.moderation.unban.success": "{ID} was unbanned successfully.",
     "insanitybot.moderation.clear_modlog.success": "{MENTION}'s modlog was cleared successfully.",
     "insanitybot.moderation.purge.success": "Messages were deleted successfully.",
+    "insanitybot.moderation.lock.success": "{CHANNEL} was locked successfully.",
 
     "insanitybot.moderation.verbal_warn.failure": "{MENTION} could not be verbally warned.",
     "insanitybot.moderation.unwarn.failure": "{MENTION} could not be unwarned.",
@@ -28,6 +29,7 @@
     "insanitybot.moderation.unban.failure": "{ID} could not be unbanned.",
     "insanitybot.moderation.clear_modlog.failure": "{MENTION}'s modlog could not be cleared.",
     "insanitybot.moderation.purge.failure": "Messages could not be deleted.",
+    "insanitybot.moderation.lock.failure": "{CHANNEL} could not be locked.",
 
     "insanitybot.moderation.verbal_warn.reason": "{MENTION}, {REASON}",
     "insanitybot.moderation.warn.reason": "You were warned for {REASON}.",
