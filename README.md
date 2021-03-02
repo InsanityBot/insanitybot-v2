@@ -28,8 +28,6 @@ requests](https://img.shields.io/github/issues-pr-closed-raw/InsanityNetwork/Ins
 [Support](#--question-support-question) • [Licence &
 Copyright](#--scroll-licence-copyright--tos-scroll)
 
-\
-
 ## Estimated Code Completion Percentage for 2.0 Release: 1.5%
 
 :heavy_check_mark: Features :heavy_check_mark:
@@ -77,20 +75,16 @@ Copyright](#--scroll-licence-copyright--tos-scroll)
 View the InsanityBot commands
 [here](https://docs.insanity.network/en/InsanityBot/Commands).
 
-\
-
 :electric_plug: Installation :electric_plug:
 --------------------------------------------
 
 [Linux](https://docs.insanity.network/en/InsanityBot/Linux-Installation)
-\|
-[Windows](https://docs.insanity.network/en/InsanityBot/Windows-Installation)
-\|
-[MacOS](https://docs.insanity.network/en/InsanityBot/MacOS-Installation)
-\|
-[Pterodactyl](https://docs.insanity.network/en/InsanityBot/Pterodactyl)
 
-\
+[Windows](https://docs.insanity.network/en/InsanityBot/Windows-Installation)
+
+[MacOS](https://docs.insanity.network/en/InsanityBot/MacOS-Installation)
+
+[Pterodactyl](https://docs.insanity.network/en/InsanityBot/Pterodactyl)
 
 :question: Support :question:
 -----------------------------
@@ -102,15 +96,13 @@ issue
 however, you will likely have to wait longer to get a reply.\
 *NOTE: We reserve the right to refuse support to anyone.*
 
-\
-
 :scroll: Licence, Copyright & TOS :scroll:
 ------------------------------------------
 
 [InsanityBot](https://github.com/InsanityNetwork/InsanityBot) is
 licenced under the
-[`MIT Licence`](https://github.com/InsanityNetwork/InsanityBot/blob/master/LICENSE).\
-\
-Our TOS can be viewed [here](https://bot.insanity.network/tos/).\
-\
+[`MIT Licence`](https://github.com/InsanityNetwork/InsanityBot/blob/master/LICENSE)
+
+Our TOS can be viewed [here](https://bot.insanity.network/tos/)
+
 Copyright © 2020 - 2021 ExaInsanity
