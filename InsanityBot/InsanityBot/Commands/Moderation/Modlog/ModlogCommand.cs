@@ -59,12 +59,6 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         modlogEmbed.Color = DiscordColor.Red;
                         modlogEmbed.Description = user.CreateModlogDescription(false);
 
-                        if (modlog.ModlogEntryCount > ToByte(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]))
-                        {
-                            modlogEmbed.Description += GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.overflow"],
-                                ctx, user);
-                        }
-
                         await ctx.RespondAsync(embed: modlogEmbed.Build());
                     }
                     else

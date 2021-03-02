@@ -22,8 +22,10 @@ namespace InsanityBot.Commands.Moderation.Modlog
             Int32 startIndex = Convert.ToInt16(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]) * page,
                 endIndex = Convert.ToInt16(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]) + startIndex;
 
-
             Boolean fillsEmbed = modlog.ModlogEntryCount < endIndex;
+
+            if (fillsEmbed)
+                endIndex = (Int32)modlog.ModlogEntryCount;
 
             for (Int32 b = startIndex; b < endIndex; b++)
                 description += $"{modlog.Modlog[b].Type.ToString().ToUpper()}: {modlog.Modlog[b].Time} - {modlog.Modlog[b].Reason}\n";
@@ -34,7 +36,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             if (paged)
             {
                 description += $"\n{InsanityBot.LanguageConfig["insanitybot.commands.modlog.paged.page_number"]}"
-                    .Replace("{PAGE}", page.ToString())
+                    .Replace("{PAGE}", (page + 1).ToString())
                     .Replace("{PAGE_TOTAL}",
                         Convert.ToInt32((modlog.ModlogEntryCount /
                             Convert.ToInt32(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"])) + 1
@@ -59,6 +61,9 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
             Boolean fillsEmbed = modlog.VerbalLogEntryCount < endIndex;
 
+            if (fillsEmbed)
+                endIndex = (Int32)modlog.VerbalLogEntryCount;
+
             for (Int32 b = startIndex; b < endIndex; b++)
                 description += $"{modlog.VerbalLog[b].Time} - {modlog.VerbalLog[b].Reason}\n";
 
@@ -68,7 +73,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             if (paged)
             {
                 description += $"\n{InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.paged.page_number"]}"
-                    .Replace("{PAGE}", page.ToString())
+                    .Replace("{PAGE}", (page + 1).ToString())
                     .Replace("{PAGE_TOTAL}",
                         Convert.ToInt32((modlog.ModlogEntryCount /
                             Convert.ToInt32(InsanityBot.Config["insanitybot.commands.modlog.max_verballog_entries_per_embed"])) + 1
