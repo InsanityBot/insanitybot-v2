@@ -45,11 +45,12 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     }
                 };
 
-                if (modlog.Modlog.Count == 0)
+                if (modlog.ModlogEntryCount == 0)
                 {
                     modlogEmbed.Color = DiscordColor.SpringGreen;
                     modlogEmbed.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.empty_modlog"],
                         ctx, user);
+                    _ = ctx.RespondAsync(embed: modlogEmbed.Build());
                 }
                 else
                 {

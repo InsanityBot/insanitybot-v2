@@ -49,6 +49,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     modlogEmbed.Color = DiscordColor.SpringGreen;
                     modlogEmbed.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.empty_modlog"],
                         ctx, user);
+                    _ = ctx.RespondAsync(embed: modlogEmbed.Build());
                 }
                 else
                 {
