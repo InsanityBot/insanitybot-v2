@@ -44,12 +44,12 @@ namespace InsanityBot.Utility.Permissions.Reference
         {
             this.SnowflakeIdentifier = Id;
             this.Permissions = Permissions;
-            this.DataVersion = "2.0.0-dev.00016";
+            this.DataVersion = "2.0.0-dev.00017";
         }
 
         public PermissionBase()
         {
-            DataVersion = "2.0.0-dev.00016";
+            DataVersion = "2.0.0-dev.00017";
         }
 
         protected PermissionBase(UInt64 Id) : this(Id, GetDefaultPermissions()) { }

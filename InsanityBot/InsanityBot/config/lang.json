@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0-dev.00016",
+  "DataVersion": "2.0.0-dev.00017",
   "Configuration": {
     "insanitybot.error.lacking_permission": "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.",
     "insanitybot.error.generic": "The command failed to execute. Please retry or contact your administrators.",
