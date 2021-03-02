@@ -13,7 +13,13 @@ namespace InsanityBot.Utility.Permissions.Reference
         {
             PermissionManager.GeneratePermissionFile(Identifier, PermissionFileType.Role);
             StreamReader reader = new StreamReader($"./data/permissions/{Identifier}.json");
-            return JsonConvert.DeserializeObject<RolePermissions>(reader.ReadToEnd());
+
+            UserPermissions perms = JsonConvert.DeserializeObject<UserPermissions>(reader.ReadToEnd());
+            perms = (UserPermissions)DataFixerLower.UpgradeData(perms);
+            reader.Close();
+
+            Serialize(perms);
+            return perms;
         }
 
         public static void Serialize(RolePermissions permissions)

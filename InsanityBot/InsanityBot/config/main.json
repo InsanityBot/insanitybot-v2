@@ -11,6 +11,7 @@
     "insanitybot.modules.tickets": true,
     "insanitybot.modules.admin": true,
     "insanitybot.modules.console": true,
+
     "insanitybot.commands.help.send_dms": true,
     "insanitybot.commands.moderation.allow_minor_warns": true,
     "insanitybot.commands.moderation.convert_minor_warns_into_full_warn": true,
@@ -38,15 +39,18 @@
     "insanitybot.commands.tickets.presets.allow_create_command": true,
     "insanitybot.commands.tickets.presets.allow_delete_command": true,
     "insanitybot.commands.tickets.presets.allow_creation_by_preset_identifier": true,
+
     "insanitybot.logging.log_message_delete": true,
     "insanitybot.logging.log_message_edit": true,
     "insanitybot.logging.log_member_join": true,
     "insanitybot.logging.log_member_leave": true,
     "insanitybot.logging.log_commands": false,
     "insanitybot.logging.members.use_mentions": true,
+
     "insanitybot.miscellaneous.join_roles": true,
     "insanitybot.miscellaneous.block_say_role_pings": true,
     "insanitybot.miscellaneous.block_say_user_pings": false,
+
     "insanitybot.identifiers.commands.modlog_channel_id": 0,
     "insanitybot.identifiers.commands.suggestion_channel_id": 0,
     "insanitybot.identifiers.commands.accepted_suggestions_channel_id": 0,
