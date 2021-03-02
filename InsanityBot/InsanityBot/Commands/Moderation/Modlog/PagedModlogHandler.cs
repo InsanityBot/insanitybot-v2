@@ -9,10 +9,12 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
+using InsanityBot.Utility.Modlogs;
+
+using Microsoft.Extensions.Logging;
+
 using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
-using InsanityBot.Utility.Modlogs;
-using Microsoft.Extensions.Logging;
 
 namespace InsanityBot.Commands.Moderation.Modlog
 {
@@ -21,6 +23,9 @@ namespace InsanityBot.Commands.Moderation.Modlog
         public static async Task ReactionAddedEventHandler(DiscordClient client, MessageReactionAddEventArgs args)
         {
             if (!ModlogMessageTracker.IsTracked(args.Message.Id))
+                return;
+
+            if (args.Message.Author.IsBot)
                 return;
 
             var possibleMessages = from v in ModlogMessageTracker.MessageTracker
