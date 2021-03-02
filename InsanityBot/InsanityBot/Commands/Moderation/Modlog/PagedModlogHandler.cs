@@ -25,7 +25,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             if (!ModlogMessageTracker.IsTracked(args.Message.Id))
                 return;
 
-            if (args.Message.Author.IsBot)
+            if (args.User.IsBot)
                 return;
 
             var possibleMessages = from v in ModlogMessageTracker.MessageTracker
@@ -34,6 +34,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
             ModlogMessageTracker.MessageTrackerEntry messageData = possibleMessages.ToList()[0];
             DiscordMessage message = await args.Channel.GetMessageAsync(possibleMessages.ToList()[0].MessageId);
+            DiscordUser user = await InsanityBot.HomeGuild.GetMemberAsync(messageData.UserId);
 
             try
             {
@@ -47,13 +48,13 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         DiscordEmbedBuilder modlogEmbedBuilder = new DiscordEmbedBuilder
                         {
                             Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.embed_title"],
-                                (DiscordMember)message.Author),
+                                (DiscordMember)user),
                             Footer = new DiscordEmbedBuilder.EmbedFooter
                             {
                                 Text = "InsanityBot - Exa 2020-2021"
                             },
                             Color = DiscordColor.Red,
-                            Description = message.Author.CreateModlogDescription(true, ToByte(messageData.Page - 1))
+                            Description = user.CreateModlogDescription(true, ToByte(messageData.Page - 1))
                         };
 
                         await message.ModifyAsync(embed: modlogEmbedBuilder.Build());
@@ -61,26 +62,26 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         ModlogMessageTracker.AddTrackedMessage(new ModlogMessageTracker.MessageTrackerEntry
                         {
                             MessageId = message.Id,
-                            UserId = message.Author.Id,
+                            UserId = user.Id,
                             Type = ModlogMessageTracker.LogType.Modlog,
                             Page = ToByte(messageData.Page - 1)
                         });
                     }
                     else if (args.Emoji == ReactionForwards)
                     {
-                        if (messageData.Page >= ToByte(((DiscordMember)(message.Author)).GetUserModlog().ModlogEntryCount + 1))
+                        if (messageData.Page >= ToByte(((DiscordMember)(user)).GetUserModlog().ModlogEntryCount + 1))
                             goto delete_reaction;
 
                         DiscordEmbedBuilder modlogEmbedBuilder = new DiscordEmbedBuilder
                         {
                             Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.embed_title"],
-                                (DiscordMember)message.Author),
+                                (DiscordMember)user),
                             Footer = new DiscordEmbedBuilder.EmbedFooter
                             {
                                 Text = "InsanityBot - Exa 2020-2021"
                             },
                             Color = DiscordColor.Red,
-                            Description = message.Author.CreateModlogDescription(true, ToByte(messageData.Page + 1))
+                            Description = user.CreateModlogDescription(true, ToByte(messageData.Page + 1))
                         };
 
                         await message.ModifyAsync(embed: modlogEmbedBuilder.Build());
@@ -88,7 +89,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         ModlogMessageTracker.AddTrackedMessage(new ModlogMessageTracker.MessageTrackerEntry
                         {
                             MessageId = message.Id,
-                            UserId = message.Author.Id,
+                            UserId = user.Id,
                             Type = ModlogMessageTracker.LogType.Modlog,
                             Page = ToByte(messageData.Page + 1)
                         });
@@ -104,13 +105,13 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         DiscordEmbedBuilder modlogEmbedBuilder = new DiscordEmbedBuilder
                         {
                             Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.embed_title"],
-                                (DiscordMember)message.Author),
+                                (DiscordMember)user),
                             Footer = new DiscordEmbedBuilder.EmbedFooter
                             {
                                 Text = "InsanityBot - Exa 2020-2021"
                             },
                             Color = DiscordColor.Red,
-                            Description = message.Author.CreateVerballogDescription(true, ToByte(messageData.Page - 1))
+                            Description = user.CreateVerballogDescription(true, ToByte(messageData.Page - 1))
                         };
 
                         await message.ModifyAsync(embed: modlogEmbedBuilder.Build());
@@ -118,26 +119,26 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         ModlogMessageTracker.AddTrackedMessage(new ModlogMessageTracker.MessageTrackerEntry
                         {
                             MessageId = message.Id,
-                            UserId = message.Author.Id,
+                            UserId = user.Id,
                             Type = ModlogMessageTracker.LogType.VerbalLog,
                             Page = ToByte(messageData.Page - 1)
                         });
                     }
                     else if (args.Emoji == ReactionForwards)
                     {
-                        if (messageData.Page >= ToByte(((DiscordMember)(message.Author)).GetUserModlog().VerbalLogEntryCount + 1))
+                        if (messageData.Page >= ToByte(((DiscordMember)(user)).GetUserModlog().VerbalLogEntryCount + 1))
                             goto delete_reaction;
 
                         DiscordEmbedBuilder modlogEmbedBuilder = new DiscordEmbedBuilder
                         {
                             Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.embed_title"],
-                                (DiscordMember)message.Author),
+                                (DiscordMember)user),
                             Footer = new DiscordEmbedBuilder.EmbedFooter
                             {
                                 Text = "InsanityBot - Exa 2020-2021"
                             },
                             Color = DiscordColor.Red,
-                            Description = message.Author.CreateModlogDescription(true, ToByte(messageData.Page + 1))
+                            Description = user.CreateModlogDescription(true, ToByte(messageData.Page + 1))
                         };
 
                         await message.ModifyAsync(embed: modlogEmbedBuilder.Build());
@@ -145,7 +146,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         ModlogMessageTracker.AddTrackedMessage(new ModlogMessageTracker.MessageTrackerEntry
                         {
                             MessageId = message.Id,
-                            UserId = message.Author.Id,
+                            UserId = user.Id,
                             Type = ModlogMessageTracker.LogType.VerbalLog,
                             Page = ToByte(messageData.Page + 1)
                         });
