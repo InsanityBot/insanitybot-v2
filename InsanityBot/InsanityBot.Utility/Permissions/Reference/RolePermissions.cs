@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+using InsanityBot.Utility.Datafixers;
+
 using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Permissions.Reference
@@ -14,8 +16,8 @@ namespace InsanityBot.Utility.Permissions.Reference
             PermissionManager.GeneratePermissionFile(Identifier, PermissionFileType.Role);
             StreamReader reader = new StreamReader($"./data/permissions/{Identifier}.json");
 
-            UserPermissions perms = JsonConvert.DeserializeObject<UserPermissions>(reader.ReadToEnd());
-            perms = (UserPermissions)DataFixerLower.UpgradeData(perms);
+            RolePermissions perms = JsonConvert.DeserializeObject<RolePermissions>(reader.ReadToEnd());
+            perms = (RolePermissions)DataFixerLower.UpgradeData(perms);
             reader.Close();
 
             Serialize(perms);
