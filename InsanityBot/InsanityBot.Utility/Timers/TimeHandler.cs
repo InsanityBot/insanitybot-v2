@@ -28,15 +28,15 @@ namespace InsanityBot.Utility.Timers
         [MethodImpl(MethodImplOptions.Synchronized)]
         private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (!Directory.Exists("./data/timers"))
+            if (!Directory.Exists("./cache/timers"))
             {
-                Directory.CreateDirectory("./data/timers");
+                Directory.CreateDirectory("./cache/timers");
                 return;
             }
 
             //knowing that it exists, proceed to read contents
 
-            if (Directory.GetFiles("./data/timers").Length == 0)
+            if (Directory.GetFiles("./cache/timers").Length == 0)
                 return;
 
             //ok, it exists and has file contents. time to read.
@@ -45,7 +45,7 @@ namespace InsanityBot.Utility.Timers
 
             StreamReader reader = null;
 
-            foreach (String s in Directory.GetFiles("./data/timers"))
+            foreach (String s in Directory.GetFiles("./cache/timers"))
             {
                 //keep this from throwing a fatal error
                 //if an exception occurs, it just means the timer adding procedure took a little longer than usual
@@ -77,9 +77,9 @@ namespace InsanityBot.Utility.Timers
 
             StreamWriter writer;
 
-            if (!File.Exists($"./data/timers/{timer.Identifier}"))
-                File.Create($"./data/timers/{timer.Identifier}").Close();
-            writer = new StreamWriter(File.Open($"./data/timers/{timer.Identifier}", FileMode.Truncate));
+            if (!File.Exists($"./cache/timers/{timer.Identifier}"))
+                File.Create($"./cache/timers/{timer.Identifier}").Close();
+            writer = new StreamWriter(File.Open($"./cache/timers/{timer.Identifier}", FileMode.Truncate));
 
             writer.Write(JsonConvert.SerializeObject(timer));
 
