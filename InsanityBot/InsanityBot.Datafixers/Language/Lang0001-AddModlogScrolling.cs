@@ -13,7 +13,7 @@ using InsanityBot.Utility.Language;
 namespace InsanityBot.Datafixers.Language
 {
     /*
-     * Datafixer Identifier: 1.1.1
+     * Datafixer Identifier: 0.2.1
      * Datafixer Upgrade: beta.001 to dev.00016
      * Datafixer Reason: Addition of modlog embed scrolling, requiring language data for the new bottom line
     */
@@ -36,7 +36,7 @@ namespace InsanityBot.Datafixers.Language
             data.Configuration.Remove("insanitybot.commands.verbal_log.paged.page_number");
             data.DataVersion = "2.0.0.0-beta.001";
 
-            DatafixerLogger.LogInformation(new EventData(1, 1, 1, 1, "Downgrade"), "Downgraded successfully to version 2.0.0.0-beta.001");
+            DatafixerLogger.LogInformation(new EventData(0, 2, 1, 1, "Downgrade"), "Downgraded successfully to version 2.0.0.0-beta.001");
             return DatafixerDowngradeResult.Success;
         }
 
@@ -49,33 +49,33 @@ namespace InsanityBot.Datafixers.Language
             data.Configuration.Remove("insanitybot.commands.verbal_log.paged.page_number");
             data.DataVersion = "2.0.0.0-beta.001";
 
-            DatafixerLogger.LogInformation(new EventData(1, 1, 1, 2, "DowngradeExport"), "Downgraded successfully to version 2.0.0.0-beta.001");
+            DatafixerLogger.LogInformation(new EventData(0, 2, 1, 2, "DowngradeExport"), "Downgraded successfully to version 2.0.0.0-beta.001");
             return data;
         }
 
         public LanguageConfiguration ExportUpgradedData(LanguageConfiguration data)
         {
-            if (data.DataVersion == "2.0.0-dev.00016")
+            if (data.DataVersion != "2.0.0-dev.00016")
                 return data;
 
             data.Configuration.Add("insanitybot.commands.modlog.paged.page_number", "Page {PAGE}/{PAGE_TOTAL}");
             data.Configuration.Add("insanitybot.commands.verbal_log.paged.page_number", "Page {PAGE}/{PAGE_TOTAL}");
             data.DataVersion = "2.0.0-dev.00016";
 
-            DatafixerLogger.LogInformation(new EventData(1, 1, 1, 3, "UpgradeExport"), "Upgraded successfully to version 2.0.0-dev.00016");
+            DatafixerLogger.LogInformation(new EventData(0, 2, 1, 3, "UpgradeExport"), "Upgraded successfully to version 2.0.0-dev.00016");
             return data;
         }
 
         public DatafixerUpgradeResult UpgradeData(ref LanguageConfiguration data)
         {
-            if (data.DataVersion == "2.0.0-dev.00016")
+            if (data.DataVersion != "2.0.0-dev.00016")
                 return DatafixerUpgradeResult.AlreadyUpgraded;
 
             data.Configuration.Add("insanitybot.commands.modlog.paged.page_number", "Page {PAGE}/{PAGE_TOTAL}");
             data.Configuration.Add("insanitybot.commands.verbal_log.paged.page_number", "Page {PAGE}/{PAGE_TOTAL}");
             data.DataVersion = "2.0.0-dev.00016";
 
-            DatafixerLogger.LogInformation(new EventData(1, 1, 1, 4, "Upgrade"), "Upgraded successfully to version 2.0.0-dev.00016");
+            DatafixerLogger.LogInformation(new EventData(0, 2, 1, 4, "Upgrade"), "Upgraded successfully to version 2.0.0-dev.00016");
             return DatafixerUpgradeResult.Success;
         }
     }

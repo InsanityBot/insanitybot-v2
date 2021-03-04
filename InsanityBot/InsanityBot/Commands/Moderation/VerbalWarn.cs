@@ -61,7 +61,7 @@ namespace InsanityBot.Commands.Moderation
             }
             catch(Exception e)
             {
-                DiscordEmbedBuilder failed = new DiscordEmbedBuilder
+                DiscordEmbedBuilder failed = new()
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.verbal_warn.failure"],
                         ctx, member),
@@ -100,7 +100,7 @@ namespace InsanityBot.Commands.Moderation
                 _ => GetFormattedString(reason, ctx, member)
             };
 
-            DiscordEmbedBuilder embedBuilder = null, moderationEmbedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder embedBuilder = null, moderationEmbedBuilder = new()
             {
                 Title = "Verbal Warn",
                 Color = DiscordColor.Yellow,

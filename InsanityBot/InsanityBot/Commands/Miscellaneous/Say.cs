@@ -40,7 +40,7 @@ namespace InsanityBot.Commands.Miscellaneous
             }
 
             _ = ctx.Message.DeleteAsync();
-            DiscordEmbedBuilder embedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder embedBuilder = new()
             {
                 Description = text,
                 Footer = new DiscordEmbedBuilder.EmbedFooter

@@ -1,7 +1,8 @@
 {
-  "DataVersion": "2.0.0-dev.00016",
+  "DataVersion": "2.0.0-dev.00017",
   "Configuration": {
     "insanitybot.error.lacking_permission": "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.",
+    "insanitybot.error.lacking_admin_permission": "You cannot execute this command as you are not a server administrator!",
     "insanitybot.error.generic": "The command failed to execute. Please retry or contact your administrators.",
 
     "insanitybot.moderation.warn.success": "{MENTION} was warned successfully.",
@@ -15,6 +16,8 @@
     "insanitybot.moderation.unban.success": "{ID} was unbanned successfully.",
     "insanitybot.moderation.clear_modlog.success": "{MENTION}'s modlog was cleared successfully.",
     "insanitybot.moderation.purge.success": "Messages were deleted successfully.",
+    "insanitybot.moderation.lock.success": "{CHANNEL} was locked successfully.",
+    "insanitybot.moderation.unlock.success": "{CHANNEL} was unlocked successfully.",
 
     "insanitybot.moderation.verbal_warn.failure": "{MENTION} could not be verbally warned.",
     "insanitybot.moderation.unwarn.failure": "{MENTION} could not be unwarned.",
@@ -28,6 +31,8 @@
     "insanitybot.moderation.unban.failure": "{ID} could not be unbanned.",
     "insanitybot.moderation.clear_modlog.failure": "{MENTION}'s modlog could not be cleared.",
     "insanitybot.moderation.purge.failure": "Messages could not be deleted.",
+    "insanitybot.moderation.lock.failure": "{CHANNEL} could not be locked.",
+    "insanitybot.moderation.unlock.failure": "{CHANNEL} could not be unlocked.",
 
     "insanitybot.moderation.verbal_warn.reason": "{MENTION}, {REASON}",
     "insanitybot.moderation.warn.reason": "You were warned for {REASON}.",
@@ -52,7 +57,18 @@
     "insanitybot.commands.verbal_log.empty_modlog": ":white_check_mark: This member has no verbal log entries",
     "insanitybot.commands.verbal_log.overflow": "... and more entries",
     "insanitybot.commands.verbal_log.failed": "Could not retrieve verbal log for {MENTION}",
-    "insanitybot.commands.verbal_log.paged.page_number": "Page {PAGE}/{PAGE_TOTAL}"
+    "insanitybot.commands.verbal_log.paged.page_number": "Page {PAGE}/{PAGE_TOTAL}",
+
+    "insanitybot.commands.lock.whitelist.add.success": "{ROLE} was added successfully to the whitelist for {CHANNEL}.",
+    "insanitybot.commands.lock.whitelist.add.failure": "{ROLE} could not be added to the whitelist for {CHANNEL}.",
+    "insanitybot.commands.lock.whitelist.add.already_present": "{ROLE} was already whitelisted in {CHANNEL}.",
+    "insanitybot.commands.lock.whitelist.remove.success": "{ROLE} was removed successfully from the whitelist for {CHANNEL}.",
+    "insanitybot.commands.lock.whitelist.remove.failure": "{ROLE} could not be removed from the whitelist for {CHANNEL}.",
+    "insanitybot.commands.lock.blacklist.add.success": "{ROLE} was added successfully to the blacklist for {CHANNEL}.",
+    "insanitybot.commands.lock.blacklist.add.failure": "{ROLE} could not be added to the blacklist for {CHANNEL}.",
+    "insanitybot.commands.lock.blacklist.add.already_present": "{ROLE} was already blacklisted in {CHANNEL}.",
+    "insanitybot.commands.lock.blacklist.remove.success": "{ROLE} was removed successfully from the blacklist for {CHANNEL}.",
+    "insanitybot.commands.lock.blacklist.remove.failure": "{ROLE} could not be removed from the blacklist for {CHANNEL}."
   }
 }
 

@@ -63,7 +63,7 @@ namespace InsanityBot.Commands.Moderation
             }
             catch (Exception e)
             {
-                DiscordEmbedBuilder failed = new DiscordEmbedBuilder
+                DiscordEmbedBuilder failed = new()
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.failure"],
                         ctx, memberId),
@@ -112,7 +112,7 @@ namespace InsanityBot.Commands.Moderation
             }
 
             DiscordEmbedBuilder nonSilent = null;
-            DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder moderationEmbedBuilder = new()
             {
                 Title = "UNBAN",
                 Color = DiscordColor.SpringGreen,

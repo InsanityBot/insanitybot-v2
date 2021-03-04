@@ -46,7 +46,12 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     return;
                 }
 
-                await exportChannel.SendFileAsync($"./data/{member.Id}/modlog.json");
+                Stream stream = new FileStream($"./data/{member.Id}/modlog.json", FileMode.Open);
+
+                DiscordMessageBuilder messageBuilder = new();
+                messageBuilder.WithFile($"./data/{member.Id}/modlog.json", stream);
+
+                await exportChannel.SendMessageAsync(messageBuilder);
             }
             catch(Exception e)
             {

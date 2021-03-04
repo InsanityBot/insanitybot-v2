@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+using InsanityBot.Utility.Datafixers;
+
 using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Permissions.Reference
@@ -12,13 +14,19 @@ namespace InsanityBot.Utility.Permissions.Reference
         public static RolePermissions Deserialize(UInt64 Identifier)
         {
             PermissionManager.GeneratePermissionFile(Identifier, PermissionFileType.Role);
-            StreamReader reader = new StreamReader($"./data/permissions/{Identifier}.json");
-            return JsonConvert.DeserializeObject<RolePermissions>(reader.ReadToEnd());
+            StreamReader reader = new($"./data/permissions/{Identifier}.json");
+
+            RolePermissions perms = JsonConvert.DeserializeObject<RolePermissions>(reader.ReadToEnd());
+            perms = (RolePermissions)DataFixerLower.UpgradeData(perms);
+            reader.Close();
+
+            Serialize(perms);
+            return perms;
         }
 
         public static void Serialize(RolePermissions permissions)
         {
-            StreamWriter writer = new StreamWriter($"./data/permissions/{permissions.SnowflakeIdentifier}.json");
+            StreamWriter writer = new($"./data/permissions/{permissions.SnowflakeIdentifier}.json");
             writer.BaseStream.SetLength(0);
             writer.Flush();
             writer.Write(JsonConvert.SerializeObject(permissions));

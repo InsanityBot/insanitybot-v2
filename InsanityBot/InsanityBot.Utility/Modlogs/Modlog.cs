@@ -21,8 +21,8 @@ namespace InsanityBot.Utility.Modlogs
         /// <param name="UserId">ID of the user whose modlog gets serialized. Used to tell apart different modlog files</param>
         private static void Serialize(UserModlog user, UInt64 UserId)
         {
-            FileStream file = new FileStream($"./data/{UserId}/modlog.json", FileMode.Truncate);
-            StreamWriter writer = new StreamWriter(file);
+            FileStream file = new($"./data/{UserId}/modlog.json", FileMode.Truncate);
+            StreamWriter writer = new(file);
 
             writer.Write(JsonConvert.SerializeObject(user, Formatting.Indented));
 
@@ -39,7 +39,7 @@ namespace InsanityBot.Utility.Modlogs
             if (!File.Exists($"./data/{UserId}/modlog.json"))
                 Create(UserName, UserId);
 
-            StreamReader reader = new StreamReader($"./data/{UserId}/modlog.json");
+            StreamReader reader = new($"./data/{UserId}/modlog.json");
             String text = reader.ReadToEnd();
             reader.Close();
 
@@ -53,8 +53,8 @@ namespace InsanityBot.Utility.Modlogs
 
             if (!File.Exists($"./data/{UserId}/modlog.json"))
             {
-                StreamWriter writer = new StreamWriter(File.Create($"./data/{UserId}/modlog.json"));
-                UserModlog modlog = new UserModlog(UserName);
+                StreamWriter writer = new(File.Create($"./data/{UserId}/modlog.json"));
+                UserModlog modlog = new(UserName);
 
                 writer.Write(JsonConvert.SerializeObject(modlog, Formatting.Indented));
                 writer.Close();

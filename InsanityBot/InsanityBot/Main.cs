@@ -13,6 +13,7 @@ using DSharpPlus.Exceptions;
 
 using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Commands.Moderation;
+using InsanityBot.Commands.Moderation.Locking;
 using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
@@ -162,6 +163,10 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<ClearModlog>();
 
                 CommandsExtension.RegisterCommands<Purge>();
+
+                CommandsExtension.RegisterCommands<Lock>();
+                CommandsExtension.RegisterCommands<Unlock>();
+                CommandsExtension.RegisterCommands<LockHelperCommands>();
             }
         }
 
@@ -190,7 +195,7 @@ namespace InsanityBot
                 return;
 
 
-            TcpListener listener = new TcpListener(IPAddress.Parse("0.0.0.0"), (Int32)Port);
+            TcpListener listener = new(IPAddress.Parse("0.0.0.0"), (Int32)Port);
 
             try
             {
