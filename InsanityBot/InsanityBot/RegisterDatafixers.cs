@@ -17,8 +17,10 @@ namespace InsanityBot
         public static void RegisterDatafixers()
         {
             DataFixerLower.AddDatafixer(new Main0001_AddModlogScrolling(), typeof(MainConfiguration));
+            DataFixerLower.AddDatafixer(new Main0002_AddChannelLocking(), typeof(MainConfiguration));
 
             DataFixerLower.AddDatafixer(new Lang0001_AddModlogScrolling(), typeof(LanguageConfiguration));
+            DataFixerLower.AddDatafixer(new Lang0002_AddChannelLocking(), typeof(LanguageConfiguration));
         }
     }
 }

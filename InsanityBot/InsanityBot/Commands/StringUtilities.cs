@@ -34,6 +34,17 @@ namespace InsanityBot.Commands
                 .Replace("{CHANNELNAME}", context.Channel.Name);
         }
 
+        public static String GetFormattedString(String value, CommandContext context)
+        {
+            return value.Replace("{MODMENTION}", context.Member.Mention)
+                .Replace("{MODUSERNAME}", context.Member.Username)
+                .Replace("{MODNICKNAME}", context.Member.Nickname)
+                .Replace("{MODID}", context.Member.Id.ToString())
+                .Replace("{CHANNEL}", context.Channel.Mention)
+                .Replace("{CHANNELNAME}", context.Channel.Name);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static String GetFormattedString(String value, CommandContext context, UInt64 discordMemberId)
         {
             return value.Replace("{ID}", discordMemberId.ToString())
