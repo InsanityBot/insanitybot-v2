@@ -38,7 +38,11 @@ namespace InsanityBot.Utility.Permissions.Reference
             { "insanitybot.moderation.clear_modlog", false },
             { "insanitybot.moderation.purge", false },
             { "insanitybot.moderation.lock", false },
-            { "insanitybot.moderation.unlock", false }
+            { "insanitybot.moderation.unlock", false },
+            { "insanitybot.admin.lock_whitelist.add", false },
+            { "insanitybot.admin.lock_whitelist.remove", false },
+            { "insanitybot.admin.lock_blacklist.add", false },
+            { "insanitybot.admin.lock_blacklist.remove", false }
         };
 
         protected PermissionBase(UInt64 Id, Dictionary<String, Boolean> Permissions)

@@ -107,6 +107,11 @@ namespace InsanityBot.Commands.Moderation.Locking
                 var overwrites = channel.GetChannelData();
                 var cachedData = channel.GetCachedChannelData();
 
+                UInt64 exemptRole;
+                if ((exemptRole = Convert.ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.lock_exempt_role_id"])) != 0)
+                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(exemptRole), allow: Permissions.None, reason:
+                        "InsanityBot - unlocking channel, removing whitelist");
+
                 foreach (var v in cachedData.LockedRoles)
                     await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), deny: Permissions.None, reason: "InsanityBot - unlocking channel, removing permission overwrites");
 

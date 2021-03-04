@@ -116,6 +116,11 @@ namespace InsanityBot.Commands.Moderation.Locking
                 foreach (var v in data.WhitelistedRoles)
                     await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), allow: Permissions.SendMessages, reason: "InsanityBot - locking channel, re-adding access for whitelisted roles");
 
+                UInt64 exemptRole;
+                if ((exemptRole = Convert.ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.lock_exempt_role_id"])) != 0)
+                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(exemptRole), allow: Permissions.SendMessages, reason:
+                        "InsanityBot - locking channel, granting access to whitelisted users");
+
                 embedBuilder = new DiscordEmbedBuilder
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.lock.success"], ctx),
