@@ -22,6 +22,12 @@ namespace InsanityBot.Commands.Moderation.Modlog
     {
         public static async Task ReactionAddedEventHandler(DiscordClient client, MessageReactionAddEventArgs args)
         {
+            _ = PagedModlogHandler(client, args);
+        }
+
+        private static async Task PagedModlogHandler(DiscordClient client, MessageReactionAddEventArgs args)
+        {
+
             if (!ModlogMessageTracker.IsTracked(args.Message.Id))
                 return;
 
@@ -153,10 +159,10 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     }
                 }
 
-delete_reaction:
+            delete_reaction:
                 await args.Message.DeleteReactionAsync(args.Emoji, args.User);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 InsanityBot.Client.Logger.LogError($"{e.GetType()}: {e.Message}\n{e.StackTrace}");
             }
