@@ -30,7 +30,7 @@ namespace InsanityBot.Utility.Config
 
         public MainConfiguration Deserialize(String Filename)
         {
-            using StreamReader reader = new StreamReader(File.OpenRead(Filename));
+            using StreamReader reader = new(File.OpenRead(Filename));
 
             MainConfiguration config = JsonConvert.DeserializeObject<MainConfiguration>(reader.ReadToEnd());
             config = (MainConfiguration)DataFixerLower.UpgradeData(config);
@@ -42,7 +42,7 @@ namespace InsanityBot.Utility.Config
 
         public void Serialize(MainConfiguration Config, String Filename)
         {
-            using StreamWriter writer = new StreamWriter(File.OpenWrite(Filename));
+            using StreamWriter writer = new(File.OpenWrite(Filename));
             writer.BaseStream.SetLength(0);
             writer.Flush();
             writer.Write(JsonConvert.SerializeObject(Config, Formatting.Indented));

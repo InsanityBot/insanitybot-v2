@@ -61,7 +61,7 @@ namespace InsanityBot.Commands.Moderation
             }
             catch (Exception e)
             {
-                DiscordEmbedBuilder failed = new DiscordEmbedBuilder
+                DiscordEmbedBuilder failed = new()
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unmute.failure"],
                         ctx, member),
@@ -111,7 +111,7 @@ namespace InsanityBot.Commands.Moderation
             }
 
             DiscordEmbedBuilder nonSilent = null;
-            DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder moderationEmbedBuilder = new()
             {
                 Title = "UNMUTE",
                 Color = DiscordColor.SpringGreen,

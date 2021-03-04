@@ -44,7 +44,7 @@ namespace InsanityBot.Commands.Moderation
 
             DiscordEmbedBuilder embedBuilder = null;
 
-            DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder moderationEmbedBuilder = new()
             {
                 Title = "BLACKLIST",
                 Color = DiscordColor.Black,
@@ -121,7 +121,7 @@ namespace InsanityBot.Commands.Moderation
 
             DiscordEmbedBuilder embedBuilder = null;
 
-            DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder moderationEmbedBuilder = new()
             {
                 Title = "WHITELIST",
                 Color = DiscordColor.White,

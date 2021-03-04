@@ -41,7 +41,7 @@ namespace InsanityBot.Utility.Timers
 
             //ok, it exists and has file contents. time to read.
 
-            List<Timer> ActiveTimers = new List<Timer>();
+            List<Timer> ActiveTimers = new();
 
             StreamReader reader = null;
 

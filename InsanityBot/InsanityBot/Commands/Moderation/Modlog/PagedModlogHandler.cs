@@ -20,12 +20,14 @@ namespace InsanityBot.Commands.Moderation.Modlog
 {
     public partial class Modlog
     {
+#pragma warning disable CS1998
         public static async Task ReactionAddedEventHandler(DiscordClient client, MessageReactionAddEventArgs args)
         {
-            _ = PagedModlogHandler(client, args);
+            _ = PagedModlogHandler(args);
         }
+#pragma warning restore CS1998
 
-        private static async Task PagedModlogHandler(DiscordClient client, MessageReactionAddEventArgs args)
+        private static async Task PagedModlogHandler(MessageReactionAddEventArgs args)
         {
 
             if (!ModlogMessageTracker.IsTracked(args.Message.Id))
@@ -51,7 +53,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         if (messageData.Page == 0)
                             goto delete_reaction;
 
-                        DiscordEmbedBuilder modlogEmbedBuilder = new DiscordEmbedBuilder
+                        DiscordEmbedBuilder modlogEmbedBuilder = new()
                         {
                             Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.embed_title"],
                                 (DiscordMember)user),
@@ -78,7 +80,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         if (messageData.Page >= ToByte(((DiscordMember)(user)).GetUserModlog().ModlogEntryCount + 1))
                             goto delete_reaction;
 
-                        DiscordEmbedBuilder modlogEmbedBuilder = new DiscordEmbedBuilder
+                        DiscordEmbedBuilder modlogEmbedBuilder = new()
                         {
                             Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.embed_title"],
                                 (DiscordMember)user),
@@ -108,7 +110,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         if (messageData.Page == 0)
                             goto delete_reaction;
 
-                        DiscordEmbedBuilder modlogEmbedBuilder = new DiscordEmbedBuilder
+                        DiscordEmbedBuilder modlogEmbedBuilder = new()
                         {
                             Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.embed_title"],
                                 (DiscordMember)user),
@@ -135,7 +137,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         if (messageData.Page >= ToByte(((DiscordMember)(user)).GetUserModlog().VerbalLogEntryCount + 1))
                             goto delete_reaction;
 
-                        DiscordEmbedBuilder modlogEmbedBuilder = new DiscordEmbedBuilder
+                        DiscordEmbedBuilder modlogEmbedBuilder = new()
                         {
                             Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.embed_title"],
                                 (DiscordMember)user),

@@ -55,7 +55,7 @@ namespace InsanityBot.Commands.Moderation
             }
             catch (Exception e)
             {
-                DiscordEmbedBuilder failed = new DiscordEmbedBuilder
+                DiscordEmbedBuilder failed = new()
                 {
                     Description = InsanityBot.LanguageConfig["insanitybot.moderation.purge.failure"],
                     Color = DiscordColor.Red,
@@ -92,7 +92,7 @@ namespace InsanityBot.Commands.Moderation
                 _ => reason
             };
 
-            DiscordEmbedBuilder tmpEmbedBuilder = null, moderationEmbedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder tmpEmbedBuilder = null, moderationEmbedBuilder = new()
             {
                 Title = "Purge",
                 Color = DiscordColor.Yellow,

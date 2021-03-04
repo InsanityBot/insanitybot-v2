@@ -16,7 +16,7 @@ namespace InsanityBot.Utility.Permissions.Reference
         public String DataVersion { get; set; }
 
         [JsonIgnore]
-        public static readonly Dictionary<String, Boolean> DefaultPermissions = new Dictionary<String, Boolean>
+        public static readonly Dictionary<String, Boolean> DefaultPermissions = new()
         {
             { "insanitybot.miscellaneous.say", false },
             { "insanitybot.miscellaneous.say.embed", false },

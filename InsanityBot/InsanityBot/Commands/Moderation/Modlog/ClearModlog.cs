@@ -54,7 +54,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             }
             catch (Exception e)
             {
-                DiscordEmbedBuilder failed = new DiscordEmbedBuilder
+                DiscordEmbedBuilder failed = new()
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.clear_modlog.failure"],
                         ctx, member),
@@ -91,7 +91,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 _ => GetFormattedString(reason, ctx, member)
             };
 
-            DiscordEmbedBuilder embedBuilder = null, moderationEmbedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder embedBuilder = null, moderationEmbedBuilder = new()
             {
                 Title = "Modlog Cleared",
                 Color = DiscordColor.SpringGreen,

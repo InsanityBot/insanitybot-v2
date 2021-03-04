@@ -69,7 +69,7 @@ namespace InsanityBot.Commands.Moderation
             }
             catch (Exception e)
             {
-                DiscordEmbedBuilder failed = new DiscordEmbedBuilder
+                DiscordEmbedBuilder failed = new()
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.tempmute.failure"],
                         ctx, member),
@@ -107,7 +107,7 @@ namespace InsanityBot.Commands.Moderation
 
             DiscordEmbedBuilder embedBuilder = null;
 
-            DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder moderationEmbedBuilder = new()
             {
                 Title = "TEMPMUTE",
                 Color = DiscordColor.Red,
@@ -126,7 +126,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 MuteStartingEvent();
 
-                Timer callbackTimer = new Timer(DateTime.Now.Add(time), $"tempmute_{member.Id}");
+                Timer callbackTimer = new(DateTime.Now.Add(time), $"tempmute_{member.Id}");
                 moderationEmbedBuilder.AddField("Timer GUID", callbackTimer.Guid.ToString(), true);
                 TimeHandler.AddTimer(callbackTimer);
 

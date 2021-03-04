@@ -195,7 +195,7 @@ namespace InsanityBot
                 return;
 
 
-            TcpListener listener = new TcpListener(IPAddress.Parse("0.0.0.0"), (Int32)Port);
+            TcpListener listener = new(IPAddress.Parse("0.0.0.0"), (Int32)Port);
 
             try
             {

@@ -35,7 +35,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             {
                 UserModlog modlog = user.GetUserModlog();
 
-                DiscordEmbedBuilder modlogEmbed = new DiscordEmbedBuilder
+                DiscordEmbedBuilder modlogEmbed = new()
                 {
                     Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.embed_title"],
                         ctx, user),
@@ -104,7 +104,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1170, "Modlog"), $"Could not retrieve modlogs: {e}: {e.Message}");
 
-                DiscordEmbedBuilder failedModlog = new DiscordEmbedBuilder
+                DiscordEmbedBuilder failedModlog = new()
                 {
                     Color = DiscordColor.Red,
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.failed"], ctx, user),

@@ -59,7 +59,7 @@ namespace InsanityBot.Commands.Moderation
             }
             catch (Exception e)
             {
-                DiscordEmbedBuilder failed = new DiscordEmbedBuilder
+                DiscordEmbedBuilder failed = new()
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.ban.failure"],
                         ctx, member),
@@ -97,7 +97,7 @@ namespace InsanityBot.Commands.Moderation
 
             DiscordEmbedBuilder embedBuilder = null;
 
-            DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder moderationEmbedBuilder = new()
             {
                 Title = "BAN",
                 Color = DiscordColor.Red,

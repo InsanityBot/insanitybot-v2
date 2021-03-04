@@ -22,7 +22,7 @@ namespace InsanityBot.Utility.Language
 
         public LanguageConfiguration Deserialize(String Filename)
         {
-            StreamReader reader = new StreamReader(File.OpenRead(Filename));
+            StreamReader reader = new(File.OpenRead(Filename));
 
             LanguageConfiguration config = JsonConvert.DeserializeObject<LanguageConfiguration>(reader.ReadToEnd());
             config = (LanguageConfiguration)DataFixerLower.UpgradeData(config);
@@ -40,7 +40,7 @@ namespace InsanityBot.Utility.Language
 
         public void Serialize(LanguageConfiguration Config, String Filename)
         {
-            using StreamWriter writer = new StreamWriter(File.OpenWrite(Filename));
+            using StreamWriter writer = new(File.OpenWrite(Filename));
             writer.BaseStream.SetLength(0);
             writer.Flush();
             writer.Write(JsonConvert.SerializeObject(Config, Formatting.Indented));

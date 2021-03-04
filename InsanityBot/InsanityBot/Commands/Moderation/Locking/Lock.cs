@@ -51,7 +51,7 @@ namespace InsanityBot.Commands.Moderation.Locking
             }
             catch(Exception e)
             {
-                DiscordEmbedBuilder failed = new DiscordEmbedBuilder
+                DiscordEmbedBuilder failed = new()
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.lock.failure"],
                         ctx),
@@ -89,7 +89,7 @@ namespace InsanityBot.Commands.Moderation.Locking
             };
 
             DiscordEmbedBuilder embedBuilder = null;
-            DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
+            DiscordEmbedBuilder moderationEmbedBuilder = new()
             {
                 Title = "LOCK",
                 Color = DiscordColor.Blue,

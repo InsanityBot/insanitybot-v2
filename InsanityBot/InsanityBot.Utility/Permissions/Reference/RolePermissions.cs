@@ -14,7 +14,7 @@ namespace InsanityBot.Utility.Permissions.Reference
         public static RolePermissions Deserialize(UInt64 Identifier)
         {
             PermissionManager.GeneratePermissionFile(Identifier, PermissionFileType.Role);
-            StreamReader reader = new StreamReader($"./data/permissions/{Identifier}.json");
+            StreamReader reader = new($"./data/permissions/{Identifier}.json");
 
             RolePermissions perms = JsonConvert.DeserializeObject<RolePermissions>(reader.ReadToEnd());
             perms = (RolePermissions)DataFixerLower.UpgradeData(perms);
@@ -26,7 +26,7 @@ namespace InsanityBot.Utility.Permissions.Reference
 
         public static void Serialize(RolePermissions permissions)
         {
-            StreamWriter writer = new StreamWriter($"./data/permissions/{permissions.SnowflakeIdentifier}.json");
+            StreamWriter writer = new($"./data/permissions/{permissions.SnowflakeIdentifier}.json");
             writer.BaseStream.SetLength(0);
             writer.Flush();
             writer.Write(JsonConvert.SerializeObject(permissions));
