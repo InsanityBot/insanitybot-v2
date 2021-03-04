@@ -1,4 +1,4 @@
-**What issues are fixed in this Pull Request** Mention isses if appropriate
+**What issues are fixed in this Pull Request** Mention issues if appropriate
 
 **Changes made to code** You must describe this in as much detail as possible
 
