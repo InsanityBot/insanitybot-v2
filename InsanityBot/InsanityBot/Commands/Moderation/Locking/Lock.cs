@@ -132,11 +132,12 @@ namespace InsanityBot.Commands.Moderation.Locking
                         Text = "InsanityBot - ExaInsanity 2020-2021"
                     }
                 };
-            InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
-        }
+                InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
+            }
             finally
             {
-                await ctx.RespondAsync(embed: embedBuilder.Build());
+                if(!silent)
+                    await ctx.RespondAsync(embed: embedBuilder.Build());
             }
         }
     }
