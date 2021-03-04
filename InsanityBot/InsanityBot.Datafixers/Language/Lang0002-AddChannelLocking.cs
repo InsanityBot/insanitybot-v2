@@ -34,6 +34,8 @@ namespace InsanityBot.Datafixers.Language
 
             data.Configuration.Remove("insanitybot.moderation.lock.success");
             data.Configuration.Remove("insanitybot.moderation.lock.failure");
+            data.Configuration.Remove("insanitybot.moderation.unlock.success");
+            data.Configuration.Remove("insanitybot.moderation.unlock.failure");
             data.DataVersion = "2.0.0-dev.00016";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 2, 1, "Downgrade"), "Downgraded successfully to version 2.0.0-dev.00016");
@@ -47,6 +49,8 @@ namespace InsanityBot.Datafixers.Language
 
             data.Configuration.Remove("insanitybot.moderation.lock.success");
             data.Configuration.Remove("insanitybot.moderation.lock.failure");
+            data.Configuration.Remove("insanitybot.moderation.unlock.success");
+            data.Configuration.Remove("insanitybot.moderation.unlock.failure");
             data.DataVersion = "2.0.0-dev.00016";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 2, 2, "ExportDowngrade"), "Downgraded successfully to version 2.0.0-dev.00016");
@@ -60,6 +64,8 @@ namespace InsanityBot.Datafixers.Language
 
             data.Configuration.Add("insanitybot.moderation.lock.success", "{CHANNEL} was locked successfully.");
             data.Configuration.Add("insanitybot.moderation.lock.failure", "{CHANNEL} could not be locked.");
+            data.Configuration.Add("insanitybot.moderation.unlock.success", "{CHANNEL} was unlocked successfully.");
+            data.Configuration.Add("insanitybot.moderation.unlock.failure", "{CHANNEL} could not be unlocked.");
             data.DataVersion = "2.0.0-dev.00017";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 2, 3, "ExportUpgrade"), "Upgraded successfully to version 2.0.0-dev.00017");
@@ -73,6 +79,8 @@ namespace InsanityBot.Datafixers.Language
 
             data.Configuration.Add("insanitybot.moderation.lock.success", "{CHANNEL} was locked successfully.");
             data.Configuration.Add("insanitybot.moderation.lock.failure", "{CHANNEL} could not be locked.");
+            data.Configuration.Add("insanitybot.moderation.unlock.success", "{CHANNEL} was unlocked successfully.");
+            data.Configuration.Add("insanitybot.moderation.unlock.failure", "{CHANNEL} could not be unlocked.");
             data.DataVersion = "2.0.0-dev.00017";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 2, 4, "Upgrade"), "Upgraded successfully to version 2.0.0-dev.00017");

@@ -19,22 +19,22 @@ using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation.Locking
 {
-    public class Lock : BaseCommandModule
+    public class Unlock : BaseCommandModule
     {
-        [Command("lock")]
-        public async Task LockCommand(CommandContext ctx)
+        [Command("unlock")]
+        public async Task UnlockCommand(CommandContext ctx)
         {
-            await LockCommand(ctx, ctx.Channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
+            await UnlockCommand(ctx, ctx.Channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
         }
 
-        [Command("lock")]
-        public async Task LockCommand(CommandContext ctx, DiscordChannel channel)
+        [Command("unlock")]
+        public async Task UnlockCommand(CommandContext ctx, DiscordChannel channel)
         {
-            await LockCommand(ctx, channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
+            await UnlockCommand(ctx, channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
         }
 
-        [Command("lock")]
-        public async Task LockCommand(CommandContext ctx, String args)
+        [Command("unlock")]
+        public async Task UnlockCommand(CommandContext ctx, String args)
         {
             try
             {
@@ -46,14 +46,14 @@ namespace InsanityBot.Commands.Moderation.Locking
                 await Parser.Default.ParseArguments<LockOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await LockCommand(ctx, InsanityBot.HomeGuild.GetChannel(o.ChannelId), String.Join(' ', o.Reason), o.Silent);
+                        await UnlockCommand(ctx, InsanityBot.HomeGuild.GetChannel(o.ChannelId), String.Join(' ', o.Reason), o.Silent);
                     });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 DiscordEmbedBuilder failed = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.lock.failure"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unlock.failure"],
                         ctx),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -67,31 +67,30 @@ namespace InsanityBot.Commands.Moderation.Locking
             }
         }
 
-        [Command("lock")]
-        public async Task LockCommand(CommandContext ctx, DiscordChannel channel, String args)
+        [Command("unlock")]
+        public async Task UnlockCommand(CommandContext ctx, DiscordChannel channel, String args)
         {
-            await LockCommand(ctx, args + $" -c {channel.Id}");
+            await UnlockCommand(ctx, args + $" -c {channel.Id}");
         }
 
-        private async Task LockCommand(CommandContext ctx, DiscordChannel channel, String reason = "usedefault", Boolean silent = false)
+        private async Task UnlockCommand(CommandContext ctx, DiscordChannel channel, String reason = "usedefault", Boolean silent = false)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.lock"))
+            if (!ctx.Member.HasPermission("insanitybot.moderation.unlock"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
-            String LockReason = reason switch
+            String UnlockReason = reason switch
             {
-                "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"],
-                                ctx),
+                "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], ctx),
                 _ => GetFormattedString(reason, ctx)
             };
 
             DiscordEmbedBuilder embedBuilder = null;
             DiscordEmbedBuilder moderationEmbedBuilder = new DiscordEmbedBuilder
             {
-                Title = "LOCK",
+                Title = "UNLOCK",
                 Color = DiscordColor.Blue,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
@@ -101,24 +100,25 @@ namespace InsanityBot.Commands.Moderation.Locking
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
                 .AddField("Channel", channel.Mention, true)
-                .AddField("Reason", LockReason, true);
+                .AddField("Reason", UnlockReason, true);
 
             try
             {
-                channel.SerializeChannelData();
-                ChannelData data = channel.GetCachedChannelData();
+                var overwrites = channel.GetChannelData();
+                var cachedData = channel.GetCachedChannelData();
 
-                await channel.AddOverwriteAsync(InsanityBot.HomeGuild.EveryoneRole, deny: Permissions.SendMessages, reason: "InsanityBot - locking channel");
+                foreach (var v in cachedData.LockedRoles)
+                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), deny: Permissions.None, reason: "InsanityBot - unlocking channel, removing permission overwrites");
 
-                foreach(var v in data.LockedRoles)
-                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), deny: Permissions.SendMessages, reason: "InsanityBot - locking channel, removing access for listed roles");
+                foreach (var v in cachedData.LockedRoles)
+                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), allow: Permissions.None, reason: "InsanityBot - unlocking channel, removing permission overwrites");
 
-                foreach (var v in data.WhitelistedRoles)
-                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), allow: Permissions.SendMessages, reason: "InsanityBot - locking channel, re-adding access for whitelisted roles");
+                foreach (var v in overwrites)
+                    await channel.AddOverwriteAsync(await v.GetRoleAsync(), v.Allowed, v.Denied, "InsanityBot - unlocking channel, restoring previous permissions");
 
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.lock.success"], ctx),
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unlock.success"], ctx),
                     Color = DiscordColor.Blue,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
@@ -130,7 +130,7 @@ namespace InsanityBot.Commands.Moderation.Locking
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.lock.failure"], ctx),
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unlock.failure"], ctx),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
@@ -141,15 +141,9 @@ namespace InsanityBot.Commands.Moderation.Locking
             }
             finally
             {
-                if(!silent)
+                if (!silent)
                     await ctx.RespondAsync(embed: embedBuilder.Build());
             }
         }
-    }
-
-    public class LockOptions : ModerationOptionBase
-    {
-        [Option('c', "channel", Default = 0, Required = false)]
-        public UInt64 ChannelId { get; set; }
     }
 }
