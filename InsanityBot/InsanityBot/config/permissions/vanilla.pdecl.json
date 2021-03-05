@@ -1,0 +1,104 @@
+[
+  {
+    "Permission": "insanitybot.miscellaneous.say",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.miscellaneous.say.embed",
+    "Default": false
+  },
+
+  {
+    "Permission": "insanitybot.moderation.verbal_warn",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.warn",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.unwarn",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.mute",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.tempmute",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.unmute",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.blacklist",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.whitelist",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.kick",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.ban",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.tempban",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.unban",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.verballog",
+    "Default": true
+  },
+  {
+    "Permission": "insanitybot.moderation.modlog",
+    "Default": true
+  },
+  {
+    "Permission": "insanitybot.moderation.export_modlog",
+    "Default": true
+  },
+  {
+    "Permission": "insanitybot.moderation.clear_modlog",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.purge",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.lock",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.moderation.unlock",
+    "Default": false
+  },
+
+  {
+    "Permission": "insanitybot.admin.lock_whitelist.add",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.admin.lock_whitelist.remove",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.admin.lock_blacklist.add",
+    "Default": false
+  },
+  {
+    "Permission": "insanitybot.admin.lock_blacklist.remove",
+    "Default": false
+  }
+]

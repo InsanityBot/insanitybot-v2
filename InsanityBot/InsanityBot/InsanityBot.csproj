@@ -13,7 +13,11 @@
 
   <ItemGroup>
     <None Remove="config\lang.json" />
-    <None Remove="config\main.json" />
+    <None Remove="config\main.json" />    
+    <None Remove="config\permissions\default.json" />
+    <None Remove="config\permissions\vanilla.pdecl.json" />
+    <None Remove="config\permissions\vanilla.mappings.json" />
+    <None Remove="config\permissions\mappings.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +25,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="config\main.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\permissions\default.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\permissions\vanilla.pdecl.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\permissions\vanilla.mappings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\permissions\mappings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

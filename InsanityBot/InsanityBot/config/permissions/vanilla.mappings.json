@@ -1,0 +1,35 @@
+{
+  "4": [
+    "insanitybot.admin.*"
+  ],
+  "32": [
+    "insanitybot.moderation.ban",
+    "insanitybot.moderation.tempban",
+    "insanitybot.moderation.unban",
+    "insanitybot.moderation.lock",
+    "insanitybot.moderation.unlock"
+  ],
+  "1024": [
+    "insanitybot.moderation.blacklist",
+    "insanitybot.moderation.whitelist",
+    "insanitybot.moderation.kick",
+    "insanitybot.moderation.clear_modlog"
+  ],
+  "16384": [
+    "insanitybot.moderation.verbal_warn",
+    "insanitybot.moderation.warn",
+    "insanitybot.moderation.unwarn",
+    "insanitybot.moderation.mute",
+    "insanitybot.moderation.tempmute",
+    "insanitybot.moderation.unmute"
+  ],
+  "262144": [
+    "insanitybot.miscellaneous.say",
+    "insanitybot.miscellaneous.say.embed"
+  ],
+  "2097152": [
+    "insanitybot.moderation.verballog",
+    "insanitybot.moderation.modlog",
+    "insanitybot.moderation.export_modlog"
+  ]
+}
