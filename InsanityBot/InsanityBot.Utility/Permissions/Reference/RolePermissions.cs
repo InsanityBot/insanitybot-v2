@@ -17,10 +17,7 @@ namespace InsanityBot.Utility.Permissions.Reference
             StreamReader reader = new($"./data/permissions/{Identifier}.json");
 
             RolePermissions perms = JsonConvert.DeserializeObject<RolePermissions>(reader.ReadToEnd());
-            perms = (RolePermissions)DataFixerLower.UpgradeData(perms);
             reader.Close();
-
-            Serialize(perms);
             return perms;
         }
 
