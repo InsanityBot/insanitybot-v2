@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-**Describe the idea you'd like to see impplemented**
+**Describe the idea you'd like to see implemented**
 A clear and concise description of what you want to happen.
 
 **Describe alternatives you've considered**
