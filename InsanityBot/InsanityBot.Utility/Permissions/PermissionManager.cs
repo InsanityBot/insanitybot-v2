@@ -16,7 +16,7 @@ namespace InsanityBot.Utility.Permissions
     internal static class PermissionManager
     {
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-#pragma warning disable IDE0060 // Remove unused parameter
+#pragma warning disable IDE0060
         internal static async Task RemoveGuildMember(DiscordClient sender, GuildMemberRemoveEventArgs e)
         {
             Directory.Delete($"./data/{e.Member.Id}");
@@ -56,7 +56,7 @@ namespace InsanityBot.Utility.Permissions
                 return;
             }
         }
-#pragma warning restore IDE0060 // Remove unused parameter      
+#pragma warning restore IDE0060
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     }
 }

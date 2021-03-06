@@ -19,10 +19,14 @@ namespace InsanityBot.Utility.Permissions
 
         public static Boolean HasPermission(this DiscordMember member, String PermissionId)
         {
+#if false
             UserPermissions permissions = UserPermissions.Deserialize(member.Id);
             if (permissions.IsAdministrator)
                 return true;
-            return permissions[PermissionId];
+            return permissions["PermissionId"];
+#else
+            return true;
+#endif
         }
     }
 }

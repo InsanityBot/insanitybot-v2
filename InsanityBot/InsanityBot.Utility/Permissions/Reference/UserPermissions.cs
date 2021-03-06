@@ -11,10 +11,10 @@ namespace InsanityBot.Utility.Permissions.Reference
 {
     public class UserPermissions : PermissionBase
     {
-        public UserPermissions(UInt64 Id, Dictionary<String, Boolean> Permissions) : base(Id, Permissions)
+        public UserPermissions(UInt64 Id, Dictionary<String, Boolean> Permissions) //: base(Id, Permissions)
         { }
 
-        public UserPermissions(UInt64 Id) : base(Id)
+        public UserPermissions(UInt64 Id) //: base(Id)
         { }
 
         public UserPermissions() : base()

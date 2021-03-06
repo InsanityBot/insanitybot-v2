@@ -3,6 +3,7 @@
     public enum PermissionFileType
     {
         User,
-        Role
+        Role,
+        Addon
     }
 }

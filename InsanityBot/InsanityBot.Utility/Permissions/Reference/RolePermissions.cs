@@ -30,10 +30,10 @@ namespace InsanityBot.Utility.Permissions.Reference
             writer.Close();
         }
 
-        public RolePermissions(UInt64 Id, Dictionary<String, Boolean> permissions) : base(Id, permissions)
+        public RolePermissions(UInt64 Id, Dictionary<String, Boolean> permissions) //: base(Id, permissions)
         { }
 
-        public RolePermissions(UInt64 Id) : base(Id)
+        public RolePermissions(UInt64 Id) //: base(Id)
         { }
     }
 }
