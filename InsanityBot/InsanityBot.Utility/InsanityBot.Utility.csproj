@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Permissions\Intermediary\Mappings\" />
+    <Folder Include="Permissions\" />
   </ItemGroup>
 
 </Project>
