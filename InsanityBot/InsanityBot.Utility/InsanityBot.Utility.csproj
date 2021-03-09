@@ -12,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Permissions\" />
+    <Folder Include="Permissions\Controller\" />
+    <Folder Include="Permissions\Interface\" />
   </ItemGroup>
 
 </Project>
