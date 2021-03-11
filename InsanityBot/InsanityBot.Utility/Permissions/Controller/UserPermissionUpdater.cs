@@ -8,22 +8,22 @@ using InsanityBot.Utility.Permissions.Model;
 
 namespace InsanityBot.Utility.Permissions.Controller
 {
-    public static class RolePermissionUpdater
+    public static class UserPermissionUpdater
     {
-        public static RolePermissions GetUpdatedRolePermissions(UInt64 roleId)
+        public static UserPermissions GetUpdatedRolePermissions(UInt64 userId)
         {
-            RolePermissions permissions = RolePermissionSerializer.Deserialize(roleId);
+            UserPermissions permissions = UserPermissionSerializer.Deserialize(userId);
             permissions += DefaultPermissionSerializer.GetDefaultPermissions();
             permissions -= DefaultPermissionSerializer.GetDefaultPermissions();
             return permissions;
         }
 
-        public static void UpdateRolePermissions(UInt64 roleId)
+        public static void UpdateRolePermissions(UInt64 userId)
         {
-            RolePermissions permissions = RolePermissionSerializer.Deserialize(roleId);
+            UserPermissions permissions = UserPermissionSerializer.Deserialize(userId);
             permissions += DefaultPermissionSerializer.GetDefaultPermissions();
             permissions -= DefaultPermissionSerializer.GetDefaultPermissions();
-            RolePermissionSerializer.Serialize(permissions);
+            UserPermissionSerializer.Serialize(permissions);
         }
     }
 }

@@ -72,5 +72,11 @@ namespace InsanityBot.Utility.Permissions.Model
 
             return permissions;
         }
+
+        public Boolean this[String key]
+        {
+            get => Permissions[key];
+            set => Permissions[key] = value;
+        }
     }
 }
