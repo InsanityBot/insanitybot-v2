@@ -18,15 +18,21 @@ namespace InsanityBot.Utility.Permissions.Controller
 
         public static Boolean CheckForUpdates()
         {
+            if(!File.Exists($"{IntermediateFilePath}/default-checksums"))
+            {
+                File.Create($"{IntermediateFilePath}/default-checksums").Close();
+                return true;
+            }
+
             StreamReader reader = new($"{IntermediateFilePath}/default-checksums");
             SHA512HashMap<String> fileChecksums = JsonConvert.DeserializeObject<SHA512HashMap<String>>(reader.ReadToEnd());
 
             if (!(fileChecksums["./config/permissions/vanilla.pdecl.json".GetSHA512Checksum()] == "vanilla"))
                 return true;
 
-            var modFiles = (from x in Directory.GetFiles($"{ModPermissionFilePath}")
-                     where x.EndsWith(".pdecl.json")
-                     select x).ToList();
+            var modFiles = from x in Directory.GetFiles(ModPermissionFilePath)
+                           where x.EndsWith(".pdecl.json")
+                           select x;
 
             foreach(var v in modFiles)
             {
@@ -45,9 +51,9 @@ namespace InsanityBot.Utility.Permissions.Controller
             permissions += JsonConvert.DeserializeObject<PermissionDeclaration[]>(reader.ReadToEnd());
             reader.Close();
 
-            var modFiles = (from x in Directory.GetFiles($"{ModPermissionFilePath}")
-                            where x.EndsWith(".pdecl.json")
-                            select x).ToList();
+            var modFiles = from x in Directory.GetFiles(ModPermissionFilePath)
+                           where x.EndsWith(".pdecl.json")
+                           select x;
 
             foreach(var v in modFiles)
             {
@@ -71,9 +77,9 @@ namespace InsanityBot.Utility.Permissions.Controller
 
             map.Add($"./config/permissions/vanilla.pdecl.json".GetSHA512Checksum(), "vanilla");
 
-            var modFiles = (from x in Directory.GetFiles($"{ModPermissionFilePath}")
-                            where x.EndsWith(".pdecl.json")
-                            select x).ToList();
+            var modFiles = from x in Directory.GetFiles(ModPermissionFilePath)
+                           where x.EndsWith(".pdecl.json")
+                           select x;
 
             foreach(var v in modFiles)
             {
