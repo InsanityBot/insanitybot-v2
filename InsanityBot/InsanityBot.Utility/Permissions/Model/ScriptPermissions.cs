@@ -8,10 +8,11 @@ namespace InsanityBot.Utility.Permissions.Model
 {
     public class ScriptPermissions : PermissionBase
     {
-        public override UInt64 SnowflakeIdentifier
+        public ScriptPermissions()
         {
-            get => 0;
-            set => base.SnowflakeIdentifier = 0;
+            this.SnowflakeIdentifier = 0;
+            this.Permissions = new();
+            this.IsAdministrator = true;
         }
     }
 }

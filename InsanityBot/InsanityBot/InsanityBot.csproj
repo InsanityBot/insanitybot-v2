@@ -18,6 +18,7 @@
     <None Remove="config\permissions\vanilla.pdecl.json" />
     <None Remove="config\permissions\vanilla.mappings.json" />
     <None Remove="config\permissions\mappings.json" />
+    <None Remove="config\permissions\scripts.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +38,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="config\permissions\mappings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\permissions\scripts.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
