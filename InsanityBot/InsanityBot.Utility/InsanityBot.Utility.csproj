@@ -11,8 +11,4 @@
     <PackageReference Include="DSharpPlus.Lavalink" Version="4.0.0-rc2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Permissions\Interface\" />
-  </ItemGroup>
-
 </Project>

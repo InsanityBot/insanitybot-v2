@@ -84,7 +84,7 @@ namespace InsanityBot
             await Client.ConnectAsync();
 
             //load perms :b
-            Client.InitializePermissionFramework();
+            // Client.InitializePermissionFramework();
 
             try
             {
