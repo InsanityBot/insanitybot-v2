@@ -57,3 +57,5 @@ worked on when the slash command API is more mature and stable.
 <br/> <br/>
 
 Additional planned features include a modding API, scripting and a webpanel, though neither of these have exited first planning stage yet.
+
+Further planned/considered features can be found [here](https://github.com/InsanityNetwork/InsanityBot/labels/enhancement)
