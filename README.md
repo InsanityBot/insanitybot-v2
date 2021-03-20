@@ -52,93 +52,67 @@
 <h2 align="center">
 Estimated Code Completion Percentage for 2.0 Release: 1.5%
 </h2>
-<br>
+<br />
 </h3>
-<h2>
-  :heavy_check_mark: Features :heavy_check_mark:
-</h2>
-<h3>
-  Moderation
-</h3>
-<ul>
-  <li>Warns</li>
-  <li>Verbal Warns</li>
-  <li>Blacklist</li>
-  <li>Whitelist</li>
-  <li>Mute (WIP)</li>
-  <li>Tempmute (WIP)</li>
-  <li>Unmute (WIP)</li>
-  <li>Kick</li>
-  <li>Ban</li>
-  <li>Tempban (WIP)</li>
-  <li>Unban (WIP)</li>
-  <li>Modlog</li>
-  <li>Unwarn</li>
-  <li>Lock/unlock channel</li>
-  <li>Purge (mass-delete)</li>
-<br>
-</ul>
-<h3>
-  Utility
-</h3>
-<ul>
-  <li>Tags (custom commands)</li>
-  <li>Suggestions (staff and community denied)</li>
-<br>
-</ul>
-<h3>
-  Tickets
-</h3>
-<ul>
-  <li>Open/Close</li>
-  <li>Add/Remove users</li>
-  <li>Report tickets</li>
-  <li>Application tickets</li>
-<br>
-</ul>
-<h3>
-  Experience (WIP)
-</h3>
-<ul>
-  <li>Leaderboard</li>
-  <li>Rank command</li>
-  <li>Level up messages</li>
-<br>
-<br>
-</ul>
-<h2>
-  :computer: Commands :computer:
-</h2>
-<p>
-View the InsanityBot commands <a href="https://docs.insanity.network/en/InsanityBot/Commands">here</a>.
-</p>
-<br>
-<h2>
-  :electric_plug: Installation :electric_plug:
-</h2>
-<p>
-<a href="https://docs.insanity.network/en/InsanityBot/Linux-Installation">Linux</a> | 
-<a href="https://docs.insanity.network/en/InsanityBot/Windows-Installation">Windows</a> | 
-<a href="https://docs.insanity.network/en/InsanityBot/MacOS-Installation">MacOS</a> | 
-<a href="https://docs.insanity.network/en/InsanityBot/Pterodactyl">Pterodactyl</a>
-</p>
-<br>
-<h2>
-  :question: Support :question:
-</h2>
-<p>
-  The fastest way to get support is via our <a href="https://discord.gg/8TKJaGs">Discord server</a>. Alternatively you can open a GitHub issue <a href="https://github.com/InsanityNetwork/InsanityBot/issues/new/choose">here</a>, however, you will likely have to wait longer to get a reply.
-  <br>
-  <strong><em>NOTE:</strong> We reserve the right to refuse support to anyone.</em>
-</p>
-<br>
-<h2>
-  :scroll: Licence, Copyright & TOS :scroll:
-</h2>
-<p>
-  <a href="https://github.com/InsanityNetwork/InsanityBot">InsanityBot</a> is licenced under the <a href="https://github.com/InsanityNetwork/InsanityBot/blob/master/LICENSE"><code>MIT Licence</code></a>.
-  <br><br>
-  Our TOS can be viewed <a href="https://bot.insanity.network/tos/" target="_blank">here</a>.
-  <br><br>
-  Copyright &copy; 2020 - 2021 ExaInsanity
-</p>
+
+
+## :heavy_check_mark: Features :heavy_check_mark:
+### Moderation
+- Warns
+- Verbal Warns
+- Blacklist
+- Whitelist
+- Mute (WIP)
+- Tempmute (WIP)
+- Unmute (WIP)
+- Kick
+- Ban
+- Tempban (WIP)
+- Unban (WIP)
+- Modlog
+- Unwarn
+- Lock/unlock channel
+- Purge (mass-delete)
+<br />
+
+### Utility
+- Tags (custom commands)
+- Suggestions (staff and community denied)
+<br />
+
+### Tickets
+- Open/Close
+- Add/Remove users
+- Report tickets
+- Application tickets
+<br />
+
+### Experience (WIP)
+- Leaderboard
+- Rank command
+- Level up messages
+<br />
+<br />
+
+## :computer: Commands :computer:
+View the InsanityBot commands [here](https://docs.insanity.network/en/InsanityBot/Commands).
+<br />
+## :electric_plug: Installation :electric_plug:
+[Linux](https://docs.insanity.network/en/InsanityBot/Linux-Installation) | 
+[Windows](https://docs.insanity.network/en/InsanityBot/Windows-Installation) | 
+[MacOS](https://docs.insanity.network/en/InsanityBot/MacOS-Installation) | 
+[Pterodactyl](https://docs.insanity.network/en/InsanityBot/Pterodactyl)
+<br />
+
+## :question: Support :question:
+The fastest way to get support is via our [Discord server](https://discord.gg/8TKJaGs). Alternatively you can open a GitHub issue [here](https://github.com/InsanityNetwork/InsanityBot/issues/new/choose), however, you will likely have to wait longer to get a reply.
+<br />
+***NOTE:** We reserve the right to refuse support to anyone.*
+<br />
+
+## :scroll: Licence, Copyright & TOS :scroll:
+[InsanityBot](https://github.com/InsanityNetwork/InsanityBot) is licenced under the [`MIT Licence`](https://github.com/InsanityNetwork/InsanityBot/blob/master/LICENSE).
+<br /><br />
+Our TOS can be viewed [here](https://bot.insanity.network/tos/).
+<br /><br />
+Copyright &copy; 2020 - 2021 ExaInsanity
