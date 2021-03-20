@@ -55,7 +55,7 @@ Estimated Code Completion Percentage for 2.0 Release: 1.5%
 <br />
 </h3>
 
-## Features:
+## Features
 
 InsanityBot is a general-purpose discord bot covering all fields of everyday usage with advanced functionality. A full feature list can be found [here](../features.md)
 
