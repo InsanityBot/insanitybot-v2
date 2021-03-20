@@ -60,20 +60,24 @@ Estimated Code Completion Percentage for 2.0 Release: 1.5%
 InsanityBot is a general-purpose discord bot covering all fields of everyday usage with advanced functionality. A full feature list can be found [here](./features.md)
 
 ## Commands
+
 View the InsanityBot commands [here](https://docs.insanity.network/en/InsanityBot/Commands).
 
 ## Installation
+
 [Linux](https://docs.insanity.network/en/InsanityBot/Linux-Installation) | 
 [Windows](https://docs.insanity.network/en/InsanityBot/Windows-Installation) | 
 [MacOS](https://docs.insanity.network/en/InsanityBot/MacOS-Installation) | 
 [Pterodactyl](https://docs.insanity.network/en/InsanityBot/Pterodactyl)
 
 ## Support
+
 The fastest way to get support is via our [Discord server](https://discord.gg/8TKJaGs). Alternatively you can open a GitHub issue [here](https://github.com/InsanityNetwork/InsanityBot/issues/new/choose), however, you will likely have to wait longer to get a reply.
 
 ***NOTE:** We reserve the right to refuse support to anyone.*
 
 ## Licence, Copyright & TOS
+
 [InsanityBot](https://github.com/InsanityNetwork/InsanityBot) is licenced under the [`MIT Licence`](https://github.com/InsanityNetwork/InsanityBot/blob/master/LICENSE).
 <br /><br />
 Our TOS can be viewed [here](https://bot.insanity.network/tos/).
