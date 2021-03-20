@@ -1,9 +1,9 @@
 <h1 align="center">
   <a href="https://github.com/InsanityNetwork/InsanityBot/"><img src="https://i.trainergamer.me/CLbsn.png" alt="InsanityBot Logo"></a>
   <br>
-  :robot: InsanityBot :robot:
+  InsanityBot
   <br>
-  :memo: <em>Advanced C# Discord Bot</em> :memo:
+  <em>Advanced C# Discord Bot</em>
   <br>
   <br>
 </h1>
