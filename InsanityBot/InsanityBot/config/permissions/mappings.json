@@ -1,0 +1,35 @@
+{
+  "Administrator": [
+    "insanitybot.admin.*"
+  ],
+  "BanMembers": [
+    "insanitybot.moderation.ban",
+    "insanitybot.moderation.tempban",
+    "insanitybot.moderation.unban",
+    "insanitybot.moderation.lock",
+    "insanitybot.moderation.unlock"
+  ],
+  "KickMembers": [
+    "insanitybot.moderation.blacklist",
+    "insanitybot.moderation.whitelist",
+    "insanitybot.moderation.kick",
+    "insanitybot.moderation.clear_modlog"
+  ],
+  "ManageMessages": [
+    "insanitybot.moderation.verbal_warn",
+    "insanitybot.moderation.warn",
+    "insanitybot.moderation.unwarn",
+    "insanitybot.moderation.mute",
+    "insanitybot.moderation.tempmute",
+    "insanitybot.moderation.unmute"
+  ],
+  "MentionEveryone": [
+    "insanitybot.miscellaneous.say",
+    "insanitybot.miscellaneous.say.embed"
+  ],
+  "None": [
+    "insanitybot.moderation.verballog",
+    "insanitybot.moderation.modlog",
+    "insanitybot.moderation.export_modlog"
+  ]
+}

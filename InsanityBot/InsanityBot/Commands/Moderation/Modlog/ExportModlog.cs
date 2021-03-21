@@ -49,7 +49,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 Stream stream = new FileStream($"./data/{member.Id}/modlog.json", FileMode.Open);
 
                 DiscordMessageBuilder messageBuilder = new();
-                messageBuilder.WithFile($"./data/{member.Id}/modlog.json", stream);
+                messageBuilder.WithFile("modlog_export.json", stream);
 
                 await exportChannel.SendMessageAsync(messageBuilder);
             }

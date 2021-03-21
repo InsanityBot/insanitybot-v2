@@ -84,7 +84,7 @@ namespace InsanityBot
             await Client.ConnectAsync();
 
             //load perms :b
-            Client.InitializePermissionFramework();
+            // Client.InitializePermissionFramework();
 
             try
             {
@@ -116,6 +116,8 @@ namespace InsanityBot
             Client.UseCommandsNext(CommandConfiguration);
             CommandsExtension = Client.GetCommandsNext();
 
+            CommandsExtension.CommandErrored += CommandsExtension_CommandErrored;
+
             //start timer framework
             TimeHandler.Start();
 
@@ -141,6 +143,13 @@ namespace InsanityBot
 
             //abort main thread, who needs it anyway
             Thread.Sleep(-1);
+        }
+
+        private static Task CommandsExtension_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)
+        {
+            Client.Logger.LogError($"Command {e.Command} failed:\n" +
+                $"{e.Exception}: {e.Exception.Message}\n{e.Exception.StackTrace}");
+            return Task.CompletedTask;
         }
 
         private static void RegisterAllCommands()
