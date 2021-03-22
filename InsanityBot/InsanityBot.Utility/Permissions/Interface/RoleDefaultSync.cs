@@ -30,16 +30,7 @@ namespace InsanityBot.Utility.Permissions.Interface
             PermissionBackupHandler.BackupRoles(true);
 
             foreach (var v in roleIds)
-                Task.Run(() => { SyncRole(v); });
-        }
-
-        private static void SyncRole(UInt64 id)
-        {
-            DefaultPermissions defaultPermissions = DefaultPermissionSerializer.GetDefaultPermissions();
-            RolePermissions rolePermissions = RolePermissionSerializer.Deserialize(id);
-
-            rolePermissions += defaultPermissions;
-            RolePermissionSerializer.Serialize(rolePermissions);
+                Task.Run(() => { RolePermissionUpdater.UpdateRolePermissions(v); });
         }
     }
 }

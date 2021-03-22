@@ -19,6 +19,12 @@ namespace InsanityBot.Utility.Permissions.Controller
 
         public static RolePermissions Deserialize(UInt64 roleId)
         {
+            if(!File.Exists($"{RolePermissionFilePath}/{roleId}.json"))
+            {
+                FileInfo defaultFile = new("./config/permissions/default.json");
+                defaultFile.CopyTo($"{RolePermissionFilePath}/{roleId}.json");
+            }
+
             StreamReader reader = new($"{RolePermissionFilePath}/{roleId}.json");
             return JsonConvert.DeserializeObject<RolePermissions>(reader.ReadToEnd());
         }

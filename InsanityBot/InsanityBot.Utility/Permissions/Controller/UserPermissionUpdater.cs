@@ -10,7 +10,7 @@ namespace InsanityBot.Utility.Permissions.Controller
 {
     public static class UserPermissionUpdater
     {
-        public static UserPermissions GetUpdatedRolePermissions(UInt64 userId)
+        public static UserPermissions GetUpdatedUserPermissions(UInt64 userId)
         {
             UserPermissions permissions = UserPermissionSerializer.Deserialize(userId);
             permissions += DefaultPermissionSerializer.GetDefaultPermissions();
@@ -18,7 +18,7 @@ namespace InsanityBot.Utility.Permissions.Controller
             return permissions;
         }
 
-        public static void UpdateRolePermissions(UInt64 userId)
+        public static void UpdateUserPermissions(UInt64 userId)
         {
             UserPermissions permissions = UserPermissionSerializer.Deserialize(userId);
             permissions += DefaultPermissionSerializer.GetDefaultPermissions();

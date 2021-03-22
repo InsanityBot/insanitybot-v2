@@ -40,14 +40,7 @@ namespace InsanityBot.Utility.Permissions.Interface
             RolePermissions permissions = RolePermissionSerializer.Deserialize(roleId);
 
             foreach (var v in userIds)
-                Task.Run(() => { SyncUser(permissions, v); });
-        }
-
-        private static void SyncUser(RolePermissions permissions, UInt64 userId)
-        {
-            UserPermissions perms = UserPermissionSerializer.Deserialize(userId);
-            perms += permissions;
-            UserPermissionSerializer.Serialize(perms);
+                Task.Run(() => { UserPermissionUpdater.UpdateUserPermissions(v); });
         }
     }
 }

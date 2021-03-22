@@ -15,6 +15,15 @@ namespace InsanityBot.Utility.Permissions.Controller
     {
         public static UserPermissions Deserialize(UInt64 userId)
         {
+            if (!Directory.Exists($"./data/{userId}"))
+                Directory.CreateDirectory($"./data/{userId}");
+
+            if(!File.Exists($"./data/{userId}/permissions.json"))
+            {
+                FileInfo defaultFile = new("./config/permissions/default.json");
+                defaultFile.CopyTo($"./data/{userId}/permissions.json");
+            }
+
             StreamReader reader = new($"./data/{userId}/permissions.json");
             return JsonConvert.DeserializeObject<UserPermissions>(reader.ReadToEnd());
         }

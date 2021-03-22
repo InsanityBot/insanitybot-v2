@@ -29,16 +29,7 @@ namespace InsanityBot.Utility.Permissions.Interface
             PermissionBackupHandler.BackupUsers(true);
 
             foreach (var v in userIds)
-                Task.Run(() => { SyncUser(v); });
-        }
-
-        private static void SyncUser(UInt64 id)
-        {
-            DefaultPermissions defaultPermissions = DefaultPermissionSerializer.GetDefaultPermissions();
-            UserPermissions userPermissions = UserPermissionSerializer.Deserialize(id);
-
-            userPermissions += defaultPermissions;
-            UserPermissionSerializer.Serialize(userPermissions);
+                Task.Run(() => { UserPermissionUpdater.UpdateUserPermissions(v); });
         }
     }
 }
