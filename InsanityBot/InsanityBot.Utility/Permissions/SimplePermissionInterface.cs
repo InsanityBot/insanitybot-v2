@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions.Controller;
-using InsanityBot.Utility.Permissions.Model;
+using InsanityBot.Utility.Permissions.Interface;
 
 namespace InsanityBot.Utility.Permissions
 {
@@ -15,12 +14,9 @@ namespace InsanityBot.Utility.Permissions
     {
         public static Boolean HasPermission(this DiscordMember member, String permission)
         {
-            UserPermissions permissions = UserPermissionSerializer.Deserialize(member.Id);
-            
-            if(permissions.IsAdministrator)
-                return true;
-
-            return permissions[permission];
+            if (permission.StartsWith("script"))
+                return member.CheckScriptPermission(permission);
+            return member.CheckUserPermission(permission);
         }
     }
 }
