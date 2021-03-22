@@ -14,7 +14,7 @@ namespace InsanityBot.Utility.Permissions.Interface
     {
         public const String UserPermissionFilePath = "./data";
 
-        public static void SyncRoles()
+        public static void SyncUsers()
         {
             String[] users = Directory.GetDirectories(UserPermissionFilePath);
             UInt64[] userIds = new UInt64[users.Length];
@@ -29,10 +29,10 @@ namespace InsanityBot.Utility.Permissions.Interface
             PermissionBackupHandler.BackupUsers(true);
 
             foreach (var v in userIds)
-                Task.Run(() => { SyncRole(v); });
+                Task.Run(() => { SyncUser(v); });
         }
 
-        private static void SyncRole(UInt64 id)
+        private static void SyncUser(UInt64 id)
         {
             DefaultPermissions defaultPermissions = DefaultPermissionSerializer.GetDefaultPermissions();
             UserPermissions userPermissions = UserPermissionSerializer.Deserialize(id);
