@@ -22,7 +22,7 @@ namespace InsanityBot.Utility.Permissions.Interface
             DirectoryInfo backupDirectory = Directory.CreateDirectory($"./permission-backups/data/role-permissions");
 
             foreach (var v in roleDirectory.GetFiles())
-                v.CopyTo(backupDirectory.FullName);
+                v.CopyTo(backupDirectory.FullName, true);
         }
 
         public static void BackupUsers(Boolean auto = false)
@@ -61,7 +61,7 @@ namespace InsanityBot.Utility.Permissions.Interface
             DirectoryInfo backupDirectory = Directory.CreateDirectory($"./permission-backups/data/role-permissions");
 
             foreach (var v in backupDirectory.GetFiles())
-                v.CopyTo(roleDirectory.FullName);
+                v.CopyTo(roleDirectory.FullName, true);
         }
 
         public static void RestoreUsers()
@@ -87,22 +87,26 @@ namespace InsanityBot.Utility.Permissions.Interface
 
         public static void BackupRole(UInt64 id)
         {
-
+            FileInfo file = new($"./data/role-permissions/{id}.json");
+            file.CopyTo($"./permission-backups/data/role-permissions/{id}.json", true);
         }
 
         public static void BackupUser(UInt64 id)
         {
-
+            FileInfo file = new($"./data/{id}/permissions.json");
+            file.CopyTo($"./permission-backups/data/user-permissions/{id}.json", true);
         }
 
         public static void RestoreRole(UInt64 id)
         {
-
+            FileInfo file = new($"./permission-backups/data/role-permissions/{id}.json");
+            file.CopyTo($"./data/role-permissions/{id}.json", true);
         }
 
         public static void RestoreUser(UInt64 id)
         {
-
+            FileInfo file = new($"./permission-backups/data/user-permissions/{id}.json");
+            file.CopyTo($"./data/{id}/permissions.json", true);
         }
     }
 }
