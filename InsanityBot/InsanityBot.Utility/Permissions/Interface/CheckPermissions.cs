@@ -22,6 +22,15 @@ namespace InsanityBot.Utility.Permissions.Interface
                 return true;
             return permissions[permission];
         }
+
+        public static Boolean HasAdministrator(this DiscordMember member)
+        {
+            UserPermissions permissions = UserPermissionSerializer.Deserialize(member.Id);
+
+            if (permissions.IsAdministrator)
+                return true;
+            return false;
+        }
         #endregion
 
         #region Role
