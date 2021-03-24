@@ -110,7 +110,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.failed"], ctx, user),
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
-                        Text = "InsanityBot - ExaInsanity 2020-2021"
+                        Text = "InsanityBot 2020-2021"
                     }
                 };
                 await ctx.RespondAsync(embed: failedModlog.Build());

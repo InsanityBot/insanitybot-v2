@@ -46,7 +46,7 @@ namespace InsanityBot.Commands.Permissions
                     Color = DiscordColor.Red,
                     Footer = new()
                     {
-                        Text = "InsanityBot - ExaInsanity 2020-2021"
+                        Text = "InsanityBot 2020-2021"
                     }
                 };
                 await ctx.RespondAsync(invalid.Build());
