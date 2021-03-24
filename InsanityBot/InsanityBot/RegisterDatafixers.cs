@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using InsanityBot.Datafixers.Language;
+﻿using InsanityBot.Datafixers.Language;
 using InsanityBot.Datafixers.Main;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -21,6 +15,7 @@ namespace InsanityBot
 
             DataFixerLower.AddDatafixer(new Lang0001_AddModlogScrolling(), typeof(LanguageConfiguration));
             DataFixerLower.AddDatafixer(new Lang0002_AddChannelLocking(), typeof(LanguageConfiguration));
+            DataFixerLower.AddDatafixer(new Lang0003_AddPermissions(), typeof(LanguageConfiguration)); 
         }
     }
 }

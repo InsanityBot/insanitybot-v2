@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0-dev.00017",
+  "DataVersion": "2.0.0-dev.00018",
   "Configuration": {
 
     /*
@@ -73,7 +73,12 @@
     "insanitybot.commands.lock.blacklist.add.failure": "{ROLE} could not be added to the blacklist for {CHANNEL}.",
     "insanitybot.commands.lock.blacklist.add.already_present": "{ROLE} was already blacklisted in {CHANNEL}.",
     "insanitybot.commands.lock.blacklist.remove.success": "{ROLE} was removed successfully from the blacklist for {CHANNEL}.",
-    "insanitybot.commands.lock.blacklist.remove.failure": "{ROLE} could not be removed from the blacklist for {CHANNEL}."
+    "insanitybot.commands.lock.blacklist.remove.failure": "{ROLE} could not be removed from the blacklist for {CHANNEL}.",
+
+    "insanitybot.permissions.error.permission_not_found": "Permission {PERMISSION} could not be found.",
+    "insanitybot.permissions.error.no_permission_passed": "No permission was passed to the command.",
+    "insanitybot.permissions.error.could_not_grant": "Could not grant permission {PERMISSION} to {MENTION}.",
+    "insanitybot.permissions.permission_granted": "Granted permission {PERMISSION} to {MENTION}."
   }
 }
 

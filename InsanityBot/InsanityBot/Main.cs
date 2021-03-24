@@ -15,11 +15,11 @@ using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Commands.Moderation;
 using InsanityBot.Commands.Moderation.Locking;
 using InsanityBot.Commands.Moderation.Modlog;
+using InsanityBot.Commands.Permissions;
 using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
-using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
@@ -154,6 +154,8 @@ namespace InsanityBot
 
         private static void RegisterAllCommands()
         {
+            CommandsExtension.RegisterCommands<GrantPermission>();
+
             if((Boolean)Config["insanitybot.modules.miscellaneous"])
             {
                 CommandsExtension.RegisterCommands<Say>();

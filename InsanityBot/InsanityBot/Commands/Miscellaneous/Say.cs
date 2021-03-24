@@ -45,7 +45,7 @@ namespace InsanityBot.Commands.Miscellaneous
                 Description = text,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
-                    Text = "https://github.com/InsanityNetwork/InsanityBot"
+                    Text = "InsanityBot 2020-2021"
                 },
                 Color = DiscordColor.Blurple
             };
