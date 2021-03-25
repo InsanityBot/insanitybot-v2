@@ -56,10 +56,62 @@ namespace InsanityBot
 
             if (String.IsNullOrWhiteSpace(Config.Token))
             {
-                Console.WriteLine("Invalid Token. Please provide a valid token in .\\config\\main.json" +
-                    "\nPress any key to continue...");
-                Console.ReadKey();
-                return;
+                if (!CommandLineOptions.Interactive)
+                {
+                    Console.WriteLine("Invalid Token. Please provide a valid token in .\\config\\main.json" +
+                        "\nPress any key to continue...");
+                    Console.ReadKey();
+                    return;
+                }
+
+                Console.Write("Your config does not contain a token. To set a token now, paste your token here. " +
+                    "To abort and exit InsanityBot, type \"cancel\"\nToken: ");
+                String token = Console.ReadLine();
+
+                if(token.ToLower().Trim() == "cancel")
+                {
+                    Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
+                    Console.ReadKey();
+                    return;
+                }
+
+                Config.Token = token;
+                ConfigManager.Serialize(Config, "./config/main.json");
+            }
+
+            if(Config.GuildId == 0)
+            {
+                if(!CommandLineOptions.Interactive)
+                {
+                    Console.WriteLine("Invalid GuildId. Please provide a valid guild ID in .\\config\\main.json" +
+                        "\nPress any key to continue...");
+                    Console.ReadKey();
+                    return;
+                }
+
+                Console.Write("Your config does not contain a valid guild ID. To set a guild ID now, paste your guild ID here. " +
+                    "To abort and exit InsanityBot, type \"cancel\"\nGuild ID: ");
+                String guildId = Console.ReadLine();
+
+                if(guildId.ToLower().Trim() == "cancel")
+                {
+                    Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
+                    Console.ReadKey();
+                    return;
+                }
+
+                if(UInt64.TryParse(guildId, out var id))
+                {
+                    Config.GuildId = id;
+                    ConfigManager.Serialize(Config, "./config/main.json");
+                }
+                else
+                {
+                    Console.WriteLine("The provided guild ID could not be parsed. Aborting and exiting InsanityBot.\n" +
+                        "Press any key to continue...");
+                    Console.ReadKey();
+                    return;
+                }
             }
 
             LanguageConfig = LanguageManager.Deserialize("./config/lang.json");

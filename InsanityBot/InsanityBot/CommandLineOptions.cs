@@ -20,5 +20,8 @@ namespace InsanityBot
 
         [Option('d', "datafix", Required = false, Default = false, Hidden = true, HelpText = "Currently not in use.")]
         public Boolean ApplyDatafixes { get; set; }
+
+        [Option("interactive", Required = false, Default = true, HelpText = "Allows to start up the bot with default configs, you will then be asked to enter critical values in console")]
+        public Boolean Interactive { get; set; }
     }
 }
