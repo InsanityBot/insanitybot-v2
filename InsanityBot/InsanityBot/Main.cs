@@ -186,11 +186,11 @@ namespace InsanityBot
             _ = HandleTCPConnections((Int64)Config["insanitybot.tcp_port"]);
 
             //start offthread XP management
-            if ((Boolean)Config["insanitybot.modules.experience"])
+            // if ((Boolean)Config["insanitybot.modules.experience"])
                 ; // not implemented yet
 
             //start offthread console management
-            if ((Boolean)Config["insanitybot.modules.console"])
+            // if ((Boolean)Config["insanitybot.modules.console"])
                 ; // not implemented yet
 
             //abort main thread, who needs it anyway
