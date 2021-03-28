@@ -6,7 +6,7 @@ When opening a new bug report, include as much as possible of the following info
 
 - The exact version of InsanityBot and its libraries you are running 
 - The system you use to control the bot (Pterodactyl? Multicraft? SSH?)
-- As much log you can possibly obtain. Attach this either as a file or using a service like [GitHub Gist](https://gist.github.com/) or [Insanity Pastebin](https://paste.insanity.network)
+- As much log you can possibly obtain. Attach this either as a file or using a service like [GitHub Gist](https://gist.github.com/) or [Insanity Pastebin](https://paste.insanity.host)
 - If your issue is a bug and not a crash, what happened? what did you expect to happen?
 - Any other information you might possibly have.
 
