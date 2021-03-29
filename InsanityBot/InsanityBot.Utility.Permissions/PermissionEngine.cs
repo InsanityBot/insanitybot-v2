@@ -43,25 +43,25 @@ namespace InsanityBot.Utility.Permissions
         public delegate void DeleteRolePermissionsDelegate(UInt64 UserId);
 
 #if INSANITYBOT_DO_NOT_OVERRIDE_ENGINE
-        internal UpdateUserPermissionsDelegate UpdateUserPermissions { get; set; }
-        internal UpdateRolePermissionsDelegate UpdateRolePermissions { get; set; }
-        internal GrantUserPermissionsDelegate GrantUserPermissions { get; set; }
-        internal GrantRolePermissionsDelegate GrantRolePermissions { get; set; }
-        internal RevokeUserPermissionsDelegate RevokeUserPermissions { get; set; }
-        internal RevokeRolePermissionsDelegate RevokeRolePermissions { get; set; }
-        internal NeutralizeUserPermissionsDelegate NeutralizeUserPermissions { get; set; }
-        internal NeutralizeRolePermissionsDelegate NeutralizeRolePermissions { get; set; }
-        internal SetUserAdministratorDelegate SetUserAdministrator { get; set; }
-        internal SetRoleAdministratorDelegate SetRoleAdministrator { get; set; }
-        internal CreateUserPermissionsDelegate CreateUserPermissions { get; set; }
-        internal CreateRolePermissionsDelegate CreateRolePermissions { get; set; }
-        internal GetUserPermissionsDelegate GetUserPermissions { get; set; }
-        internal GetRolePermissionsDelegate GetRolePermissions { get; set; }
-        internal SetUserPermissionsDelegate SetUserPermissions { get; set; }
-        internal SetRolePermissionsDelegate SetRolePermissions { get; set; }
-        internal ApplyMappingsDelegate ApplyMappings { get; set; }
-        internal DeleteUserPermissionsDelegate DeleteUserPermissions { get; set; }
-        internal DeleteRolePermissionsDelegate DeleteRolePermissions { get; set; }
+        public UpdateUserPermissionsDelegate UpdateUserPermissions { get; internal set; }
+        public UpdateRolePermissionsDelegate UpdateRolePermissions { get; internal set; }
+        public GrantUserPermissionsDelegate GrantUserPermissions { get; internal set; }
+        public GrantRolePermissionsDelegate GrantRolePermissions { get; internal set; }
+        public RevokeUserPermissionsDelegate RevokeUserPermissions { get; internal set; }
+        public RevokeRolePermissionsDelegate RevokeRolePermissions { get; internal set; }
+        public NeutralizeUserPermissionsDelegate NeutralizeUserPermissions { get; internal set; }
+        public NeutralizeRolePermissionsDelegate NeutralizeRolePermissions { get; internal set; }
+        public SetUserAdministratorDelegate SetUserAdministrator { get; internal set; }
+        public SetRoleAdministratorDelegate SetRoleAdministrator { get; internal set; }
+        public CreateUserPermissionsDelegate CreateUserPermissions { get; internal set; }
+        public CreateRolePermissionsDelegate CreateRolePermissions { get; internal set; }
+        public GetUserPermissionsDelegate GetUserPermissions { get; internal set; }
+        public GetRolePermissionsDelegate GetRolePermissions { get; internal set; }
+        public SetUserPermissionsDelegate SetUserPermissions { get; internal set; }
+        public SetRolePermissionsDelegate SetRolePermissions { get; internal set; }
+        public ApplyMappingsDelegate ApplyMappings { get; internal set; }
+        public DeleteUserPermissionsDelegate DeleteUserPermissions { get; internal set; }
+        public DeleteRolePermissionsDelegate DeleteRolePermissions { get; internal set; }
 #else
         public UpdateUserPermissionsDelegate UpdateUserPermissions { get; set; }
         public UpdateRolePermissionsDelegate UpdateRolePermissions { get; set; }
