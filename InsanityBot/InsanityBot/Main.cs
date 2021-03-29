@@ -20,6 +20,7 @@ using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
+using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,7 @@ namespace InsanityBot
         {
             //run command line parser
             Parser.Default.ParseArguments<CommandLineOptions>(args)
-                .WithParsed<CommandLineOptions>(o =>
+                .WithParsed(o =>
                 {
                     CommandLineOptions = o;
                 });
@@ -135,8 +136,13 @@ namespace InsanityBot
             Client = new DiscordClient(ClientConfiguration);
             await Client.ConnectAsync();
 
-            //load perms :b
-            // Client.InitializePermissionFramework();
+            //load perms
+            PermissionEngine = Client.InitializeEngine(new PermissionConfiguration
+            {
+                PrecompiledScripts = true,
+                UpdateRolePermissions = true,
+                UpdateUserPermissions = true
+            });
 
             try
             {

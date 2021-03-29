@@ -1,35 +1,37 @@
 {
-  "8": [
-    "insanitybot.admin.*"
-  ],
-  "4": [
-    "insanitybot.moderation.ban",
-    "insanitybot.moderation.tempban",
-    "insanitybot.moderation.unban",
-    "insanitybot.moderation.lock",
-    "insanitybot.moderation.unlock"
-  ],
-  "2": [
-    "insanitybot.moderation.blacklist",
-    "insanitybot.moderation.whitelist",
-    "insanitybot.moderation.kick",
-    "insanitybot.moderation.clear_modlog"
-  ],
-  "8192": [
-    "insanitybot.moderation.verbal_warn",
-    "insanitybot.moderation.warn",
-    "insanitybot.moderation.unwarn",
-    "insanitybot.moderation.mute",
-    "insanitybot.moderation.tempmute",
-    "insanitybot.moderation.unmute"
-  ],
-  "131072": [
-    "insanitybot.miscellaneous.say",
-    "insanitybot.miscellaneous.say.embed"
-  ],
-  "0": [
-    "insanitybot.moderation.verballog",
-    "insanitybot.moderation.modlog",
-    "insanitybot.moderation.export_modlog"
-  ]
+  "Mappings": {
+    "8": [
+      "insanitybot.admin.*"
+    ],
+    "4": [
+      "insanitybot.moderation.ban",
+      "insanitybot.moderation.tempban",
+      "insanitybot.moderation.unban",
+      "insanitybot.moderation.lock",
+      "insanitybot.moderation.unlock"
+    ],
+    "2": [
+      "insanitybot.moderation.blacklist",
+      "insanitybot.moderation.whitelist",
+      "insanitybot.moderation.kick",
+      "insanitybot.moderation.clear_modlog"
+    ],
+    "8192": [
+      "insanitybot.moderation.verbal_warn",
+      "insanitybot.moderation.warn",
+      "insanitybot.moderation.unwarn",
+      "insanitybot.moderation.mute",
+      "insanitybot.moderation.tempmute",
+      "insanitybot.moderation.unmute"
+    ],
+    "131072": [
+      "insanitybot.miscellaneous.say",
+      "insanitybot.miscellaneous.say.embed"
+    ],
+    "0": [
+      "insanitybot.moderation.verballog",
+      "insanitybot.moderation.modlog",
+      "insanitybot.moderation.export_modlog"
+    ]
+  }
 }

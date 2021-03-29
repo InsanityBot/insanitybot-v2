@@ -34,6 +34,8 @@ namespace InsanityBot
 
         public static LanguageConfigurationManager LanguageManager;
         public static LanguageConfiguration LanguageConfig;
+
+        public static PermissionEngine PermissionEngine;
     }
 }
 #pragma warning restore CA2211

@@ -48,7 +48,7 @@ namespace InsanityBot.Utility.Permissions.Data
             PermissionFileType = PermissionFileType.Declaration,
             GetFilePath = () =>
             {
-                if (PermissionSettings.PrecompileScripts)
+                if (PermissionSettings.PrecompiledScripts)
                     return "./cache/scripts/compiled/decl.json";
                 else
                     return "./data/scripts/decl.json";
