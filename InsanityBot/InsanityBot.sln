@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsanityBot.Api", "Insanity
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsanityBot.Datafixers", "InsanityBot.Datafixers\InsanityBot.Datafixers.csproj", "{739E5266-2393-4EC8-8158-D036C9383058}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsanityBot.Utility.Permissions", "InsanityBot.Utility.Permissions\InsanityBot.Utility.Permissions.csproj", "{9E053A6F-2591-460F-9E8A-61FF81BE61E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsanityBot.Utility.Permissions", "InsanityBot.Utility.Permissions\InsanityBot.Utility.Permissions.csproj", "{9E053A6F-2591-460F-9E8A-61FF81BE61E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,7 +13,9 @@
 
   <ItemGroup>
     <None Remove="config\lang.json" />
-    <None Remove="config\main.json" />    
+    <None Remove="config\main.json" />
+    <None Remove="config\overrides.mappings.json" />
+    <None Remove="config\overrides.default.json" />
     <None Remove="config\permissions\default.json" />
     <None Remove="config\permissions\vanilla.pdecl.json" />
     <None Remove="config\permissions\vanilla.mappings.json" />
@@ -25,6 +27,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="config\main.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\overrides.mappings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\overrides.default.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="config\permissions\default.json">

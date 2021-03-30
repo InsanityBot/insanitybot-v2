@@ -11,7 +11,6 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Permissions;
-using InsanityBot.Utility.Permissions.Interface;
 
 using Microsoft.Extensions.Logging;
 
@@ -102,14 +101,11 @@ namespace InsanityBot.Commands.Permissions
                 .AddField("User", member.Mention, true)
                 .AddField("Permission", permission, true);
 
-            try
+            try 
             {
-                if (permission.StartsWith("script"))
-                    member.GrantScriptPermission(permission);
-                else
-                    member.GrantMemberPermission(permission);
+                InsanityBot.PermissionEngine.GrantUserPermissions(member.Id, new[] { permission });
 
-                embedBuilder = new()
+                embedBuilder = new() 
                 {
                     Color = new(0xff6347),
                     Footer = new()

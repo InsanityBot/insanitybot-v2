@@ -1,0 +1,104 @@
+{
+  "None": [
+
+  ],
+  "CreateInvite": [
+
+  ],
+  "KickMembers": [
+
+  ],
+  "BanMembers": [
+
+  ],
+  "Administrator": [
+
+  ],
+  "ManageChannels": [
+
+  ],
+  "ManageServer": [
+
+  ],
+  "AddReactions": [
+
+  ],
+  "ViewAuditLog": [
+
+  ],
+  "PriorityVoice": [
+
+  ],
+  "StreamVoice": [
+
+  ],
+  "ViewChannels": [
+
+  ],
+  "SendMessages": [
+
+  ],
+  "SendTTS": [
+
+  ],
+  "ManageMessages": [
+
+  ],
+  "EmbedLinks": [
+
+  ],
+  "AttachFiles": [
+
+  ],
+  "ViewMessageHistory": [
+
+  ],
+  "MentionEveryone": [
+
+  ],
+  "UseExternalEmotes": [
+
+  ],
+  "ViewServerInsights": [
+
+  ],
+  "ConnectVoice": [
+
+  ],
+  "SpeakVoice": [
+
+  ],
+  "MuteVoice": [
+
+  ],
+  "DeafenVoice": [
+
+  ],
+  "MoveVoice": [
+
+  ],
+  "VoiceActivity": [
+
+  ],
+  "ChangeActivity": [
+
+  ],
+  "ChangeNickname": [
+
+  ],
+  "ManageNicknames": [
+
+  ],
+  "ManageRoles": [
+
+  ],
+  "ManageWebhooks": [
+
+  ],
+  "ManageEmotes": [
+
+  ],
+  "ExecuteSlashCommand": [
+
+  ]
+}

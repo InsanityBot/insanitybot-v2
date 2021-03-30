@@ -43,7 +43,7 @@ namespace InsanityBot.Utility.Timers
 
             List<Timer> ActiveTimers = new();
 
-            StreamReader reader = null;
+            StreamReader reader;
 
             foreach (String s in Directory.GetFiles("./cache/timers"))
             {
