@@ -56,6 +56,7 @@ namespace InsanityBot.Utility.Permissions.Data
             StreamReader reader = modName switch
             {
                 "vanilla" => new("./config/permissions/vanilla.mappings.json"),
+                "complete" => new("./config/permissions/mappings.json"),
                 _ => new($"./mod-data/permissions/{modName}.mappings.json")
             };
 

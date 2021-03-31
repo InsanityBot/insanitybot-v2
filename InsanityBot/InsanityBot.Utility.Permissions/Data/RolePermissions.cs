@@ -100,7 +100,7 @@ namespace InsanityBot.Utility.Permissions.Data
             return permissions;
         }
 
-        public static void Serialize(UserPermissions permissions)
+        public static void Serialize(RolePermissions permissions)
         {
             StreamWriter writer = new(DefaultPermissionFileSpecifications.Role.GetFilePath().Replace("{ID}",
                 permissions.SnowflakeIdentifier.ToString()));

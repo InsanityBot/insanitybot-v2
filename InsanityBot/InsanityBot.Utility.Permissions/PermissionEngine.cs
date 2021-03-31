@@ -30,8 +30,8 @@ namespace InsanityBot.Utility.Permissions
         public delegate void RevokeRolePermissionsDelegate(UInt64 RoleId, String[] Permissions);
         public delegate void NeutralizeUserPermissionsDelegate(UInt64 UserId, String[] Permissions);
         public delegate void NeutralizeRolePermissionsDelegate(UInt64 RoleId, String[] Permissions);
-        public delegate void SetUserAdministratorDelegate(UInt64 UserId, String[] Permissions);
-        public delegate void SetRoleAdministratorDelegate(UInt64 RoleId, String[] Permissions);
+        public delegate void SetUserAdministratorDelegate(UInt64 UserId, Boolean Administrator);
+        public delegate void SetRoleAdministratorDelegate(UInt64 RoleId, Boolean Administrator);
         public delegate void CreateUserPermissionsDelegate(UInt64 UserId);
         public delegate void CreateRolePermissionsDelegate(UInt64 RoleId);
         public delegate UserPermissions GetUserPermissionsDelegate(UInt64 UserId);
@@ -85,14 +85,11 @@ namespace InsanityBot.Utility.Permissions
 #endif
         #endregion
 
-        private readonly PermissionConfiguration config;
-
         public PermissionEngine(PermissionConfiguration config)
         {
             PermissionSettings.PrecompiledScripts = config.PrecompiledScripts;
             PermissionSettings.UpdateRolePermissions = false;
             PermissionSettings.UpdateUserPermissions = false;
-            this.config = config;
 
             UpdateUserPermissions += VanillaUpdateUserPermissions;
             UpdateRolePermissions += VanillaUpdateRolePermissions;
@@ -117,10 +114,10 @@ namespace InsanityBot.Utility.Permissions
             Initialize();
         }
 
-        private void Initialize()
+        private static void Initialize()
         {
 
-            if(!Directory.Exists("./config/permissions"))
+            if (!Directory.Exists("./config/permissions"))
             {
                 Console.WriteLine("Missing permission configuration, aborting startup. Please contact the InsanityBot team immediately" +
                     "\nPress any key to continue...");
@@ -129,7 +126,7 @@ namespace InsanityBot.Utility.Permissions
             }
 
             // check for default mappings and declarations
-            if(!File.Exists("./config/permissions/vanilla.mappings.json"))
+            if (!File.Exists("./config/permissions/vanilla.mappings.json"))
             {
                 Console.WriteLine("Missing vanilla permission mappings, aborting startup. Please contact the InsanityBot team immediately" +
                     "\nPress any key to continue...");
@@ -137,7 +134,7 @@ namespace InsanityBot.Utility.Permissions
                 Process.GetCurrentProcess().Kill();
             }
 
-            if(!File.Exists("./config/permissions/vanilla.pdecl.json"))
+            if (!File.Exists("./config/permissions/vanilla.pdecl.json"))
             {
                 Console.WriteLine("Missing vanilla permission declaration, aborting startup. Please contact the InsanityBot team immediately" +
                     "\nPress any key to continue...");
@@ -168,18 +165,26 @@ namespace InsanityBot.Utility.Permissions
             // check whether mappings are up-to-date
             if (ShouldUpdateMappings())
                 UpdateMappings();
+
+            // apply overrides to default and mappings
+            DefaultPermissions.Serialize(LoadDefaultPermissions());
+
+            PermissionMapping toSerialize = LoadMappings();
+            StreamWriter writer = new("./config/permissions/mappings.json");
+            writer.Write(JsonConvert.SerializeObject(toSerialize));
+            writer.Close();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Boolean ShouldUpdateDefaultPermissions()
         {
-            if(!File.Exists("./config/permissions/default.json"))
+            if (!File.Exists("./config/permissions/default.json"))
             {
                 File.Create("./config/permissions/default.json").Close();
                 return true;
             }
 
-            if(!File.Exists("./cache/permissions/intermediate/default"))
+            if (!File.Exists("./cache/permissions/intermediate/default"))
             {
                 File.Create("./cache/permissions/intermediate/default").Close();
                 return true;
@@ -212,12 +217,14 @@ namespace InsanityBot.Utility.Permissions
                            where x.EndsWith(".pdecl.json")
                            select x;
 
-            foreach(var v in modFiles)
+            foreach (var v in modFiles)
             {
                 reader = new(v);
                 permissions += JsonConvert.DeserializeObject<PermissionDeclaration[]>(reader.ReadToEnd());
                 reader.Close();
             }
+
+            permissions.UpdateGuid = new Guid();
 
             if (!File.Exists("./config/permissions/default.json"))
                 File.Create("./config/permissions/default.json").Close();
@@ -240,13 +247,13 @@ namespace InsanityBot.Utility.Permissions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Boolean ShouldUpdateMappings()
         {
-            if(!File.Exists("./config/permissions/mappings.json"))
+            if (!File.Exists("./config/permissions/mappings.json"))
             {
                 File.Create("./config/permissions/mappings.json").Close();
                 return true;
             }
 
-            if(!File.Exists("./cache/permissions/intermediate/mappings"))
+            if (!File.Exists("./cache/permissions/intermediate/mappings"))
             {
                 File.Create("./cache/permissions/intermediate/mappings").Close();
                 return true;
@@ -277,7 +284,7 @@ namespace InsanityBot.Utility.Permissions
                            where x.EndsWith(".mappings.json")
                            select x;
 
-            foreach(var v in modFiles)
+            foreach (var v in modFiles)
             {
                 reader = new(v);
                 mappings += JsonConvert.DeserializeObject<PermissionMapping>(reader.ReadToEnd());
@@ -299,99 +306,207 @@ namespace InsanityBot.Utility.Permissions
             writer.Close();
         }
 
-        private void VanillaDeleteRolePermissions(UInt64 UserId)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static DefaultPermissions LoadDefaultPermissions()
         {
-            throw new NotImplementedException();
+            DefaultPermissions permissions = DefaultPermissions.Deserialize();
+            return permissions.ApplyOverrides(DefaultPermissionOverrides.Deserialize());
+        }
+
+        private static PermissionMapping LoadMappings()
+        {
+            PermissionMapping mapping = PermissionMapping.Deserialize("complete");
+            return mapping + PermissionMappingOverrides.Deserialize();
+        }
+
+        private void VanillaDeleteRolePermissions(UInt64 RoleId)
+        {
+            if (File.Exists($"./data/role-permissions/{RoleId}.json"))
+                File.Delete($"./data/role-permissions/{RoleId}.json");
         }
 
         private void VanillaDeleteUserPermissions(UInt64 UserId)
         {
-            throw new NotImplementedException();
+            if (File.Exists($"./data/{UserId}/permissions.json"))
+                File.Delete($"./data/{UserId}/permissions.json");
         }
 
         private RolePermissions VanillaApplyMappings(DiscordRole Role)
         {
-            throw new NotImplementedException();
+            PermissionMapping mapping = PermissionMapping.Deserialize("complete");
+
+            foreach (var v in mapping.Mappings)
+            {
+                if (Role.CheckPermission((DSharpPlus.Permissions)v.Key) == PermissionLevel.Allowed)
+                    GrantRolePermissions(Role.Id, v.Value);
+            }
+
+            return RolePermissions.Deserialize(Role.Id);
         }
 
         private void VanillaSetRolePermissions(RolePermissions Role)
         {
-            throw new NotImplementedException();
+            RolePermissions.Serialize(Role);
         }
 
         private void VanillaSetUserPermissions(UserPermissions User)
         {
-            throw new NotImplementedException();
+            UserPermissions.Serialize(User);
         }
 
         private RolePermissions VanillaGetRolePermissions(UInt64 RoleId)
         {
-            throw new NotImplementedException();
+            return RolePermissions.Deserialize(RoleId);
         }
 
         private UserPermissions VanillaGetUserPermissions(UInt64 UserId)
         {
-            throw new NotImplementedException();
+            return UserPermissions.Deserialize(UserId);
         }
 
         private void VanillaCreateRolePermissions(UInt64 RoleId)
         {
-            throw new NotImplementedException();
+            RolePermissions permissions = RolePermissions.Create(RoleId, DefaultPermissions.Deserialize());
+            RolePermissions.Serialize(permissions);
         }
 
         private void VanillaCreateUserPermissions(UInt64 UserId)
         {
-            throw new NotImplementedException();
+            UserPermissions permissions = UserPermissions.Create(UserId, DefaultPermissions.Deserialize());
+            UserPermissions.Serialize(permissions);
         }
 
-        private void VanillaSetRoleAdministrator(UInt64 RoleId, String[] Permissions)
+        private void VanillaSetRoleAdministrator(UInt64 RoleId, Boolean Administrator)
         {
-            throw new NotImplementedException();
+            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+                CreateRolePermissions(RoleId);
+
+            RolePermissions permissions = RolePermissions.Deserialize(RoleId);
+            permissions.IsAdministrator = Administrator;
+            RolePermissions.Serialize(permissions);
         }
 
-        private void VanillaSetUserAdministrator(UInt64 UserId, String[] Permissions)
+        private void VanillaSetUserAdministrator(UInt64 UserId, Boolean Administrator)
         {
-            throw new NotImplementedException();
+            if (!File.Exists($"./data/{UserId}/permissions.json"))
+                CreateUserPermissions(UserId);
+
+            UserPermissions permissions = UserPermissions.Deserialize(UserId);
+            permissions.IsAdministrator = Administrator;
+            UserPermissions.Serialize(permissions);
         }
 
         private void VanillaNeutralizeRolePermissions(UInt64 RoleId, String[] Permissions)
         {
-            throw new NotImplementedException();
+            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+                CreateRolePermissions(RoleId);
+
+            RolePermissions permissions = RolePermissions.Deserialize(RoleId);
+
+            foreach (var v in Permissions)
+                foreach (var v1 in ParseWildcards(v))
+                    permissions[v1] = PermissionValue.Inherited;
+
+            RolePermissions.Serialize(permissions);
         }
 
         private void VanillaNeutralizeUserPermissions(UInt64 UserId, String[] Permissions)
         {
-            throw new NotImplementedException();
+            if (!File.Exists($"./data/{UserId}/permissions.json"))
+                CreateUserPermissions(UserId);
+
+            UserPermissions permissions = UserPermissions.Deserialize(UserId);
+
+            foreach (var v in Permissions)
+                foreach (var v1 in ParseWildcards(v))
+                    permissions[v1] = PermissionValue.Inherited;
+
+            UserPermissions.Serialize(permissions);
         }
 
         private void VanillaRevokeRolePermissions(UInt64 RoleId, String[] Permissions)
         {
-            throw new NotImplementedException();
+            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+                CreateRolePermissions(RoleId);
+
+            RolePermissions permissions = RolePermissions.Deserialize(RoleId);
+
+            foreach (var v in Permissions)
+                foreach (var v1 in ParseWildcards(v))
+                    permissions[v1] = PermissionValue.Denied;
+
+            RolePermissions.Serialize(permissions);
         }
 
         private void VanillaRevokeUserPermissions(UInt64 UserId, String[] Permissions)
         {
-            throw new NotImplementedException();
+            if (!File.Exists($"./data/{UserId}/permissions.json"))
+                CreateUserPermissions(UserId);
+
+            UserPermissions permissions = UserPermissions.Deserialize(UserId);
+
+            foreach (var v in Permissions)
+                foreach (var v1 in ParseWildcards(v))
+                    permissions[v1] = PermissionValue.Denied;
+
+            UserPermissions.Serialize(permissions);
         }
 
         private void VanillaGrantRolePermissions(UInt64 RoleId, String[] Permissions)
         {
-            throw new NotImplementedException();
+            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+                CreateRolePermissions(RoleId);
+
+            RolePermissions permissions = RolePermissions.Deserialize(RoleId);
+
+            foreach (var v in Permissions)
+                foreach (var v1 in ParseWildcards(v))
+                    permissions[v1] = PermissionValue.Allowed;
+
+            RolePermissions.Serialize(permissions);
         }
 
         private void VanillaGrantUserPermissions(UInt64 UserId, String[] Permissions)
         {
-            throw new NotImplementedException();
+            if (!File.Exists($"./data/{UserId}/permissions.json"))
+                CreateUserPermissions(UserId);
+
+            UserPermissions permissions = UserPermissions.Deserialize(UserId);
+
+            foreach (var v in Permissions)
+                foreach (var v1 in ParseWildcards(v))
+                    permissions[v1] = PermissionValue.Allowed;
+
+            UserPermissions.Serialize(permissions);
         }
 
         private void VanillaUpdateRolePermissions(UInt64 RoleId)
         {
-            throw new NotImplementedException();
+            RolePermissions permissions = RolePermissions.Deserialize(RoleId);
+            RolePermissions.Serialize(permissions.Update(DefaultPermissions.Deserialize()));
         }
 
         private void VanillaUpdateUserPermissions(UInt64 UserId)
         {
-            throw new NotImplementedException();
+            UserPermissions permissions = UserPermissions.Deserialize(UserId);
+            UserPermissions.Serialize(permissions.Update(DefaultPermissions.Deserialize()));
         }
+
+        #region Utils
+        private static String[] ParseWildcards(String permission)
+        {
+            if (!permission.Contains('*'))
+                return new[] { permission };
+
+            if (permission[permission.IndexOf('*') - 1] != '.')
+                throw new ArgumentException("Invalid wildcard.", nameof(permission));
+
+            DefaultPermissions permissions = DefaultPermissions.Deserialize();
+
+            return (from x in permissions.Permissions
+                    where x.Key.StartsWith(permission.Split('*')[0])
+                    select x.Key).ToArray();
+        }
+        #endregion
     }
 }
