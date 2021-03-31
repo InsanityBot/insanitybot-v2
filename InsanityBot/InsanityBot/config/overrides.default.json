@@ -1,0 +1,4 @@
+[
+  // "insanitybot.dummy true" would override whatever the default value for insanitybot.dummy is to allowed
+  // "insanitybot.dummy false" would override whatever the default value for insanitybot.dummy is to denied
+]

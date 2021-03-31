@@ -13,12 +13,13 @@
 
   <ItemGroup>
     <None Remove="config\lang.json" />
-    <None Remove="config\main.json" />    
+    <None Remove="config\main.json" />
+    <None Remove="config\overrides.mappings.json" />
+    <None Remove="config\overrides.default.json" />
     <None Remove="config\permissions\default.json" />
     <None Remove="config\permissions\vanilla.pdecl.json" />
     <None Remove="config\permissions\vanilla.mappings.json" />
     <None Remove="config\permissions\mappings.json" />
-    <None Remove="config\permissions\scripts.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +27,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="config\main.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\overrides.mappings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="config\overrides.default.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="config\permissions\default.json">
@@ -40,9 +47,6 @@
     <EmbeddedResource Include="config\permissions\mappings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="config\permissions\scripts.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +56,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\InsanityBot.Utility.Permissions\InsanityBot.Utility.Permissions.csproj" />
     <ProjectReference Include="..\InsanityBot.Utility\InsanityBot.Utility.csproj" />
     <ProjectReference Include="..\Insanitybot.Datafixers\Insanitybot.Datafixers.csproj" />
   </ItemGroup>

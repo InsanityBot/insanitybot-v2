@@ -58,7 +58,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
-                        Text = "InsanityBot - ExaInsanity 2020-2021"
+                        Text = "InsanityBot 2020-2021"
                     }
                 };
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
@@ -94,7 +94,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 Color = DiscordColor.Blue,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
-                    Text = "InsanityBot - ExaInsanity 2020-2021"
+                    Text = "InsanityBot 2020-2021"
                 }
             };
 
@@ -109,14 +109,14 @@ namespace InsanityBot.Commands.Moderation.Locking
 
                 UInt64 exemptRole;
                 if ((exemptRole = Convert.ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.lock_exempt_role_id"])) != 0)
-                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(exemptRole), allow: Permissions.None, reason:
+                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(exemptRole), allow: DSharpPlus.Permissions.None, reason:
                         "InsanityBot - unlocking channel, removing whitelist");
 
                 foreach (var v in cachedData.LockedRoles)
-                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), deny: Permissions.None, reason: "InsanityBot - unlocking channel, removing permission overwrites");
+                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), deny: DSharpPlus.Permissions.None, reason: "InsanityBot - unlocking channel, removing permission overwrites");
 
                 foreach (var v in cachedData.LockedRoles)
-                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), allow: Permissions.None, reason: "InsanityBot - unlocking channel, removing permission overwrites");
+                    await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), allow: DSharpPlus.Permissions.None, reason: "InsanityBot - unlocking channel, removing permission overwrites");
 
                 foreach (var v in overwrites)
                     await channel.AddOverwriteAsync(await v.GetRoleAsync(), v.Allowed, v.Denied, "InsanityBot - unlocking channel, restoring previous permissions");
@@ -127,7 +127,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                     Color = DiscordColor.Blue,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
-                        Text = "InsanityBot - ExaInsanity 2020-2021"
+                        Text = "InsanityBot 2020-2021"
                     }
                 };
             }
@@ -139,7 +139,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
-                        Text = "InsanityBot - ExaInsanity 2020-2021"
+                        Text = "InsanityBot 2020-2021"
                     }
                 };
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");

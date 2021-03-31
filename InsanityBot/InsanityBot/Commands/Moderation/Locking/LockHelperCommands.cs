@@ -44,7 +44,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                     Color = new(0xff6347),
                     Footer = new()
                     {
-                        Text = "InsanityBot - ExaInsanity 2020-2021"
+                        Text = "InsanityBot 2020-2021"
                     }
                 };
 
@@ -66,7 +66,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                             Color = new(0xff6347),
                             Footer = new()
                             {
-                                Text = "InsanityBot - ExaInsanity 2020-2021"
+                                Text = "InsanityBot 2020-2021"
                             },
                             Description = GetFormattedString(
                                 InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.already_present"], role, channel)
@@ -79,7 +79,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                             Color = new(0xff6347),
                             Footer = new()
                             {
-                                Text = "InsanityBot - ExaInsanity 2020-2021"
+                                Text = "InsanityBot 2020-2021"
                             },
                             Description = GetFormattedString(
                                 InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.success"], role, channel)
@@ -98,7 +98,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                         Color = new(0xff6347),
                         Footer = new()
                         {
-                            Text = "InsanityBot - ExaInsanity 2020-2021"
+                            Text = "InsanityBot 2020-2021"
                         },
                         Description = GetFormattedString(
                             InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.failure"], role, channel)
@@ -134,7 +134,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                     Color = new(0xff6347),
                     Footer = new()
                     {
-                        Text = "InsanityBot - ExaInsanity 2020-2021"
+                        Text = "InsanityBot 2020-2021"
                     }
                 };
 
@@ -155,7 +155,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                         Color = new(0xff6347),
                         Footer = new()
                         {
-                            Text = "InsanityBot - ExaInsanity 2020-2021"
+                            Text = "InsanityBot 2020-2021"
                         },
                         Description = GetFormattedString(
                             InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.remove.success"], role, channel)
@@ -173,7 +173,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                         Color = new(0xff6347),
                         Footer = new()
                         {
-                            Text = "InsanityBot - ExaInsanity 2020-2021"
+                            Text = "InsanityBot 2020-2021"
                         },
                         Description = GetFormattedString(
                             InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.remove.failure"], role, channel)
@@ -215,7 +215,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                     Color = new(0xff6347),
                     Footer = new()
                     {
-                        Text = "InsanityBot - ExaInsanity 2020-2021"
+                        Text = "InsanityBot 2020-2021"
                     }
                 };
 
@@ -237,7 +237,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                             Color = new(0xff6347),
                             Footer = new()
                             {
-                                Text = "InsanityBot - ExaInsanity 2020-2021"
+                                Text = "InsanityBot 2020-2021"
                             },
                             Description = GetFormattedString(
                                 InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.already_present"], role, channel)
@@ -250,7 +250,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                             Color = new(0xff6347),
                             Footer = new()
                             {
-                                Text = "InsanityBot - ExaInsanity 2020-2021"
+                                Text = "InsanityBot 2020-2021"
                             },
                             Description = GetFormattedString(
                                 InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.success"], role, channel)
@@ -269,7 +269,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                         Color = new(0xff6347),
                         Footer = new()
                         {
-                            Text = "InsanityBot - ExaInsanity 2020-2021"
+                            Text = "InsanityBot 2020-2021"
                         },
                         Description = GetFormattedString(
                             InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.failure"], role, channel)
@@ -305,7 +305,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                     Color = new(0xff6347),
                     Footer = new()
                     {
-                        Text = "InsanityBot - ExaInsanity 2020-2021"
+                        Text = "InsanityBot 2020-2021"
                     }
                 };
 
@@ -326,7 +326,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                         Color = new(0xff6347),
                         Footer = new()
                         {
-                            Text = "InsanityBot - ExaInsanity 2020-2021"
+                            Text = "InsanityBot 2020-2021"
                         },
                         Description = GetFormattedString(
                             InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.remove.success"], role, channel)
@@ -344,7 +344,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                         Color = new(0xff6347),
                         Footer = new()
                         {
-                            Text = "InsanityBot - ExaInsanity 2020-2021"
+                            Text = "InsanityBot 2020-2021"
                         },
                         Description = GetFormattedString(
                             InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.remove.failure"], role, channel)
