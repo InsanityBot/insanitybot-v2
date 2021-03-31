@@ -18,10 +18,12 @@ using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Permissions
 {
-    public class GrantPermission : BaseCommandModule
+    [Group("permission")]
+    [Aliases("permissions")]
+    public class GrantUserPermission : BaseCommandModule
     {
-        [Command("grant-permission")]
-        [Aliases("give-permission")]
+        [Command("grant")]
+        [Aliases("give")]
         public async Task GrantPermissionCommand(CommandContext ctx, DiscordMember member, 
             [RemainingText]
             String args)

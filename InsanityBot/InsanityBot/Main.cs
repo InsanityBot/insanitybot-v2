@@ -212,7 +212,7 @@ namespace InsanityBot
 
         private static void RegisterAllCommands()
         {
-            CommandsExtension.RegisterCommands<GrantPermission>();
+            CommandsExtension.RegisterCommands<GrantUserPermission>();
 
             if((Boolean)Config["insanitybot.modules.miscellaneous"])
             {
