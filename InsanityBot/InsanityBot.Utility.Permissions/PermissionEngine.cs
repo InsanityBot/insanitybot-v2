@@ -158,6 +158,10 @@ namespace InsanityBot.Utility.Permissions
             if (!Directory.Exists("./mod-data/permissions/declarations"))
                 Directory.CreateDirectory("./mod-data/permissions/declarations");
 
+            // create intermediary directory
+            if (!Directory.Exists("./cache/permissions/intermediary"))
+                Directory.CreateDirectory("./cache/permissions/intermediary");
+
             // check whether default permissions are up-to-date
             if (ShouldUpdateDefaultPermissions())
                 UpdateDefaultPermissions();
@@ -493,6 +497,7 @@ namespace InsanityBot.Utility.Permissions
         }
 
         #region Utils
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static String[] ParseWildcards(String permission)
         {
             if (!permission.Contains('*'))
