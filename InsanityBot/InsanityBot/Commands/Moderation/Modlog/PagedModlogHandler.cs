@@ -59,7 +59,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                                 (DiscordMember)user),
                             Footer = new DiscordEmbedBuilder.EmbedFooter
                             {
-                                Text = "InsanityBot - Exa 2020-2021"
+                                Text = "InsanityBot 2020-2021"
                             },
                             Color = DiscordColor.Red,
                             Description = user.CreateModlogDescription(true, ToByte(messageData.Page - 1))
@@ -86,7 +86,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                                 (DiscordMember)user),
                             Footer = new DiscordEmbedBuilder.EmbedFooter
                             {
-                                Text = "InsanityBot - Exa 2020-2021"
+                                Text = "InsanityBot 2020-2021"
                             },
                             Color = DiscordColor.Red,
                             Description = user.CreateModlogDescription(true, ToByte(messageData.Page + 1))
@@ -116,7 +116,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                                 (DiscordMember)user),
                             Footer = new DiscordEmbedBuilder.EmbedFooter
                             {
-                                Text = "InsanityBot - Exa 2020-2021"
+                                Text = "InsanityBot 2020-2021"
                             },
                             Color = DiscordColor.Red,
                             Description = user.CreateVerballogDescription(true, ToByte(messageData.Page - 1))
@@ -143,7 +143,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                                 (DiscordMember)user),
                             Footer = new DiscordEmbedBuilder.EmbedFooter
                             {
-                                Text = "InsanityBot - Exa 2020-2021"
+                                Text = "InsanityBot 2020-2021"
                             },
                             Color = DiscordColor.Red,
                             Description = user.CreateModlogDescription(true, ToByte(messageData.Page + 1))

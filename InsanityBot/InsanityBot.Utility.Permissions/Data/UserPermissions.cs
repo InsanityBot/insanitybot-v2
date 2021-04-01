@@ -109,7 +109,7 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             StreamWriter writer = new(DefaultPermissionFileSpecifications.User.GetFilePath().Replace("{ID}",
                 permissions.SnowflakeIdentifier.ToString()));
-            writer.Write(JsonConvert.SerializeObject(permissions));
+            writer.Write(JsonConvert.SerializeObject(permissions, Formatting.Indented));
             writer.Close();
         }
     }

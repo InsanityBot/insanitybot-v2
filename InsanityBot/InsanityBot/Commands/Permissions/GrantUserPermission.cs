@@ -82,7 +82,7 @@ namespace InsanityBot.Commands.Permissions
 
         private async Task ExecuteGrantPermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
         {
-            if(!ctx.Member.HasPermission("insanitybot.permissions.grant"))
+            if(!ctx.Member.HasPermission("insanitybot.permissions.user.grant"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                 return;

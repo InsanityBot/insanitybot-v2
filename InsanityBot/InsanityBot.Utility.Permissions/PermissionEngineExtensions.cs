@@ -19,6 +19,9 @@ namespace InsanityBot.Utility.Permissions
         {
             UserPermissions permissions = activeEngine.GetUserPermissions(member.Id);
 
+            if (permissions.IsAdministrator)
+                return true;
+
             if (permissions[permission] == PermissionValue.Allowed)
                 return true;
             else if (permissions[permission] == PermissionValue.Denied)
@@ -33,6 +36,9 @@ namespace InsanityBot.Utility.Permissions
             {
                 RolePermissions inherited = activeEngine.GetRolePermissions(v);
 
+                if (inherited.IsAdministrator)
+                    return true;
+
                 if (inherited[permission] == PermissionValue.Allowed)
                     return true;
                 else if (inherited[permission] == PermissionValue.Denied)
@@ -41,7 +47,7 @@ namespace InsanityBot.Utility.Permissions
 
             DefaultPermissions defaults = DefaultPermissions.Deserialize();
 
-            if (defaults[permission] == PermissionValue.Allowed)
+            if (defaults[permission] == PermissionValue.Allowed || defaults.IsAdministrator)
                 return true;
 
             return false;

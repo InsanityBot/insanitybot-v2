@@ -21,7 +21,7 @@ namespace InsanityBot.Utility.Permissions.Data
             Permissions = new();
             SnowflakeIdentifier = 0;
             IsAdministrator = false;
-            UpdateGuid = new(new Byte[] { 0, 0, 0, 0, 0, 0, 0, 0 });
+            UpdateGuid = new(new Byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
         }
     }
 }

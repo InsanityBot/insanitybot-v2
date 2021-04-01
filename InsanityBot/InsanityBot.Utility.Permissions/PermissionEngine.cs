@@ -159,8 +159,8 @@ namespace InsanityBot.Utility.Permissions
                 Directory.CreateDirectory("./mod-data/permissions/declarations");
 
             // create intermediary directory
-            if (!Directory.Exists("./cache/permissions/intermediary"))
-                Directory.CreateDirectory("./cache/permissions/intermediary");
+            if (!Directory.Exists("./cache/permissions/intermediate"))
+                Directory.CreateDirectory("./cache/permissions/intermediate");
 
             // check whether default permissions are up-to-date
             if (ShouldUpdateDefaultPermissions())
@@ -350,33 +350,57 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaSetRolePermissions(RolePermissions Role)
         {
+            if (!File.Exists($"./data/role-permissions/{Role.SnowflakeIdentifier}.json"))
+                CreateRolePermissions(Role.SnowflakeIdentifier);
+
             RolePermissions.Serialize(Role);
         }
 
         private void VanillaSetUserPermissions(UserPermissions User)
         {
+            if (!File.Exists($"./data/{User.SnowflakeIdentifier}/permissions.json"))
+                CreateUserPermissions(User.SnowflakeIdentifier);
+
             UserPermissions.Serialize(User);
         }
 
         private RolePermissions VanillaGetRolePermissions(UInt64 RoleId)
         {
+            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+                CreateRolePermissions(RoleId);
+
             return RolePermissions.Deserialize(RoleId);
         }
 
         private UserPermissions VanillaGetUserPermissions(UInt64 UserId)
         {
+            if (!File.Exists($"./data/{UserId}/permissions.json"))
+                CreateUserPermissions(UserId);
+
             return UserPermissions.Deserialize(UserId);
         }
 
         private void VanillaCreateRolePermissions(UInt64 RoleId)
         {
             RolePermissions permissions = RolePermissions.Create(RoleId, DefaultPermissions.Deserialize());
+
+            Directory.CreateDirectory($"./data/role-permissions");
+
+            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+                File.Create($"./data/role-permissions/{RoleId}.json");
+
             RolePermissions.Serialize(permissions);
         }
 
         private void VanillaCreateUserPermissions(UInt64 UserId)
         {
             UserPermissions permissions = UserPermissions.Create(UserId, DefaultPermissions.Deserialize());
+
+            Directory.CreateDirectory($"./data/{UserId}");
+
+            if (!File.Exists($"./data/{UserId}/permissions.json"))
+                File.Create($"./data/{UserId}/permissions.json").Close();
+
             UserPermissions.Serialize(permissions);
         }
 

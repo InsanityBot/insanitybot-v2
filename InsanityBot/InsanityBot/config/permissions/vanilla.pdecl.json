@@ -100,5 +100,9 @@
   {
     "Permission": "insanitybot.admin.lock_blacklist.remove",
     "Default": false
+  },
+  {
+    "Permission": "insanitybot.permissions.user.grant",
+    "Default": false
   }
 ]
