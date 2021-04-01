@@ -1,108 +1,108 @@
 [
   {
     "Permission": "insanitybot.miscellaneous.say",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.miscellaneous.say.embed",
-    "Default": false
+    "Value": false
   },
 
   {
     "Permission": "insanitybot.moderation.verbal_warn",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.warn",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.unwarn",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.mute",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.tempmute",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.unmute",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.blacklist",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.whitelist",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.kick",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.ban",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.tempban",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.unban",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.verballog",
-    "Default": true
+    "Value": true
   },
   {
     "Permission": "insanitybot.moderation.modlog",
-    "Default": true
+    "Value": true
   },
   {
     "Permission": "insanitybot.moderation.export_modlog",
-    "Default": true
+    "Value": true
   },
   {
     "Permission": "insanitybot.moderation.clear_modlog",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.purge",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.lock",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.moderation.unlock",
-    "Default": false
+    "Value": false
   },
 
   {
     "Permission": "insanitybot.admin.lock_whitelist.add",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.admin.lock_whitelist.remove",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.admin.lock_blacklist.add",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.admin.lock_blacklist.remove",
-    "Default": false
+    "Value": false
   },
   {
     "Permission": "insanitybot.permissions.user.grant",
-    "Default": false
+    "Value": false
   }
 ]

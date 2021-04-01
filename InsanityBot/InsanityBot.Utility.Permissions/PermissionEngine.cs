@@ -522,7 +522,7 @@ namespace InsanityBot.Utility.Permissions
             UserPermissions.Serialize(permissions.Update(DefaultPermissions.Deserialize()));
         }
 
-        #region Utils
+#region Utils
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static String[] ParseWildcards(String permission)
         {
@@ -538,6 +538,6 @@ namespace InsanityBot.Utility.Permissions
                     where x.Key.StartsWith(permission.Split('*')[0])
                     select x.Key).ToArray();
         }
-        #endregion
+#endregion
     }
 }
