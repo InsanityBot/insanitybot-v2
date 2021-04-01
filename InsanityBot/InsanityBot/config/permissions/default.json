@@ -27,7 +27,7 @@
     "insanitybot.admin.lock_blacklist.remove": -1,
     "insanitybot.permissions.user.grant": -1
   },
-  "IsAdministrator": true,
+  "IsAdministrator": false,
   "SnowflakeIdentifier": 0,
   "UpdateGuid": "00000000-0000-0000-0000-000000000000"
 }
