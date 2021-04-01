@@ -34,6 +34,7 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 		<EmbeddedResource Include="config\permissions\vanilla.pdecl.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 		<EmbeddedResource Include="config\permissions\vanilla.mappings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
