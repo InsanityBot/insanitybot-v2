@@ -228,7 +228,7 @@ namespace InsanityBot.Utility.Permissions
                 reader.Close();
             }
 
-            permissions.UpdateGuid = new Guid();
+            permissions.UpdateGuid = Guid.NewGuid();
 
             if (!File.Exists("./config/permissions/default.json"))
                 File.Create("./config/permissions/default.json").Close();
@@ -245,6 +245,7 @@ namespace InsanityBot.Utility.Permissions
 
             writer = new("./cache/permissions/intermediate/default");
             writer.Write(JsonConvert.SerializeObject(checksums));
+            writer.Flush();
             writer.Close();
         }
 
@@ -307,6 +308,7 @@ namespace InsanityBot.Utility.Permissions
 
             writer = new("./cache/permissions/intermediate/mappings");
             writer.Write(JsonConvert.SerializeObject(checksums));
+            writer.Flush();
             writer.Close();
         }
 
@@ -369,7 +371,7 @@ namespace InsanityBot.Utility.Permissions
             if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
                 CreateRolePermissions(RoleId);
 
-            return RolePermissions.Deserialize(RoleId);
+            return RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
         }
 
         private UserPermissions VanillaGetUserPermissions(UInt64 UserId)
@@ -377,7 +379,7 @@ namespace InsanityBot.Utility.Permissions
             if (!File.Exists($"./data/{UserId}/permissions.json"))
                 CreateUserPermissions(UserId);
 
-            return UserPermissions.Deserialize(UserId);
+            return UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
         }
 
         private void VanillaCreateRolePermissions(UInt64 RoleId)
@@ -409,7 +411,7 @@ namespace InsanityBot.Utility.Permissions
             if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
                 CreateRolePermissions(RoleId);
 
-            RolePermissions permissions = RolePermissions.Deserialize(RoleId);
+            RolePermissions permissions = RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
             permissions.IsAdministrator = Administrator;
             RolePermissions.Serialize(permissions);
         }
@@ -419,7 +421,7 @@ namespace InsanityBot.Utility.Permissions
             if (!File.Exists($"./data/{UserId}/permissions.json"))
                 CreateUserPermissions(UserId);
 
-            UserPermissions permissions = UserPermissions.Deserialize(UserId);
+            UserPermissions permissions = UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
             permissions.IsAdministrator = Administrator;
             UserPermissions.Serialize(permissions);
         }
@@ -429,7 +431,7 @@ namespace InsanityBot.Utility.Permissions
             if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
                 CreateRolePermissions(RoleId);
 
-            RolePermissions permissions = RolePermissions.Deserialize(RoleId);
+            RolePermissions permissions = RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
 
             foreach (var v in Permissions)
                 foreach (var v1 in ParseWildcards(v))
@@ -443,7 +445,7 @@ namespace InsanityBot.Utility.Permissions
             if (!File.Exists($"./data/{UserId}/permissions.json"))
                 CreateUserPermissions(UserId);
 
-            UserPermissions permissions = UserPermissions.Deserialize(UserId);
+            UserPermissions permissions = UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
 
             foreach (var v in Permissions)
                 foreach (var v1 in ParseWildcards(v))
@@ -457,7 +459,7 @@ namespace InsanityBot.Utility.Permissions
             if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
                 CreateRolePermissions(RoleId);
 
-            RolePermissions permissions = RolePermissions.Deserialize(RoleId);
+            RolePermissions permissions = RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
 
             foreach (var v in Permissions)
                 foreach (var v1 in ParseWildcards(v))
@@ -471,7 +473,7 @@ namespace InsanityBot.Utility.Permissions
             if (!File.Exists($"./data/{UserId}/permissions.json"))
                 CreateUserPermissions(UserId);
 
-            UserPermissions permissions = UserPermissions.Deserialize(UserId);
+            UserPermissions permissions = UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
 
             foreach (var v in Permissions)
                 foreach (var v1 in ParseWildcards(v))
@@ -485,7 +487,7 @@ namespace InsanityBot.Utility.Permissions
             if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
                 CreateRolePermissions(RoleId);
 
-            RolePermissions permissions = RolePermissions.Deserialize(RoleId);
+            RolePermissions permissions = RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
 
             foreach (var v in Permissions)
                 foreach (var v1 in ParseWildcards(v))
@@ -499,7 +501,7 @@ namespace InsanityBot.Utility.Permissions
             if (!File.Exists($"./data/{UserId}/permissions.json"))
                 CreateUserPermissions(UserId);
 
-            UserPermissions permissions = UserPermissions.Deserialize(UserId);
+            UserPermissions permissions = UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
 
             foreach (var v in Permissions)
                 foreach (var v1 in ParseWildcards(v))

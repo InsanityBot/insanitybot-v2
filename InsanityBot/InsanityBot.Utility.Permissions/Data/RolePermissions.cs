@@ -56,6 +56,9 @@ namespace InsanityBot.Utility.Permissions.Data
 
         public RolePermissions Update(DefaultPermissions defaults)
         {
+            if (defaults.UpdateGuid == this.UpdateGuid)
+                return this;
+
             foreach (var v in defaults.Permissions)
             {
                 if (!this.Permissions.ContainsKey(v.Key))
@@ -68,6 +71,8 @@ namespace InsanityBot.Utility.Permissions.Data
             }
             this.UpdateGuid = defaults.UpdateGuid;
 
+            Serialize(this);
+
             return this;
         }
 
@@ -75,6 +80,7 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             RolePermissions permissions = new();
             permissions.SnowflakeIdentifier = roleId;
+            permissions.UpdateGuid = defaults.UpdateGuid;
 
             foreach(var v in defaults.Permissions)
             {
@@ -88,6 +94,7 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             StreamReader reader = new(DefaultPermissionFileSpecifications.Role.GetFilePath().Replace("{ID}", id.ToString()));
             RolePermissions permissions = JsonConvert.DeserializeObject<RolePermissions>(reader.ReadToEnd());
+            reader.Close();
 
             if(PermissionSettings.UpdateRolePermissions)
             {
