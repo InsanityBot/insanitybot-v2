@@ -40,7 +40,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         ctx, user),
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
-                        Text = "InsanityBot - Exa 2020-2021"
+                        Text = "InsanityBot 2020-2021"
                     }
                 };
 

@@ -28,13 +28,15 @@ namespace InsanityBot.Utility.Permissions.Data
         public static DefaultPermissions Deserialize()
         {
             StreamReader reader = new(DefaultPermissionFileSpecifications.Default.GetFilePath());
-            return JsonConvert.DeserializeObject<DefaultPermissions>(reader.ReadToEnd());
+            var value = JsonConvert.DeserializeObject<DefaultPermissions>(reader.ReadToEnd());
+            reader.Close();
+            return value;
         }
 
         public static void Serialize(DefaultPermissions permissions)
         {
             StreamWriter writer = new(DefaultPermissionFileSpecifications.Default.GetFilePath());
-            writer.Write(JsonConvert.SerializeObject(permissions));
+            writer.Write(JsonConvert.SerializeObject(permissions, Formatting.Indented));
             writer.Close();
         }
 

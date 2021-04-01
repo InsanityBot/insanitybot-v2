@@ -18,10 +18,12 @@ using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Permissions
 {
-    public class GrantPermission : BaseCommandModule
+    [Group("permission")]
+    [Aliases("permissions")]
+    public class GrantUserPermission : BaseCommandModule
     {
-        [Command("grant-permission")]
-        [Aliases("give-permission")]
+        [Command("grant")]
+        [Aliases("give")]
         public async Task GrantPermissionCommand(CommandContext ctx, DiscordMember member, 
             [RemainingText]
             String args)
@@ -80,7 +82,7 @@ namespace InsanityBot.Commands.Permissions
 
         private async Task ExecuteGrantPermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
         {
-            if(!ctx.Member.HasPermission("insanitybot.permissions.grant"))
+            if(!ctx.Member.HasPermission("insanitybot.permissions.user.grant"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                 return;

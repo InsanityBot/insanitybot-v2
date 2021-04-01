@@ -60,7 +60,9 @@ namespace InsanityBot.Utility.Permissions.Data
                 _ => new($"./mod-data/permissions/{modName}.mappings.json")
             };
 
-            return JsonConvert.DeserializeObject<PermissionMapping>(reader.ReadToEnd());
+            var value = JsonConvert.DeserializeObject<PermissionMapping>(reader.ReadToEnd());
+            reader.Close();
+            return value;
         }
 
         public static PermissionMapping operator + (PermissionMapping left, PermissionMapping right)

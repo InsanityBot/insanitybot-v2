@@ -15,6 +15,7 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             StreamReader reader = new("./config/overrides.default.json");
             String[] overrides = JsonConvert.DeserializeObject<String[]>(reader.ReadToEnd());
+            reader.Close();
 
             Dictionary<String, Boolean> retValue = new();
 

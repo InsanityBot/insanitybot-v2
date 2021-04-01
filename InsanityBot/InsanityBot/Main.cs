@@ -205,14 +205,14 @@ namespace InsanityBot
 
         private static Task CommandsExtension_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)
         {
-            Client.Logger.LogError($"Command {e.Command} failed:\n" +
+            Client.Logger.LogError($"{e.Command} failed:\n" +
                 $"{e.Exception}: {e.Exception.Message}\n{e.Exception.StackTrace}");
             return Task.CompletedTask;
         }
 
         private static void RegisterAllCommands()
         {
-            CommandsExtension.RegisterCommands<GrantPermission>();
+            CommandsExtension.RegisterCommands<GrantUserPermission>();
 
             if((Boolean)Config["insanitybot.modules.miscellaneous"])
             {

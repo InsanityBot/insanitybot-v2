@@ -61,6 +61,9 @@ namespace InsanityBot.Utility.Permissions.Data
 
         public UserPermissions Update(DefaultPermissions defaults)
         {
+            if (defaults.UpdateGuid == this.UpdateGuid)
+                return this;
+
             foreach(var v in defaults.Permissions)
             {
                 if (!this.Permissions.ContainsKey(v.Key))
@@ -73,6 +76,8 @@ namespace InsanityBot.Utility.Permissions.Data
             }
             this.UpdateGuid = defaults.UpdateGuid;
 
+            Serialize(this);
+
             return this;
         }
 
@@ -80,6 +85,7 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             UserPermissions permissions = new();
             permissions.SnowflakeIdentifier = userId;
+            permissions.UpdateGuid = defaults.UpdateGuid;
 
             foreach(var v in defaults.Permissions)
             {
@@ -93,6 +99,7 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             StreamReader reader = new(DefaultPermissionFileSpecifications.User.GetFilePath().Replace("{ID}", Id.ToString()));
             UserPermissions permissions = JsonConvert.DeserializeObject<UserPermissions>(reader.ReadToEnd());
+            reader.Close();
 
             if (PermissionSettings.UpdateUserPermissions)
             {
@@ -109,7 +116,7 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             StreamWriter writer = new(DefaultPermissionFileSpecifications.User.GetFilePath().Replace("{ID}",
                 permissions.SnowflakeIdentifier.ToString()));
-            writer.Write(JsonConvert.SerializeObject(permissions));
+            writer.Write(JsonConvert.SerializeObject(permissions, Formatting.Indented));
             writer.Close();
         }
     }
