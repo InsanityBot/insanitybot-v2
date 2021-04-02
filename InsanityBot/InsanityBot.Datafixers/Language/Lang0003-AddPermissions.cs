@@ -35,7 +35,9 @@ namespace InsanityBot.Datafixers.Language
             data.Configuration.Remove("insanitybot.permissions.error.permission_not_found");
             data.Configuration.Remove("insanitybot.permissions.error.no_permission_passed");
             data.Configuration.Remove("insanitybot.permissions.error.could_not_grant");
+            data.Configuration.Remove("insanitybot.permissions.error.could_not_neutralize");
             data.Configuration.Remove("insanitybot.permissions.permission_granted");
+            data.Configuration.Remove("insanitybot.permissions.permission_neutralized");
             data.DataVersion = "2.0.0-dev.00017";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 3, 1, "Downgrade"), "Downgraded successfully to version 2.0.0-dev.00017");
@@ -50,7 +52,9 @@ namespace InsanityBot.Datafixers.Language
             data.Configuration.Remove("insanitybot.permissions.error.permission_not_found");
             data.Configuration.Remove("insanitybot.permissions.error.no_permission_passed");
             data.Configuration.Remove("insanitybot.permissions.error.could_not_grant");
+            data.Configuration.Remove("insanitybot.permissions.error.could_not_neutralize");
             data.Configuration.Remove("insanitybot.permissions.permission_granted");
+            data.Configuration.Remove("insanitybot.permissions.permission_neutralized");
             data.DataVersion = "2.0.0-dev.00017";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 3, 2, "ExportDowngrade"), "Downgraded successfully to version 2.0.0-dev.00017");
@@ -65,7 +69,9 @@ namespace InsanityBot.Datafixers.Language
             data.Configuration.Add("insanitybot.permissions.error.permission_not_found", "Permission {PERMISSION} could not be found.");
             data.Configuration.Add("insanitybot.permissions.error.no_permission_passed", "No permission was passed to the command.");
             data.Configuration.Add("insanitybot.permissions.error.could_not_grant", "Could not grant permission {PERMISSION} to {MENTION}.");
+            data.Configuration.Add("insanitybot.permissions.error.could_not_neutralize", "Could not neutralize permission override {PERMISSION} from {MENTION}");
             data.Configuration.Add("insanitybot.permissions.permission_granted", "Granted permission {PERMISSION} to {MENTION}");
+            data.Configuration.Add("insanitybot.permissions.permission_neutralized", "Neutralized permission override {PERMISSION} from {MENTION}");
             data.DataVersion = "2.0.0-dev.00018";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 3, 3, "ExportUpgrade"), "Upgraded successfully to version 2.0.0-dev.00018");
@@ -80,7 +86,9 @@ namespace InsanityBot.Datafixers.Language
             data.Configuration.Add("insanitybot.permissions.error.permission_not_found", "Permission {PERMISSION} could not be found.");
             data.Configuration.Add("insanitybot.permissions.error.no_permission_passed", "No permission was passed to the command.");
             data.Configuration.Add("insanitybot.permissions.error.could_not_grant", "Could not grant permission {PERMISSION} to {MENTION}.");
+            data.Configuration.Add("insanitybot.permissions.error.could_not_neutralize", "Could not neutralize permission override {PERMISSION} from {MENTION}");
             data.Configuration.Add("insanitybot.permissions.permission_granted", "Granted permission {PERMISSION} to {MENTION}");
+            data.Configuration.Add("insanitybot.permissions.permission_neutralized", "Neutralized permission override {PERMISSION} from {MENTION}");
             data.DataVersion = "2.0.0-dev.00018";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 3, 4, "Upgrade"), "Upgraded successfully to version 2.0.0-dev.00018");

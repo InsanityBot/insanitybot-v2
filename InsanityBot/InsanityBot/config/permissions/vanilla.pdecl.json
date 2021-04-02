@@ -104,5 +104,33 @@
   {
     "Permission": "insanitybot.permissions.user.grant",
     "Value": false
+  },
+  {
+    "Permission": "insanitybot.permissions.user.neutral",
+    "Value": false
+  },
+  {
+    "Permission": "insanitybot.permissions.user.deny",
+    "Value": false
+  },
+  {
+    "Permission": "insanitybot.permissions.user.add_role",
+    "Value": false
+  },
+  {
+    "Permission": "insanitybot.permissions.role.grant",
+    "Value": false
+  },
+  {
+    "Permission": "insanitybot.permissions.role.neutral",
+    "Value": false
+  },
+  {
+    "Permission": "insanitybot.permissions.role.deny",
+    "Value": false
+  },
+  {
+    "Permission": "insanitybot.permissions.role.add_parent",
+    "Value": false
   }
 ]
