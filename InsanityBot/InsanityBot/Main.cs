@@ -213,6 +213,8 @@ namespace InsanityBot
         private static void RegisterAllCommands()
         {
             CommandsExtension.RegisterCommands<GrantUserPermission>();
+            CommandsExtension.RegisterCommands<NeutralizeUserPermission>();
+            CommandsExtension.RegisterCommands<DenyUserPermission>();
 
             if((Boolean)Config["insanitybot.modules.miscellaneous"])
             {

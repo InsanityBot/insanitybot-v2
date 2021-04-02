@@ -17,25 +17,25 @@ namespace InsanityBot.Commands.Permissions
 {
     [Group("permission")]
     [Aliases("permissions")]
-    public class GrantUserPermission : BaseCommandModule
+    public class DenyUserPermission : BaseCommandModule
     {
-        [Command("grant")]
-        [Aliases("give")]
-        public async Task GrantPermissionCommand(CommandContext ctx, DiscordMember member, 
+        [Command("deny")]
+        [Aliases("remove")]
+        public async Task DenyPermissionCommand(CommandContext ctx, DiscordMember member,
             [RemainingText]
             String args)
         {
-            if(args.StartsWith('-'))
+            if (args.StartsWith('-'))
             {
-                await ParseGrantPermission(ctx, member, args);
+                await ParseDenyPermission(ctx, member, args);
                 return;
             }
-            await ExecuteGrantPermission(ctx, member, false, args);
+            await ExecuteDenyPermission(ctx, member, false, args);
         }
 
-        private async Task ParseGrantPermission(CommandContext ctx, DiscordMember member, String args)
+        private async Task ParseDenyPermission(CommandContext ctx, DiscordMember member, String args)
         {
-            if(!args.Contains("-p"))
+            if (!args.Contains("-p"))
             {
                 DiscordEmbedBuilder invalid = new()
                 {
@@ -56,10 +56,10 @@ namespace InsanityBot.Commands.Permissions
                 await Parser.Default.ParseArguments<PermissionOptions>(args.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteGrantPermission(ctx, member, o.Silent, o.Permission);
+                        await ExecuteDenyPermission(ctx, member, o.Silent, o.Permission);
                     });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -77,9 +77,9 @@ namespace InsanityBot.Commands.Permissions
             }
         }
 
-        private async Task ExecuteGrantPermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
+        private async Task ExecuteDenyPermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
         {
-            if(!ctx.Member.HasPermission("insanitybot.permissions.user.grant"))
+            if (!ctx.Member.HasPermission("insanitybot.permissions.user.deny"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                 return;
@@ -88,7 +88,7 @@ namespace InsanityBot.Commands.Permissions
             DiscordEmbedBuilder embedBuilder = null;
             DiscordEmbedBuilder moderationEmbedBuilder = new()
             {
-                Title = "ADMIN: Permission Grant",
+                Title = "ADMIN: Permission Deny",
                 Color = new(0xff6347),
                 Footer = new()
                 {
@@ -100,23 +100,23 @@ namespace InsanityBot.Commands.Permissions
                 .AddField("User", member.Mention, true)
                 .AddField("Permission", permission, true);
 
-            try 
+            try
             {
-                InsanityBot.PermissionEngine.GrantUserPermissions(member.Id, new[] { permission });
+                InsanityBot.PermissionEngine.RevokeUserPermissions(member.Id, new[] { permission });
 
-                embedBuilder = new() 
+                embedBuilder = new()
                 {
                     Color = new(0xff6347),
                     Footer = new()
                     {
                         Text = "InsanityBot 2020-2021"
                     },
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.permission_granted"], ctx, member, permission)
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.permission_denied"], ctx, member, permission)
                 };
 
-                InsanityBot.Client.Logger.LogInformation(new EventId(9000, "Permissions"), $"Added permission {permission} to {member.Username}");
+                InsanityBot.Client.Logger.LogInformation(new EventId(9002, "Permissions"), $"Denied permission {permission} for {member.Username}");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 embedBuilder = new()
                 {
@@ -125,18 +125,19 @@ namespace InsanityBot.Commands.Permissions
                     {
                         Text = "InsanityBot 2020-2021"
                     },
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_grant"], ctx, member)
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_deny"], ctx, member)
                 };
 
-                InsanityBot.Client.Logger.LogCritical(new EventId(9000, "Permissions"), $"Administrative action failed: could not grant " +
-                    $"permission {permission} to {member.Username}. Please contact the InsanityBot team immediately.\n" +
+                InsanityBot.Client.Logger.LogCritical(new EventId(9000, "Permissions"), $"Administrative action failed: could not deny " +
+                    $"permission {permission} fpr {member.Username}. Please contact the InsanityBot team immediately.\n" +
                     $"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
             }
             finally
             {
-                if(!silent)
+                if (!silent)
                     await ctx.RespondAsync(embedBuilder.Build());
             }
         }
     }
 }
+

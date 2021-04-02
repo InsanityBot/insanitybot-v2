@@ -37,8 +37,10 @@ namespace InsanityBot.Datafixers.Language
             data.Configuration.Remove("insanitybot.permissions.error.could_not_parse");
             data.Configuration.Remove("insanitybot.permissions.error.could_not_grant");
             data.Configuration.Remove("insanitybot.permissions.error.could_not_neutralize");
+            data.Configuration.Remove("insanitybot.permissions.error.could_not_deny");
             data.Configuration.Remove("insanitybot.permissions.permission_granted");
             data.Configuration.Remove("insanitybot.permissions.permission_neutralized");
+            data.Configuration.Remove("insanitybot.permissions.permission_denied");
             data.DataVersion = "2.0.0-dev.00017";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 3, 1, "Downgrade"), "Downgraded successfully to version 2.0.0-dev.00017");
@@ -55,8 +57,10 @@ namespace InsanityBot.Datafixers.Language
             data.Configuration.Remove("insanitybot.permissions.error.could_not_grant");
             data.Configuration.Remove("insanitybot.permissions.error.could_not_parse");
             data.Configuration.Remove("insanitybot.permissions.error.could_not_neutralize");
+            data.Configuration.Remove("insanitybot.permissions.error.could_not_deny");
             data.Configuration.Remove("insanitybot.permissions.permission_granted");
             data.Configuration.Remove("insanitybot.permissions.permission_neutralized");
+            data.Configuration.Remove("insanitybot.permissions.permission_denied");
             data.DataVersion = "2.0.0-dev.00017";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 3, 2, "ExportDowngrade"), "Downgraded successfully to version 2.0.0-dev.00017");
@@ -73,8 +77,10 @@ namespace InsanityBot.Datafixers.Language
             data.Configuration.Add("insanitybot.permissions.error.could_not_parse", "Could not parse command arguments.");
             data.Configuration.Add("insanitybot.permissions.error.could_not_grant", "Could not grant permission {PERMISSION} to {MENTION}.");
             data.Configuration.Add("insanitybot.permissions.error.could_not_neutralize", "Could not neutralize permission override {PERMISSION} from {MENTION}");
+            data.Configuration.Add("insanitybot.permissions.error.could_not_deny", "Could not deny permission {PERMISSION} for {MEMBER}.");
             data.Configuration.Add("insanitybot.permissions.permission_granted", "Granted permission {PERMISSION} to {MENTION}");
             data.Configuration.Add("insanitybot.permissions.permission_neutralized", "Neutralized permission override {PERMISSION} from {MENTION}");
+            data.Configuration.Add("insanitybot.permissions.permission_denied", "Denied permission {PERMISSION} for {MENTION}.");
             data.DataVersion = "2.0.0-dev.00018";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 3, 3, "ExportUpgrade"), "Upgraded successfully to version 2.0.0-dev.00018");
@@ -91,8 +97,10 @@ namespace InsanityBot.Datafixers.Language
             data.Configuration.Add("insanitybot.permissions.error.could_not_parse", "Could not parse command arguments.");
             data.Configuration.Add("insanitybot.permissions.error.could_not_grant", "Could not grant permission {PERMISSION} to {MENTION}.");
             data.Configuration.Add("insanitybot.permissions.error.could_not_neutralize", "Could not neutralize permission override {PERMISSION} from {MENTION}");
+            data.Configuration.Add("insanitybot.permissions.error.could_not_deny", "Could not deny permission {PERMISSION} for {MEMBER}.");
             data.Configuration.Add("insanitybot.permissions.permission_granted", "Granted permission {PERMISSION} to {MENTION}");
             data.Configuration.Add("insanitybot.permissions.permission_neutralized", "Neutralized permission override {PERMISSION} from {MENTION}");
+            data.Configuration.Add("insanitybot.permissions.permission_denied", "Denied permission {PERMISSION} for {MENTION}.");
             data.DataVersion = "2.0.0-dev.00018";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 3, 4, "Upgrade"), "Upgraded successfully to version 2.0.0-dev.00018");
