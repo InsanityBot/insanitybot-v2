@@ -34,6 +34,7 @@ namespace InsanityBot.Datafixers.Language
 
             data.Configuration.Remove("insanitybot.permissions.error.permission_not_found");
             data.Configuration.Remove("insanitybot.permissions.error.no_permission_passed");
+            data.Configuration.Remove("insanitybot.permissions.error.could_not_parse");
             data.Configuration.Remove("insanitybot.permissions.error.could_not_grant");
             data.Configuration.Remove("insanitybot.permissions.error.could_not_neutralize");
             data.Configuration.Remove("insanitybot.permissions.permission_granted");
@@ -52,6 +53,7 @@ namespace InsanityBot.Datafixers.Language
             data.Configuration.Remove("insanitybot.permissions.error.permission_not_found");
             data.Configuration.Remove("insanitybot.permissions.error.no_permission_passed");
             data.Configuration.Remove("insanitybot.permissions.error.could_not_grant");
+            data.Configuration.Remove("insanitybot.permissions.error.could_not_parse");
             data.Configuration.Remove("insanitybot.permissions.error.could_not_neutralize");
             data.Configuration.Remove("insanitybot.permissions.permission_granted");
             data.Configuration.Remove("insanitybot.permissions.permission_neutralized");
@@ -68,6 +70,7 @@ namespace InsanityBot.Datafixers.Language
 
             data.Configuration.Add("insanitybot.permissions.error.permission_not_found", "Permission {PERMISSION} could not be found.");
             data.Configuration.Add("insanitybot.permissions.error.no_permission_passed", "No permission was passed to the command.");
+            data.Configuration.Add("insanitybot.permissions.error.could_not_parse", "Could not parse command arguments.");
             data.Configuration.Add("insanitybot.permissions.error.could_not_grant", "Could not grant permission {PERMISSION} to {MENTION}.");
             data.Configuration.Add("insanitybot.permissions.error.could_not_neutralize", "Could not neutralize permission override {PERMISSION} from {MENTION}");
             data.Configuration.Add("insanitybot.permissions.permission_granted", "Granted permission {PERMISSION} to {MENTION}");
@@ -85,6 +88,7 @@ namespace InsanityBot.Datafixers.Language
 
             data.Configuration.Add("insanitybot.permissions.error.permission_not_found", "Permission {PERMISSION} could not be found.");
             data.Configuration.Add("insanitybot.permissions.error.no_permission_passed", "No permission was passed to the command.");
+            data.Configuration.Add("insanitybot.permissions.error.could_not_parse", "Could not parse command arguments.");
             data.Configuration.Add("insanitybot.permissions.error.could_not_grant", "Could not grant permission {PERMISSION} to {MENTION}.");
             data.Configuration.Add("insanitybot.permissions.error.could_not_neutralize", "Could not neutralize permission override {PERMISSION} from {MENTION}");
             data.Configuration.Add("insanitybot.permissions.permission_granted", "Granted permission {PERMISSION} to {MENTION}");

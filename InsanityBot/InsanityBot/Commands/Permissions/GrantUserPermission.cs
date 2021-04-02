@@ -66,7 +66,7 @@ namespace InsanityBot.Commands.Permissions
             {
                 DiscordEmbedBuilder failed = new()
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_parse_grant"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_parse"],
                         ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new()

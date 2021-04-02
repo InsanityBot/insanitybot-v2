@@ -77,6 +77,7 @@
 
     "insanitybot.permissions.error.permission_not_found": "Permission {PERMISSION} could not be found.",
     "insanitybot.permissions.error.no_permission_passed": "No permission was passed to the command.",
+    "insanitybot.permissions.error.could_not_parse": "Could not parse command arguments.",
     "insanitybot.permissions.error.could_not_grant": "Could not grant permission {PERMISSION} to {MENTION}.",
     "insanitybot.permissions.error.could_not_neutralize": "Could not neutralize permission override {PERMISSION} from {MENTION}",
     "insanitybot.permissions.permission_granted": "Granted permission {PERMISSION} to {MENTION}.",
