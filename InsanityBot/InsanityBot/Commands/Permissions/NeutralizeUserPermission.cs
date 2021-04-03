@@ -15,6 +15,7 @@ using InsanityBot.Utility.Permissions;
 using Microsoft.Extensions.Logging;
 
 using static InsanityBot.Commands.StringUtilities;
+using static System.Convert;
 
 namespace InsanityBot.Commands.Permissions
 {
@@ -142,6 +143,9 @@ namespace InsanityBot.Commands.Permissions
                 {
                     if (!silent)
                         await ctx.RespondAsync(embedBuilder.Build());
+
+                    _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
+                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
                 }
             }
         }
