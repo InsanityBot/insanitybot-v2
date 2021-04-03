@@ -87,6 +87,9 @@ namespace InsanityBot.Commands.Permissions
                     return;
                 }
 
+                if (silent)
+                    await ctx.Message.DeleteAsync();
+
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = new()
                 {
