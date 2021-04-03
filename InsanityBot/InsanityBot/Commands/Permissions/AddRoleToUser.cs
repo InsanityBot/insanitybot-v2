@@ -22,7 +22,8 @@ namespace InsanityBot.Commands.Permissions
     {
         public partial class UserPermissionCommand : BaseCommandModule
         {
-
+            [Command("addrole")]
+            [Aliases("add-role")]
             public async Task AddRoleCommand(CommandContext ctx, DiscordMember member,
                 [RemainingText]
                 String args)
@@ -110,7 +111,8 @@ namespace InsanityBot.Commands.Permissions
                 try
                 {
                     UserPermissions permissions = InsanityBot.PermissionEngine.GetUserPermissions(member.Id);
-                    permissions.AssignedRoles = permissions.AssignedRoles.Append(role).ToArray();
+                    if(!permissions.AssignedRoles.Contains(role))
+                        permissions.AssignedRoles = permissions.AssignedRoles.Append(role).ToArray();
                     InsanityBot.PermissionEngine.SetUserPermissions(permissions);
 
                     embedBuilder = new()
@@ -120,7 +122,7 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.role_addded"],
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.role_added"],
                             ctx, member, InsanityBot.HomeGuild.GetRole(role))
                     };
 
