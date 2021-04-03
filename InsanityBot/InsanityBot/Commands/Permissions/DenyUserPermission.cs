@@ -92,7 +92,7 @@ namespace InsanityBot.Commands.Permissions
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = new()
                 {
-                    Title = "ADMIN: Permission Deny",
+                    Title = "ADMIN: Permission Denied",
                     Color = new(0xff6347),
                     Footer = new()
                     {
