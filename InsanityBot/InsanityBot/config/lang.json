@@ -80,10 +80,12 @@
     "insanitybot.permissions.error.could_not_parse": "Could not parse command arguments.",
     "insanitybot.permissions.error.could_not_grant": "Could not grant permission {PERMISSION} to {MENTION}.",
     "insanitybot.permissions.error.could_not_neutralize": "Could not neutralize permission override {PERMISSION} from {MENTION}",
-    "insanitybot.permissions.error.could_not_deny": "Could not deny permission {PERMISSION} for {MEMBER}.",
+    "insanitybot.permissions.error.could_not_deny": "Could not deny permission {PERMISSION} for {MENTION}.",
+    "insanitybot.permissions.error.could_not_add_role": "Could not add role {ROLE} to {MENTION}.",
     "insanitybot.permissions.permission_granted": "Granted permission {PERMISSION} to {MENTION}.",
     "insanitybot.permissions.permission_neutralized": "Neutralized permission override {PERMISSION} from {MENTION}",
-    "insanitybot.permissions.permission_denied": "Denied permission {PERMISSION} for {MENTION}."
+    "insanitybot.permissions.permission_denied": "Denied permission {PERMISSION} for {MENTION}.",
+    "insanitybot.permissions.role_added": "Added role {ROLE} to {MENTION}."
   }
 }
 

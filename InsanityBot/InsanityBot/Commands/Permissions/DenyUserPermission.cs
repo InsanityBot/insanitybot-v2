@@ -63,7 +63,7 @@ namespace InsanityBot.Commands.Permissions
                 {
                     DiscordEmbedBuilder failed = new()
                     {
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_parse"],
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_parse"],
                             ctx, member),
                         Color = DiscordColor.Red,
                         Footer = new()
@@ -111,7 +111,7 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.permission_denied"], ctx, member, permission)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_denied"], ctx, member, permission)
                     };
 
                     InsanityBot.Client.Logger.LogInformation(new EventId(9002, "Permissions"), $"Denied permission {permission} for {member.Username}");
@@ -125,11 +125,11 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_deny"], ctx, member)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_deny"], ctx, member)
                     };
 
-                    InsanityBot.Client.Logger.LogCritical(new EventId(9000, "Permissions"), $"Administrative action failed: could not deny " +
-                        $"permission {permission} fpr {member.Username}. Please contact the InsanityBot team immediately.\n" +
+                    InsanityBot.Client.Logger.LogCritical(new EventId(9002, "Permissions"), $"Administrative action failed: could not deny " +
+                        $"permission {permission} for {member.Username}. Please contact the InsanityBot team immediately.\n" +
                         $"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
                 }
                 finally

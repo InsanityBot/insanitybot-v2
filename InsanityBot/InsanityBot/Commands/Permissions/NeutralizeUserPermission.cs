@@ -114,7 +114,7 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.permission_neutralized"], ctx, member, permission)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_neutralized"], ctx, member, permission)
                     };
 
                     InsanityBot.Client.Logger.LogInformation(new EventId(9001, "Permissions"), $"Neutralized permission override {permission} from {member.Username}");
@@ -128,7 +128,7 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_neutralize"], ctx, member)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_neutralize"], ctx, member)
                     };
 
                     InsanityBot.Client.Logger.LogCritical(new EventId(9001, "Permissions"), $"Administrative action failed: could not neutralize " +
