@@ -23,7 +23,7 @@ namespace InsanityBot.Commands.Permissions
             [Command("create")]
             public async Task CreatePermissionCommand(CommandContext ctx, DiscordMember member,
                 [RemainingText]
-                String args)
+                String args = "void")
             {
                 if (args.StartsWith('-'))
                 {
