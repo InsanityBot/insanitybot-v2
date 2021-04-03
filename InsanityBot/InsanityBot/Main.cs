@@ -9,6 +9,7 @@ using CommandLine;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Exceptions;
 
 using InsanityBot.Commands.Miscellaneous;
@@ -205,6 +206,9 @@ namespace InsanityBot
 
         private static Task CommandsExtension_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)
         {
+            if (e.Exception.GetType() == typeof(CommandNotFoundException))
+                return Task.CompletedTask;
+
             Client.Logger.LogError($"{e.Command} failed:\n" +
                 $"{e.Exception}: {e.Exception.Message}\n{e.Exception.StackTrace}");
             return Task.CompletedTask;
@@ -212,7 +216,7 @@ namespace InsanityBot
 
         private static void RegisterAllCommands()
         {
-            CommandsExtension.RegisterCommands<GrantUserPermission>();
+            CommandsExtension.RegisterCommands<PermissionCommand>();
 
             if((Boolean)Config["insanitybot.modules.miscellaneous"])
             {

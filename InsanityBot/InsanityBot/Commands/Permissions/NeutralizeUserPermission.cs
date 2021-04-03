@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -15,27 +18,25 @@ using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Permissions
 {
-    [Group("permission")]
-    [Aliases("permissions")]
     public partial class PermissionCommand : BaseCommandModule
     {
         public partial class UserPermissionCommand : BaseCommandModule
         {
-            [Command("grant")]
-            [Aliases("give")]
-            public async Task GrantPermissionCommand(CommandContext ctx, DiscordMember member,
+            [Command("neutralize")]
+            [Aliases("revoke", "neutral")]
+            public async Task NeutralizePermissionCommand(CommandContext ctx, DiscordMember member,
                 [RemainingText]
                 String args)
             {
                 if (args.StartsWith('-'))
                 {
-                    await ParseGrantPermission(ctx, member, args);
+                    await ParseNeutralizePermission(ctx, member, args);
                     return;
                 }
-                await ExecuteGrantPermission(ctx, member, false, args);
+                await ExecuteNeutralizePermission(ctx, member, false, args);
             }
 
-            private async Task ParseGrantPermission(CommandContext ctx, DiscordMember member, String args)
+            private async Task ParseNeutralizePermission(CommandContext ctx, DiscordMember member, String args)
             {
                 if (!args.Contains("-p"))
                 {
@@ -58,14 +59,14 @@ namespace InsanityBot.Commands.Permissions
                     await Parser.Default.ParseArguments<PermissionOptions>(args.Split(' '))
                         .WithParsedAsync(async o =>
                         {
-                            await ExecuteGrantPermission(ctx, member, o.Silent, o.Permission);
+                            await ExecuteNeutralizePermission(ctx, member, o.Silent, o.Permission);
                         });
                 }
                 catch (Exception e)
                 {
                     DiscordEmbedBuilder failed = new()
                     {
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_parse"],
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_parse"],
                             ctx, member),
                         Color = DiscordColor.Red,
                         Footer = new()
@@ -79,9 +80,9 @@ namespace InsanityBot.Commands.Permissions
                 }
             }
 
-            private async Task ExecuteGrantPermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
+            private async Task ExecuteNeutralizePermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
             {
-                if (!ctx.Member.HasPermission("insanitybot.permissions.user.grant"))
+                if (!ctx.Member.HasPermission("insanitybot.permissions.user.neutral"))
                 {
                     await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
@@ -93,7 +94,7 @@ namespace InsanityBot.Commands.Permissions
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = new()
                 {
-                    Title = "ADMIN: Permission Grant",
+                    Title = "ADMIN: Permission Neutralize",
                     Color = new(0xff6347),
                     Footer = new()
                     {
@@ -107,7 +108,7 @@ namespace InsanityBot.Commands.Permissions
 
                 try
                 {
-                    InsanityBot.PermissionEngine.GrantUserPermissions(member.Id, new[] { permission });
+                    InsanityBot.PermissionEngine.NeutralizeUserPermissions(member.Id, new[] { permission });
 
                     embedBuilder = new()
                     {
@@ -116,10 +117,10 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_granted"], ctx, member, permission)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_neutralized"], ctx, member, permission)
                     };
 
-                    InsanityBot.Client.Logger.LogInformation(new EventId(9000, "Permissions"), $"Added permission {permission} to {member.Username}");
+                    InsanityBot.Client.Logger.LogInformation(new EventId(9001, "Permissions"), $"Neutralized permission override {permission} from {member.Username}");
                 }
                 catch (Exception e)
                 {
@@ -130,11 +131,11 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_grant"], ctx, member)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_neutralize"], ctx, member)
                     };
 
-                    InsanityBot.Client.Logger.LogCritical(new EventId(9000, "Permissions"), $"Administrative action failed: could not grant " +
-                        $"permission {permission} to {member.Username}. Please contact the InsanityBot team immediately.\n" +
+                    InsanityBot.Client.Logger.LogCritical(new EventId(9001, "Permissions"), $"Administrative action failed: could not neutralize " +
+                        $"permission override {permission} from {member.Username}. Please contact the InsanityBot team immediately\n" +
                         $"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
                 }
                 finally
