@@ -10,7 +10,11 @@ using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Permissions.Data
 {
+#pragma warning disable CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
+#pragma warning disable CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
     public class DefaultPermissions : PermissionBase
+#pragma warning restore CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
+#pragma warning restore CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
     {
         // PermissionValue.Inherited is invalid here, for obvious reasons
         public override PermissionValue this[String key]
@@ -60,6 +64,22 @@ namespace InsanityBot.Utility.Permissions.Data
         public static DefaultPermissions Empty
         {
             get => new();
+        }
+
+        /// <summary>
+        /// THIS IS NOT AN EQUALITY CHECK!
+        /// This solely tests compatibility between the existing defaults and updated defaults and determines whether the defaults have to be rebuilt entirely.
+        /// </summary>
+        public static Boolean operator == (DefaultPermissions left, DefaultPermissions right)
+        {
+            if (left.Permissions.Keys == right.Permissions.Keys)
+                return true;
+            return false;
+        }
+
+        public static Boolean operator != (DefaultPermissions left, DefaultPermissions right)
+        {
+            return !(left == right);
         }
     }
 }
