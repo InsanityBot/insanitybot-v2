@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
-
-using InsanityBot.Utility.Exceptions;
 
 using Microsoft.Extensions.Logging;
 
@@ -25,6 +18,20 @@ namespace InsanityBot.Commands
             return value.Replace("{MENTION}", commandTarget.Mention)
                 .Replace("{USERNAME}", commandTarget.Username)
                 .Replace("{NICKNAME}", commandTarget.Nickname)
+                .Replace("{ID}", commandTarget.Id.ToString())
+                .Replace("{MODMENTION}", context.Member.Mention)
+                .Replace("{MODUSERNAME}", context.Member.Username)
+                .Replace("{MODNICKNAME}", context.Member.Nickname)
+                .Replace("{MODID}", context.Member.Id.ToString())
+                .Replace("{CHANNEL}", context.Channel.Mention)
+                .Replace("{CHANNELNAME}", context.Channel.Name);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static String GetFormattedString(String value, CommandContext context, DiscordRole commandTarget)
+        {
+            return value.Replace("{MENTION}", commandTarget.Mention)
+                .Replace("{NAME}", commandTarget.Name)
                 .Replace("{ID}", commandTarget.Id.ToString())
                 .Replace("{MODMENTION}", context.Member.Mention)
                 .Replace("{MODUSERNAME}", context.Member.Username)
@@ -58,6 +65,21 @@ namespace InsanityBot.Commands
             return value.Replace("{MENTION}", commandTarget.Mention)
                 .Replace("{USERNAME}", commandTarget.Username)
                 .Replace("{NICKNAME}", commandTarget.Nickname)
+                .Replace("{ID}", commandTarget.Id.ToString())
+                .Replace("{MODMENTION}", context.Member.Mention)
+                .Replace("{MODUSERNAME}", context.Member.Username)
+                .Replace("{MODNICKNAME}", context.Member.Nickname)
+                .Replace("{MODID}", context.Member.Id.ToString())
+                .Replace("{CHANNEL}", context.Channel.Mention)
+                .Replace("{CHANNELNAME}", context.Channel.Name)
+                .Replace("{PERMISSION}", permission);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static String GetFormattedString(String value, CommandContext context, DiscordRole commandTarget, String permission)
+        {
+            return value.Replace("{MENTION}", commandTarget.Mention)
+                .Replace("{NAME}", commandTarget.Name)
                 .Replace("{ID}", commandTarget.Id.ToString())
                 .Replace("{MODMENTION}", context.Member.Mention)
                 .Replace("{MODUSERNAME}", context.Member.Username)

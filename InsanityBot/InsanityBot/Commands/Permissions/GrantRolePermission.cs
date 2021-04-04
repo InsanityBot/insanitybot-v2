@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -16,34 +19,30 @@ using static System.Convert;
 
 namespace InsanityBot.Commands.Permissions
 {
-    [Group("permission")]
-    [Aliases("permissions")]
-    public partial class PermissionCommand : BaseCommandModule
+    public partial class PermissionCommand
     {
-        public partial class UserPermissionCommand : BaseCommandModule
+        public partial class RolePermissionCommand : BaseCommandModule
         {
-            [Command("grant")]
-            [Aliases("give")]
-            public async Task GrantPermissionCommand(CommandContext ctx, DiscordMember member,
+            public async Task GrantPermissionCommand(CommandContext ctx, DiscordRole role,
                 [RemainingText]
                 String args)
             {
-                if (args.StartsWith('-'))
+                if(args.StartsWith('-'))
                 {
-                    await ParseGrantPermission(ctx, member, args);
+                    await ParseGrantPermission(ctx, role, args);
                     return;
                 }
-                await ExecuteGrantPermission(ctx, member, false, args);
+                await ExecuteGrantPermission(ctx, role, false, args);
             }
 
-            private async Task ParseGrantPermission(CommandContext ctx, DiscordMember member, String args)
+            private async Task ParseGrantPermission(CommandContext ctx, DiscordRole role, String args)
             {
-                if (!args.Contains("-p"))
+                if(!args.Contains("-p"))
                 {
                     DiscordEmbedBuilder invalid = new()
                     {
                         Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_not_found"],
-                            ctx, member),
+                            ctx, role),
                         Color = DiscordColor.Red,
                         Footer = new()
                         {
@@ -59,15 +58,15 @@ namespace InsanityBot.Commands.Permissions
                     await Parser.Default.ParseArguments<PermissionOptions>(args.Split(' '))
                         .WithParsedAsync(async o =>
                         {
-                            await ExecuteGrantPermission(ctx, member, o.Silent, o.Permission);
+                            await ExecuteGrantPermission(ctx, role, o.Silent, o.Permission);
                         });
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     DiscordEmbedBuilder failed = new()
                     {
                         Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_parse"],
-                            ctx, member),
+                            ctx, role),
                         Color = DiscordColor.Red,
                         Footer = new()
                         {
@@ -80,9 +79,9 @@ namespace InsanityBot.Commands.Permissions
                 }
             }
 
-            private async Task ExecuteGrantPermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
+            private async Task ExecuteGrantPermission(CommandContext ctx, DiscordRole role, Boolean silent, String args)
             {
-                if (!ctx.Member.HasPermission("insanitybot.permissions.user.grant"))
+                if(!ctx.Member.HasPermission("insanitybot.permissions.role.grant"))
                 {
                     await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
@@ -103,12 +102,12 @@ namespace InsanityBot.Commands.Permissions
                 };
 
                 moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
-                    .AddField("User", member.Mention, true)
-                    .AddField("Permission", permission, true);
+                    .AddField("Role", role.Mention, true)
+                    .AddField("Permission", args, true);
 
                 try
                 {
-                    InsanityBot.PermissionEngine.GrantUserPermissions(member.Id, new[] { permission });
+                    InsanityBot.PermissionEngine.GrantRolePermissions(role.Id, new[] { args });
 
                     embedBuilder = new()
                     {
@@ -117,12 +116,13 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_granted"], ctx, member, permission)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.role_permission_granted"],
+                            ctx, role, args)
                     };
 
-                    InsanityBot.Client.Logger.LogInformation(new EventId(9000, "Permissions"), $"Added permission {permission} to {member.Username}");
+                    InsanityBot.Client.Logger.LogInformation(new EventId(9010, "Permissions"), $"Added permission {args} to {role.Name}");
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     embedBuilder = new()
                     {
@@ -131,11 +131,12 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_grant"], ctx, member)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.role_could_not_grant"],
+                            ctx, role)
                     };
 
-                    InsanityBot.Client.Logger.LogCritical(new EventId(9000, "Permissions"), $"Administrative action failed: could not grant " +
-                        $"permission {permission} to {member.Username}. Please contact the InsanityBot team immediately.\n" +
+                    InsanityBot.Client.Logger.LogCritical(new EventId(9010, "Permissions"), $"Administrative action failed: could not grant " +
+                        $"permission {args} to {role.Name}. Please contact the InsanityBot team immediately.\n" +
                         $"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
                 }
                 finally
