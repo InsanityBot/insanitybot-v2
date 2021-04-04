@@ -50,7 +50,7 @@
   <a href="#--scroll-licence-copyright--tos-scroll">Licence & Copyright</a>
 </p>
 <h2 align="center">
-Estimated Code Completion Percentage for 2.0 Release: 1.5%
+Estimated Code Completion Percentage for 2.0 Release: 1.75%
 </h2>
 <br />
 </h3>
