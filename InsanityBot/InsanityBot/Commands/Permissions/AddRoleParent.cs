@@ -20,6 +20,7 @@ namespace InsanityBot.Commands.Permissions
 {
     public partial class PermissionCommand : BaseCommandModule
     {
+        [Group("role")]
         public partial class RolePermissionCommand : BaseCommandModule
         {
             [Command("addrole")]

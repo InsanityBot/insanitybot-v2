@@ -207,7 +207,10 @@ namespace InsanityBot
             if (e.Exception.GetType() == typeof(CommandNotFoundException))
                 return Task.CompletedTask;
 
-            Client.Logger.LogError($"{e.Command} failed:\n" +
+            if (e.Exception.GetType() == typeof(ArgumentException))
+                return Task.CompletedTask;
+
+            Client.Logger.LogError(new EventId(1001, "CommandError"), $"{e.Command} failed:\n" +
                 $"{e.Exception}: {e.Exception.Message}\n{e.Exception.StackTrace}");
             return Task.CompletedTask;
         }
