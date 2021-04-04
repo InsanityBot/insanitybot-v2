@@ -9,7 +9,11 @@ using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Permissions.Data
 {
+#pragma warning disable CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
+#pragma warning disable CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
     public class PermissionMapping
+#pragma warning restore CS0661 // Type defines operator == or operator != but does not override Object.GetHashCode()
+#pragma warning restore CS0660 // Type defines operator == or operator != but does not override Object.Equals(object o)
     {
         public Dictionary<Int64, String[]> Mappings { get; set; }
 
@@ -88,6 +92,27 @@ namespace InsanityBot.Utility.Permissions.Data
                 result.Add(MappingTranslation[v.Key], v.Value);
 
             return result;
+        }
+
+        /// <summary>
+        /// THIS IS NOT AN EQUALITY CHECK! This solely checks whether the existing mappings are up-to-date.
+        /// </summary>
+        public static Boolean operator == (PermissionMapping left, PermissionMapping right)
+        {
+            List<String> pRight = new(), pLeft = new();
+
+            foreach (var v in left.Mappings)
+                pLeft.AddRange(v.Value);
+
+            foreach (var v in right.Mappings)
+                pRight.AddRange(v.Value);
+
+            return pLeft == pRight;
+        }
+
+        public static Boolean operator !=(PermissionMapping left, PermissionMapping right)
+        {
+            return !(left == right);
         }
     }
 }

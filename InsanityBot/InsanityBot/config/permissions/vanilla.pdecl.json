@@ -118,6 +118,10 @@
     "Value": false
   },
   {
+    "Permission": "insanitybot.permissions.user.create",
+    "Value": false
+  },
+  {
     "Permission": "insanitybot.permissions.role.grant",
     "Value": false
   },

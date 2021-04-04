@@ -194,16 +194,30 @@ namespace InsanityBot.Utility.Permissions
                 return true;
             }
 
-            StreamReader reader = new("./cache/permissions/intermediate/default");
-            String[] checksums = JsonConvert.DeserializeObject<String[]>(reader.ReadToEnd());
+            DefaultPermissions permissions = DefaultPermissions.Empty;
+
+            StreamReader reader = new("./config/permissions/vanilla.pdecl.json");
+            permissions += JsonConvert.DeserializeObject<PermissionDeclaration[]>(reader.ReadToEnd());
+            reader.Close();
 
             var modFiles = from x in Directory.GetFiles("./mod-data/permissions/declarations")
                            where x.EndsWith(".pdecl.json")
                            select x;
 
             foreach (var v in modFiles)
-                if (!checksums.Contains(v.GetSHA512Checksum()))
-                    return true;
+            {
+                reader = new(v);
+                permissions += JsonConvert.DeserializeObject<PermissionDeclaration[]>(reader.ReadToEnd());
+                reader.Close();
+            }
+
+            reader = new("./config/permissions/default.json");
+
+            if (permissions != JsonConvert.DeserializeObject<DefaultPermissions>(reader.ReadToEnd()))
+            {
+                reader.Close();
+                return true;
+            }
 
             return false;
         }
@@ -264,16 +278,28 @@ namespace InsanityBot.Utility.Permissions
                 return true;
             }
 
-            StreamReader reader = new("./cache/permissions/intermediate/mappings");
-            String[] checksums = JsonConvert.DeserializeObject<String[]>(reader.ReadToEnd());
+            StreamReader reader = new("./config/permissions/vanilla.mappings.json");
+            PermissionMapping mappings = JsonConvert.DeserializeObject<PermissionMapping>(reader.ReadToEnd());
+            reader.Close();
 
             var modFiles = from x in Directory.GetFiles("./mod-data/permissions/mappings")
                            where x.EndsWith(".mappings.json")
                            select x;
 
             foreach (var v in modFiles)
-                if (!checksums.Contains(v.GetSHA512Checksum()))
-                    return true;
+            {
+                reader = new(v);
+                mappings += JsonConvert.DeserializeObject<PermissionMapping>(reader.ReadToEnd());
+                reader.Close();
+            }
+
+            reader = new("./config/permissions/mappings.json");
+
+            if (mappings != JsonConvert.DeserializeObject<PermissionMapping>(reader.ReadToEnd()))
+            {
+                reader.Close();
+                return true;
+            }
 
             return false;
         }

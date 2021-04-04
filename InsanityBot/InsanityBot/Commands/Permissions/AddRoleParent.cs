@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -11,6 +9,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Permissions;
+using InsanityBot.Utility.Permissions.Data;
 
 using Microsoft.Extensions.Logging;
 
@@ -21,54 +20,55 @@ namespace InsanityBot.Commands.Permissions
 {
     public partial class PermissionCommand : BaseCommandModule
     {
-        public partial class UserPermissionCommand : BaseCommandModule
+        public partial class RolePermissionCommand : BaseCommandModule
         {
-            [Command("neutralize")]
-            [Aliases("revoke", "neutral")]
-            public async Task NeutralizePermissionCommand(CommandContext ctx, DiscordMember member,
+            [Command("addrole")]
+            [Aliases("add-role")]
+            public async Task AddRoleCommand(CommandContext ctx, DiscordRole role,
                 [RemainingText]
                 String args)
             {
                 if (args.StartsWith('-'))
                 {
-                    await ParseNeutralizePermission(ctx, member, args);
+                    await ParseAddRole(ctx, role, args);
                     return;
                 }
-                await ExecuteNeutralizePermission(ctx, member, false, args);
+                await ExecuteAddRole(ctx, role, false, Convert.ToUInt64(args));
             }
 
-            private async Task ParseNeutralizePermission(CommandContext ctx, DiscordMember member, String args)
+            private async Task ParseAddRole(CommandContext ctx, DiscordRole role, String args)
             {
-                if (!args.Contains("-p"))
+                if (!args.Contains("-r"))
                 {
                     DiscordEmbedBuilder invalid = new()
                     {
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_not_found"],
-                            ctx, member),
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.role_not_found"],
+                            ctx, role),
                         Color = DiscordColor.Red,
                         Footer = new()
                         {
                             Text = "InsanityBot 2020-2021"
                         }
                     };
+
                     await ctx.RespondAsync(invalid.Build());
                     return;
                 }
 
                 try
                 {
-                    await Parser.Default.ParseArguments<PermissionOptions>(args.Split(' '))
+                    await Parser.Default.ParseArguments<RoleOptions>(args.Split(' '))
                         .WithParsedAsync(async o =>
                         {
-                            await ExecuteNeutralizePermission(ctx, member, o.Silent, o.Permission);
+                            await ExecuteAddRole(ctx, role, o.Silent, o.RoleId);
                         });
                 }
                 catch (Exception e)
                 {
                     DiscordEmbedBuilder failed = new()
                     {
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_parse"],
-                            ctx, member),
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_parse"],
+                            ctx, role),
                         Color = DiscordColor.Red,
                         Footer = new()
                         {
@@ -81,9 +81,9 @@ namespace InsanityBot.Commands.Permissions
                 }
             }
 
-            private async Task ExecuteNeutralizePermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
+            private async Task ExecuteAddRole(CommandContext ctx, DiscordRole role, Boolean silent, UInt64 parent)
             {
-                if (!ctx.Member.HasPermission("insanitybot.permissions.user.neutral"))
+                if (!ctx.Member.HasPermission("insanitybot.permissions.role.add_parent"))
                 {
                     await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
@@ -95,7 +95,7 @@ namespace InsanityBot.Commands.Permissions
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = new()
                 {
-                    Title = "ADMIN: Permission Neutralized",
+                    Title = "ADMIN: Add parent to role",
                     Color = new(0xff6347),
                     Footer = new()
                     {
@@ -104,12 +104,15 @@ namespace InsanityBot.Commands.Permissions
                 };
 
                 moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
-                    .AddField("User", member.Mention, true)
-                    .AddField("Permission", permission, true);
+                    .AddField("Role", role.Mention, true)
+                    .AddField("Parent ID", parent.ToString(), true)
+                    .AddField("Parent", InsanityBot.HomeGuild.GetRole(parent).Mention, true);
 
                 try
                 {
-                    InsanityBot.PermissionEngine.NeutralizeUserPermissions(member.Id, new[] { permission });
+                    RolePermissions permissions = InsanityBot.PermissionEngine.GetRolePermissions(role.Id);
+                    permissions.Parent = parent;
+                    InsanityBot.PermissionEngine.SetRolePermissions(permissions);
 
                     embedBuilder = new()
                     {
@@ -118,10 +121,11 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_neutralized"], ctx, member, permission)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.parent_added"],
+                            ctx, role, InsanityBot.HomeGuild.GetRole(parent))
                     };
 
-                    InsanityBot.Client.Logger.LogInformation(new EventId(9001, "Permissions"), $"Neutralized permission override {permission} from {member.Username}");
+                    InsanityBot.Client.Logger.LogInformation(new EventId(9003, "Permissions"), $"Added role {parent} to {role.Name}");
                 }
                 catch (Exception e)
                 {
@@ -132,12 +136,13 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_neutralize"], ctx, member)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_add_parent"],
+                            ctx, role, InsanityBot.HomeGuild.GetRole(parent))
                     };
 
-                    InsanityBot.Client.Logger.LogCritical(new EventId(9001, "Permissions"), $"Administrative action failed: could not neutralize " +
-                        $"permission override {permission} from {member.Username}. Please contact the InsanityBot team immediately\n" +
-                        $"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
+                    InsanityBot.Client.Logger.LogCritical(new EventId(9003, "Permissions"), $"Administrative action failed: could not add parent " +
+                        $"role {parent} to {role.Name}. Please contact the InsanityBot team immediately.\n" +
+                        $"Please also provide them with the following information:\n\n{e}:{e.Message}\n{e.StackTrace}");
                 }
                 finally
                 {
@@ -145,7 +150,7 @@ namespace InsanityBot.Commands.Permissions
                         await ctx.RespondAsync(embedBuilder.Build());
 
                     _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                                        .SendMessageAsync(embed: moderationEmbedBuilder.Build());
                 }
             }
         }

@@ -21,30 +21,30 @@ namespace InsanityBot.Commands.Permissions
 {
     public partial class PermissionCommand : BaseCommandModule
     {
-        public partial class UserPermissionCommand : BaseCommandModule
+        public partial class RolePermissionCommand : BaseCommandModule
         {
             [Command("neutralize")]
             [Aliases("revoke", "neutral")]
-            public async Task NeutralizePermissionCommand(CommandContext ctx, DiscordMember member,
+            public async Task NeutralizePermissionCommand(CommandContext ctx, DiscordRole role,
                 [RemainingText]
                 String args)
             {
                 if (args.StartsWith('-'))
                 {
-                    await ParseNeutralizePermission(ctx, member, args);
+                    await ParseNeutralizePermission(ctx, role, args);
                     return;
                 }
-                await ExecuteNeutralizePermission(ctx, member, false, args);
+                await ExecuteNeutralizePermission(ctx, role, false, args);
             }
 
-            private async Task ParseNeutralizePermission(CommandContext ctx, DiscordMember member, String args)
+            private async Task ParseNeutralizePermission(CommandContext ctx, DiscordRole role, String args)
             {
                 if (!args.Contains("-p"))
                 {
                     DiscordEmbedBuilder invalid = new()
                     {
                         Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_not_found"],
-                            ctx, member),
+                            ctx, role),
                         Color = DiscordColor.Red,
                         Footer = new()
                         {
@@ -60,7 +60,7 @@ namespace InsanityBot.Commands.Permissions
                     await Parser.Default.ParseArguments<PermissionOptions>(args.Split(' '))
                         .WithParsedAsync(async o =>
                         {
-                            await ExecuteNeutralizePermission(ctx, member, o.Silent, o.Permission);
+                            await ExecuteNeutralizePermission(ctx, role, o.Silent, o.Permission);
                         });
                 }
                 catch (Exception e)
@@ -68,7 +68,7 @@ namespace InsanityBot.Commands.Permissions
                     DiscordEmbedBuilder failed = new()
                     {
                         Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_parse"],
-                            ctx, member),
+                            ctx, role),
                         Color = DiscordColor.Red,
                         Footer = new()
                         {
@@ -81,9 +81,9 @@ namespace InsanityBot.Commands.Permissions
                 }
             }
 
-            private async Task ExecuteNeutralizePermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
+            private async Task ExecuteNeutralizePermission(CommandContext ctx, DiscordRole role, Boolean silent, String permission)
             {
-                if (!ctx.Member.HasPermission("insanitybot.permissions.user.neutral"))
+                if (!ctx.Member.HasPermission("insanitybot.permissions.role.neutral"))
                 {
                     await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
@@ -104,12 +104,12 @@ namespace InsanityBot.Commands.Permissions
                 };
 
                 moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
-                    .AddField("User", member.Mention, true)
+                    .AddField("Role", role.Mention, true)
                     .AddField("Permission", permission, true);
 
                 try
                 {
-                    InsanityBot.PermissionEngine.NeutralizeUserPermissions(member.Id, new[] { permission });
+                    InsanityBot.PermissionEngine.NeutralizeRolePermissions(role.Id, new[] { permission });
 
                     embedBuilder = new()
                     {
@@ -118,10 +118,10 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_neutralized"], ctx, member, permission)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.role_permission_neutralized"], ctx, role, permission)
                     };
 
-                    InsanityBot.Client.Logger.LogInformation(new EventId(9001, "Permissions"), $"Neutralized permission override {permission} from {member.Username}");
+                    InsanityBot.Client.Logger.LogInformation(new EventId(9011, "Permissions"), $"Neutralized permission override {permission} from {role.Name}");
                 }
                 catch (Exception e)
                 {
@@ -132,11 +132,11 @@ namespace InsanityBot.Commands.Permissions
                         {
                             Text = "InsanityBot 2020-2021"
                         },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_neutralize"], ctx, member)
+                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.role_could_not_neutralize"], ctx, role)
                     };
 
-                    InsanityBot.Client.Logger.LogCritical(new EventId(9001, "Permissions"), $"Administrative action failed: could not neutralize " +
-                        $"permission override {permission} from {member.Username}. Please contact the InsanityBot team immediately\n" +
+                    InsanityBot.Client.Logger.LogCritical(new EventId(9011, "Permissions"), $"Administrative action failed: could not neutralize " +
+                        $"permission override {permission} from {role.Name}. Please contact the InsanityBot team immediately\n" +
                         $"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
                 }
                 finally
@@ -151,3 +151,4 @@ namespace InsanityBot.Commands.Permissions
         }
     }
 }
+
