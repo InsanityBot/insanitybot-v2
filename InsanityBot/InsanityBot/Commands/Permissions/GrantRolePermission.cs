@@ -23,6 +23,8 @@ namespace InsanityBot.Commands.Permissions
     {
         public partial class RolePermissionCommand : BaseCommandModule
         {
+            [Command("grant")]
+            [Aliases("give", "allow")]
             public async Task GrantPermissionCommand(CommandContext ctx, DiscordRole role,
                 [RemainingText]
                 String args)
