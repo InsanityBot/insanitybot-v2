@@ -136,5 +136,9 @@
   {
     "Permission": "insanitybot.permissions.role.add_parent",
     "Value": false
+  },
+  {
+    "Permission": "insanitybot.permissions.role.create",
+    "Value": false
   }
 ]
