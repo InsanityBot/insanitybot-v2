@@ -84,7 +84,10 @@
     "Permission": "insanitybot.moderation.unlock",
     "Value": false
   },
-
+  {
+    "Permission": "insanitybot.moderation.slowmode",
+    "Value": false
+  },
   {
     "Permission": "insanitybot.admin.lock_whitelist.add",
     "Value": false

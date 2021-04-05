@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0-dev.00017",
+  "DataVersion": "2.0.0-dev.00020",
   "Configuration": {
 
     /* Toggles the experience module status, true or false
@@ -68,6 +68,8 @@
     "insanitybot.commands.modlog.allow_scrolling": true,
     // Enables verballog scrolling - paging of verballogs longer than the defined maximum entries using reactions. true or false
     "insanitybot.commands.modlog.allow_verballog_scrolling": true,
+    // Defines the default slowmode if none is specified or the specified slowmode time is invalid.
+    "insanitybot.commands.slowmode.default_slowmode": 5,
     // Enables suggestions to be denied by community votes. true or false
     "insanitybot.commands.suggestions.allow_community_denial": true,
     // Enables suggestions to be denied at a certain percentage rather than at a specific amount of downvotes.

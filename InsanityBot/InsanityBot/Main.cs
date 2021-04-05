@@ -237,6 +237,7 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<ClearModlog>();
 
                 CommandsExtension.RegisterCommands<Purge>();
+                CommandsExtension.RegisterCommands<Slowmode>();
 
                 CommandsExtension.RegisterCommands<Lock>();
                 CommandsExtension.RegisterCommands<Unlock>();

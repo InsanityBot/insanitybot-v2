@@ -12,10 +12,12 @@ namespace InsanityBot
         {
             DataFixerLower.AddDatafixer(new Main0001_AddModlogScrolling(), typeof(MainConfiguration));
             DataFixerLower.AddDatafixer(new Main0002_AddChannelLocking(), typeof(MainConfiguration));
+            DataFixerLower.AddDatafixer(new Main0003_AddSlowmode(), typeof(MainConfiguration));
 
             DataFixerLower.AddDatafixer(new Lang0001_AddModlogScrolling(), typeof(LanguageConfiguration));
             DataFixerLower.AddDatafixer(new Lang0002_AddChannelLocking(), typeof(LanguageConfiguration));
-            DataFixerLower.AddDatafixer(new Lang0003_AddPermissions(), typeof(LanguageConfiguration)); 
+            DataFixerLower.AddDatafixer(new Lang0003_AddPermissions(), typeof(LanguageConfiguration));
+            DataFixerLower.AddDatafixer(new Lang0004_AddSlowmode(), typeof(LanguageConfiguration));
         }
     }
 }
