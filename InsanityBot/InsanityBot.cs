@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity;
 
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -31,6 +32,8 @@ namespace InsanityBot
 
         public static CommandsNextExtension CommandsExtension;
         public static CommandsNextConfiguration CommandConfiguration;
+
+        public static InteractivityExtension Interactivity;
 
         public static LanguageConfigurationManager LanguageManager;
         public static LanguageConfiguration LanguageConfig;

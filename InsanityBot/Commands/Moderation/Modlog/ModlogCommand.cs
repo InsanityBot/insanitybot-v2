@@ -68,9 +68,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         modlogEmbed.Color = DiscordColor.Red;
                         String embedDescription = user.CreateModlogDescription();
 
-                        var interactivity = ctx.Client.GetInteractivity();
-
-                        var pages = interactivity.GeneratePagesInEmbed(embedDescription, SplitType.Line, modlogEmbed);
+                        var pages = InsanityBot.Interactivity.GeneratePagesInEmbed(embedDescription, SplitType.Line, modlogEmbed);
 
                         await ctx.Channel.SendPaginatedMessageAsync(ctx.Member, pages);
                     }

@@ -182,21 +182,21 @@ namespace InsanityBot
 
             PaginationEmojis InteractivityPaginationEmotes = new();
             if (ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"]) != 0)
-                InteractivityPaginationEmotes.Right = DiscordEmoji.FromGuildEmote(Client, ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"]));
+                InteractivityPaginationEmotes.Right = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"])];
 
             if (ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"]) != 0)
-                InteractivityPaginationEmotes.Left = DiscordEmoji.FromGuildEmote(Client, ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"]));
+                InteractivityPaginationEmotes.Left = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"])];
 
             if (ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"]) != 0)
-                InteractivityPaginationEmotes.SkipRight = DiscordEmoji.FromGuildEmote(Client, ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"]));
+                InteractivityPaginationEmotes.SkipRight = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"])];
 
             if (ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"]) != 0)
-                InteractivityPaginationEmotes.SkipLeft = DiscordEmoji.FromGuildEmote(Client, ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"]));
+                InteractivityPaginationEmotes.SkipLeft = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"])];
 
             if (ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"]) != 0)
-                InteractivityPaginationEmotes.Stop = DiscordEmoji.FromGuildEmote(Client, ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"]));
+                InteractivityPaginationEmotes.Stop = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"])];
 
-            Client.UseInteractivity(new()
+            Interactivity = Client.UseInteractivity(new()
             {
                 PaginationBehaviour = PaginationBehaviour.Ignore,
                 PaginationDeletion = PaginationDeletion.DeleteEmojis,
