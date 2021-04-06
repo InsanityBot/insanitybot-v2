@@ -166,7 +166,7 @@ namespace InsanityBot.Commands.Moderation
 
             try
             {
-                File.Delete($"./data/timers/{Identifier}");
+                File.Delete($"./cache/timers/{Identifier}");
 
                 new Ban().ExecuteUnbanCommand(null, ToUInt64(Identifier),
                     true, false, true, "timer_guid", guid).GetAwaiter().GetResult();
