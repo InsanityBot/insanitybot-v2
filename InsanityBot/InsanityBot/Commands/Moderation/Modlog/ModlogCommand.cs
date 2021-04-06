@@ -16,6 +16,8 @@ using Microsoft.Extensions.Logging;
 
 using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
+using DSharpPlus.Interactivity.Extensions;
+using DSharpPlus.Interactivity.Enums;
 
 namespace InsanityBot.Commands.Moderation.Modlog
 {
@@ -64,39 +66,13 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     else
                     {
                         modlogEmbed.Color = DiscordColor.Red;
-                        modlogEmbed.Description = user.CreateModlogDescription();
-                        if (ReactionForwards == null)
-                        {
-                            try
-                            {
-                                ModlogMessageTracker.CreateTracker();
+                        String embedDescription = user.CreateModlogDescription();
 
-                                ReactionForwards = await InsanityBot.HomeGuild.GetEmojiAsync(ToUInt64(
-                                    InsanityBot.Config["insanitybot.identifiers.modlog.scroll_right_emote_id"]));
-                                ReactionBackwards = await InsanityBot.HomeGuild.GetEmojiAsync(ToUInt64(
-                                    InsanityBot.Config["insanitybot.identifiers.modlog.scroll_left_emote_id"]));
-                            }
-                            catch
-                            {
-                                ReactionForwards = DiscordEmoji.FromName(InsanityBot.Client, ":arrow_forward:");
-                                ReactionBackwards = DiscordEmoji.FromName(InsanityBot.Client, ":arrow_backward:");
-                            }
-                        }
+                        var interactivity = ctx.Client.GetInteractivity();
 
-                        var message = await ctx.RespondAsync(embed: modlogEmbed.Build());
-                        _ = message.CreateReactionAsync(ReactionBackwards);
-                        await Task.Delay(251); // delay the next reaction by 251ms to avoid getting ratelimited
-                        _ = message.CreateReactionAsync(ReactionForwards);
+                        var pages = interactivity.GeneratePagesInEmbed(embedDescription, SplitType.Line, modlogEmbed);
 
-                        await Task.Delay(500); // delay registering by 500ms to avoid false positives on reactions
-
-                        ModlogMessageTracker.AddTrackedMessage(new ModlogMessageTracker.MessageTrackerEntry
-                        {
-                            MessageId = message.Id,
-                            Page = 0,
-                            UserId = user.Id,
-                            Type = ModlogMessageTracker.LogType.Modlog
-                        });
+                        await ctx.Channel.SendPaginatedMessageAsync(ctx.Member, pages);
                     }
                 }
             }

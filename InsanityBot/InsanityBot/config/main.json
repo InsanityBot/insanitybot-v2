@@ -181,10 +181,14 @@
     "insanitybot.identifiers.moderation.blacklist_role_id": 0,
     // Role ID of the lock exempt role. Must be a valid Discord role ID if moderation is enabled.
     "insanitybot.identifiers.moderation.lock_exempt_role_id": 0,
-    // Emote ID of the modlog/verballog forwards scrolling emote. Must be a valid Discord emote ID if modlog scrolling is enabled.
-    "insanitybot.identifiers.modlog.scroll_right_emote_id": 0,
-    // Emote ID of the modlog/verballog backwards scrollign emote. Must be a valid Discord emote ID if modlog scrolling is enabled.
-    "insanitybot.identifiers.modlog.scroll_left_emote_id": 0,
+
+    // embed scrolling emote IDs used for all sorts of embeds. 0 will fall back to default.
+    "insanitybot.identifiers.interactivity.scroll_right_emote_id": 0,
+    "insanitybot.identifiers.interactivity.scroll_left_emote_id": 0,
+    "insanitybot.identifiers.interactivity.skip_right_emote_id": 0,
+    "insanitybot.identifiers.interactivity.skip_left_emote_id": 0,
+    "insanitybot.identifiers.interactivity.stop_emote_id": 0,
+
     // TCP port to be used for uptime monitors, can be omitted. 1 - 65536. The port must be opened on your server.
     "insanitybot.tcp_port": 0
   },
