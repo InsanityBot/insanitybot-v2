@@ -178,7 +178,7 @@ namespace InsanityBot.Commands.Moderation
 
             try
             {
-                File.Delete($"./data/timers/{Identifier}");
+                File.Delete($"./cache/timers/{Identifier}");
 
                 new Mute().ExecuteUnmuteCommand(null, GetMember(Identifier),
                     true, false, true, "timer_guid", guid).GetAwaiter().GetResult();

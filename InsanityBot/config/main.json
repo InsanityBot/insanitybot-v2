@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0-dev.00017",
+  "DataVersion": "2.0.0-dev.00020",
   "Configuration": {
 
     /* Toggles the experience module status, true or false
@@ -68,6 +68,8 @@
     "insanitybot.commands.modlog.allow_scrolling": true,
     // Enables verballog scrolling - paging of verballogs longer than the defined maximum entries using reactions. true or false
     "insanitybot.commands.modlog.allow_verballog_scrolling": true,
+    // Defines the default slowmode if none is specified or the specified slowmode time is invalid.
+    "insanitybot.commands.slowmode.default_slowmode": 5,
     // Enables suggestions to be denied by community votes. true or false
     "insanitybot.commands.suggestions.allow_community_denial": true,
     // Enables suggestions to be denied at a certain percentage rather than at a specific amount of downvotes.
@@ -179,10 +181,14 @@
     "insanitybot.identifiers.moderation.blacklist_role_id": 0,
     // Role ID of the lock exempt role. Must be a valid Discord role ID if moderation is enabled.
     "insanitybot.identifiers.moderation.lock_exempt_role_id": 0,
-    // Emote ID of the modlog/verballog forwards scrolling emote. Must be a valid Discord emote ID if modlog scrolling is enabled.
-    "insanitybot.identifiers.modlog.scroll_right_emote_id": 0,
-    // Emote ID of the modlog/verballog backwards scrollign emote. Must be a valid Discord emote ID if modlog scrolling is enabled.
-    "insanitybot.identifiers.modlog.scroll_left_emote_id": 0,
+
+    // embed scrolling emote IDs used for all sorts of embeds. 0 will fall back to default.
+    "insanitybot.identifiers.interactivity.scroll_right_emote_id": 0,
+    "insanitybot.identifiers.interactivity.scroll_left_emote_id": 0,
+    "insanitybot.identifiers.interactivity.skip_right_emote_id": 0,
+    "insanitybot.identifiers.interactivity.skip_left_emote_id": 0,
+    "insanitybot.identifiers.interactivity.stop_emote_id": 0,
+
     // TCP port to be used for uptime monitors, can be omitted. 1 - 65536. The port must be opened on your server.
     "insanitybot.tcp_port": 0
   },

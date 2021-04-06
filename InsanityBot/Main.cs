@@ -4,13 +4,18 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 using CommandLine;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Exceptions;
+using DSharpPlus.Entities;
 using DSharpPlus.Exceptions;
+using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Enums;
+using DSharpPlus.Interactivity.Extensions;
 
 using InsanityBot.Commands.Miscellaneous;
 using InsanityBot.Commands.Moderation;
@@ -25,6 +30,8 @@ using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
+
+using static System.Convert;
 
 namespace InsanityBot
 {
@@ -173,6 +180,29 @@ namespace InsanityBot
             Client.UseCommandsNext(CommandConfiguration);
             CommandsExtension = Client.GetCommandsNext();
 
+            PaginationEmojis InteractivityPaginationEmotes = new();
+            if (ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"]) != 0)
+                InteractivityPaginationEmotes.Right = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"])];
+
+            if (ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"]) != 0)
+                InteractivityPaginationEmotes.Left = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"])];
+
+            if (ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"]) != 0)
+                InteractivityPaginationEmotes.SkipRight = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"])];
+
+            if (ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"]) != 0)
+                InteractivityPaginationEmotes.SkipLeft = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"])];
+
+            if (ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"]) != 0)
+                InteractivityPaginationEmotes.Stop = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"])];
+
+            Interactivity = Client.UseInteractivity(new()
+            {
+                PaginationBehaviour = PaginationBehaviour.Ignore,
+                PaginationDeletion = PaginationDeletion.DeleteEmojis,
+                PaginationEmojis = InteractivityPaginationEmotes
+            });
+
             CommandsExtension.CommandErrored += CommandsExtension_CommandErrored;
 
             //start timer framework
@@ -210,6 +240,9 @@ namespace InsanityBot
             if (e.Exception.GetType() == typeof(ArgumentException))
                 return Task.CompletedTask;
 
+            if (e.Exception.GetType() == typeof(ArgumentNullException))
+                return Task.CompletedTask;
+
             Client.Logger.LogError(new EventId(1001, "CommandError"), $"{e.Command} failed:\n" +
                 $"{e.Exception}: {e.Exception.Message}\n{e.Exception.StackTrace}");
             return Task.CompletedTask;
@@ -237,6 +270,7 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<ClearModlog>();
 
                 CommandsExtension.RegisterCommands<Purge>();
+                CommandsExtension.RegisterCommands<Slowmode>();
 
                 CommandsExtension.RegisterCommands<Lock>();
                 CommandsExtension.RegisterCommands<Unlock>();
@@ -254,8 +288,6 @@ namespace InsanityBot
 
             Mute.MuteStartingEvent += TimeHandler.DisableTimer;
             Ban.BanStartingEvent += TimeHandler.DisableTimer;
-
-            Client.MessageReactionAdded += Modlog.ReactionAddedEventHandler;
         }
 
         private static void InitializeAll()
