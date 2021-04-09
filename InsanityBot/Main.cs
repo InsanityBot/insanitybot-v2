@@ -262,6 +262,7 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<Warn>();
                 CommandsExtension.RegisterCommands<Mute>();
                 CommandsExtension.RegisterCommands<Blacklist>();
+                CommandsExtension.RegisterCommands<Whitelist>();
                 CommandsExtension.RegisterCommands<Kick>();
                 CommandsExtension.RegisterCommands<Ban>();
 

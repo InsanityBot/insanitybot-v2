@@ -18,10 +18,10 @@ using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
-    public class Blacklist : BaseCommandModule
+    public class Whitelist : BaseCommandModule
     {
-        [Command("blacklist")]
-        public async Task BlacklistCommand(CommandContext ctx,
+        [Command("whitelist")]
+        public async Task WhitelistCommand(CommandContext ctx,
             DiscordMember member,
 
             [RemainingText]
@@ -29,13 +29,13 @@ namespace InsanityBot.Commands.Moderation
         {
             if (Reason.StartsWith('-'))
             {
-                await ParseBlacklistCommand(ctx, member, Reason);
+                await ParseWhitelistCommand(ctx, member, Reason);
                 return;
             }
-            await ExecuteBlacklistCommand(ctx, member, Reason, false, false);
+            await ExecuteWhitelistCommand(ctx, member, Reason, false, false);
         }
 
-        private async Task ParseBlacklistCommand(CommandContext ctx,
+        private async Task ParseWhitelistCommand(CommandContext ctx,
             DiscordMember member,
             String arguments)
         {
@@ -45,18 +45,17 @@ namespace InsanityBot.Commands.Moderation
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
                     cmdArguments += " --reason usedefault";
 
-                await Parser.Default.ParseArguments<BlacklistOptions>(cmdArguments.Split(' '))
+                await Parser.Default.ParseArguments<WhitelistOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                            await ExecuteBlacklistCommand(ctx, member,
-                                String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                        await ExecuteWhitelistCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
             catch (Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.blacklist.failure"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.whitelist.failure"],
                         ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -70,20 +69,20 @@ namespace InsanityBot.Commands.Moderation
             }
         }
 
-        private async Task ExecuteBlacklistCommand(CommandContext ctx,
+        private async Task ExecuteWhitelistCommand(CommandContext ctx,
             DiscordMember member,
             String Reason,
             Boolean Silent,
             Boolean DmMember)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.blacklist"))
+            if (!ctx.Member.HasPermission("insanitybot.moderation.whitelist"))
             {
                 await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
             //actually do something with the usedefault value
-            String BlacklistReason = Reason switch
+            String WhitelistReason = Reason switch
             {
                 "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"],
                                 ctx, member),
@@ -94,7 +93,7 @@ namespace InsanityBot.Commands.Moderation
 
             DiscordEmbedBuilder moderationEmbedBuilder = new()
             {
-                Title = "Blacklist",
+                Title = "Whitelist",
                 Color = DiscordColor.Red,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
@@ -104,24 +103,23 @@ namespace InsanityBot.Commands.Moderation
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
                 .AddField("Member", member.Mention, true)
-                .AddField("Reason", BlacklistReason, true);
+                .AddField("Reason", WhitelistReason, true);
 
             try
             {
-                member.AddModlogEntry(ModlogEntryType.blacklist, BlacklistReason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.blacklist.success"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.whitelist.success"],
                         ctx, member),
-                    Color = DiscordColor.Red,
+                    Color = DiscordColor.White,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         Text = "InsanityBot 2020-2021"
                     }
                 };
-                _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
+                _ = member.RevokeRoleAsync(InsanityBot.HomeGuild.GetRole(
                     ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.blacklist_role_id"])),
-                    BlacklistReason);
+                    WhitelistReason);
                 _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());
             }
@@ -129,7 +127,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.blacklist.failure"],
+                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.whitelist.failure"],
                         ctx, member),
                     Color = DiscordColor.Red,
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -146,8 +144,9 @@ namespace InsanityBot.Commands.Moderation
         }
     }
 
-    public class BlacklistOptions : ModerationOptionBase
+    public class WhitelistOptions : ModerationOptionBase
     {
 
     }
 }
+
