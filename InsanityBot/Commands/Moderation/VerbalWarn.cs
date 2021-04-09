@@ -148,8 +148,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (!silent)
-                    await ctx.RespondAsync(embed: embedBuilder.Build());
+                await ctx.RespondAsync(embedBuilder.Build());
 
                 if ((Boolean)InsanityBot.Config["insanitybot.commands.moderation.convert_minor_warns_into_full_warn"])
                 {
