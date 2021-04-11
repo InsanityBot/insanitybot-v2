@@ -1,11 +1,12 @@
 {
-  "DataVersion": "2.0.0-dev.00020",
+  "DataVersion": "2.0.0-dev.00022",
   "Configuration": {
 
     /*
     Simple, placeholder-based command messages. Not all strings support all placeholders, if you are unsure, ask in our Discord
     or check out the docs at https://docs.insanity.network/. Mod commands may have custom placeholders. null strings are not allowed.
     */
+
     "insanitybot.error.lacking_permission": "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.",
     "insanitybot.error.lacking_admin_permission": "You cannot execute this command as you are not a server administrator!",
     "insanitybot.error.generic": "The command failed to execute. Please retry or contact your administrators.",
@@ -24,6 +25,7 @@
     "insanitybot.moderation.lock.success": "{CHANNEL} was locked successfully.",
     "insanitybot.moderation.unlock.success": "{CHANNEL} was unlocked successfully.",
     "insanitybot.moderation.slowmode.success": "{CHANNEL} slowmode was set to {TIME}.",
+    "insanitybot.moderation.slowmode_reset.success": "{CHANNEL} slowmode was removed successfully.",
 
     "insanitybot.moderation.verbal_warn.failure": "{MENTION} could not be verbally warned.",
     "insanitybot.moderation.unwarn.failure": "{MENTION} could not be unwarned.",
@@ -40,6 +42,7 @@
     "insanitybot.moderation.lock.failure": "{CHANNEL} could not be locked.",
     "insanitybot.moderation.unlock.failure": "{CHANNEL} could not be unlocked.",
     "insanitybot.moderation.slowmode.failure": "Could not set slowmode for {CHANNEL}.",
+    "insanitybot.moderation.slowmode_reset.failure": "Could not remove slowmode for {CHANNEL}.",
 
     "insanitybot.moderation.verbal_warn.reason": "{MENTION}, {REASON}",
     "insanitybot.moderation.warn.reason": "You were warned for {REASON}.",
