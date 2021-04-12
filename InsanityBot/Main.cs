@@ -20,7 +20,6 @@ using InsanityBot.Commands.Moderation;
 using InsanityBot.Commands.Moderation.Locking;
 using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
-using InsanityBot.Core.Patches;
 using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -44,9 +43,6 @@ namespace InsanityBot
                 {
                     CommandLineOptions = o;
                 });
-
-            // apply all harmony patches
-            ApplyPatches.ApplyHarmonyPatches();
 
             // initialize datafixers
 #if DEBUG
