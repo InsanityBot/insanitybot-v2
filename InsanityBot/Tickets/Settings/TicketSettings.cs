@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InsanityBot.Tickets.Data.Settings
+namespace InsanityBot.Tickets.Settings
 {
     public record TicketSettings
     {
