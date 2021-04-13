@@ -28,7 +28,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             {
                 if (!ctx.Member.HasPermission("insanitybot.moderation.export_modlog"))
                 {
-                    await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                    await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                     return;
                 }
 
@@ -41,7 +41,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
                 if (!File.Exists($"./data/{member.Id}/modlog.json"))
                 {
-                    await ctx.RespondAsync(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.export_modlog.no_modlog"],
+                    await ctx.Channel.SendMessageAsync(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.export_modlog.no_modlog"],
                         ctx, member));
                     return;
                 }
