@@ -45,6 +45,7 @@ namespace InsanityBot
                     CommandLineOptions = o;
                 });
 
+
             // initialize datafixers
 #if DEBUG
             DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
@@ -143,6 +144,8 @@ namespace InsanityBot
             Client = new DiscordClient(ClientConfiguration);
             await Client.ConnectAsync();
 
+            Client.Logger.LogInformation(new EventId(1000, "Main"), $"InsanityBot Version {Version}");
+
             //load perms
             PermissionEngine = Client.InitializeEngine(new PermissionConfiguration
             {
@@ -214,7 +217,7 @@ namespace InsanityBot
             //initialize various parts of InsanityBots framework
             InitializeAll();
 
-            Client.Logger.LogInformation(new EventId(1000, "Main"), "Startup successful!");
+            Client.Logger.LogInformation(new EventId(1000, "Main"), $"Startup successful!");
 
             //start offthread TCP connection
             _ = HandleTCPConnections((Int64)Config["insanitybot.tcp_port"]);

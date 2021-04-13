@@ -43,6 +43,8 @@ namespace InsanityBot
         public static LoggerConfigurationManager LoggerManager;
 
         public static PermissionEngine PermissionEngine;
+
+        public static String Version = "2.0.0-dev.00023";
     }
 }
 #pragma warning restore CA2211
