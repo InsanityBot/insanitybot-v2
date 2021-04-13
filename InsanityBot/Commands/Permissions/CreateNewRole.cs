@@ -57,7 +57,7 @@ namespace InsanityBot.Commands.Permissions
                     };
                     InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
-                    await ctx.RespondAsync(failed.Build());
+                    await ctx.Channel.SendMessageAsync(failed.Build());
                 }
             }
 
@@ -65,7 +65,7 @@ namespace InsanityBot.Commands.Permissions
             {
                 if (!ctx.Member.HasPermission("insanitybot.permissions.role.create"))
                 {
-                    await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
+                    await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
                 }
 
@@ -121,7 +121,7 @@ namespace InsanityBot.Commands.Permissions
                 finally
                 {
                     if (!silent)
-                        await ctx.RespondAsync(embedBuilder.Build());
+                        await ctx.Channel.SendMessageAsync(embedBuilder.Build());
 
                     _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());
