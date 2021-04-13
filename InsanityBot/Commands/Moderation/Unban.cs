@@ -75,7 +75,7 @@ namespace InsanityBot.Commands.Moderation
                 };
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"), $"{e}: {e.Message}");
 
-                await ctx.Channel.SendMessageAsync(embed: failed.Build());
+                await ctx.RespondAsync(embed: failed.Build());
             }
         }
 
@@ -92,7 +92,7 @@ namespace InsanityBot.Commands.Moderation
 
             if (!automated && !ctx.Member.HasPermission("insanitybot.moderation.unban"))
             {
-                await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
@@ -194,7 +194,7 @@ namespace InsanityBot.Commands.Moderation
                 if (!silent)
                 {
                     if (nonSilent != null)
-                        _ = ctx.Channel.SendMessageAsync(embed: nonSilent.Build());
+                        _ = ctx.RespondAsync(embed: nonSilent.Build());
                     else
                         InsanityBot.Client.Logger.LogError(new EventId(1145, "Unban"), $"DiscordEmbedBuilder nonSilent was null");
                 }

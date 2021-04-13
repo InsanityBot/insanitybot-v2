@@ -6,7 +6,6 @@
     Simple, placeholder-based command messages. Not all strings support all placeholders, if you are unsure, ask in our Discord
     or check out the docs at https://docs.insanity.network/. Mod commands may have custom placeholders. null strings are not allowed.
     */
-
     "insanitybot.error.lacking_permission": "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.",
     "insanitybot.error.lacking_admin_permission": "You cannot execute this command as you are not a server administrator!",
     "insanitybot.error.generic": "The command failed to execute. Please retry or contact your administrators.",
@@ -104,3 +103,4 @@
     "insanitybot.permissions.role_not_found": "Could not find role." // used by parents, does *not* support role-specific placeholders
   }
 }
+

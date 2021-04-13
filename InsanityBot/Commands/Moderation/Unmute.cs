@@ -73,7 +73,7 @@ namespace InsanityBot.Commands.Moderation
                 };
                 InsanityBot.Client.Logger.LogError(new EventId(1134, "Unmute"), $"{e}: {e.Message}");
 
-                await ctx.Channel.SendMessageAsync(embed: failed.Build());
+                await ctx.RespondAsync(embed: failed.Build());
             }
         }
 
@@ -91,7 +91,7 @@ namespace InsanityBot.Commands.Moderation
 
             if (!automated && !ctx.Member.HasPermission("insanitybot.moderation.unmute"))
             {
-                await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
@@ -195,7 +195,7 @@ namespace InsanityBot.Commands.Moderation
             finally
             {
                 if (!silent)
-                    _ = ctx.Channel.SendMessageAsync(embed: nonSilent.Build());
+                    _ = ctx.RespondAsync(embed: nonSilent.Build());
                 await InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());
             }
