@@ -8,6 +8,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 
+using InsanityBot.Core.Logger;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
@@ -37,6 +38,9 @@ namespace InsanityBot
 
         public static LanguageConfigurationManager LanguageManager;
         public static LanguageConfiguration LanguageConfig;
+
+        public static LoggerConfiguration LoggerConfig;
+        public static LoggerConfigurationManager LoggerManager;
 
         public static PermissionEngine PermissionEngine;
     }

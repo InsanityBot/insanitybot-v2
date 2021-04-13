@@ -1,0 +1,14 @@
+{
+  "DataVersion": "2.0.0-dev.00023",
+  "Configuration": {
+    "LogLevel": 2,
+    "TimestampFormat": "yyyy-MM-dd HH-mm-ss zzz"
+  },
+  "EventExclusions": [
+
+  ],
+  "EventIdExclusions": [
+    114,
+    116
+  ]
+}

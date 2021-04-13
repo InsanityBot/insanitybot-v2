@@ -20,6 +20,7 @@ using InsanityBot.Commands.Moderation;
 using InsanityBot.Commands.Moderation.Locking;
 using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
+using InsanityBot.Core.Logger;
 using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -57,6 +58,7 @@ namespace InsanityBot
             //load main config
             ConfigManager = new MainConfigurationManager();
             LanguageManager = new LanguageConfigurationManager();
+            LoggerManager = new LoggerConfigurationManager();
 
             //read config from file
             Config = ConfigManager.Deserialize("./config/main.json");
@@ -122,6 +124,9 @@ namespace InsanityBot
             }
 
             LanguageConfig = LanguageManager.Deserialize("./config/lang.json");
+            LoggerConfig = LoggerManager.Deserialize("./config/logger.json");
+
+            LoggerFactory loggerFactory = new();
 
 
             //create discord config; increase the cache size if you want though itll take more RAM
@@ -131,11 +136,7 @@ namespace InsanityBot
                 Token = Config.Token,
                 TokenType = TokenType.Bot,
                 MessageCacheSize = 4096,
-#if DEBUG
-                MinimumLogLevel = LogLevel.Debug
-#else
-                MinimumLogLevel = LogLevel.Information
-#endif
+                LoggerFactory = loggerFactory
             };
 
             //create and connect client
