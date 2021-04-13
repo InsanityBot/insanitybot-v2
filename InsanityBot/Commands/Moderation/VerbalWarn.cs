@@ -74,7 +74,7 @@ namespace InsanityBot.Commands.Moderation
 
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
-                await ctx.RespondAsync(embed: failed.Build());
+                await ctx.Channel.SendMessageAsync(embed: failed.Build());
             }
         }
 
@@ -86,7 +86,7 @@ namespace InsanityBot.Commands.Moderation
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.verbal_warn"))
             {
-                await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
@@ -148,7 +148,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                await ctx.RespondAsync(embedBuilder.Build());
+                await ctx.Channel.SendMessageAsync(embedBuilder.Build());
 
                 if ((Boolean)InsanityBot.Config["insanitybot.commands.moderation.convert_minor_warns_into_full_warn"])
                 {
