@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InsanityBot.Tickets.Workflows
+namespace InsanityBot.Tickets.Scripts
 {
-    public class TicketWorkflow
+    public class TicketScript
     {
+        public async Task Evaluate()
+        {
 
+        }
     }
 }

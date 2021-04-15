@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace InsanityBot.Tickets.Workflows
 {
-    public class TicketWorkflow
+    public struct TicketWorkflowStep
     {
-
+        public UInt64 CategoryId { get; set; }
+        public Boolean Queued { get; set; }
     }
 }

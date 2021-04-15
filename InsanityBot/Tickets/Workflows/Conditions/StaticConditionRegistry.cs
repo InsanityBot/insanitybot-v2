@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InsanityBot.Tickets.Workflows
+namespace InsanityBot.Tickets.Workflows.Conditions
 {
-    public class TicketWorkflow
+    internal class StaticConditionRegistry
     {
-
     }
 }
