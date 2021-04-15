@@ -137,7 +137,8 @@ namespace InsanityBot
                 Token = Config.Token,
                 TokenType = TokenType.Bot,
                 MessageCacheSize = 4096,
-                LoggerFactory = loggerFactory
+                LoggerFactory = loggerFactory,
+                HttpTimeout = new(00, 00, 30)
             };
 
             //create and connect client
