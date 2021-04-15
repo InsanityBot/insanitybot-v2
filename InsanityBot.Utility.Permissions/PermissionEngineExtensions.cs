@@ -28,11 +28,16 @@ namespace InsanityBot.Utility.Permissions
                 return false;
 
             List<UInt64> inheritedRoles = permissions.AssignedRoles.ToList();
+
+            inheritedRoles.AddRange(from v in member.Roles
+                                    select v.Id);
+
+            List<UInt64> finalRoles = new(inheritedRoles);
             
             foreach(var v in inheritedRoles)
-                inheritedRoles.AddRange(GetRoleIdsRecursive(v));
+                finalRoles.AddRange(GetRoleIdsRecursive(v));
             
-            foreach(var v in inheritedRoles)
+            foreach(var v in finalRoles)
             {
                 RolePermissions inherited = activeEngine.GetRolePermissions(v);
 

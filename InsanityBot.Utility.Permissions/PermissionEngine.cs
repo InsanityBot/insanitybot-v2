@@ -415,7 +415,7 @@ namespace InsanityBot.Utility.Permissions
             Directory.CreateDirectory($"./data/role-permissions");
 
             if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
-                File.Create($"./data/role-permissions/{RoleId}.json");
+                File.Create($"./data/role-permissions/{RoleId}.json").Close();
 
             RolePermissions.Serialize(permissions);
         }
