@@ -70,7 +70,6 @@ namespace InsanityBot.Core.Logger
 
                     case LogLevel.Critical:
                         Console.BackgroundColor = ConsoleColor.Red;
-                        Console.ForegroundColor = ConsoleColor.Black;
                         break;
                 }
                 Console.Write(logLevel switch
