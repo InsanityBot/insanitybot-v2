@@ -11,6 +11,14 @@
 		<LangVersion>9</LangVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<None Remove="config\lang.json" />
 		<None Remove="config\main.json" />
@@ -51,6 +59,10 @@
 		<ProjectReference Include="..\InsanityBot.Utility.Permissions\InsanityBot.Utility.Permissions.csproj" />
 		<ProjectReference Include="..\InsanityBot.Utility\InsanityBot.Utility.csproj" />
 		<ProjectReference Include="..\Insanitybot.Datafixers\Insanitybot.Datafixers.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Tickets\Daemon\" />
 	</ItemGroup>
 
 </Project>
