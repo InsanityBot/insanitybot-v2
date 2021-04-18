@@ -1,0 +1,15 @@
+{
+  "Category": 0,
+  "NameFormat": "ticket-{username:4}-{discriminator}",
+  "Topic": null,
+  "AccessRules": {
+    "AllowedRoles": [
+      0
+    ],
+    "AllowedUsers": [
+      0
+    ]
+  },
+  "CreationMessages": null,
+  "CreationEmbeds": null
+}

@@ -50,6 +50,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Remove="cache\tickets\presets\default.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="cache\tickets\presets\default.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
 		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
 		<PackageReference Include="TimeSpanParserUtil" Version="1.2.0" />
@@ -59,10 +69,6 @@
 		<ProjectReference Include="..\InsanityBot.Utility.Permissions\InsanityBot.Utility.Permissions.csproj" />
 		<ProjectReference Include="..\InsanityBot.Utility\InsanityBot.Utility.csproj" />
 		<ProjectReference Include="..\Insanitybot.Datafixers\Insanitybot.Datafixers.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Tickets\Daemon\" />
 	</ItemGroup>
 
 </Project>
