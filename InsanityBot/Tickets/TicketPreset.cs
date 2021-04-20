@@ -14,6 +14,7 @@ namespace InsanityBot.Tickets
         public String NameFormat { get; set; }
         public String Topic { get; set; }
         public TicketAccess AccessRules { get; set; }
+        public TicketSettings Settings { get; set; }
         public DiscordMessage[] CreationMessages { get; set; }
         public DiscordEmbed[] CreationEmbeds { get; set; }
     }

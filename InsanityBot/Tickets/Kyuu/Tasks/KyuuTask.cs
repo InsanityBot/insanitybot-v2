@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InsanityBot.Tickets.Kyuu
+namespace InsanityBot.Tickets.Kyuu.Tasks
 {
-    public static class KyuuLoader
+    class KyuuTask
     {
-        public static void Load()
-        {
-
-        }
     }
 }
