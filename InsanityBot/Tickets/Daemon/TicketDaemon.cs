@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using DSharpPlus.Entities;
 
 using InsanityBot.Tickets.Daemon.Config;
+using InsanityBot.Tickets.Kyuu;
 using InsanityBot.Tickets.Kyuu.Tasks;
 
 using Microsoft.Extensions.Logging;
@@ -47,6 +48,8 @@ namespace InsanityBot.Tickets.Daemon
             else
                 AdditionalData = JsonConvert.DeserializeObject<Dictionary<Guid, DiscordTicketData>>(
                     File.ReadAllText("./cache/tickets/data.json"));
+
+            KyuuLoader.Load();
 
             Tasks = new();
             Configuration = new TicketConfigurationManager().Deserialize("./config/tickets.json");
