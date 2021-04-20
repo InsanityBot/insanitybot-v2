@@ -21,6 +21,7 @@ using InsanityBot.Commands.Moderation.Locking;
 using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
 using InsanityBot.Datafixers;
+using InsanityBot.Tickets.Daemon;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
@@ -149,6 +150,8 @@ namespace InsanityBot
                 UpdateRolePermissions = true,
                 UpdateUserPermissions = true
             });
+
+            TicketDaemon = new();
 
             try
             {

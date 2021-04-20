@@ -8,6 +8,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 
+using InsanityBot.Tickets.Daemon;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
@@ -39,6 +40,7 @@ namespace InsanityBot
         public static LanguageConfiguration LanguageConfig;
 
         public static PermissionEngine PermissionEngine;
+        public static TicketDaemon TicketDaemon;
     }
 }
 #pragma warning restore CA2211
