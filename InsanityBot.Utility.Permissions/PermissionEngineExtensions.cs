@@ -38,7 +38,7 @@ namespace InsanityBot.Utility.Permissions
 
                 if (rolePermissions.IsAdministrator || permissions[permission] == PermissionValue.Allowed)
                     return true;
-                else if (permissions[permission] == PermissionValue.Denied)
+                else if (rolePermissions[permission] == PermissionValue.Denied)
                     return false;
 
                 if (rolePermissions.Parent != 0)
