@@ -44,7 +44,7 @@ namespace InsanityBot.Tickets.Daemon
                     File.ReadAllText("./cache/tickets/data.json"));
 
             Tasks = new();
-            Configuration = new TicketConfigurationManager().Deserialize("./config/tickets.json");
+            Configuration = new TicketConfigurationManager().Deserialize("./config/ticket.json");
 
             KyuuLoader.Load();
         }
