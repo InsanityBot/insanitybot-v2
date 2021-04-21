@@ -2,12 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-using DSharpPlus.Entities;
 
 using InsanityBot.Tickets.Daemon.Config;
 using InsanityBot.Tickets.Kyuu;
@@ -49,10 +43,38 @@ namespace InsanityBot.Tickets.Daemon
                 AdditionalData = JsonConvert.DeserializeObject<Dictionary<Guid, DiscordTicketData>>(
                     File.ReadAllText("./cache/tickets/data.json"));
 
-            KyuuLoader.Load();
-
             Tasks = new();
             Configuration = new TicketConfigurationManager().Deserialize("./config/tickets.json");
+
+            KyuuLoader.Load();
+        }
+
+        public void SaveAll()
+        {
+            if(Tickets.Count > 0)
+            {
+                if (!File.Exists("./cache/tickets/tickets.json"))
+                    File.Create("./cache/tickets/tickets.json").Close();
+
+                StreamWriter writer = new("./cache/tickets/tickets.json");
+                writer.Write(JsonConvert.SerializeObject(Tickets));
+                writer.Close();
+            }
+
+            if(AdditionalData.Count > 0)
+            {
+                if (!File.Exists("./cache/tickets/data.json"))
+                    File.Create("./cache/tickets/data.json").Close();
+
+                StreamWriter writer = new("./cache/tickets/data.json");
+                writer.Write(JsonConvert.SerializeObject(AdditionalData));
+                writer.Close();
+            }
+        }
+
+        ~TicketDaemon()
+        {
+            SaveAll();
         }
     }
 }
