@@ -20,5 +20,7 @@ namespace InsanityBot.Tickets.Kyuu
             this.MaxQueue = maxQueue;
             this.QueueInterval = queueInterval;
         }
+
+
     }
 }
