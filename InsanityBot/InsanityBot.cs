@@ -9,6 +9,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 
 using InsanityBot.Core.Logger;
+using InsanityBot.Tickets.Daemon;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
@@ -45,6 +46,7 @@ namespace InsanityBot
         public static PermissionEngine PermissionEngine;
 
         public static String Version = "2.0.0-dev.00027";
+        public static TicketDaemon TicketDaemon;
     }
 }
 #pragma warning restore CA2211

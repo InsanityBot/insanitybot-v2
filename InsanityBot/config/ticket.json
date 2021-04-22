@@ -1,0 +1,14 @@
+{
+  "DataVersion": "2.0.0",
+  "Configuration": {
+
+    // these options control how much processing power Kyuu can use
+    "kyuu.threads": 4,
+    "kyuu.queue_width": 4,
+    "kyuu.max_queue": -1,
+    "kyuu.queue_interval": 32,
+
+    // these options control which preprocessor flags are enabled
+    "kyuu.preprocessor.event": true
+  }
+}

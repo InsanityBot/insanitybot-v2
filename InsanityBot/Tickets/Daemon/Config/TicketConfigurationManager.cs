@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+
+using InsanityBot.Utility;
+using InsanityBot.Utility.Config;
+using InsanityBot.Utility.Datafixers;
 
 using Newtonsoft.Json;
 
-namespace InsanityBot.Utility.Config
+namespace InsanityBot.Tickets.Daemon.Config
 {
-    public class TicketConfigurationManager : IConfigSerializer<TicketConfiguration, Object>, 
+    class TicketConfigurationManager : IConfigSerializer<TicketConfiguration, Object>,
         IConfigBuilder<TicketConfiguration, TicketConfigurationManager, Object>
     {
         public TicketConfiguration Config { get; set; }
@@ -27,7 +33,13 @@ namespace InsanityBot.Utility.Config
         public TicketConfiguration Deserialize(String Filename)
         {
             using StreamReader reader = new(File.OpenRead(Filename));
-            return JsonConvert.DeserializeObject<TicketConfiguration>(reader.ReadToEnd());
+
+            TicketConfiguration config = JsonConvert.DeserializeObject<TicketConfiguration>(reader.ReadToEnd());
+            config = (TicketConfiguration)DataFixerLower.UpgradeData(config);
+            reader.Close();
+
+            Serialize(config, "./config/ticket.json");
+            return config;
         }
 
         public void Serialize(TicketConfiguration Config, String Filename)

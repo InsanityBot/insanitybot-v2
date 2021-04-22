@@ -22,6 +22,7 @@ using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
 using InsanityBot.Core.Logger;
 using InsanityBot.Datafixers;
+using InsanityBot.Tickets.Daemon;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
@@ -155,6 +156,8 @@ namespace InsanityBot
                 UpdateUserPermissions = true
             });
 
+            TicketDaemon = new();
+
             try
             {
                 //create home guild so commands can use it
@@ -226,7 +229,7 @@ namespace InsanityBot
             //start offthread XP management
             // if ((Boolean)Config["insanitybot.modules.experience"])
                 ; // not implemented yet
-
+            
             //start offthread console management
             // if ((Boolean)Config["insanitybot.modules.console"])
                 ; // not implemented yet
