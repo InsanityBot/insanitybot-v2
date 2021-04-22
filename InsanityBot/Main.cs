@@ -20,6 +20,7 @@ using InsanityBot.Commands.Moderation;
 using InsanityBot.Commands.Moderation.Locking;
 using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
+using InsanityBot.Core.Logger;
 using InsanityBot.Datafixers;
 using InsanityBot.Tickets.Daemon;
 using InsanityBot.Utility.Config;
@@ -45,6 +46,7 @@ namespace InsanityBot
                     CommandLineOptions = o;
                 });
 
+
             // initialize datafixers
 #if DEBUG
             DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
@@ -58,6 +60,7 @@ namespace InsanityBot
             //load main config
             ConfigManager = new MainConfigurationManager();
             LanguageManager = new LanguageConfigurationManager();
+            LoggerManager = new LoggerConfigurationManager();
 
             //read config from file
             Config = ConfigManager.Deserialize("./config/main.json");
@@ -123,6 +126,9 @@ namespace InsanityBot
             }
 
             LanguageConfig = LanguageManager.Deserialize("./config/lang.json");
+            LoggerConfig = LoggerManager.Deserialize("./config/logger.json");
+
+            LoggerFactory loggerFactory = new();
 
 
             //create discord config; increase the cache size if you want though itll take more RAM
@@ -132,16 +138,15 @@ namespace InsanityBot
                 Token = Config.Token,
                 TokenType = TokenType.Bot,
                 MessageCacheSize = 4096,
-#if DEBUG
-                MinimumLogLevel = LogLevel.Debug
-#else
-                MinimumLogLevel = LogLevel.Information
-#endif
+                LoggerFactory = loggerFactory,
+                HttpTimeout = new(00, 00, 30)
             };
 
             //create and connect client
             Client = new DiscordClient(ClientConfiguration);
             await Client.ConnectAsync();
+
+            Client.Logger.LogInformation(new EventId(1000, "Main"), $"InsanityBot Version {Version}");
 
             //load perms
             PermissionEngine = Client.InitializeEngine(new PermissionConfiguration
@@ -216,7 +221,7 @@ namespace InsanityBot
             //initialize various parts of InsanityBots framework
             InitializeAll();
 
-            Client.Logger.LogInformation(new EventId(1000, "Main"), "Startup successful!");
+            Client.Logger.LogInformation(new EventId(1000, "Main"), $"Startup successful!");
 
             //start offthread TCP connection
             _ = HandleTCPConnections((Int64)Config["insanitybot.tcp_port"]);

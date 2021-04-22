@@ -29,7 +29,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
         {
             if (!ctx.Member.HasPermission("insanitybot.moderation.verballog"))
             {
-                await ctx.RespondAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
             try
@@ -51,7 +51,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     modlogEmbed.Color = DiscordColor.SpringGreen;
                     modlogEmbed.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.empty_modlog"],
                         ctx, user);
-                    _ = ctx.RespondAsync(embed: modlogEmbed.Build());
+                    _ = ctx.Channel.SendMessageAsync(embed: modlogEmbed.Build());
                 }
                 else
                 {
@@ -60,7 +60,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         modlogEmbed.Color = DiscordColor.Red;
                         modlogEmbed.Description = user.CreateVerballogDescription();
 
-                        await ctx.RespondAsync(embed: modlogEmbed.Build());
+                        await ctx.Channel.SendMessageAsync(embed: modlogEmbed.Build());
                     }
                     else
                     {
@@ -86,7 +86,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         Text = "InsanityBot 2020-2021"
                     }
                 };
-                await ctx.RespondAsync(embed: failedModlog.Build());
+                await ctx.Channel.SendMessageAsync(embed: failedModlog.Build());
             }
         }
 

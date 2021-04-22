@@ -168,10 +168,13 @@ namespace InsanityBot.Commands
         /// This method will fall back to 00:30:00 if both input value and the config-defined defaults fail to parse
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TimeSpan ParseTimeSpan(this String value, Nullable<TemporaryPunishmentType> type = null)
+        public static TimeSpan ParseTimeSpan(this String value, TemporaryPunishmentType? type = null)
         {
             try
             {
+                if (Int32.TryParse(value, out var seconds))
+                    return new TimeSpan(0, 0, seconds);
+
                 if (TimeSpanParser.TryParse(value, out var time))
                     return time;
                 else

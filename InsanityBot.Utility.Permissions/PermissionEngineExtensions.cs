@@ -27,23 +27,26 @@ namespace InsanityBot.Utility.Permissions
             else if (permissions[permission] == PermissionValue.Denied)
                 return false;
 
-            List<UInt64> inheritedRoles = permissions.AssignedRoles.ToList();
-            
-            foreach(var v in inheritedRoles)
-                inheritedRoles.AddRange(GetRoleIdsRecursive(v));
-            
-            foreach(var v in inheritedRoles)
+            List<UInt64> roles = permissions.AssignedRoles.ToList();
+
+            roles.AddRange(from v in member.Roles
+                           where !roles.Contains(v.Id)
+                           select v.Id);
+
+            do
             {
-                RolePermissions inherited = activeEngine.GetRolePermissions(v);
+                RolePermissions rolePermissions = activeEngine.GetRolePermissions(roles[0]);
 
-                if (inherited.IsAdministrator)
+                if (rolePermissions.IsAdministrator || rolePermissions[permission] == PermissionValue.Allowed)
                     return true;
-
-                if (inherited[permission] == PermissionValue.Allowed)
-                    return true;
-                else if (inherited[permission] == PermissionValue.Denied)
+                else if (rolePermissions[permission] == PermissionValue.Denied)
                     return false;
-            }
+
+                if (rolePermissions.Parent != 0)
+                    roles.Add(rolePermissions.Parent);
+
+                roles.Remove(roles[0]);
+            } while (roles.Count != 0);
 
             DefaultPermissions defaults = DefaultPermissions.Deserialize();
 
@@ -51,21 +54,6 @@ namespace InsanityBot.Utility.Permissions
                 return true;
 
             return false;
-        }
-
-        private static List<UInt64> GetRoleIdsRecursive(UInt64 roleId)
-        {
-            List<UInt64> value = new();
-            RolePermissions permissions;
-
-            do
-            {
-                permissions = activeEngine.GetRolePermissions(roleId);
-                if (permissions.Parent != 0)
-                    value.Add(permissions.Parent);
-            } while (permissions.Parent != 0);
-
-            return value;
         }
 
         public static PermissionEngine InitializeEngine(this DiscordClient client, PermissionConfiguration configuration)

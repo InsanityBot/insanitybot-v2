@@ -22,6 +22,7 @@
 	<ItemGroup>
 		<None Remove="config\lang.json" />
 		<None Remove="config\main.json" />
+		<None Remove="config\logger.json" />
 		<None Remove="config\ticket.json" />
 		<None Remove="config\overrides.mappings.json" />
 		<None Remove="config\overrides.default.json" />
@@ -36,6 +37,9 @@
 		<EmbeddedResource Include="config\main.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
+		<EmbeddedResource Include="config\logger.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
 		<EmbeddedResource Include="config\ticket.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
@@ -65,6 +69,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
+		<PackageReference Include="Lib.Harmony" Version="2.0.4" />
 		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
 		<PackageReference Include="TimeSpanParserUtil" Version="1.2.0" />
 	</ItemGroup>
