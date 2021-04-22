@@ -13,10 +13,10 @@ namespace InsanityBot.Commands.Moderation.Modlog
 {
     public static class ModlogEmbedCreator
     {
-        // only pass page if paged is true as well
         public static String CreateModlogDescription(this DiscordUser user, Boolean paged = true)
         {
             UserModlog modlog = ((DiscordMember)user).GetUserModlog();
+            modlog.Modlog.Reverse(); // display newest first
             String description = "";
 
             if(paged)
@@ -37,6 +37,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
         public static String CreateVerballogDescription(this DiscordUser user, Boolean paged = true, Byte page = 0)
         {
             UserModlog modlog = ((DiscordMember)user).GetUserModlog();
+            modlog.VerbalLog.Reverse(); // display newest first
             String description = "";
 
             if (paged)

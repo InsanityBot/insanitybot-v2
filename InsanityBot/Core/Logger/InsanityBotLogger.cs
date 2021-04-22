@@ -44,7 +44,7 @@ namespace InsanityBot.Core.Logger
             {
                 var ename = eventId.Name;
                 ename = ename?.Length > 12 ? ename?.Substring(0, 12) : ename;
-                Console.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] [{eventId.Id}/{ename}] ");
+                Console.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
 
                 switch (logLevel)
                 {
@@ -85,7 +85,7 @@ namespace InsanityBot.Core.Logger
                 });
                 Console.ResetColor();
 
-                Console.Write(" ");
+                Console.Write($" [{eventId.Id}/{ename}] ");
 
                 var message = formatter(state, exception);
                 Console.WriteLine(message);
