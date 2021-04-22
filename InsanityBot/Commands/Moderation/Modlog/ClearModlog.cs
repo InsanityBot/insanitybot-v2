@@ -25,7 +25,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
         [Command("clearmodlog")]
         public async Task ClearModlogCommand(CommandContext ctx,
             DiscordMember member,
-            String arguments)
+            String arguments = "usedefault")
         {
 
             if(arguments.StartsWith('-'))
