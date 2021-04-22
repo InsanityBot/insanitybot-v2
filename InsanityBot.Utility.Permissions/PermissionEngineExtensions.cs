@@ -30,13 +30,14 @@ namespace InsanityBot.Utility.Permissions
             List<UInt64> roles = permissions.AssignedRoles.ToList();
 
             roles.AddRange(from v in member.Roles
-                                    select v.Id);
+                           where !roles.Contains(v.Id)
+                           select v.Id);
 
             do
             {
                 RolePermissions rolePermissions = activeEngine.GetRolePermissions(roles[0]);
 
-                if (rolePermissions.IsAdministrator || permissions[permission] == PermissionValue.Allowed)
+                if (rolePermissions.IsAdministrator || rolePermissions[permission] == PermissionValue.Allowed)
                     return true;
                 else if (rolePermissions[permission] == PermissionValue.Denied)
                     return false;
