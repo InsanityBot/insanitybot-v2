@@ -65,7 +65,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     else
                     {
                         modlogEmbed.Color = DiscordColor.Red;
-                        String embedDescription = user.CreateModlogDescription();
+                        String embedDescription = user.CreateVerballogDescription();
 
                         var pages = InsanityBot.Interactivity.GeneratePagesInEmbed(embedDescription, SplitType.Line, modlogEmbed);
 
