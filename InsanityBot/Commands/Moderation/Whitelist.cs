@@ -7,8 +7,6 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
-using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
@@ -43,7 +41,9 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<WhitelistOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>

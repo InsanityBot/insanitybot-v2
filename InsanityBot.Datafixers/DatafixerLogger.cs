@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 using Helium.Commons.Logging;
-using Helium.Commons.Logging.Abstract;
 using Helium.Commons.Logging.Default;
 
 namespace InsanityBot.Datafixers
@@ -67,7 +62,10 @@ namespace InsanityBot.Datafixers
         public static void LogDebug(EventData data, String message)
         {
             if (MinimalLevel > LogLevel.Debug)
+            {
                 return;
+            }
+
             Console.Write($"[{DateTimeOffset.Now}] ");
             Console.ForegroundColor = DefaultFormatting.Debug.ForegroundColor;
             Console.Write(String.Format("{0:-5}", $"[{DefaultFormatting.Debug.LogName}]"));
@@ -81,7 +79,10 @@ namespace InsanityBot.Datafixers
         public static void LogTrace(EventData data, String message)
         {
             if (MinimalLevel > LogLevel.Trace)
+            {
                 return;
+            }
+
             Console.Write($"[{DateTimeOffset.Now}] ");
             Console.ForegroundColor = DefaultFormatting.Trace.ForegroundColor;
             Console.Write(String.Format("{0:-5}", $"[{DefaultFormatting.Trace.LogName}]"));
@@ -96,7 +97,10 @@ namespace InsanityBot.Datafixers
         public static void LogInformation(EventData data, String message)
         {
             if (MinimalLevel > LogLevel.Info)
+            {
                 return;
+            }
+
             Console.Write($"[{DateTimeOffset.Now}] ");
             Console.ForegroundColor = DefaultFormatting.Info.ForegroundColor;
             Console.Write(String.Format("{0:-5}", $"[{DefaultFormatting.Info.LogName}]"));
@@ -111,7 +115,10 @@ namespace InsanityBot.Datafixers
         public static void LogWarning(EventData data, String message)
         {
             if (MinimalLevel > LogLevel.Warning)
+            {
                 return;
+            }
+
             Console.Write($"[{DateTimeOffset.Now}] ");
             Console.ForegroundColor = DefaultFormatting.Warn.ForegroundColor;
             Console.Write(String.Format("{0:-5}", $"[{DefaultFormatting.Warn.LogName}]"));
@@ -126,7 +133,10 @@ namespace InsanityBot.Datafixers
         public static void LogError(EventData data, String message)
         {
             if (MinimalLevel > LogLevel.Error)
+            {
                 return;
+            }
+
             Console.Write($"[{DateTimeOffset.Now}] ");
             Console.ForegroundColor = DefaultFormatting.Error.ForegroundColor;
             Console.Write(String.Format("{0:-5}", $"[{DefaultFormatting.Error.LogName}]"));
@@ -141,7 +151,10 @@ namespace InsanityBot.Datafixers
         public static void LogCritical(EventData data, String message)
         {
             if (MinimalLevel > LogLevel.Critical)
+            {
                 return;
+            }
+
             Console.Write($"[{DateTimeOffset.Now}] ");
             Console.ForegroundColor = DefaultFormatting.Crit.ForegroundColor;
             Console.Write(String.Format("{0:-5}", $"[{DefaultFormatting.Crit.LogName}]"));

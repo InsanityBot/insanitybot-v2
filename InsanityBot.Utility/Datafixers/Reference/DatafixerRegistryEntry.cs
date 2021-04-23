@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-using InsanityBot.Utility.Exceptions;
 using InsanityBot.Utility.Reference;
 
 namespace InsanityBot.Utility.Datafixers.Reference
@@ -20,15 +15,12 @@ namespace InsanityBot.Utility.Datafixers.Reference
         public Boolean BreakingChange { get; init; }
         public UInt32 DatafixerId { get; init; } // please dont attempt to datafix IDatafixable's you didnt implement, thatll just cause confusion
 
-        public SortedDatafixerRegistryEntry ToSortedDatafixerRegistryEntry()
+        public SortedDatafixerRegistryEntry ToSortedDatafixerRegistryEntry() => new SortedDatafixerRegistryEntry
         {
-            return new SortedDatafixerRegistryEntry
-            {
-                DatafixerGuid = this.DatafixerGuid,
-                Datafixer = this.Datafixer,
-                BreakingChange = this.BreakingChange,
-                DatafixerId = this.DatafixerId
-            };
-        }
+            DatafixerGuid = this.DatafixerGuid,
+            Datafixer = this.Datafixer,
+            BreakingChange = this.BreakingChange,
+            DatafixerId = this.DatafixerId
+        };
     }
 }

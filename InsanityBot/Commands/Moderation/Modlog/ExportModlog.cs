@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
@@ -20,7 +17,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
     public class ExportModlog : BaseCommandModule
     {
         [Command("exportmodlog")]
-        public async Task ExportModlogCommand(CommandContext ctx, 
+        public async Task ExportModlogCommand(CommandContext ctx,
             DiscordMember member,
             Boolean dmFile = false)
         {
@@ -35,9 +32,13 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 DiscordChannel exportChannel;
 
                 if (!dmFile)
+                {
                     exportChannel = ctx.Channel;
+                }
                 else
+                {
                     exportChannel = await ctx.Member.CreateDmChannelAsync();
+                }
 
                 if (!File.Exists($"./data/{member.Id}/modlog.json"))
                 {
@@ -53,7 +54,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
                 await exportChannel.SendMessageAsync(messageBuilder);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1181, "ExportModlog"), $"{e}: {e.Message}\n{e.StackTrace}");
             }
@@ -61,9 +62,6 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
         [Command("exportmodlog")]
         public async Task ExportModlogCommand(CommandContext ctx,
-            Boolean dmFile = false)
-        {
-            await ExportModlogCommand(ctx, ctx.Member, dmFile);
-        }
+            Boolean dmFile = false) => await ExportModlogCommand(ctx, ctx.Member, dmFile);
     }
 }

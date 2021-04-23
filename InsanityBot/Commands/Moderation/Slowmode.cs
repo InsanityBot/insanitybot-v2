@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -10,10 +7,12 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
-using Microsoft.Extensions.Logging;
 using InsanityBot.Utility.Permissions;
+
+using Microsoft.Extensions.Logging;
+
+using static System.Convert;
+using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -27,7 +26,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String args = "usedefault")
         {
-            if(args.StartsWith('-'))
+            if (args.StartsWith('-'))
             {
                 await ParseSlowmodeCommand(ctx, channel, args);
                 return;
@@ -60,7 +59,7 @@ namespace InsanityBot.Commands.Moderation
                         await ExecuteSlowmodeCommand(ctx, channel, o.SlowmodeTime.ParseTimeSpan(), o.Silent);
                     });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -79,14 +78,16 @@ namespace InsanityBot.Commands.Moderation
 
         private async Task ExecuteSlowmodeCommand(CommandContext ctx, DiscordChannel channel, TimeSpan slowmodeTime, Boolean silent)
         {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.slowmode"))
+            if (!ctx.Member.HasPermission("insanitybot.moderation.slowmode"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
             if (silent)
+            {
                 await ctx.Message.DeleteAsync();
+            }
 
             DiscordEmbedBuilder embedBuilder = null;
             DiscordEmbedBuilder moderationEmbedBuilder = new()
@@ -124,7 +125,7 @@ namespace InsanityBot.Commands.Moderation
                 _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 embedBuilder = new()
                 {
@@ -140,7 +141,9 @@ namespace InsanityBot.Commands.Moderation
             finally
             {
                 if (!silent)
+                {
                     await ctx.Channel.SendMessageAsync(embedBuilder.Build());
+                }
             }
         }
 
@@ -159,7 +162,9 @@ namespace InsanityBot.Commands.Moderation
             }
 
             if (silent)
+            {
                 await ctx.Message.DeleteAsync();
+            }
 
             DiscordEmbedBuilder embedBuilder = null;
             DiscordEmbedBuilder moderationEmbedBuilder = new()
@@ -211,7 +216,9 @@ namespace InsanityBot.Commands.Moderation
             finally
             {
                 if (!silent)
+                {
                     await ctx.Channel.SendMessageAsync(embedBuilder.Build());
+                }
             }
         }
     }

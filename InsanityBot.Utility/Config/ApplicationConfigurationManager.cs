@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Config
 {
-    public class ApplicationConfigurationManager : IConfigSerializer<ApplicationConfiguration, Object>, 
+    public class ApplicationConfigurationManager : IConfigSerializer<ApplicationConfiguration, Object>,
         IConfigBuilder<ApplicationConfiguration, ApplicationConfigurationManager, Object>
     {
         public ApplicationConfiguration Config { get; set; }

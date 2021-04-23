@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Helium.Commons.Logging;
 
@@ -19,18 +15,20 @@ namespace InsanityBot.Datafixers.Language
     */
     public class Lang0001_AddModlogScrolling : IDatafixer<LanguageConfiguration>
     {
-        public String NewDataVersion { get => "2.0.0-dev.00016"; }
+        public String NewDataVersion => "2.0.0-dev.00016";
 
-        public String OldDataVersion { get => "2.0.0.0-beta.001"; }
+        public String OldDataVersion => "2.0.0.0-beta.001";
 
-        public UInt32 DatafixerId { get => 0; }
+        public UInt32 DatafixerId => 0;
 
-        public Boolean BreakingChange { get => false; }
+        public Boolean BreakingChange => false;
 
         public DatafixerDowngradeResult DowngradeData(ref LanguageConfiguration data)
         {
             if (data.DataVersion == "2.0.0.0-beta.001")
+            {
                 return DatafixerDowngradeResult.AlreadyDowngraded;
+            }
 
             data.Configuration.Remove("insanitybot.commands.modlog.paged.page_number");
             data.Configuration.Remove("insanitybot.commands.verbal_log.paged.page_number");
@@ -43,7 +41,9 @@ namespace InsanityBot.Datafixers.Language
         public LanguageConfiguration ExportDowngradedData(LanguageConfiguration data)
         {
             if (data.DataVersion == "2.0.0.0-beta.001")
+            {
                 return data;
+            }
 
             data.Configuration.Remove("insanitybot.commands.modlog.paged.page_number");
             data.Configuration.Remove("insanitybot.commands.verbal_log.paged.page_number");
@@ -56,7 +56,9 @@ namespace InsanityBot.Datafixers.Language
         public LanguageConfiguration ExportUpgradedData(LanguageConfiguration data)
         {
             if (data.DataVersion != "2.0.0-dev.00016")
+            {
                 return data;
+            }
 
             data.Configuration.Add("insanitybot.commands.modlog.paged.page_number", "Page {PAGE}/{PAGE_TOTAL}");
             data.Configuration.Add("insanitybot.commands.verbal_log.paged.page_number", "Page {PAGE}/{PAGE_TOTAL}");
@@ -69,7 +71,9 @@ namespace InsanityBot.Datafixers.Language
         public DatafixerUpgradeResult UpgradeData(ref LanguageConfiguration data)
         {
             if (data.DataVersion != "2.0.0-dev.00016")
+            {
                 return DatafixerUpgradeResult.AlreadyUpgraded;
+            }
 
             data.Configuration.Add("insanitybot.commands.modlog.paged.page_number", "Page {PAGE}/{PAGE_TOTAL}");
             data.Configuration.Add("insanitybot.commands.verbal_log.paged.page_number", "Page {PAGE}/{PAGE_TOTAL}");

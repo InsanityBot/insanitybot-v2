@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
@@ -23,16 +18,20 @@ namespace InsanityBot.Utility.Permissions.Data
             set
             {
                 if (value == PermissionValue.Inherited)
+                {
                     Permissions[key] = PermissionValue.Denied; // fall back to denied
+                }
                 else
+                {
                     Permissions[key] = value;
+                }
             }
         }
 
         public static DefaultPermissions Deserialize()
         {
             StreamReader reader = new(DefaultPermissionFileSpecifications.Default.GetFilePath());
-            var value = JsonConvert.DeserializeObject<DefaultPermissions>(reader.ReadToEnd());
+            DefaultPermissions value = JsonConvert.DeserializeObject<DefaultPermissions>(reader.ReadToEnd());
             reader.Close();
             return value;
         }
@@ -44,11 +43,11 @@ namespace InsanityBot.Utility.Permissions.Data
             writer.Close();
         }
 
-        public static DefaultPermissions operator + (DefaultPermissions left, PermissionDeclaration[] right)
+        public static DefaultPermissions operator +(DefaultPermissions left, PermissionDeclaration[] right)
         {
             DefaultPermissions retValue = left;
-            
-            foreach(var v in right)
+
+            foreach (PermissionDeclaration v in right)
             {
                 retValue.Permissions.Add(v.Permission,
                     v.Value switch
@@ -61,25 +60,22 @@ namespace InsanityBot.Utility.Permissions.Data
             return retValue;
         }
 
-        public static DefaultPermissions Empty
-        {
-            get => new();
-        }
+        public static DefaultPermissions Empty => new();
 
         /// <summary>
         /// THIS IS NOT AN EQUALITY CHECK!
         /// This solely tests compatibility between the existing defaults and updated defaults and determines whether the defaults have to be rebuilt entirely.
         /// </summary>
-        public static Boolean operator == (DefaultPermissions left, DefaultPermissions right)
+        public static Boolean operator ==(DefaultPermissions left, DefaultPermissions right)
         {
             if (left.Permissions.Keys == right.Permissions.Keys)
+            {
                 return true;
+            }
+
             return false;
         }
 
-        public static Boolean operator != (DefaultPermissions left, DefaultPermissions right)
-        {
-            return !(left == right);
-        }
+        public static Boolean operator !=(DefaultPermissions left, DefaultPermissions right) => !(left == right);
     }
 }

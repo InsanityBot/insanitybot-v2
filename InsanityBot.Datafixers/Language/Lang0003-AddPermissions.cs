@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Helium.Commons.Logging;
 
@@ -19,18 +15,20 @@ namespace InsanityBot.Datafixers.Language
     */
     public class Lang0003_AddPermissions : IDatafixer<LanguageConfiguration>
     {
-        public String NewDataVersion { get => "2.0.0-dev.00018"; }
+        public String NewDataVersion => "2.0.0-dev.00018";
 
-        public String OldDataVersion { get => "2.0.0-dev.00017"; }
+        public String OldDataVersion => "2.0.0-dev.00017";
 
-        public UInt32 DatafixerId { get => 2; }
+        public UInt32 DatafixerId => 2;
 
-        public Boolean BreakingChange { get => false; }
+        public Boolean BreakingChange => false;
 
         public DatafixerDowngradeResult DowngradeData(ref LanguageConfiguration data)
         {
             if (data.DataVersion == "2.0.0-dev.00017")
+            {
                 return DatafixerDowngradeResult.AlreadyDowngraded;
+            }
 
             data.Configuration.Remove("insanitybot.permissions.error.permission_not_found");
             data.Configuration.Remove("insanitybot.permissions.error.no_permission_passed");
@@ -65,7 +63,9 @@ namespace InsanityBot.Datafixers.Language
         public LanguageConfiguration ExportDowngradedData(LanguageConfiguration data)
         {
             if (data.DataVersion == "2.0.0-dev.00017")
+            {
                 return data;
+            }
 
             data.Configuration.Remove("insanitybot.permissions.error.permission_not_found");
             data.Configuration.Remove("insanitybot.permissions.error.no_permission_passed");
@@ -100,7 +100,9 @@ namespace InsanityBot.Datafixers.Language
         public LanguageConfiguration ExportUpgradedData(LanguageConfiguration data)
         {
             if (data.DataVersion != "2.0.0-dev.00017")
+            {
                 return data;
+            }
 
             data.Configuration.Add("insanitybot.permissions.error.permission_not_found", "Permission {PERMISSION} could not be found.");
             data.Configuration.Add("insanitybot.permissions.error.no_permission_passed", "No permission was passed to the command.");
@@ -135,7 +137,9 @@ namespace InsanityBot.Datafixers.Language
         public DatafixerUpgradeResult UpgradeData(ref LanguageConfiguration data)
         {
             if (data.DataVersion != "2.0.0-dev.00017")
+            {
                 return DatafixerUpgradeResult.AlreadyUpgraded;
+            }
 
             data.Configuration.Add("insanitybot.permissions.error.permission_not_found", "Permission {PERMISSION} could not be found.");
             data.Configuration.Add("insanitybot.permissions.error.no_permission_passed", "No permission was passed to the command.");
@@ -164,7 +168,7 @@ namespace InsanityBot.Datafixers.Language
             data.DataVersion = "2.0.0-dev.00018";
 
             DatafixerLogger.LogInformation(new EventData(0, 2, 3, 4, "Upgrade"), "Upgraded successfully to version 2.0.0-dev.00018");
-            return DatafixerUpgradeResult.Success; 
+            return DatafixerUpgradeResult.Success;
         }
     }
 }

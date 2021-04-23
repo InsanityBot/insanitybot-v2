@@ -78,7 +78,7 @@ namespace InsanityBot
                     "To abort and exit InsanityBot, type \"cancel\"\nToken: ");
                 String token = Console.ReadLine();
 
-                if(token.ToLower().Trim() == "cancel")
+                if (token.ToLower().Trim() == "cancel")
                 {
                     Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
                     Console.ReadKey();
@@ -89,9 +89,9 @@ namespace InsanityBot
                 ConfigManager.Serialize(Config, "./config/main.json");
             }
 
-            if(Config.GuildId == 0)
+            if (Config.GuildId == 0)
             {
-                if(!CommandLineOptions.Interactive)
+                if (!CommandLineOptions.Interactive)
                 {
                     Console.WriteLine("Invalid GuildId. Please provide a valid guild ID in .\\config\\main.json" +
                         "\nPress any key to continue...");
@@ -103,14 +103,14 @@ namespace InsanityBot
                     "To abort and exit InsanityBot, type \"cancel\"\nGuild ID: ");
                 String guildId = Console.ReadLine();
 
-                if(guildId.ToLower().Trim() == "cancel")
+                if (guildId.ToLower().Trim() == "cancel")
                 {
                     Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
                     Console.ReadKey();
                     return;
                 }
 
-                if(UInt64.TryParse(guildId, out var id))
+                if (UInt64.TryParse(guildId, out UInt64 id))
                 {
                     Config.GuildId = id;
                     ConfigManager.Serialize(Config, "./config/main.json");
@@ -162,7 +162,7 @@ namespace InsanityBot
             }
             catch (UnauthorizedException)
             {
-                Client.Logger.LogCritical(new EventId(0000, "Main"), 
+                Client.Logger.LogCritical(new EventId(0000, "Main"),
                     "Your GuildId is either invalid or InsanityBot has not been invited to the server yet.");
             }
             catch
@@ -185,19 +185,29 @@ namespace InsanityBot
 
             PaginationEmojis InteractivityPaginationEmotes = new();
             if (ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"]) != 0)
+            {
                 InteractivityPaginationEmotes.Right = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"])];
+            }
 
             if (ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"]) != 0)
+            {
                 InteractivityPaginationEmotes.Left = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"])];
+            }
 
             if (ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"]) != 0)
+            {
                 InteractivityPaginationEmotes.SkipRight = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"])];
+            }
 
             if (ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"]) != 0)
+            {
                 InteractivityPaginationEmotes.SkipLeft = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"])];
+            }
 
             if (ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"]) != 0)
+            {
                 InteractivityPaginationEmotes.Stop = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"])];
+            }
 
             Interactivity = Client.UseInteractivity(new()
             {
@@ -225,11 +235,11 @@ namespace InsanityBot
 
             //start offthread XP management
             // if ((Boolean)Config["insanitybot.modules.experience"])
-                ; // not implemented yet
+            ; // not implemented yet
 
             //start offthread console management
             // if ((Boolean)Config["insanitybot.modules.console"])
-                ; // not implemented yet
+            ; // not implemented yet
 
             //abort main thread, who needs it anyway
             Thread.Sleep(-1);
@@ -238,13 +248,19 @@ namespace InsanityBot
         private static Task CommandsExtension_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)
         {
             if (e.Exception.GetType() == typeof(CommandNotFoundException))
+            {
                 return Task.CompletedTask;
+            }
 
             if (e.Exception.GetType() == typeof(ArgumentException))
+            {
                 return Task.CompletedTask;
+            }
 
             if (e.Exception.GetType() == typeof(ArgumentNullException))
+            {
                 return Task.CompletedTask;
+            }
 
             Client.Logger.LogError(new EventId(1001, "CommandError"), $"{e.Command} failed:\n" +
                 $"{e.Exception}: {e.Exception.Message}\n{e.Exception.StackTrace}");
@@ -255,11 +271,11 @@ namespace InsanityBot
         {
             CommandsExtension.RegisterCommands<PermissionCommand>();
 
-            if((Boolean)Config["insanitybot.modules.miscellaneous"])
+            if ((Boolean)Config["insanitybot.modules.miscellaneous"])
             {
                 CommandsExtension.RegisterCommands<Say>();
             }
-            if((Boolean)Config["insanitybot.modules.moderation"])
+            if ((Boolean)Config["insanitybot.modules.moderation"])
             {
                 CommandsExtension.RegisterCommands<VerbalWarn>();
                 CommandsExtension.RegisterCommands<Warn>();
@@ -294,16 +310,14 @@ namespace InsanityBot
             Ban.BanStartingEvent += TimeHandler.DisableTimer;
         }
 
-        private static void InitializeAll()
-        {
-            TimeHandler.Start();
-        }
+        private static void InitializeAll() => TimeHandler.Start();
 
         private static async Task HandleTCPConnections(Int64 Port)
         {
             if (Port == 0)
+            {
                 return;
-
+            }
 
             TcpListener listener = new(IPAddress.Parse("0.0.0.0"), (Int32)Port);
 

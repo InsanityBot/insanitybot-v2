@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -10,12 +7,12 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using Microsoft.Extensions.Logging;
-
 using InsanityBot.Utility.Permissions;
 
-using static InsanityBot.Commands.StringUtilities;
+using Microsoft.Extensions.Logging;
+
 using static System.Convert;
+using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -53,7 +50,9 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason void"; //we dont need the reason but its required by the protocol
+                }
 
                 await Parser.Default.ParseArguments<UnbanOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
@@ -123,9 +122,13 @@ namespace InsanityBot.Commands.Moderation
             };
 
             if (automated)
+            {
                 moderationEmbedBuilder.AddField("Moderator", "InsanityBot", true);
+            }
             else
+            {
                 moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true);
+            }
 
             moderationEmbedBuilder.AddField("Member", memberId.ToString(), true);
 
@@ -177,6 +180,7 @@ namespace InsanityBot.Commands.Moderation
             catch (Exception e)
             {
                 if (!silent)
+                {
                     nonSilent = new DiscordEmbedBuilder
                     {
                         Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.failure"],
@@ -187,6 +191,8 @@ namespace InsanityBot.Commands.Moderation
                             Text = "InsanityBot 2020-2021"
                         }
                     };
+                }
+
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"), $"{e}: {e.Message}");
             }
             finally
@@ -194,9 +200,13 @@ namespace InsanityBot.Commands.Moderation
                 if (!silent)
                 {
                     if (nonSilent != null)
+                    {
                         _ = ctx.Channel.SendMessageAsync(embed: nonSilent.Build());
+                    }
                     else
+                    {
                         InsanityBot.Client.Logger.LogError(new EventId(1145, "Unban"), $"DiscordEmbedBuilder nonSilent was null");
+                    }
                 }
 
                 await InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))

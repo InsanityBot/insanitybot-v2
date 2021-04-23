@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsanityBot.Utility.Timers
 {
@@ -15,10 +12,7 @@ namespace InsanityBot.Utility.Timers
         public static event TimerExpiredDelegate TimerExpiredEvent;
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void CallExpiredEvent(String Identifier, Guid guid)
-        {
-            TimerExpiredEvent?.Invoke(Identifier, guid);
-        }
+        private static void CallExpiredEvent(String Identifier, Guid guid) => TimerExpiredEvent?.Invoke(Identifier, guid);
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Boolean CheckExpiry()

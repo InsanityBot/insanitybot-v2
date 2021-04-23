@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
 
 using InsanityBot.Utility.Datafixers.Reference;
@@ -14,34 +12,25 @@ namespace InsanityBot.Utility.Datafixers
     {
         private static DatafixerRegistry Registry;
 
-        public static void Initialize(Byte registryMode)
-        {
-            Registry = new DatafixerRegistry(registryMode);
-        }
+        public static void Initialize(Byte registryMode) => Registry = new DatafixerRegistry(registryMode);
 
-        public static void SortRegistry()
-        {
-            Registry.SortDatafixers();
-        }
+        public static void SortRegistry() => Registry.SortDatafixers();
 
-        public static void AddDatafixer(IDatafixer datafixer, Type target)
+        public static void AddDatafixer(IDatafixer datafixer, Type target) => Registry.AddDatafixer(new DatafixerRegistryEntry
         {
-            Registry.AddDatafixer(new DatafixerRegistryEntry
-            {
-                Datafixer = datafixer,
-                BreakingChange = datafixer.BreakingChange,
-                DatafixerGuid = Guid.NewGuid(),
-                DatafixerId = datafixer.DatafixerId,
-                DatafixerTarget = target
-            });
-        }
+            Datafixer = datafixer,
+            BreakingChange = datafixer.BreakingChange,
+            DatafixerGuid = Guid.NewGuid(),
+            DatafixerId = datafixer.DatafixerId,
+            DatafixerTarget = target
+        });
 
         public static void LoadAllDatafixers()
         {
-            var datafixers = Registry.GetAllDatafixers();
-            foreach(var v in datafixers)
+            Dictionary<Type, List<SortedDatafixerRegistryEntry>> datafixers = Registry.GetAllDatafixers();
+            foreach (KeyValuePair<Type, List<SortedDatafixerRegistryEntry>> v in datafixers)
             {
-                foreach(var v1 in v.Value)
+                foreach (SortedDatafixerRegistryEntry v1 in v.Value)
                 {
                     v1.GetType().InvokeMember("Load", BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, null, null, null);
                 }
@@ -58,7 +47,7 @@ namespace InsanityBot.Utility.Datafixers
             {
                 datafixers = Registry.GetDatafixers(data.GetType()).ToList();
             }
-            catch(ArgumentNullException)
+            catch (ArgumentNullException)
             {
                 return dataReference;
             }
@@ -68,9 +57,11 @@ namespace InsanityBot.Utility.Datafixers
             }
 
             if (datafixers == null)
+            {
                 return dataReference;
+            }
 
-            foreach(var v in datafixers)
+            foreach (DatafixerRegistryEntry v in datafixers)
             {
                 ((IDatafixer<Datafixable>)v.Datafixer).UpgradeData(ref dataReference);
             }
@@ -98,9 +89,11 @@ namespace InsanityBot.Utility.Datafixers
             }
 
             if (datafixers == null)
+            {
                 return dataReference;
+            }
 
-            foreach (var v in datafixers)
+            foreach (DatafixerRegistryEntry v in datafixers)
             {
                 ((IDatafixer<Datafixable>)v.Datafixer).DowngradeData(ref dataReference);
             }
@@ -128,9 +121,11 @@ namespace InsanityBot.Utility.Datafixers
             }
 
             if (datafixers == null)
+            {
                 return dataReference;
+            }
 
-            foreach (var v in datafixers)
+            foreach (DatafixerRegistryEntry v in datafixers)
             {
                 dataReference = ((IDatafixer<Datafixable>)v.Datafixer).ExportUpgradedData(dataReference);
             }
@@ -158,9 +153,11 @@ namespace InsanityBot.Utility.Datafixers
             }
 
             if (datafixers == null)
+            {
                 return dataReference;
+            }
 
-            foreach (var v in datafixers)
+            foreach (DatafixerRegistryEntry v in datafixers)
             {
                 dataReference = ((IDatafixer<Datafixable>)v.Datafixer).ExportDowngradedData(dataReference);
             }

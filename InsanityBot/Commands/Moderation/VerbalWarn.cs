@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -9,8 +6,6 @@ using CommandLine;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-
-using Emzi0767;
 
 using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Permissions;
@@ -33,9 +28,11 @@ namespace InsanityBot.Commands.Moderation
             String arguments = "usedefault")
         {
             if (!(Boolean)InsanityBot.Config["insanitybot.commands.moderation.allow_minor_warns"])
+            {
                 return;
+            }
 
-            if(arguments.StartsWith('-'))
+            if (arguments.StartsWith('-'))
             {
                 await ParseVerbalWarnCommand(ctx, member, arguments);
                 return;
@@ -51,7 +48,9 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<VerbalWarnOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
@@ -59,7 +58,7 @@ namespace InsanityBot.Commands.Moderation
                         await ExecuteVerbalWarnCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -84,14 +83,16 @@ namespace InsanityBot.Commands.Moderation
             Boolean silent,
             Boolean dmMember)
         {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.verbal_warn"))
+            if (!ctx.Member.HasPermission("insanitybot.moderation.verbal_warn"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
             if (silent)
+            {
                 await ctx.Message.DeleteAsync();
+            }
 
             String VerbalWarnReason = reason switch
             {
@@ -152,7 +153,7 @@ namespace InsanityBot.Commands.Moderation
 
                 if ((Boolean)InsanityBot.Config["insanitybot.commands.moderation.convert_minor_warns_into_full_warn"])
                 {
-                    if((member.GetUserModlog().VerbalLogEntryCount % 
+                    if ((member.GetUserModlog().VerbalLogEntryCount %
                         (Int64)InsanityBot.Config["insanitybot.commands.moderation.minor_warns_equal_full_warn"]) == 0)
                     {
                         await new Warn().WarnCommand(ctx, member, $"--silent --reason Too many verbal warns, count since last warn exceeded " +

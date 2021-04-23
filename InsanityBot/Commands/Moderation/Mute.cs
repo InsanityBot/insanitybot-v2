@@ -26,12 +26,12 @@ namespace InsanityBot.Commands.Moderation
 
             [Description("Mention the user you want to mute")]
             DiscordMember member,
-            
+
             [Description("Give a reason for the mute")]
             [RemainingText]
             String Reason = "usedefault")
         {
-            if(Reason.StartsWith('-'))
+            if (Reason.StartsWith('-'))
             {
                 await ParseMuteCommand(ctx, member, Reason);
                 return;
@@ -47,17 +47,23 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<MuteOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
                         if (o.Time == "default")
+                        {
                             await ExecuteMuteCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                        }
                         else
-                            await ExecuteTempmuteCommand(ctx, member, 
+                        {
+                            await ExecuteTempmuteCommand(ctx, member,
                                 o.Time.ParseTimeSpan(TemporaryPunishmentType.Mute),
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                        }
                     });
             }
             catch (Exception e)
@@ -78,7 +84,7 @@ namespace InsanityBot.Commands.Moderation
             }
         }
 
-        private async Task ExecuteMuteCommand(CommandContext ctx, 
+        private async Task ExecuteMuteCommand(CommandContext ctx,
             DiscordMember member,
             String Reason,
             Boolean Silent,

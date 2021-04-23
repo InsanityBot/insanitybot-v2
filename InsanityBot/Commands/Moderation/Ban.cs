@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -10,12 +7,14 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
-using Microsoft.Extensions.Logging;
-using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Permissions;
+
+using Microsoft.Extensions.Logging;
+
+using static System.Convert;
+using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -44,17 +43,23 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<BanOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
                         if (o.Time == "default")
+                        {
                             await ExecuteBanCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                        }
                         else
+                        {
                             await ExecuteTempbanCommand(ctx, member,
                                 o.Time.ParseTimeSpan(TemporaryPunishmentType.Ban),
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                        }
                     });
             }
             catch (Exception e)
@@ -151,6 +156,6 @@ namespace InsanityBot.Commands.Moderation
 
     public class BanOptions : TempbanOptions
     {
-        
+
     }
 }

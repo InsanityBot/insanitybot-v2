@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -42,7 +41,9 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<WarnOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
@@ -50,7 +51,7 @@ namespace InsanityBot.Commands.Moderation
                         await ExecuteWarn(ctx, target, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -71,7 +72,7 @@ namespace InsanityBot.Commands.Moderation
         private async Task ExecuteWarn(CommandContext ctx,
             DiscordMember target,
             String reason,
-            Boolean silent, 
+            Boolean silent,
             Boolean dmMember)
         {
             if (!ctx.Member.HasPermission("insanitybot.moderation.warn"))
@@ -82,7 +83,9 @@ namespace InsanityBot.Commands.Moderation
 
             //if silent - delete the warn command
             if (silent)
+            {
                 await ctx.Message.DeleteAsync();
+            }
 
             //actually do something with the usedefault value
             String WarnReason = reason switch
@@ -140,9 +143,12 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if(!silent)
+                if (!silent)
+                {
                     await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
-                if(dmMember)
+                }
+
+                if (dmMember)
                 {
                     embedBuilder.Description = GetReason(InsanityBot.LanguageConfig["insanitybot.moderation.warn.reason"], WarnReason);
                     await (await target.CreateDmChannelAsync()).SendMessageAsync(embed: embedBuilder.Build());
@@ -154,6 +160,6 @@ namespace InsanityBot.Commands.Moderation
 
     public class WarnOptions : ModerationOptionBase
     {
-        
+
     }
 }

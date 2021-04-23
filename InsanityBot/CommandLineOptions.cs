@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using CommandLine;
 
@@ -10,7 +6,7 @@ namespace InsanityBot
 {
     public class CommandLineOptions
     {
-        [Option('i', "init", Required = false, Default = false, 
+        [Option('i', "init", Required = false, Default = false,
             HelpText = "Initialize all missing files on startup. This excludes modlog and permission files.")]
         public Boolean Initialize { get; set; }
 

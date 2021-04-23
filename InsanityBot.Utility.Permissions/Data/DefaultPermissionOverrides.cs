@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
@@ -19,9 +16,9 @@ namespace InsanityBot.Utility.Permissions.Data
 
             Dictionary<String, Boolean> retValue = new();
 
-            foreach(var v in overrides)
+            foreach (String v in overrides)
             {
-                retValue.Add(v.Split(' ')[0], 
+                retValue.Add(v.Split(' ')[0],
                     Convert.ToBoolean(
                         v.Split(' ')[1]));
             }
@@ -35,12 +32,14 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             DefaultPermissions value = permissions;
 
-            foreach (var v in overrides)
+            foreach (KeyValuePair<String, Boolean> v in overrides)
+            {
                 permissions[v.Key] = v.Value switch
                 {
                     true => PermissionValue.Allowed,
                     false => PermissionValue.Denied
                 };
+            }
 
             return value;
         }

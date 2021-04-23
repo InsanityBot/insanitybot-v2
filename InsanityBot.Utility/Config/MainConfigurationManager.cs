@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-
-using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Datafixers;
 
@@ -11,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Config
 {
-    public class MainConfigurationManager : IConfigSerializer<MainConfiguration, Object>, 
+    public class MainConfigurationManager : IConfigSerializer<MainConfiguration, Object>,
         IConfigBuilder<MainConfiguration, MainConfigurationManager, Object>
     {
         public MainConfiguration Config { get; set; }

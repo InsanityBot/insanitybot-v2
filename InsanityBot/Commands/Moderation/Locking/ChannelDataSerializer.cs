@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using DSharpPlus.Entities;
 
@@ -22,10 +18,14 @@ namespace InsanityBot.Commands.Moderation.Locking
             };
 
             if (!Directory.Exists($"./cache/lock"))
+            {
                 Directory.CreateDirectory($"./cache/lock");
+            }
 
             if (!File.Exists($"./cache/lock/{channel.Id}"))
+            {
                 File.Create($"./cache/lock/{channel.Id}").Close();
+            }
 
             StreamWriter writer = new($"./cache/lock/{channel.Id}");
             writer.Write(JsonConvert.SerializeObject(data));
@@ -36,7 +36,9 @@ namespace InsanityBot.Commands.Moderation.Locking
         public static List<DiscordOverwrite> GetChannelData(this DiscordChannel channel)
         {
             if (!File.Exists($"./cache/lock/{channel.Id}"))
+            {
                 return (List<DiscordOverwrite>)channel.PermissionOverwrites;
+            }
 
             StreamReader reader = new($"./cache/lock/{channel.Id}");
             return JsonConvert.DeserializeObject<LockedChannelData>(reader.ReadToEnd()).Overwrites;
@@ -45,10 +47,14 @@ namespace InsanityBot.Commands.Moderation.Locking
         public static void SerializeLockingOverwrites(this DiscordChannel channel, ChannelData data)
         {
             if (!Directory.Exists($"./cache/lock"))
+            {
                 Directory.CreateDirectory($"./cache/lock");
+            }
 
             if (!File.Exists($"./cache/lock/{channel.Id}.ibcd"))
+            {
                 File.Create($"./cache/lock/{channel.Id}.ibcd").Close();
+            }
 
             StreamWriter writer = new($"./cache/lock/{channel.Id}.ibcd");
             writer.Write(JsonConvert.SerializeObject(data));
@@ -59,7 +65,9 @@ namespace InsanityBot.Commands.Moderation.Locking
         public static ChannelData GetCachedChannelData(this DiscordChannel channel)
         {
             if (!File.Exists($"./cache/lock/{channel.Id}.ibcd"))
+            {
                 return ChannelData.CreateNew();
+            }
 
             StreamReader reader = new($"./cache/lock/{channel.Id}.ibcd");
             return JsonConvert.DeserializeObject<ChannelData>(reader.ReadToEnd());

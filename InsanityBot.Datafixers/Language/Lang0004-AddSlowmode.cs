@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 using Helium.Commons.Logging;
 
@@ -20,18 +15,20 @@ namespace InsanityBot.Datafixers.Language
     */
     public class Lang0004_AddSlowmode : IDatafixer<LanguageConfiguration>
     {
-        public String NewDataVersion { get => "2.0.0-dev.00020"; }
+        public String NewDataVersion => "2.0.0-dev.00020";
 
-        public String OldDataVersion { get => "2.0.0-dev.00018"; }
+        public String OldDataVersion => "2.0.0-dev.00018";
 
-        public UInt32 DatafixerId { get => 3; }
+        public UInt32 DatafixerId => 3;
 
-        public Boolean BreakingChange { get => false; }
+        public Boolean BreakingChange => false;
 
         public DatafixerDowngradeResult DowngradeData(ref LanguageConfiguration data)
         {
             if (data.DataVersion == "2.0.0-dev.00018")
+            {
                 return DatafixerDowngradeResult.AlreadyDowngraded;
+            }
 
             data.Configuration.Remove("insanitybot.moderation.slowmode.success");
             data.Configuration.Remove("insanitybot.moderation.slowmode.failure");
@@ -44,7 +41,9 @@ namespace InsanityBot.Datafixers.Language
         public LanguageConfiguration ExportDowngradedData(LanguageConfiguration data)
         {
             if (data.DataVersion == "2.0.0-dev.00018")
+            {
                 return data;
+            }
 
             data.Configuration.Remove("insanitybot.moderation.slowmode.success");
             data.Configuration.Remove("insanitybot.moderation.slowmode.failure");
@@ -57,7 +56,9 @@ namespace InsanityBot.Datafixers.Language
         public LanguageConfiguration ExportUpgradedData(LanguageConfiguration data)
         {
             if (data.DataVersion != "2.0.0-dev.00018")
+            {
                 return data;
+            }
 
             data.Configuration.Add("insanitybot.moderation.slowmode.success", "{CHANNEL} slowmode was set to {TIME}.");
             data.Configuration.Add("insanitybot.moderation.slowmode.failure", "Could not set slowmode for {CHANNEL}.");
@@ -70,7 +71,9 @@ namespace InsanityBot.Datafixers.Language
         public DatafixerUpgradeResult UpgradeData(ref LanguageConfiguration data)
         {
             if (data.DataVersion != "2.0.0-dev.00018")
+            {
                 return DatafixerUpgradeResult.AlreadyUpgraded;
+            }
 
             data.Configuration.Add("insanitybot.moderation.slowmode.success", "{CHANNEL} slowmode was set to {TIME}.");
             data.Configuration.Add("insanitybot.moderation.slowmode.failure", "Could not set slowmode for {CHANNEL}.");

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace InsanityBot.Utility.Config
 {
@@ -11,8 +10,8 @@ namespace InsanityBot.Utility.Config
 
         public List<String> Prefixes { get; set; }
 
-        public String Token { get; set; } 
-        public UInt64 GuildId { get; set; } 
+        public String Token { get; set; }
+        public UInt64 GuildId { get; set; }
 
         public Object this[String Identifier]
         {

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
@@ -13,61 +10,70 @@ namespace InsanityBot.Utility.Permissions.Data
     {
         public UInt64 Parent { get; set; }
 
-        public RolePermissions() : base()
-        {
-            Parent = 0;
-        }
+        public RolePermissions() : base() => Parent = 0;
 
-        public RolePermissions(UInt64 id) : base()
-        {
-            Parent = 0;
-        }
+        public RolePermissions(UInt64 id) : base() => Parent = 0;
 
-        public static RolePermissions operator + (RolePermissions left, RolePermissions right)
+        public static RolePermissions operator +(RolePermissions left, RolePermissions right)
         {
             RolePermissions final = left;
             final.Parent = right.SnowflakeIdentifier;
             return final;
         }
 
-        public static RolePermissions operator - (RolePermissions left, RolePermissions right)
+        public static RolePermissions operator -(RolePermissions left, RolePermissions right)
         {
             RolePermissions final = left;
             if (final.Parent == right.SnowflakeIdentifier)
+            {
                 final.Parent = 0;
+            }
+
             return final;
         }
 
-        public static RolePermissions operator + (RolePermissions left, String right)
+        public static RolePermissions operator +(RolePermissions left, String right)
         {
             RolePermissions final = left;
             if (final[right] != PermissionValue.Allowed)
+            {
                 final[right]++;
+            }
+
             return final;
         }
 
-        public static RolePermissions operator - (RolePermissions left, String right)
+        public static RolePermissions operator -(RolePermissions left, String right)
         {
             RolePermissions final = left;
             if (final[right] != PermissionValue.Denied)
+            {
                 final[right]--;
+            }
+
             return final;
         }
 
         public RolePermissions Update(DefaultPermissions defaults)
         {
             if (defaults.UpdateGuid == this.UpdateGuid)
+            {
                 return this;
+            }
 
-            foreach (var v in defaults.Permissions)
+            foreach (KeyValuePair<String, PermissionValue> v in defaults.Permissions)
             {
                 if (!this.Permissions.ContainsKey(v.Key))
+                {
                     this.Permissions.Add(v.Key, PermissionValue.Inherited);
+                }
             }
-            foreach (var v in this.Permissions)
+            foreach (KeyValuePair<String, PermissionValue> v in this.Permissions)
             {
                 if (!defaults.Permissions.ContainsKey(v.Key))
+                {
                     this.Permissions.Remove(v.Key);
+                }
             }
             this.UpdateGuid = defaults.UpdateGuid;
 
@@ -82,7 +88,7 @@ namespace InsanityBot.Utility.Permissions.Data
             permissions.SnowflakeIdentifier = roleId;
             permissions.UpdateGuid = defaults.UpdateGuid;
 
-            foreach(var v in defaults.Permissions)
+            foreach (KeyValuePair<String, PermissionValue> v in defaults.Permissions)
             {
                 permissions.Permissions.Add(v.Key, PermissionValue.Inherited);
             }
@@ -96,13 +102,17 @@ namespace InsanityBot.Utility.Permissions.Data
             RolePermissions permissions = JsonConvert.DeserializeObject<RolePermissions>(reader.ReadToEnd());
             reader.Close();
 
-            if(PermissionSettings.UpdateRolePermissions)
+            if (PermissionSettings.UpdateRolePermissions)
             {
                 DefaultPermissions defaults = DefaultPermissions.Deserialize();
                 if (permissions.UpdateGuid == defaults.UpdateGuid)
+                {
                     return permissions;
+                }
                 else
+                {
                     return permissions.Update(defaults);
+                }
             }
             return permissions;
         }
