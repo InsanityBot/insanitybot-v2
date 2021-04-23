@@ -14,5 +14,6 @@ namespace InsanityBot.Tickets.Kyuu.Tasks
         public delegate Task<Boolean> CategoryPreprocessorTask(UInt64 category, KyuuPreprocessorContext context);
         public delegate Task<Boolean> MessagePreprocessorTask(String message, KyuuPreprocessorContext context);
         public delegate Task<Boolean> CommandPreprocessorTask(String command, KyuuPreprocessorContext context);
+        public delegate Task<Boolean> PreprocessorTask(KyuuPreprocessorContext context);
     }
 }
