@@ -38,7 +38,7 @@ namespace InsanityBot
 
         public static PermissionEngine PermissionEngine;
 
-        public static String Version = "2.0.0-dev.00027";
+        public static String Version = "2.0.0-dev.00028";
     }
 }
 #pragma warning restore CA2211
