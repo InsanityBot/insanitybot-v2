@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -20,12 +18,18 @@ namespace InsanityBot.Utility.Permissions
             UserPermissions permissions = activeEngine.GetUserPermissions(member.Id);
 
             if (permissions.IsAdministrator)
+            {
                 return true;
+            }
 
             if (permissions[permission] == PermissionValue.Allowed)
+            {
                 return true;
+            }
             else if (permissions[permission] == PermissionValue.Denied)
+            {
                 return false;
+            }
 
             List<UInt64> roles = permissions.AssignedRoles.ToList();
 
@@ -38,12 +42,18 @@ namespace InsanityBot.Utility.Permissions
                 RolePermissions rolePermissions = activeEngine.GetRolePermissions(roles[0]);
 
                 if (rolePermissions.IsAdministrator || rolePermissions[permission] == PermissionValue.Allowed)
+                {
                     return true;
+                }
                 else if (rolePermissions[permission] == PermissionValue.Denied)
+                {
                     return false;
+                }
 
                 if (rolePermissions.Parent != 0)
+                {
                     roles.Add(rolePermissions.Parent);
+                }
 
                 roles.Remove(roles[0]);
             } while (roles.Count != 0);
@@ -51,7 +61,9 @@ namespace InsanityBot.Utility.Permissions
             DefaultPermissions defaults = DefaultPermissions.Deserialize();
 
             if (defaults[permission] == PermissionValue.Allowed || defaults.IsAdministrator)
+            {
                 return true;
+            }
 
             return false;
         }

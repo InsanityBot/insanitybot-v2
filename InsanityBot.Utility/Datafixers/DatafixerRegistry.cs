@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 using InsanityBot.Utility.Converters;
 using InsanityBot.Utility.Datafixers.Reference;
@@ -62,27 +57,42 @@ namespace InsanityBot.Utility.Datafixers
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode0(Type type)
         {
             if (!IsSorted)
+            {
                 SortRawRegistryMethodHandler();
+            }
+
             if (!SortedRegistry.ContainsKey(type))
+            {
                 return null;
+            }
+
             return SortedRegistry[type].ToUnsorted(type);
         }
-        
+
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode0(String typename)
         {
             if (!IsSorted)
+            {
                 SortRawRegistryMethodHandler();
+            }
+
             if (!SortedRegistry.ContainsKey(Type.GetType(typename)))
+            {
                 return null;
+            }
+
             return SortedRegistry[Type.GetType(typename)].ToUnsorted(Type.GetType(typename));
         }
 
         private void SortRawRegistry_Mode0()
         {
-            foreach(var v in RawRegistry)
+            foreach (DatafixerRegistryEntry v in RawRegistry)
             {
                 if (!SortedRegistry.ContainsKey(v.DatafixerTarget))
+                {
                     SortedRegistry.Add(v.DatafixerTarget, new List<SortedDatafixerRegistryEntry>());
+                }
+
                 SortedRegistry[v.DatafixerTarget].Add(v.ToSortedDatafixerRegistryEntry());
             }
             RawRegistry.Clear();
@@ -93,19 +103,25 @@ namespace InsanityBot.Utility.Datafixers
         {
             RawRegistry.Add(item);
             if (IsSorted)
+            {
                 IsSorted = false;
+            }
         }
 
         private void RemoveRegistryItem_Mode0(DatafixerRegistryEntry item)
         {
             if (RawRegistry.Contains(item))
+            {
                 RawRegistry.Remove(item);
-
+            }
             else if (SortedRegistry[item.DatafixerTarget].Contains(item.ToSortedDatafixerRegistryEntry()))
+            {
                 SortedRegistry[item.DatafixerTarget].Remove(item.ToSortedDatafixerRegistryEntry());
-
+            }
             else
+            {
                 throw new DatafixerNotFoundException("Attempted to remove a datafixer from the registry that was not registered", item);
+            }
         }
         #endregion
 
@@ -114,27 +130,42 @@ namespace InsanityBot.Utility.Datafixers
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode1(Type type)
         {
             if (!IsSorted)
+            {
                 SortRawRegistryMethodHandler();
+            }
+
             if (!SortedRegistry.ContainsKey(type))
+            {
                 return null;
+            }
+
             return SortedRegistry[type].ToUnsorted(type);
         }
 
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode1(String typename)
         {
             if (!IsSorted)
+            {
                 SortRawRegistryMethodHandler();
+            }
+
             if (!SortedRegistry.ContainsKey(Type.GetType(typename)))
+            {
                 return null;
+            }
+
             return SortedRegistry[Type.GetType(typename)].ToUnsorted(Type.GetType(typename));
         }
 
         private void SortRawRegistry_Mode1()
         {
-            foreach (var v in RawRegistry)
+            foreach (DatafixerRegistryEntry v in RawRegistry)
             {
                 if (!SortedRegistry.ContainsKey(v.DatafixerTarget))
+                {
                     SortedRegistry.Add(v.DatafixerTarget, new List<SortedDatafixerRegistryEntry>());
+                }
+
                 SortedRegistry[v.DatafixerTarget].Add(v.ToSortedDatafixerRegistryEntry());
             }
             IsSorted = true;
@@ -155,30 +186,15 @@ namespace InsanityBot.Utility.Datafixers
 
         // interact with the private registry
         #region API
-        public IEnumerable<DatafixerRegistryEntry> GetDatafixers(Type type)
-        {
-            return GetRequiredDatafixersByTypeMethodHandler(type);
-        }
+        public IEnumerable<DatafixerRegistryEntry> GetDatafixers(Type type) => GetRequiredDatafixersByTypeMethodHandler(type);
 
-        public IEnumerable<DatafixerRegistryEntry> GetDatafixers(String typename)
-        {
-            return GetRequiredDatafixersByStringMethodHandler(typename);
-        }
+        public IEnumerable<DatafixerRegistryEntry> GetDatafixers(String typename) => GetRequiredDatafixersByStringMethodHandler(typename);
 
-        public void SortDatafixers()
-        {
-            SortRawRegistryMethodHandler();
-        }
+        public void SortDatafixers() => SortRawRegistryMethodHandler();
 
-        public void AddDatafixer(DatafixerRegistryEntry datafixer)
-        {
-            AddRegistryItemMethodHandler(datafixer);
-        }
+        public void AddDatafixer(DatafixerRegistryEntry datafixer) => AddRegistryItemMethodHandler(datafixer);
 
-        public void RemoveDatafixer(DatafixerRegistryEntry datafixer)
-        {
-            RemoveRegistryItemMethodHandler(datafixer);
-        }
+        public void RemoveDatafixer(DatafixerRegistryEntry datafixer) => RemoveRegistryItemMethodHandler(datafixer);
 
         internal Dictionary<Type, List<SortedDatafixerRegistryEntry>> GetAllDatafixers()
         {

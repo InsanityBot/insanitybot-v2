@@ -43,13 +43,15 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<BlacklistOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                            await ExecuteBlacklistCommand(ctx, member,
-                                String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                        await ExecuteBlacklistCommand(ctx, member,
+                            String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
             catch (Exception e)

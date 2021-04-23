@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace InsanityBot.Utility
 {
-    interface ICacheHandler<T, U> where T : ICacheable
+    internal interface ICacheHandler<T, U> where T : ICacheable
     {
         public IEnumerable<T> Cache { get; set; }
 

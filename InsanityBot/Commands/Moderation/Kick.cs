@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -16,12 +13,12 @@ using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
+using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
-    class Kick : BaseCommandModule
+    internal class Kick : BaseCommandModule
     {
         [Command("kick")]
         public async Task KickCommand(CommandContext ctx,
@@ -30,7 +27,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String arguments = "usedefault")
         {
-            if(arguments.StartsWith('-'))
+            if (arguments.StartsWith('-'))
             {
                 await ParseKickCommand(ctx, member, arguments);
                 return;
@@ -46,7 +43,9 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<KickOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
@@ -123,15 +122,20 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
 
-                if(Invite || DmMember)
+                if (Invite || DmMember)
                 {
-                    var channel = await member.CreateDmChannelAsync();
+                    DiscordDmChannel channel = await member.CreateDmChannelAsync();
                     if (DmMember)
+                    {
                         await channel.SendMessageAsync(GetReason(GetFormattedString(
                             InsanityBot.LanguageConfig["insanitybot.moderation.kick.reason"],
                             ctx, member), KickReason));
-                    if(Invite)
+                    }
+
+                    if (Invite)
+                    {
                         await channel.SendMessageAsync((await ctx.Channel.CreateInviteAsync()).ToString());
+                    }
                 }
 
                 _ = member.RemoveAsync(KickReason);
@@ -154,8 +158,10 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if(!Silent)
+                if (!Silent)
+                {
                     await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
+                }
             }
         }
     }

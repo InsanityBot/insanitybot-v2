@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 using Helium.Commons.Logging;
 
@@ -17,18 +15,20 @@ namespace InsanityBot.Datafixers.Main
     */
     public class Main0001_AddModlogScrolling : IDatafixer<MainConfiguration>
     {
-        public String NewDataVersion { get => "2.0.0-dev.00016"; }
+        public String NewDataVersion => "2.0.0-dev.00016";
 
-        public String OldDataVersion { get => "2.0.0-dev.00014"; }
+        public String OldDataVersion => "2.0.0-dev.00014";
 
-        public UInt32 DatafixerId { get => 0; }
+        public UInt32 DatafixerId => 0;
 
-        public Boolean BreakingChange { get => false; }
+        public Boolean BreakingChange => false;
 
         public DatafixerDowngradeResult DowngradeData(ref MainConfiguration data)
         {
             if (data.DataVersion == "2.0.0-dev.00014")
+            {
                 return DatafixerDowngradeResult.AlreadyDowngraded;
+            }
 
             data.Configuration.Remove("insanitybot.modlog.allow_scrolling");
             data.Configuration.Remove("insanitybot.modlog.allow_verballog_scrolling");
@@ -43,7 +43,9 @@ namespace InsanityBot.Datafixers.Main
         public MainConfiguration ExportDowngradedData(MainConfiguration data)
         {
             if (data.DataVersion == "2.0.0-dev.00014")
+            {
                 return data;
+            }
 
             data.Configuration.Remove("insanitybot.modlog.allow_scrolling");
             data.Configuration.Remove("insanitybot.modlog.allow_verballog_scrolling");
@@ -58,7 +60,9 @@ namespace InsanityBot.Datafixers.Main
         public MainConfiguration ExportUpgradedData(MainConfiguration data)
         {
             if (data.DataVersion != "2.0.0-dev.00014")
+            {
                 return data;
+            }
 
             data.Configuration.Add("insanitybot.modlog.allow_scrolling", true);
             data.Configuration.Add("insanitybot.modlog.allow_verballog_scrolling", true);
@@ -73,7 +77,9 @@ namespace InsanityBot.Datafixers.Main
         public DatafixerUpgradeResult UpgradeData(ref MainConfiguration data)
         {
             if (data.DataVersion != "2.0.0-dev.00014")
+            {
                 return DatafixerUpgradeResult.AlreadyUpgraded;
+            }
 
             data.Configuration.Add("insanitybot.modlog.allow_scrolling", true);
             data.Configuration.Add("insanitybot.modlog.allow_verballog_scrolling", true);

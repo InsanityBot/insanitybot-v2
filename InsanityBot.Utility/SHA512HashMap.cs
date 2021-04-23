@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-
-using Newtonsoft.Json;
 
 namespace InsanityBot.Utility
 {
@@ -21,15 +14,22 @@ namespace InsanityBot.Utility
             get
             {
                 if (!ContainsKey(key))
+                {
                     return NullValue;
+                }
+
                 return base[key];
             }
             set
             {
                 if (ContainsKey(key))
+                {
                     base[key] = value;
+                }
                 else
+                {
                     Add(key, value);
+                }
             }
         }
 

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
@@ -37,7 +33,9 @@ namespace InsanityBot.Utility.Timers
             //knowing that it exists, proceed to read contents
 
             if (Directory.GetFiles("./cache/timers").Length == 0)
+            {
                 return;
+            }
 
             //ok, it exists and has file contents. time to read.
 
@@ -61,11 +59,18 @@ namespace InsanityBot.Utility.Timers
             foreach (Timer t in ActiveTimers)
             {
                 if (t == null)
+                {
                     continue;
+                }
+
                 if (!t.CheckExpiry())
+                {
                     continue;
+                }
                 else
+                {
                     return;
+                }
             }
 
             Countdown.Start();
@@ -78,7 +83,10 @@ namespace InsanityBot.Utility.Timers
             StreamWriter writer;
 
             if (!File.Exists($"./cache/timers/{timer.Identifier}"))
+            {
                 File.Create($"./cache/timers/{timer.Identifier}").Close();
+            }
+
             writer = new StreamWriter(File.Open($"./cache/timers/{timer.Identifier}", FileMode.Truncate));
 
             writer.Write(JsonConvert.SerializeObject(timer));
@@ -96,10 +104,7 @@ namespace InsanityBot.Utility.Timers
             Countdown.Start();
         }
 
-        public static void DisableTimer()
-        {
-            Countdown.Stop();
-        }
+        public static void DisableTimer() => Countdown.Stop();
 
         private static System.Timers.Timer Countdown { get; set; }
     }

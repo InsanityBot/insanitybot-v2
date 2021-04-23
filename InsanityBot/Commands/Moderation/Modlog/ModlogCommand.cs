@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity.Enums;
+using DSharpPlus.Interactivity.Extensions;
 
 using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
@@ -14,10 +14,8 @@ using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
-using DSharpPlus.Interactivity.Extensions;
-using DSharpPlus.Interactivity.Enums;
+using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation.Modlog
 {
@@ -68,7 +66,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         modlogEmbed.Color = DiscordColor.Red;
                         String embedDescription = user.CreateModlogDescription();
 
-                        var pages = InsanityBot.Interactivity.GeneratePagesInEmbed(embedDescription, SplitType.Line, modlogEmbed);
+                        IEnumerable<DSharpPlus.Interactivity.Page> pages = InsanityBot.Interactivity.GeneratePagesInEmbed(embedDescription, SplitType.Line, modlogEmbed);
 
                         await ctx.Channel.SendPaginatedMessageAsync(ctx.Member, pages);
                     }

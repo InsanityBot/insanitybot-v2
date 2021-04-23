@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -15,8 +12,8 @@ using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
+using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation.Modlog
 {
@@ -28,7 +25,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             String arguments = "usedefault")
         {
 
-            if(arguments.StartsWith('-'))
+            if (arguments.StartsWith('-'))
             {
                 await ParseClearModlogCommand(ctx, member, arguments);
                 return;
@@ -44,7 +41,9 @@ namespace InsanityBot.Commands.Moderation.Modlog
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<ClearModlogOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
@@ -82,7 +81,9 @@ namespace InsanityBot.Commands.Moderation.Modlog
             }
 
             if (silent)
+            {
                 await ctx.Message.DeleteAsync();
+            }
 
             String ClearReason = reason switch
             {
@@ -121,7 +122,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
@@ -138,7 +139,9 @@ namespace InsanityBot.Commands.Moderation.Modlog
             finally
             {
                 if (!silent)
+                {
                     await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
+                }
             }
         }
     }

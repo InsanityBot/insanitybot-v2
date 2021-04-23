@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -7,14 +8,15 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
-using InsanityBot.Utility.Timers;
-using Microsoft.Extensions.Logging;
-using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
-using System.IO;
+using InsanityBot.Utility.Permissions;
+using InsanityBot.Utility.Timers;
+
+using Microsoft.Extensions.Logging;
+
+using static System.Convert;
+using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -47,7 +49,9 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<TempbanOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
@@ -151,10 +155,14 @@ namespace InsanityBot.Commands.Moderation
             finally
             {
                 if (embedBuilder == null)
+                {
                     InsanityBot.Client.Logger.LogError(new EventId(1151, "Tempban"),
                         "Could not execute tempban command, an unknown exception occured.");
+                }
                 else
+                {
                     await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
+                }
             }
         }
 
@@ -162,7 +170,9 @@ namespace InsanityBot.Commands.Moderation
         public static void InitializeUnban(String Identifier, Guid guid)
         {
             if (!Identifier.StartsWith("tempban_"))
+            {
                 return;
+            }
 
             try
             {

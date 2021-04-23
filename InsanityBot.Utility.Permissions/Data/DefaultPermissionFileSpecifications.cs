@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InsanityBot.Utility.Permissions.Data
+﻿namespace InsanityBot.Utility.Permissions.Data
 {
     public static class DefaultPermissionFileSpecifications
     {
@@ -49,9 +43,13 @@ namespace InsanityBot.Utility.Permissions.Data
             GetFilePath = () =>
             {
                 if (PermissionSettings.PrecompiledScripts)
+                {
                     return "./cache/scripts/compiled/decl.json";
+                }
                 else
+                {
                     return "./data/scripts/decl.json";
+                }
             }
         };
     }

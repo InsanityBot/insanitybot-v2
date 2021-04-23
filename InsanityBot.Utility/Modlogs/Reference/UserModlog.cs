@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
 
 using Newtonsoft.Json;
 
@@ -17,7 +15,7 @@ namespace InsanityBot.Utility.Modlogs.Reference
 
 
         public List<ModlogEntry> Modlog { get; set; }
-        public List<VerbalModlogEntry> VerbalLog { get; set; } 
+        public List<VerbalModlogEntry> VerbalLog { get; set; }
 
         [JsonConstructor]
         public UserModlog() { }

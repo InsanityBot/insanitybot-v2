@@ -3,16 +3,16 @@ using System.Threading.Tasks;
 
 using CommandLine;
 
-using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
+using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Permissions
 {
@@ -70,7 +70,9 @@ namespace InsanityBot.Commands.Permissions
                 }
 
                 if (silent)
+                {
                     await ctx.Message.DeleteAsync();
+                }
 
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = new()
@@ -121,7 +123,9 @@ namespace InsanityBot.Commands.Permissions
                 finally
                 {
                     if (!silent)
+                    {
                         await ctx.Channel.SendMessageAsync(embedBuilder.Build());
+                    }
 
                     _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());

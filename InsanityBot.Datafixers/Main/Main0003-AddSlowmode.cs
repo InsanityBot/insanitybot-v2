@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Helium.Commons.Logging;
 
@@ -20,18 +16,20 @@ namespace InsanityBot.Datafixers.Main
     */
     public class Main0003_AddSlowmode : IDatafixer<MainConfiguration>
     {
-        public String NewDataVersion { get => "2.0.0-dev.00020"; }
+        public String NewDataVersion => "2.0.0-dev.00020";
 
-        public String OldDataVersion { get => "2.0.0-dev.00017"; }
+        public String OldDataVersion => "2.0.0-dev.00017";
 
-        public UInt32 DatafixerId { get => 2; }
+        public UInt32 DatafixerId => 2;
 
-        public Boolean BreakingChange { get => false; }
+        public Boolean BreakingChange => false;
 
         public DatafixerDowngradeResult DowngradeData(ref MainConfiguration data)
         {
             if (data.DataVersion == "2.0.0-dev.00017")
+            {
                 return DatafixerDowngradeResult.AlreadyDowngraded;
+            }
 
             data.Configuration.Add("insanitybot.identifiers.modlog.scroll_right_emote_id", data["insanitybot.identifiers.interactivity.scroll_right_emote_id"]);
             data.Configuration.Add("insanitybot.identifiers.modlog.scroll_left_emote_id", data["insanitybot.identifiers.interactivity.scroll_left_emote_id"]);
@@ -52,7 +50,9 @@ namespace InsanityBot.Datafixers.Main
         public MainConfiguration ExportDowngradedData(MainConfiguration data)
         {
             if (data.DataVersion == "2.0.0-dev.00017")
+            {
                 return data;
+            }
 
             data.Configuration.Add("insanitybot.identifiers.modlog.scroll_right_emote_id", data["insanitybot.identifiers.interactivity.scroll_right_emote_id"]);
             data.Configuration.Add("insanitybot.identifiers.modlog.scroll_left_emote_id", data["insanitybot.identifiers.interactivity.scroll_left_emote_id"]);
@@ -73,7 +73,9 @@ namespace InsanityBot.Datafixers.Main
         public MainConfiguration ExportUpgradedData(MainConfiguration data)
         {
             if (data.DataVersion != "2.0.0-dev.00017")
+            {
                 return data;
+            }
 
             data.Configuration.Add("insanitybot.identifiers.interactivity.scroll_right_emote_id", data["insanitybot.identifiers.modlog.scroll_right_emote_id"]);
             data.Configuration.Add("insanitybot.identifiers.interactivity.scroll_left_emote_id", data["insanitybot.identifiers.modlog.scroll_left_emote_id"]);
@@ -94,7 +96,9 @@ namespace InsanityBot.Datafixers.Main
         public DatafixerUpgradeResult UpgradeData(ref MainConfiguration data)
         {
             if (data.DataVersion != "2.0.0-dev.00017")
+            {
                 return DatafixerUpgradeResult.AlreadyUpgraded;
+            }
 
             data.Configuration.Add("insanitybot.identifiers.interactivity.scroll_right_emote_id", data["insanitybot.identifiers.modlog.scroll_right_emote_id"]);
             data.Configuration.Add("insanitybot.identifiers.interactivity.scroll_left_emote_id", data["insanitybot.identifiers.modlog.scroll_left_emote_id"]);

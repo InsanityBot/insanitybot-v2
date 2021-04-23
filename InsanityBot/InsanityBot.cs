@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -10,11 +7,8 @@ using DSharpPlus.Interactivity;
 
 using InsanityBot.Core.Logger;
 using InsanityBot.Utility.Config;
-using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
-
-using Microsoft.Extensions.Logging;
 
 #pragma warning disable CA2211
 namespace InsanityBot

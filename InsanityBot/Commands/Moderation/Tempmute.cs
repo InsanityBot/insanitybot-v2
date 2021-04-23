@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -16,9 +15,8 @@ using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
 
-using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
-using System.IO;
+using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -28,18 +26,18 @@ namespace InsanityBot.Commands.Moderation
         [Aliases("temp-mute")]
         [Description("Temporarily mutes an user.")]
         public async Task TempmuteCommand(CommandContext ctx,
-            
+
             [Description("The user to mute")]
             DiscordMember member,
-            
+
             [Description("Duration of the mute")]
             String time,
-            
+
             [Description("Reason of the mute")]
             [RemainingText]
             String Reason = "usedefault")
         {
-            if(time.StartsWith('-'))
+            if (time.StartsWith('-'))
             {
                 await ParseTempmuteCommand(ctx, member, String.Join(' ', time, Reason));
                 return;
@@ -57,7 +55,9 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<TempmuteOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
@@ -162,11 +162,15 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if(embedBuilder == null)
+                if (embedBuilder == null)
+                {
                     InsanityBot.Client.Logger.LogError(new EventId(1131, "Tempmute"),
                         "Could not execute tempmute command, an unknown exception occured.");
+                }
                 else
+                {
                     await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
+                }
             }
         }
 
@@ -174,7 +178,9 @@ namespace InsanityBot.Commands.Moderation
         public static void InitializeUnmute(String Identifier, Guid guid)
         {
             if (!Identifier.StartsWith("tempmute_"))
+            {
                 return;
+            }
 
             try
             {
@@ -185,7 +191,7 @@ namespace InsanityBot.Commands.Moderation
 
                 UnmuteCompletedEvent();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1132, "Unmute"), $"Could not unmute user {Identifier[9..]}");
                 Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");

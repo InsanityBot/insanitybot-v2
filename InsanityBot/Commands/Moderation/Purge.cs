@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,7 +27,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String arguments = "usedefault")
         {
-            if(arguments.StartsWith('-'))
+            if (arguments.StartsWith('-'))
             {
                 await ParsePurgeCommand(ctx, messageCount, arguments);
                 return;
@@ -45,7 +43,9 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<PurgeOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
@@ -76,7 +76,7 @@ namespace InsanityBot.Commands.Moderation
             Boolean silent,
             String reason)
         {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.purge"))
+            if (!ctx.Member.HasPermission("insanitybot.moderation.purge"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -84,7 +84,9 @@ namespace InsanityBot.Commands.Moderation
 
             //if silent delete command
             if (silent)
+            {
                 await ctx.Message.DeleteAsync();
+            }
 
             String ModlogEmbedReason = reason switch
             {
@@ -108,12 +110,12 @@ namespace InsanityBot.Commands.Moderation
 
             try
             {
-                Byte batches = (Byte)(messageCount / 100), 
+                Byte batches = (Byte)(messageCount / 100),
                     leftover = (Byte)((messageCount % 100) + 1);
 
                 IReadOnlyList<DiscordMessage> messageHolder = null;
 
-                for(Byte b = 0; b < batches; b++)
+                for (Byte b = 0; b < batches; b++)
                 {
                     messageHolder = await ctx.Channel.GetMessagesAsync(100);
                     _ = ctx.Channel.DeleteMessagesAsync(messageHolder);
@@ -135,7 +137,7 @@ namespace InsanityBot.Commands.Moderation
                 _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
                     .SendMessageAsync(embed: moderationEmbedBuilder.Build());
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 tmpEmbedBuilder = new DiscordEmbedBuilder
                 {
@@ -150,9 +152,9 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if(!silent)
+                if (!silent)
                 {
-                    var msg = await ctx.Channel.SendMessageAsync(embed: tmpEmbedBuilder.Build());
+                    DiscordMessage msg = await ctx.Channel.SendMessageAsync(embed: tmpEmbedBuilder.Build());
                     Thread.Sleep(5000);
                     await msg.DeleteAsync();
                 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using CommandLine;
@@ -22,16 +20,10 @@ namespace InsanityBot.Commands.Moderation.Locking
     public class Unlock : BaseCommandModule
     {
         [Command("unlock")]
-        public async Task UnlockCommand(CommandContext ctx)
-        {
-            await UnlockCommand(ctx, ctx.Channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
-        }
+        public async Task UnlockCommand(CommandContext ctx) => await UnlockCommand(ctx, ctx.Channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
 
         [Command("unlock")]
-        public async Task UnlockCommand(CommandContext ctx, DiscordChannel channel)
-        {
-            await UnlockCommand(ctx, channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
-        }
+        public async Task UnlockCommand(CommandContext ctx, DiscordChannel channel) => await UnlockCommand(ctx, channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
 
         [Command("unlock")]
         public async Task UnlockCommand(CommandContext ctx, String args)
@@ -41,7 +33,9 @@ namespace InsanityBot.Commands.Moderation.Locking
                 String cmdArguments = args;
 
                 if (!args.Contains("-r") && !args.Contains("--reason"))
+                {
                     cmdArguments += " --reason usedefault";
+                }
 
                 await Parser.Default.ParseArguments<LockOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
@@ -68,10 +62,7 @@ namespace InsanityBot.Commands.Moderation.Locking
         }
 
         [Command("unlock")]
-        public async Task UnlockCommand(CommandContext ctx, DiscordChannel channel, String args)
-        {
-            await UnlockCommand(ctx, args + $" -c {channel.Id}");
-        }
+        public async Task UnlockCommand(CommandContext ctx, DiscordChannel channel, String args) => await UnlockCommand(ctx, args + $" -c {channel.Id}");
 
         private async Task UnlockCommand(CommandContext ctx, DiscordChannel channel, String reason = "usedefault", Boolean silent = false)
         {
@@ -104,22 +95,30 @@ namespace InsanityBot.Commands.Moderation.Locking
 
             try
             {
-                var overwrites = channel.GetChannelData();
-                var cachedData = channel.GetCachedChannelData();
+                List<DiscordOverwrite> overwrites = channel.GetChannelData();
+                ChannelData cachedData = channel.GetCachedChannelData();
 
                 UInt64 exemptRole;
                 if ((exemptRole = Convert.ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.lock_exempt_role_id"])) != 0)
+                {
                     await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(exemptRole), allow: DSharpPlus.Permissions.None, reason:
                         "InsanityBot - unlocking channel, removing whitelist");
+                }
 
-                foreach (var v in cachedData.LockedRoles)
+                foreach (UInt64 v in cachedData.LockedRoles)
+                {
                     await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), deny: DSharpPlus.Permissions.None, reason: "InsanityBot - unlocking channel, removing permission overwrites");
+                }
 
-                foreach (var v in cachedData.LockedRoles)
+                foreach (UInt64 v in cachedData.LockedRoles)
+                {
                     await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), allow: DSharpPlus.Permissions.None, reason: "InsanityBot - unlocking channel, removing permission overwrites");
+                }
 
-                foreach (var v in overwrites)
+                foreach (DiscordOverwrite v in overwrites)
+                {
                     await channel.AddOverwriteAsync(await v.GetRoleAsync(), v.Allowed, v.Denied, "InsanityBot - unlocking channel, restoring previous permissions");
+                }
 
                 embedBuilder = new DiscordEmbedBuilder
                 {
@@ -147,7 +146,9 @@ namespace InsanityBot.Commands.Moderation.Locking
             finally
             {
                 if (!silent)
+                {
                     await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
+                }
             }
         }
     }

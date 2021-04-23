@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
@@ -33,7 +31,7 @@ namespace InsanityBot.Commands.Miscellaneous
             [RemainingText]
             String text)
         {
-            if(!ctx.Member.HasPermission("insanitybot.miscellaneous.say.embed"))
+            if (!ctx.Member.HasPermission("insanitybot.miscellaneous.say.embed"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;

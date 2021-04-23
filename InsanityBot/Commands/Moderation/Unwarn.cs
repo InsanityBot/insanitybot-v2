@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
@@ -26,7 +24,7 @@ namespace InsanityBot.Commands.Moderation
             DiscordMember member,
             Int32 WarningIndex)
         {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.unwarn"))
+            if (!ctx.Member.HasPermission("insanitybot.moderation.unwarn"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -52,7 +50,7 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
@@ -76,13 +74,10 @@ namespace InsanityBot.Commands.Moderation
         public async Task UnwarnCommand(CommandContext ctx,
             DiscordMember member,
             [RemainingText]
-            String WarningText)
-        {
-            await UnwarnCommand(ctx, member,
+            String WarningText) => await UnwarnCommand(ctx, member,
                 member.GetUserModlog().Modlog.IndexOf(member.GetUserModlog().Modlog.FirstOrDefault(md =>
                 {
                     return md.Reason.Contains(WarningText);
                 })));
-        }
     }
 }

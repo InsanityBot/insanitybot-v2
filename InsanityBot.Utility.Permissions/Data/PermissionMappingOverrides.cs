@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
@@ -18,18 +16,18 @@ namespace InsanityBot.Utility.Permissions.Data
 
             Dictionary<Int64, String[]> finalMappings = new();
 
-            foreach(var v in readableMappings)
+            foreach (KeyValuePair<String, String[]> v in readableMappings)
             {
                 Int64 finalMappingValue = PermissionMapping.MappingTranslation.FirstOrDefault(xm => v.Key == xm.Value).Key;
                 finalMappings.Add(finalMappingValue, v.Value);
             }
 
-            return new PermissionMapping 
-            { 
+            return new PermissionMapping
+            {
                 Mappings = finalMappings
             };
         }
 
         // no serialize. this is user input only, for now.
-    } 
+    }
 }

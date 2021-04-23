@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
@@ -23,10 +20,7 @@ namespace InsanityBot.Commands.Moderation.Locking
         public class Whitelist : BaseCommandModule
         {
             [Command("add")]
-            public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role)
-            {
-                await AddWhitelistedRoleCommand(ctx, role, ctx.Channel);
-            }
+            public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await AddWhitelistedRoleCommand(ctx, role, ctx.Channel);
 
             [Command("add")]
             public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
@@ -57,7 +51,9 @@ namespace InsanityBot.Commands.Moderation.Locking
                     ChannelData data = channel.GetCachedChannelData();
 
                     if (data.LockedRoles.Contains(role.Id))
+                    {
                         data.LockedRoles.Remove(role.Id);
+                    }
 
                     if (data.WhitelistedRoles.Contains(role.Id))
                     {
@@ -114,10 +110,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
             }
 
-            public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role)
-            {
-                await RemoveWhitelistedRoleCommand(ctx, role, ctx.Channel);
-            }
+            public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await RemoveWhitelistedRoleCommand(ctx, role, ctx.Channel);
 
             public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
@@ -147,8 +140,9 @@ namespace InsanityBot.Commands.Moderation.Locking
                     ChannelData data = channel.GetCachedChannelData();
 
                     if (data.WhitelistedRoles.Contains(role.Id))
+                    {
                         data.WhitelistedRoles.Remove(role.Id);
-
+                    }
 
                     embedBuilder = new()
                     {
@@ -194,10 +188,7 @@ namespace InsanityBot.Commands.Moderation.Locking
         public class Blacklist : BaseCommandModule
         {
             [Command("add")]
-            public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role)
-            {
-                await AddBlacklistedRoleCommand(ctx, role, ctx.Channel);
-            }
+            public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await AddBlacklistedRoleCommand(ctx, role, ctx.Channel);
 
             [Command("add")]
             public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
@@ -228,7 +219,9 @@ namespace InsanityBot.Commands.Moderation.Locking
                     ChannelData data = channel.GetCachedChannelData();
 
                     if (data.WhitelistedRoles.Contains(role.Id))
+                    {
                         data.WhitelistedRoles.Remove(role.Id);
+                    }
 
                     if (data.LockedRoles.Contains(role.Id))
                     {
@@ -285,10 +278,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
             }
 
-            public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role)
-            {
-                await RemoveBlacklistedRoleCommand(ctx, role, ctx.Channel);
-            }
+            public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await RemoveBlacklistedRoleCommand(ctx, role, ctx.Channel);
 
             public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
@@ -318,8 +308,9 @@ namespace InsanityBot.Commands.Moderation.Locking
                     ChannelData data = channel.GetCachedChannelData();
 
                     if (data.LockedRoles.Contains(role.Id))
+                    {
                         data.LockedRoles.Remove(role.Id);
-
+                    }
 
                     embedBuilder = new()
                     {
