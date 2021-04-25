@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.IO;
 
 using InsanityBot.Tickets.Daemon.Config;
@@ -47,6 +48,20 @@ namespace InsanityBot.Tickets.Daemon
             Configuration = new TicketConfigurationManager().Deserialize("./config/ticket.json");
 
             KyuuLoader.Load();
+        }
+
+        public DiscordTicket GetDiscordTicket(UInt64 Id)
+        {
+            return (from v in Tickets
+                    where v.DiscordChannelId == Id
+                    select v).ToList().First();
+        }
+
+        public DiscordTicketData GetTicketData(UInt64 Id)
+        {
+            return (from v in AdditionalData
+                    where v.Key == GetDiscordTicket(Id).TicketGuid
+                    select v).ToList().First().Value;
         }
 
         public void SaveAll()
