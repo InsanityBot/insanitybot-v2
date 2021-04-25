@@ -18,31 +18,52 @@ namespace InsanityBot.Tickets.Kyuu.Preprocessor
         {
             Identifier = "event",
             Parameters = true,
-            Task = EventDirectiveProcessor.ProcessDirective
+            Task = EventDirectivePreprocessor.ProcessDirective
         };
 
         public static readonly KyuuPreprocessorDirective CategoryDirective = new()
         {
             Identifier = "category",
-            Parameters = true
+            Parameters = true,
+            Task = CategoryDirectivePreprocessor.ProcessDirective
         };
 
         public static readonly KyuuPreprocessorDirective CommandDirective = new()
         {
             Identifier = "command",
-            Parameters = true
+            Parameters = true,
+            Task = CommandDirectivePreprocessor.ProcessDirective
         };
 
         public static readonly KyuuPreprocessorDirective MessageDirective = new()
         {
             Identifier = "message",
-            Parameters = true
+            Parameters = true,
+            Task = MessageDirectivePreprocessor.ProcessDirective
+        };
+
+        public static readonly KyuuPreprocessorDirective PermissionDirective = new()
+        {
+            Identifier = "permission",
+            Parameters = true,
+            Task = PermissionDirectivePreprocessor.ProcessDirective
         };
 
         public static readonly KyuuPreprocessorDirective AdminDirective = new()
         {
             Identifier = "admin",
-            Parameters = false
+            Parameters = false,
+            Task = AdminDirectivePreprocessor.ProcessDirective
+        };
+
+        public static readonly Dictionary<String, KyuuPreprocessorDirective> Directives = new()
+        {
+            { "event", EventDirective },
+            { "category", CategoryDirective },
+            { "command", CommandDirective },
+            { "message", MessageDirective },
+            { "permission", PermissionDirective },
+            { "admin", AdminDirective }
         };
     }
 }

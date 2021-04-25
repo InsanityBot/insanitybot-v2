@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InsanityBot.Tickets.Kyuu.Preprocessor
 {
-    public static class EventDirectiveProcessor
+    public static class EventDirectivePreprocessor
     {
         public static Task<Boolean> ProcessDirective(KyuuPreprocessorContext context)
         {
