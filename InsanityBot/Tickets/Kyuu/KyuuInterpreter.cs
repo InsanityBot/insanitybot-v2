@@ -38,11 +38,15 @@ namespace InsanityBot.Tickets.Kyuu
             } 
             while (line.StartsWith('#'));
             #endregion
-        }
 
-        private void InterpretPreprocessorInstruction(KyuuPreprocessorContext context)
-        {
+            #region Constants
+            reader.BaseStream.Position = 0; // read from start
+            do
+            {
 
+            }
+            while (reader.EndOfStream);
+            #endregion
         }
     }
 }
