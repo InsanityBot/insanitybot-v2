@@ -9,6 +9,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
+using InsanityBot.Commands.Moderation.Modlog.Individual;
 using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
@@ -134,6 +135,40 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 await ctx.Channel.SendMessageAsync(embed: failedModlog.Build());
             }
         }
+
+        [Command("modlog")]
+        public async Task ModlogCommand(CommandContext ctx, String type, DiscordMember member)
+        {
+            switch(type.ToLower())
+            {
+                case "warn":
+                case "warns":
+                case "warnings":
+                    await new WarnModlog().WarnModlogCommand(ctx, member);
+                    break;
+                case "mute":
+                case "mutes":
+                    await new MuteModlog().MuteModlogCommand(ctx, member);
+                    break;
+                case "blacklist":
+                case "blacklists":
+                    await new BlacklistModlog().BlacklistModlogCommand(ctx, member);
+                    break;
+                case "kick":
+                case "kicks":
+                    await new KickModlog().KickModlogCommand(ctx, member);
+                    break;
+                case "ban":
+                case "bans":
+                    await new BanModlog().BanModlogCommand(ctx, member);
+                    break;
+            }
+        }
+
+        [Command("modlog")]
+        public async Task ModlogCommand(CommandContext ctx, String type)
+            => await ModlogCommand(ctx, type, ctx.Member);
+
 
         [Command("modlog")]
         public async Task ModlogCommand(CommandContext ctx)
