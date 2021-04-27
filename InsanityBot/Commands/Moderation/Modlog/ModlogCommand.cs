@@ -139,7 +139,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
         [Command("modlog")]
         public async Task ModlogCommand(CommandContext ctx, String type, DiscordMember member)
         {
-            switch(type.ToLower())
+            switch (type.ToLower())
             {
                 case "warn":
                 case "warns":

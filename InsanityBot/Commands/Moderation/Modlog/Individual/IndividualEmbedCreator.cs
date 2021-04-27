@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using DSharpPlus.Entities;
 
@@ -23,16 +19,20 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
             {
                 for (Int32 b = 0; b < modlog.ModlogEntryCount; b++)
                 {
-                    if(modlog.Modlog[b].Type == type)
+                    if (modlog.Modlog[b].Type == type)
+                    {
                         description += $"{modlog.Modlog[b].Type.ToString().ToUpper()}: {modlog.Modlog[b].Time:yyyy/MM/dd HH:mm:ss} - {modlog.Modlog[b].Reason}\n\n";
+                    }
                 }
             }
             else
             {
                 for (Int32 b = 0; b < Convert.ToInt16(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]); b++)
                 {
-                    if(modlog.Modlog[b].Type == type)
+                    if (modlog.Modlog[b].Type == type)
+                    {
                         description += $"{modlog.Modlog[b].Type.ToString().ToUpper()}: {modlog.Modlog[b].Time:yyyy/MM/dd HH:mm:ss} - {modlog.Modlog[b].Reason}\n\n";
+                    }
                 }
 
 
