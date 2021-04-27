@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
@@ -54,6 +55,51 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 }
                 else
                 {
+                    IEnumerable<ModlogEntry> warns = from v in modlog.Modlog
+                                                     where v.Type == ModlogEntryType.warn
+                                                     select v;
+
+                    IEnumerable<ModlogEntry> mutes = from v in modlog.Modlog
+                                                     where v.Type == ModlogEntryType.mute
+                                                     select v;
+
+                    IEnumerable<ModlogEntry> blacklists = from v in modlog.Modlog
+                                                          where v.Type == ModlogEntryType.blacklist
+                                                          select v;
+
+                    IEnumerable<ModlogEntry> kicks = from v in modlog.Modlog
+                                                     where v.Type == ModlogEntryType.kick
+                                                     select v;
+
+                    IEnumerable<ModlogEntry> bans = from v in modlog.Modlog
+                                                    where v.Type == ModlogEntryType.ban
+                                                    select v;
+
+                    if (warns.Any())
+                    {
+                        modlogEmbed.AddField("Warns", warns.Count().ToString(), true);
+                    }
+
+                    if (mutes.Any())
+                    {
+                        modlogEmbed.AddField("Mutes", mutes.Count().ToString(), true);
+                    }
+
+                    if (blacklists.Any())
+                    {
+                        modlogEmbed.AddField("Blacklists", blacklists.Count().ToString(), true);
+                    }
+
+                    if (kicks.Any())
+                    {
+                        modlogEmbed.AddField("Kicks", kicks.Count().ToString(), true);
+                    }
+
+                    if (bans.Any())
+                    {
+                        modlogEmbed.AddField("Bans", bans.Count().ToString(), true);
+                    }
+
                     if (!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_scrolling"]))
                     {
                         modlogEmbed.Color = DiscordColor.Red;
