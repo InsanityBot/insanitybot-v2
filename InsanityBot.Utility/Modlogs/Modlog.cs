@@ -3,6 +3,7 @@ using System.IO;
 
 using DSharpPlus.Entities;
 
+using InsanityBot.Utility.Exceptions;
 using InsanityBot.Utility.Modlogs.Reference;
 
 using Newtonsoft.Json;
@@ -45,7 +46,9 @@ namespace InsanityBot.Utility.Modlogs
             String text = reader.ReadToEnd();
             reader.Close();
 
-            return JsonConvert.DeserializeObject<UserModlog>(text);
+            UserModlog modlog = JsonConvert.DeserializeObject<UserModlog>(text);
+            modlog.Username = UserName;
+            return modlog;
         }
 
         public static UserModlog Create(String UserName, UInt64 UserId)
@@ -93,7 +96,7 @@ namespace InsanityBot.Utility.Modlogs
                 UserModlog user = Deserialize(member.Username, member.Id);
                 if (user == null)
                 {
-                    Console.WriteLine("bad");
+                    throw new ModlogNotFoundException("Invalid modlog file", member.Id);
                 }
 
                 user.Modlog.Add(new ModlogEntry
