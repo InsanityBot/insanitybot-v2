@@ -2,7 +2,7 @@
 
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Modlogs.Reference;
 
 namespace InsanityBot.Commands.Moderation.Modlog
@@ -11,7 +11,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
     {
         public static String CreateModlogDescription(this DiscordUser user, Boolean paged = true)
         {
-            UserModlog modlog = ((DiscordMember)user).GetUserModlog();
+            _ = user.TryFetchModlog(out UserModlog modlog);
             modlog.Modlog.Reverse(); // display newest first
             String description = "";
 
@@ -40,7 +40,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
         public static String CreateVerballogDescription(this DiscordUser user, Boolean paged = true, Byte page = 0)
         {
-            UserModlog modlog = ((DiscordMember)user).GetUserModlog();
+            _ = user.TryFetchModlog(out UserModlog modlog);
             modlog.VerbalLog.Reverse(); // display newest first
             String description = "";
 

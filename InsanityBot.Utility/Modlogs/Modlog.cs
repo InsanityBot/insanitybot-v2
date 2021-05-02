@@ -48,6 +48,11 @@ namespace InsanityBot.Utility.Modlogs
 
             UserModlog modlog = JsonConvert.DeserializeObject<UserModlog>(text);
             modlog.Username = UserName;
+
+            StreamWriter writer = new($"./data/{UserId}/modlog.json");
+            writer.Write(JsonConvert.SerializeObject(modlog, Formatting.Indented));
+            writer.Close();
+
             return modlog;
         }
 

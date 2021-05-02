@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 
@@ -110,7 +110,7 @@ namespace InsanityBot.Commands.Moderation
 
             try
             {
-                member.AddModlogEntry(ModlogEntryType.kick, KickReason);
+                _ = member.TryAddModlogEntry(ModlogEntryType.kick, KickReason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.success"],

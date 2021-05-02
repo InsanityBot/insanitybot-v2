@@ -8,7 +8,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
@@ -130,7 +130,7 @@ namespace InsanityBot.Commands.Moderation
                 moderationEmbedBuilder.AddField("Timer GUID", callbackTimer.Guid.ToString(), true);
                 TimeHandler.AddTimer(callbackTimer);
 
-                member.AddModlogEntry(ModlogEntryType.mute, MuteReason);
+                _ = member.TryAddModlogEntry(ModlogEntryType.mute, MuteReason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.success"],
