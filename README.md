@@ -39,15 +39,15 @@
   </a>
 </p>
 <p align="center">
-  <a href="#--features">Features</a>
+  <a href="#features">Features</a>
   •
-  <a href="#--commands">Commands</a>
+  <a href="#commands">Commands</a>
   •
-  <a href="#--installation">Installation</a>
+  <a href="#installation">Installation</a>
   •
-  <a href="#--support">Support</a>
+  <a href="#support">Support</a>
   •
-  <a href="#--licence-copyright--tos">Licence & Copyright</a>
+  <a href="#licence-copyright--tos">Licence & Copyright</a>
 </p>
 <h2 align="center">
 Estimated Code Completion Percentage for 2.0 Release: 1.75%
