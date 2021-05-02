@@ -25,13 +25,18 @@ worked on when the slash command API is more mature and stable.
 - Say
 - Embed
 
-
-## Work in Progress
-
 #### Administration
 
 - Advanced permission management
 
+## Work in Progress
+
+#### Tickets
+
+- Ticket categories
+- Response time stats
+- Add/remove users
+- Ticket presets
 
 ## Planned
 
@@ -40,13 +45,6 @@ worked on when the slash command API is more mature and stable.
 - Suggestions
 - Tags 
 - Custom commands
-
-#### Tickets
-
-- Ticket categories
-- Response time stats
-- Add/remove users
-- Ticket presets
 
 #### Experience
 
