@@ -20,6 +20,7 @@ using InsanityBot.Commands.Moderation;
 using InsanityBot.Commands.Moderation.Locking;
 using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
+using InsanityBot.Console.Integrated;
 using InsanityBot.Core.Logger;
 using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
@@ -68,20 +69,20 @@ namespace InsanityBot
             {
                 if (!CommandLineOptions.Interactive)
                 {
-                    Console.WriteLine("Invalid Token. Please provide a valid token in .\\config\\main.json" +
+                    System.Console.WriteLine("Invalid Token. Please provide a valid token in .\\config\\main.json" +
                         "\nPress any key to continue...");
-                    Console.ReadKey();
+                    System.Console.ReadKey();
                     return;
                 }
 
-                Console.Write("Your config does not contain a token. To set a token now, paste your token here. " +
+                System.Console.Write("Your config does not contain a token. To set a token now, paste your token here. " +
                     "To abort and exit InsanityBot, type \"cancel\"\nToken: ");
-                String token = Console.ReadLine();
+                String token = System.Console.ReadLine();
 
                 if (token.ToLower().Trim() == "cancel")
                 {
-                    Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
-                    Console.ReadKey();
+                    System.Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
+                    System.Console.ReadKey();
                     return;
                 }
 
@@ -93,20 +94,20 @@ namespace InsanityBot
             {
                 if (!CommandLineOptions.Interactive)
                 {
-                    Console.WriteLine("Invalid GuildId. Please provide a valid guild ID in .\\config\\main.json" +
+                    System.Console.WriteLine("Invalid GuildId. Please provide a valid guild ID in .\\config\\main.json" +
                         "\nPress any key to continue...");
-                    Console.ReadKey();
+                    System.Console.ReadKey();
                     return;
                 }
 
-                Console.Write("Your config does not contain a valid guild ID. To set a guild ID now, paste your guild ID here. " +
+                System.Console.Write("Your config does not contain a valid guild ID. To set a guild ID now, paste your guild ID here. " +
                     "To abort and exit InsanityBot, type \"cancel\"\nGuild ID: ");
-                String guildId = Console.ReadLine();
+                String guildId = System.Console.ReadLine();
 
                 if (guildId.ToLower().Trim() == "cancel")
                 {
-                    Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
-                    Console.ReadKey();
+                    System.Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
+                    System.Console.ReadKey();
                     return;
                 }
 
@@ -117,9 +118,9 @@ namespace InsanityBot
                 }
                 else
                 {
-                    Console.WriteLine("The provided guild ID could not be parsed. Aborting and exiting InsanityBot.\n" +
+                    System.Console.WriteLine("The provided guild ID could not be parsed. Aborting and exiting InsanityBot.\n" +
                         "Press any key to continue...");
-                    Console.ReadKey();
+                    System.Console.ReadKey();
                     return;
                 }
             }
@@ -236,6 +237,9 @@ namespace InsanityBot
             //start offthread XP management
             // if ((Boolean)Config["insanitybot.modules.experience"])
             ; // not implemented yet
+
+            //start integrated offthread console management - cannot disable
+            _ = Task.Run(() => { IntegratedCommandHandler.Initialize(); });
 
             //start offthread console management
             // if ((Boolean)Config["insanitybot.modules.console"])

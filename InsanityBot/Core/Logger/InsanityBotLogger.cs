@@ -42,35 +42,35 @@ namespace InsanityBot.Core.Logger
             {
                 String ename = eventId.Name;
                 ename = ename?.Length > 12 ? ename?.Substring(0, 12) : ename;
-                Console.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
+                System.Console.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
 
                 switch (logLevel)
                 {
                     case LogLevel.Trace:
-                        Console.ForegroundColor = ConsoleColor.Gray;
+                        System.Console.ForegroundColor = ConsoleColor.Gray;
                         break;
 
                     case LogLevel.Debug:
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        System.Console.ForegroundColor = ConsoleColor.Green;
                         break;
 
                     case LogLevel.Information:
-                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        System.Console.ForegroundColor = ConsoleColor.Magenta;
                         break;
 
                     case LogLevel.Warning:
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        System.Console.ForegroundColor = ConsoleColor.DarkYellow;
                         break;
 
                     case LogLevel.Error:
-                        Console.ForegroundColor = ConsoleColor.Red;
+                        System.Console.ForegroundColor = ConsoleColor.Red;
                         break;
 
                     case LogLevel.Critical:
-                        Console.BackgroundColor = ConsoleColor.Red;
+                        System.Console.BackgroundColor = ConsoleColor.Red;
                         break;
                 }
-                Console.Write(logLevel switch
+                System.Console.Write(logLevel switch
                 {
                     LogLevel.Trace => "[Trace]",
                     LogLevel.Debug => "[Debug]",
@@ -81,15 +81,15 @@ namespace InsanityBot.Core.Logger
                     LogLevel.None => "[None]",
                     _ => "[?????] "
                 });
-                Console.ResetColor();
+                System.Console.ResetColor();
 
-                Console.Write($" [{eventId.Id}/{ename}] ");
+                System.Console.Write($" [{eventId.Id}/{ename}] ");
 
                 String message = formatter(state, exception);
-                Console.WriteLine(message);
+                System.Console.WriteLine(message);
                 if (exception != null)
                 {
-                    Console.WriteLine(exception);
+                    System.Console.WriteLine(exception);
                 }
             }
         }
