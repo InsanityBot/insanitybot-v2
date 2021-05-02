@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
-using InsanityBot.Utility.Modlogs.Reference;
-using InsanityBot.Utility.Modlogs;
 
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
+using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
@@ -32,7 +30,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
 
             try
             {
-                UserModlog modlog = user.GetUserModlog();
+                _ = user.TryFetchModlog(out UserModlog modlog);
 
                 DiscordEmbedBuilder modlogEmbed = new()
                 {

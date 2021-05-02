@@ -8,7 +8,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
@@ -124,7 +124,7 @@ namespace InsanityBot.Commands.Moderation
                 moderationEmbedBuilder.AddField("Timer GUID", callbackTimer.Guid.ToString(), true);
                 TimeHandler.AddTimer(callbackTimer);
 
-                member.AddModlogEntry(ModlogEntryType.ban, BanReason);
+                _ = member.TryAddModlogEntry(ModlogEntryType.ban, BanReason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.ban.success"],
@@ -186,7 +186,7 @@ namespace InsanityBot.Commands.Moderation
             catch (Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1152, "Unban"), $"Could not unban user {Identifier[9..]}");
-                Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
+                System.Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
             }
         }
 

@@ -10,7 +10,7 @@ using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
 using InsanityBot.Commands.Moderation.Modlog.Individual;
-using InsanityBot.Utility.Modlogs;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 
@@ -35,7 +35,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
             try
             {
-                UserModlog modlog = user.GetUserModlog();
+                _ = user.TryFetchModlog(out UserModlog modlog);
 
                 DiscordEmbedBuilder modlogEmbed = new()
                 {
@@ -139,7 +139,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
         [Command("modlog")]
         public async Task ModlogCommand(CommandContext ctx, String type, DiscordMember member)
         {
-            switch(type.ToLower())
+            switch (type.ToLower())
             {
                 case "warn":
                 case "warns":

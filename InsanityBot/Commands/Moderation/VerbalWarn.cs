@@ -7,7 +7,8 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
+using InsanityBot.Utility.Modlogs; // unsafe interface to allow faster method chaining
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
@@ -117,7 +118,7 @@ namespace InsanityBot.Commands.Moderation
 
             try
             {
-                member.AddVerbalModlogEntry(VerbalWarnReason);
+                _ = member.TryAddVerballogEntry(VerbalWarnReason);
 
                 embedBuilder = new DiscordEmbedBuilder
                 {

@@ -6,7 +6,8 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
+using InsanityBot.Utility.Modlogs; // we're using the unsafe interface here to allow faster method chaining
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Permissions;
 
@@ -34,10 +35,10 @@ namespace InsanityBot.Commands.Moderation
 
             try
             {
-                UserModlog modlog = member.GetUserModlog();
+                _ = member.TryFetchModlog(out UserModlog modlog);
                 modlog.Modlog.RemoveAt(WarningIndex);
                 modlog.ModlogEntryCount--;
-                member.SetUserModlog(modlog);
+                _ = member.TrySetModlog(modlog);
 
                 embedBuilder = new DiscordEmbedBuilder
                 {
