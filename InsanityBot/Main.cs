@@ -278,6 +278,7 @@ namespace InsanityBot
             if ((Boolean)Config["insanitybot.modules.miscellaneous"])
             {
                 CommandsExtension.RegisterCommands<Say>();
+                CommandsExtension.RegisterCommands<Embed>();
             }
             if ((Boolean)Config["insanitybot.modules.moderation"])
             {
