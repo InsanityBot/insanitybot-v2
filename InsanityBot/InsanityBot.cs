@@ -5,6 +5,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 
+using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.Core.Logger;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Language;
@@ -37,8 +38,9 @@ namespace InsanityBot
         public static LoggerConfigurationManager LoggerManager;
 
         public static PermissionEngine PermissionEngine;
+        public static EmbedFormatterFactory EmbedFactory;
 
-        public static String Version = "2.0.0-dev.00030";
+        public static String Version = "2.0.0-dev.00031";
     }
 }
 #pragma warning restore CA2211

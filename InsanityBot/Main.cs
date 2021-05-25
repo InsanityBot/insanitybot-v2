@@ -65,6 +65,8 @@ namespace InsanityBot
             //read config from file
             Config = ConfigManager.Deserialize("./config/main.json");
 
+            //validate token and guild id
+            #region token
             if (String.IsNullOrWhiteSpace(Config.Token))
             {
                 if (!CommandLineOptions.Interactive)
@@ -124,11 +126,13 @@ namespace InsanityBot
                     return;
                 }
             }
+            #endregion
 
             LanguageConfig = LanguageManager.Deserialize("./config/lang.json");
             LoggerConfig = LoggerManager.Deserialize("./config/logger.json");
 
             LoggerFactory loggerFactory = new();
+            EmbedFactory = new();
 
 
             //create discord config; increase the cache size if you want though itll take more RAM
@@ -278,6 +282,7 @@ namespace InsanityBot
             if ((Boolean)Config["insanitybot.modules.miscellaneous"])
             {
                 CommandsExtension.RegisterCommands<Say>();
+                CommandsExtension.RegisterCommands<Embed>();
             }
             if ((Boolean)Config["insanitybot.modules.moderation"])
             {
