@@ -275,7 +275,11 @@ namespace InsanityBot.Core.Formatters.Embeds
 						}
 						break;
 					case "title":
-						if(!activeObject || activeObjectName != "fields")
+						if(!activeObject)
+                        {
+							break;
+                        }
+						if(activeObjectName != "fields")
                         {
 							throw new FormatException($"Field 'title' requires to be embedded in a 'fields' object");
                         }

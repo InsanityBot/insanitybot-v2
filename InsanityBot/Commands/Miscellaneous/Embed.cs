@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.Utility.Permissions;
 
 using System;
@@ -26,16 +27,7 @@ namespace InsanityBot.Commands.Miscellaneous
             }
 
             _ = ctx.Message.DeleteAsync();
-            DiscordEmbedBuilder embedBuilder = new()
-            {
-                Description = text,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    Text = "InsanityBot 2020-2021"
-                },
-                Color = DiscordColor.Blurple
-            };
-            _ = ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
+            _ = ctx.Channel.SendMessageAsync((InsanityBot.EmbedFactory.GetFormatter() as EmbedFormatter).Read(text));
         }
     }
 }
