@@ -204,8 +204,8 @@ namespace InsanityBot.Commands.Moderation
             return thing.GetAwaiter().GetResult();
         }
 
-        public static event UnmuteCompletedDelegate UnmuteCompletedEvent;
-        public static event MuteStartingDelegate MuteStartingEvent;
+        public static event TimedActionCompleteEventHandler UnmuteCompletedEvent;
+        public static event TimedActionStartEventHandler MuteStartingEvent;
     }
 
     public class TempmuteOptions : ModerationOptionBase

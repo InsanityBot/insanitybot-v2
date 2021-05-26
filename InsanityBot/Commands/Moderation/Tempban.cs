@@ -196,8 +196,8 @@ namespace InsanityBot.Commands.Moderation
             return thing.GetAwaiter().GetResult();
         }
 
-        public static event UnbanCompletedDelegate UnbanCompletedEvent;
-        public static event BanStartingDelegate BanStartingEvent;
+        public static event TimedActionCompleteEventHandler UnbanCompletedEvent;
+        public static event TimedActionStartEventHandler BanStartingEvent;
     }
 
     public class TempbanOptions : ModerationOptionBase
