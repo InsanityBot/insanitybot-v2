@@ -25,27 +25,23 @@ namespace InsanityBot.Utility.Timers
 
             //knowing that it exists, proceed to read contents
 
-            if (Directory.GetFiles("./cache/timers").Length == 0)
-            {
-                Active = new();
-            }
-            else
-            {
-                StreamReader reader;
+            Active = new();
 
-                foreach (String s in Directory.GetFiles("./cache/timers"))
+            StreamReader reader;
+
+            foreach (String s in Directory.GetFiles("./cache/timers"))
+            {
+                //keep this from throwing a fatal error
+                //if an exception occurs, it just means the timer adding procedure took a little longer than usual
+                try
                 {
-                    //keep this from throwing a fatal error
-                    //if an exception occurs, it just means the timer adding procedure took a little longer than usual
-                    try
-                    {
-                        reader = new StreamReader(File.OpenRead(s));
-                        Active.Add(JsonConvert.DeserializeObject<Timer>(reader.ReadToEnd()));
-                        reader.Close();
-                    }
-                    catch { }
+                    reader = new StreamReader(File.OpenRead(s));
+                    Active.Add(JsonConvert.DeserializeObject<Timer>(reader.ReadToEnd()));
+                    reader.Close();
                 }
+                catch { }
             }
+
 
             Countdown.Start();
         }
