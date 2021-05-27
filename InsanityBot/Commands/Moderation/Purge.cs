@@ -14,8 +14,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-using static System.Convert;
-
 namespace InsanityBot.Commands.Moderation
 {
     public class Purge : BaseCommandModule
@@ -28,7 +26,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String arguments = "usedefault")
         {
-            if (arguments.StartsWith('-'))
+            if(arguments.StartsWith('-'))
             {
                 await ParsePurgeCommand(ctx, messageCount, arguments);
                 return;
@@ -43,7 +41,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -54,7 +52,7 @@ namespace InsanityBot.Commands.Moderation
                         await ExecutePurgeCommand(ctx, messageCount, o.Silent, String.Join(' ', o.Reason));
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -77,14 +75,14 @@ namespace InsanityBot.Commands.Moderation
             Boolean silent,
             String reason)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.purge"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.purge"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
             //if silent delete command
-            if (silent)
+            if(silent)
             {
                 await ctx.Message.DeleteAsync();
             }
@@ -116,7 +114,7 @@ namespace InsanityBot.Commands.Moderation
 
                 IReadOnlyList<DiscordMessage> messageHolder = null;
 
-                for (Byte b = 0; b < batches; b++)
+                for(Byte b = 0; b < batches; b++)
                 {
                     messageHolder = await ctx.Channel.GetMessagesAsync(100);
                     _ = ctx.Channel.DeleteMessagesAsync(messageHolder);
@@ -140,7 +138,7 @@ namespace InsanityBot.Commands.Moderation
                     Embed = moderationEmbedBuilder
                 });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 tmpEmbedBuilder = new DiscordEmbedBuilder
                 {
@@ -155,7 +153,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (!silent)
+                if(!silent)
                 {
                     DiscordMessage msg = await ctx.Channel.SendMessageAsync(embed: tmpEmbedBuilder.Build());
                     Thread.Sleep(5000);

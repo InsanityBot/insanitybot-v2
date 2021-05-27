@@ -15,7 +15,6 @@ using System;
 using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -28,7 +27,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String arguments = "usedefault")
         {
-            if (arguments.StartsWith('-'))
+            if(arguments.StartsWith('-'))
             {
                 await ParseWarnCommand(ctx, target, arguments);
                 return;
@@ -41,7 +40,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -52,7 +51,7 @@ namespace InsanityBot.Commands.Moderation
                         await ExecuteWarn(ctx, target, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -76,14 +75,14 @@ namespace InsanityBot.Commands.Moderation
             Boolean silent,
             Boolean dmMember)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.warn"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.warn"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
             //if silent - delete the warn command
-            if (silent)
+            if(silent)
             {
                 await ctx.Message.DeleteAsync();
             }
@@ -130,7 +129,7 @@ namespace InsanityBot.Commands.Moderation
                     Embed = moderationEmbedBuilder
                 });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
@@ -146,12 +145,12 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (!silent)
+                if(!silent)
                 {
                     await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
                 }
 
-                if (dmMember)
+                if(dmMember)
                 {
                     embedBuilder.Description = GetReason(InsanityBot.LanguageConfig["insanitybot.moderation.warn.reason"], WarnReason);
                     await (await target.CreateDmChannelAsync()).SendMessageAsync(embed: embedBuilder.Build());

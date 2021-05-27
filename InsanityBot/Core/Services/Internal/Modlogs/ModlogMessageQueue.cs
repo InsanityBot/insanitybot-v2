@@ -12,7 +12,7 @@ namespace InsanityBot.Core.Services.Internal.Modlogs
         public ModlogMessageQueue(params (ModlogMessageType type, DiscordChannel channel)[] entries)
         {
             Channels = new();
-            foreach ((ModlogMessageType type, DiscordChannel channel) in entries)
+            foreach((ModlogMessageType type, DiscordChannel channel) in entries)
             {
                 Channels.Add(type, channel);
             }

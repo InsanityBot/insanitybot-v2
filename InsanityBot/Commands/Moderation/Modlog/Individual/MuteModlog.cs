@@ -22,7 +22,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
     {
         public async Task MuteModlogCommand(CommandContext ctx, DiscordMember user)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -42,7 +42,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
                     }
                 };
 
-                if (modlog.ModlogEntryCount == 0)
+                if(modlog.ModlogEntryCount == 0)
                 {
                     modlogEmbed.Color = DiscordColor.SpringGreen;
                     modlogEmbed.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.empty_modlog"],
@@ -51,7 +51,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
                 }
                 else
                 {
-                    if (!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_scrolling"]))
+                    if(!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_scrolling"]))
                     {
                         modlogEmbed.Color = DiscordColor.Red;
                         modlogEmbed.Description = user.CreateModlogDescription(ModlogEntryType.mute, false);
@@ -69,7 +69,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
                     }
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1170, "Modlog"), $"Could not retrieve modlogs: {e}: {e.Message}");
 

@@ -17,7 +17,7 @@ namespace InsanityBot.Utility.Permissions.Data
             get => Permissions[key];
             set
             {
-                if (value == PermissionValue.Inherited)
+                if(value == PermissionValue.Inherited)
                 {
                     Permissions[key] = PermissionValue.Denied; // fall back to denied
                 }
@@ -47,7 +47,7 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             DefaultPermissions retValue = left;
 
-            foreach (PermissionDeclaration v in right)
+            foreach(PermissionDeclaration v in right)
             {
                 retValue.Permissions.Add(v.Permission,
                     v.Value switch
@@ -68,7 +68,7 @@ namespace InsanityBot.Utility.Permissions.Data
         /// </summary>
         public static Boolean operator ==(DefaultPermissions left, DefaultPermissions right)
         {
-            if (left.Permissions.Keys == right.Permissions.Keys)
+            if(left.Permissions.Keys == right.Permissions.Keys)
             {
                 return true;
             }

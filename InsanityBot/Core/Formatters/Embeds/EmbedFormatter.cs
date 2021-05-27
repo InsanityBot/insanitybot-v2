@@ -19,7 +19,7 @@ namespace InsanityBot.Core.Formatters.Embeds
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
         public DiscordEmbed Read(String value)
         {
-            if (value.StartsWith('{')) // if our string starts with a curly bracket, we can safely assume it is Json.
+            if(value.StartsWith('{')) // if our string starts with a curly bracket, we can safely assume it is Json.
             {
                 return JsonConvert.DeserializeObject<DiscordEmbed>(value);
             }
@@ -33,18 +33,18 @@ namespace InsanityBot.Core.Formatters.Embeds
             FieldObjectBuilder fieldBuilder = null;
             FooterObjectBuilder footerBuilder = null;
 
-            foreach (String v in components)
+            foreach(String v in components)
             {
                 #region Validity checks
-                if (!v.Contains(':') && !activeArray)
+                if(!v.Contains(':') && !activeArray)
                 {
                     throw new FormatException($"Invalid embed format string: segment {v} does not contain a valid identifier:value pair.");
                 }
 
                 //update array and object states
-                if (v.Contains('{'))
+                if(v.Contains('{'))
                 {
-                    if (activeObject)
+                    if(activeObject)
                     {
                         throw new FormatException($"Invalid embed format string: segment {v} attempts to open a " +
                             $"new object although there is already an opened object, multi-layers are not supported.");
@@ -54,16 +54,16 @@ namespace InsanityBot.Core.Formatters.Embeds
                         activeObject = true;
                         activeObjectName = v.Split(':')[0];
 
-                        if (activeObjectName != "author" && activeObjectName != "fields" && activeObjectName != "footer")
+                        if(activeObjectName != "author" && activeObjectName != "fields" && activeObjectName != "footer")
                         {
                             throw new FormatException($"Invalid embed format string: {activeObjectName} is not a valid object name.");
                         }
                     }
                 }
 
-                if (v.Contains('}'))
+                if(v.Contains('}'))
                 {
-                    if (activeObject)
+                    if(activeObject)
                     {
                         activeObject = false;
                     }
@@ -74,9 +74,9 @@ namespace InsanityBot.Core.Formatters.Embeds
                     }
                 }
 
-                if (v.Contains('['))
+                if(v.Contains('['))
                 {
-                    if (activeArray)
+                    if(activeArray)
                     {
                         throw new FormatException($"Invalid embed format string: segment {v} attempts to open a " +
                             $"new array although there is already an opened array, multi-layers are not supported.");
@@ -84,7 +84,7 @@ namespace InsanityBot.Core.Formatters.Embeds
                     else
                     {
                         activeArray = true;
-                        if (v.Split(':')[0] != "fields")
+                        if(v.Split(':')[0] != "fields")
                         {
                             throw new FormatException($"Invalid embed format string: segment {v} attempts to open a" +
                                 $"different array than \'fields\', no other arrays are supported.");
@@ -92,9 +92,9 @@ namespace InsanityBot.Core.Formatters.Embeds
                     }
                 }
 
-                if (v.Contains(']'))
+                if(v.Contains(']'))
                 {
-                    if (activeArray)
+                    if(activeArray)
                     {
                         activeArray = false;
                     }
@@ -106,14 +106,14 @@ namespace InsanityBot.Core.Formatters.Embeds
                 }
 
                 String identifier = v.Split(':')[0];
-                if (!AllowedIdentifiers.Contains(identifier))
+                if(!AllowedIdentifiers.Contains(identifier))
                 {
                     throw new FormatException($"Invalid embed format string: segment {v} contains an invalid identifier.");
                 }
                 #endregion
 
                 // parse simple top-level entries
-                switch (identifier)
+                switch(identifier)
                 {
                     case "title":
                         embedBuilder.WithTitle(String.Join(':', v.Split(':')[1..])); // ensure that any :s are perserved
@@ -135,23 +135,23 @@ namespace InsanityBot.Core.Formatters.Embeds
                 //parse complex top-level entries
                 #region complex top-level
                 String subObject = null;
-                switch (identifier)
+                switch(identifier)
                 {
                     case "author":
-                        if (!activeObject)
+                        if(!activeObject)
                         {
                             throw new FormatException($"'author' object requires an object opening instruction, none was found.");
                         }
                         authorBuilder = new();
                         subObject = v.Split('{')[1].Split(':')[0];
 
-                        switch (subObject)
+                        switch(subObject)
                         {
                             case "name":
                                 authorBuilder.WithName(v.Split('{')[1].Split(':')[1]);
                                 break;
                             case "icon":
-                                if (Uri.TryCreate(v.Split('{')[1].Split(':')[1], UriKind.Absolute, out Uri icon))
+                                if(Uri.TryCreate(v.Split('{')[1].Split(':')[1], UriKind.Absolute, out Uri icon))
                                 {
                                     authorBuilder.WithIcon(icon);
                                 }
@@ -161,7 +161,7 @@ namespace InsanityBot.Core.Formatters.Embeds
                                 }
                                 break;
                             case "url":
-                                if (Uri.TryCreate(v.Split('{')[1].Split(':')[1], UriKind.Absolute, out Uri url))
+                                if(Uri.TryCreate(v.Split('{')[1].Split(':')[1], UriKind.Absolute, out Uri url))
                                 {
                                     authorBuilder.WithUrl(url);
                                 }
@@ -175,17 +175,17 @@ namespace InsanityBot.Core.Formatters.Embeds
                         }
                         break;
                     case "footer":
-                        if (!activeObject)
+                        if(!activeObject)
                         {
                             throw new FormatException($"'footer' object requires an object opening instruction, none was found.");
                         }
                         footerBuilder = new();
                         subObject = v.Split('{')[1].Split(':')[0];
 
-                        switch (subObject)
+                        switch(subObject)
                         {
                             case "icon":
-                                if (Uri.TryCreate(v.Split('{')[1].Split(':')[1], UriKind.Absolute, out Uri url))
+                                if(Uri.TryCreate(v.Split('{')[1].Split(':')[1], UriKind.Absolute, out Uri url))
                                 {
                                     footerBuilder.WithUrl(url);
                                 }
@@ -202,14 +202,14 @@ namespace InsanityBot.Core.Formatters.Embeds
                         }
                         break;
                     case "fields":
-                        if (!(activeObject && activeArray))
+                        if(!(activeObject && activeArray))
                         {
                             throw new FormatException($"'fields' object-array pair requires an opening instruction, none was found.");
                         }
                         fieldBuilder = new();
                         subObject = v.Split('{')[1].Split(':')[0];
 
-                        switch (subObject)
+                        switch(subObject)
                         {
                             case "title":
                                 fieldBuilder.WithTitle(String.Join(':', v.Split('{')[1].Split(':')[1..]));
@@ -228,22 +228,22 @@ namespace InsanityBot.Core.Formatters.Embeds
                 #endregion
 
                 #region second-level
-                switch (identifier)
+                switch(identifier)
                 {
                     case "name":
-                        if (!activeObject || activeObjectName != "author")
+                        if(!activeObject || activeObjectName != "author")
                         {
                             throw new FormatException($"Field 'name' requires to be embedded in an 'author' object");
                         }
                         authorBuilder.WithName(String.Join(':', v.Split(':')[1..]));
                         break;
                     case "icon":
-                        if (!activeObject || activeObjectName != "author")
+                        if(!activeObject || activeObjectName != "author")
                         {
                             throw new FormatException($"Field 'name' requires to be embedded in an 'author' object");
                         }
 
-                        if (Uri.TryCreate(v.Split(':')[1], UriKind.Absolute, out Uri uri))
+                        if(Uri.TryCreate(v.Split(':')[1], UriKind.Absolute, out Uri uri))
                         {
                             authorBuilder.WithIcon(uri);
                         }
@@ -253,14 +253,14 @@ namespace InsanityBot.Core.Formatters.Embeds
                         }
                         break;
                     case "url":
-                        if (!activeObject || (activeObjectName != "author" && activeObjectName != "footer"))
+                        if(!activeObject || (activeObjectName != "author" && activeObjectName != "footer"))
                         {
                             throw new FormatException($"Field 'url' requires to either be embedded in an 'author' or 'footer' object");
                         }
 
-                        if (Uri.TryCreate(v.Split(':')[1], UriKind.Absolute, out Uri url))
+                        if(Uri.TryCreate(v.Split(':')[1], UriKind.Absolute, out Uri url))
                         {
-                            if (activeObjectName == "author")
+                            if(activeObjectName == "author")
                             {
                                 authorBuilder.WithUrl(url);
                             }
@@ -275,32 +275,32 @@ namespace InsanityBot.Core.Formatters.Embeds
                         }
                         break;
                     case "title":
-                        if (!activeObject)
+                        if(!activeObject)
                         {
                             break;
                         }
-                        if (activeObjectName != "fields")
+                        if(activeObjectName != "fields")
                         {
                             throw new FormatException($"Field 'title' requires to be embedded in a 'fields' object");
                         }
                         fieldBuilder.WithTitle(String.Join(':', v.Split(':')[1..]));
                         break;
                     case "value":
-                        if (!activeObject || activeObjectName != "fields")
+                        if(!activeObject || activeObjectName != "fields")
                         {
                             throw new FormatException($"Field 'value' requires to be embedded in a 'fields' object");
                         }
                         fieldBuilder.WithValue(String.Join(':', v.Split(':')[1..]));
                         break;
                     case "inline":
-                        if (!activeObject || activeObjectName != "fields")
+                        if(!activeObject || activeObjectName != "fields")
                         {
                             throw new FormatException($"Field 'inline' requires to be embedded in a 'fields' object");
                         }
                         fieldBuilder.WithInline(Convert.ToBoolean(v.Split(':')[1]));
                         break;
                     case "text":
-                        if (!activeObject || activeObjectName != "fields")
+                        if(!activeObject || activeObjectName != "fields")
                         {
                             throw new FormatException($"Field 'text' requires to be embedded in a 'footer' object");
                         }
@@ -310,9 +310,9 @@ namespace InsanityBot.Core.Formatters.Embeds
                 #endregion
 
                 //close everything as needed
-                if (v.Contains('}'))
+                if(v.Contains('}'))
                 {
-                    switch (activeObjectName)
+                    switch(activeObjectName)
                     {
                         case "author":
                             embedBuilder = authorBuilder.Build(embedBuilder);

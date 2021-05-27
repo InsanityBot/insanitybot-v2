@@ -38,7 +38,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String Reason = "usedefault")
         {
-            if (time.StartsWith('-'))
+            if(time.StartsWith('-'))
             {
                 await ParseTempmuteCommand(ctx, member, String.Join(' ', time, Reason));
                 return;
@@ -55,7 +55,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -68,7 +68,7 @@ namespace InsanityBot.Commands.Moderation
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -93,7 +93,7 @@ namespace InsanityBot.Commands.Moderation
             Boolean Silent,
             Boolean DmMember)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.tempmute"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.tempmute"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -165,7 +165,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (embedBuilder == null)
+                if(embedBuilder == null)
                 {
                     InsanityBot.Client.Logger.LogError(new EventId(1131, "Tempmute"),
                         "Could not execute tempmute command, an unknown exception occured.");
@@ -180,7 +180,7 @@ namespace InsanityBot.Commands.Moderation
 
         public static void InitializeUnmute(String Identifier, Guid guid)
         {
-            if (!Identifier.StartsWith("tempmute_"))
+            if(!Identifier.StartsWith("tempmute_"))
             {
                 return;
             }
@@ -194,7 +194,7 @@ namespace InsanityBot.Commands.Moderation
 
                 UnmuteCompletedEvent();
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1132, "Unmute"), $"Could not unmute user {Identifier[9..]}");
                 System.Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");

@@ -26,7 +26,7 @@ namespace InsanityBot.Datafixers.Main
 
         public DatafixerDowngradeResult DowngradeData(ref MainConfiguration data)
         {
-            if (data.DataVersion == "2.0.0-dev.00017")
+            if(data.DataVersion == "2.0.0-dev.00017")
             {
                 return DatafixerDowngradeResult.AlreadyDowngraded;
             }
@@ -49,7 +49,7 @@ namespace InsanityBot.Datafixers.Main
 
         public MainConfiguration ExportDowngradedData(MainConfiguration data)
         {
-            if (data.DataVersion == "2.0.0-dev.00017")
+            if(data.DataVersion == "2.0.0-dev.00017")
             {
                 return data;
             }
@@ -72,7 +72,7 @@ namespace InsanityBot.Datafixers.Main
 
         public MainConfiguration ExportUpgradedData(MainConfiguration data)
         {
-            if (data.DataVersion != "2.0.0-dev.00017")
+            if(data.DataVersion != "2.0.0-dev.00017")
             {
                 return data;
             }
@@ -95,7 +95,7 @@ namespace InsanityBot.Datafixers.Main
 
         public DatafixerUpgradeResult UpgradeData(ref MainConfiguration data)
         {
-            if (data.DataVersion != "2.0.0-dev.00017")
+            if(data.DataVersion != "2.0.0-dev.00017")
             {
                 return DatafixerUpgradeResult.AlreadyUpgraded;
             }

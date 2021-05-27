@@ -17,13 +17,13 @@ namespace InsanityBot.Commands.Miscellaneous
             [RemainingText]
             String text)
         {
-            if (!ctx.Member.HasPermission("insanitybot.miscellaneous.say"))
+            if(!ctx.Member.HasPermission("insanitybot.miscellaneous.say"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
-            if ((ctx.Message.MentionedRoles.Count != 0 || ctx.Message.Content.Contains("@everyone") || ctx.Message.Content.Contains("@here"))
+            if((ctx.Message.MentionedRoles.Count != 0 || ctx.Message.Content.Contains("@everyone") || ctx.Message.Content.Contains("@here"))
                 && ((ctx.Member.PermissionsIn(ctx.Channel) & DSharpPlus.Permissions.MentionEveryone) != DSharpPlus.Permissions.MentionEveryone)
                 && ToBoolean(InsanityBot.Config["insanitybot.miscellaneous.block_say_role_pings"]))
             {
@@ -31,7 +31,7 @@ namespace InsanityBot.Commands.Miscellaneous
                 return;
             }
 
-            if (ctx.Message.MentionedUsers.Count != 0
+            if(ctx.Message.MentionedUsers.Count != 0
                 && ((ctx.Member.PermissionsIn(ctx.Channel) & DSharpPlus.Permissions.MentionEveryone) != DSharpPlus.Permissions.MentionEveryone)
                 && ToBoolean(InsanityBot.Config["insanitybot.miscellaneous.block_say_user_pings"]))
             {

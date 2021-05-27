@@ -13,7 +13,6 @@ using System;
 using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -27,7 +26,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String args = "usedefault")
         {
-            if (args.StartsWith('-'))
+            if(args.StartsWith('-'))
             {
                 await ParseSlowmodeCommand(ctx, channel, args);
                 return;
@@ -60,7 +59,7 @@ namespace InsanityBot.Commands.Moderation
                         await ExecuteSlowmodeCommand(ctx, channel, o.SlowmodeTime.ParseTimeSpan(), o.Silent);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -79,13 +78,13 @@ namespace InsanityBot.Commands.Moderation
 
         private async Task ExecuteSlowmodeCommand(CommandContext ctx, DiscordChannel channel, TimeSpan slowmodeTime, Boolean silent)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.slowmode"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.slowmode"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
-            if (silent)
+            if(silent)
             {
                 await ctx.Message.DeleteAsync();
             }
@@ -123,12 +122,12 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
 
-                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder 
-                { 
-                    Embed = moderationEmbedBuilder 
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                {
+                    Embed = moderationEmbedBuilder
                 });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 embedBuilder = new()
                 {
@@ -143,7 +142,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (!silent)
+                if(!silent)
                 {
                     await ctx.Channel.SendMessageAsync(embedBuilder.Build());
                 }
@@ -158,13 +157,13 @@ namespace InsanityBot.Commands.Moderation
         public async Task ResetSlowmodeCommand(CommandContext ctx,
             DiscordChannel channel, Boolean silent = false)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.slowmode"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.slowmode"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
-            if (silent)
+            if(silent)
             {
                 await ctx.Message.DeleteAsync();
             }
@@ -205,7 +204,7 @@ namespace InsanityBot.Commands.Moderation
                     Embed = moderationEmbedBuilder
                 });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 embedBuilder = new()
                 {
@@ -220,7 +219,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (!silent)
+                if(!silent)
                 {
                     await ctx.Channel.SendMessageAsync(embedBuilder.Build());
                 }

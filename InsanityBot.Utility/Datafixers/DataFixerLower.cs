@@ -28,9 +28,9 @@ namespace InsanityBot.Utility.Datafixers
         public static void LoadAllDatafixers()
         {
             Dictionary<Type, List<SortedDatafixerRegistryEntry>> datafixers = Registry.GetAllDatafixers();
-            foreach (KeyValuePair<Type, List<SortedDatafixerRegistryEntry>> v in datafixers)
+            foreach(KeyValuePair<Type, List<SortedDatafixerRegistryEntry>> v in datafixers)
             {
-                foreach (SortedDatafixerRegistryEntry v1 in v.Value)
+                foreach(SortedDatafixerRegistryEntry v1 in v.Value)
                 {
                     v1.GetType().InvokeMember("Load", BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod, null, null, null);
                 }
@@ -47,7 +47,7 @@ namespace InsanityBot.Utility.Datafixers
             {
                 datafixers = Registry.GetDatafixers(data.GetType()).ToList();
             }
-            catch (ArgumentNullException)
+            catch(ArgumentNullException)
             {
                 return dataReference;
             }
@@ -56,12 +56,12 @@ namespace InsanityBot.Utility.Datafixers
                 throw;
             }
 
-            if (datafixers == null)
+            if(datafixers == null)
             {
                 return dataReference;
             }
 
-            foreach (DatafixerRegistryEntry v in datafixers)
+            foreach(DatafixerRegistryEntry v in datafixers)
             {
                 ((IDatafixer<Datafixable>)v.Datafixer).UpgradeData(ref dataReference);
             }
@@ -79,7 +79,7 @@ namespace InsanityBot.Utility.Datafixers
             {
                 datafixers = Registry.GetDatafixers(data.GetType()).ToList();
             }
-            catch (ArgumentNullException)
+            catch(ArgumentNullException)
             {
                 return dataReference;
             }
@@ -88,12 +88,12 @@ namespace InsanityBot.Utility.Datafixers
                 throw;
             }
 
-            if (datafixers == null)
+            if(datafixers == null)
             {
                 return dataReference;
             }
 
-            foreach (DatafixerRegistryEntry v in datafixers)
+            foreach(DatafixerRegistryEntry v in datafixers)
             {
                 ((IDatafixer<Datafixable>)v.Datafixer).DowngradeData(ref dataReference);
             }
@@ -111,7 +111,7 @@ namespace InsanityBot.Utility.Datafixers
             {
                 datafixers = Registry.GetDatafixers(data.GetType()).ToList();
             }
-            catch (ArgumentNullException)
+            catch(ArgumentNullException)
             {
                 return dataReference;
             }
@@ -120,12 +120,12 @@ namespace InsanityBot.Utility.Datafixers
                 throw;
             }
 
-            if (datafixers == null)
+            if(datafixers == null)
             {
                 return dataReference;
             }
 
-            foreach (DatafixerRegistryEntry v in datafixers)
+            foreach(DatafixerRegistryEntry v in datafixers)
             {
                 dataReference = ((IDatafixer<Datafixable>)v.Datafixer).ExportUpgradedData(dataReference);
             }
@@ -143,7 +143,7 @@ namespace InsanityBot.Utility.Datafixers
             {
                 datafixers = Registry.GetDatafixers(data.GetType()).ToList();
             }
-            catch (ArgumentNullException)
+            catch(ArgumentNullException)
             {
                 return dataReference;
             }
@@ -152,12 +152,12 @@ namespace InsanityBot.Utility.Datafixers
                 throw;
             }
 
-            if (datafixers == null)
+            if(datafixers == null)
             {
                 return dataReference;
             }
 
-            foreach (DatafixerRegistryEntry v in datafixers)
+            foreach(DatafixerRegistryEntry v in datafixers)
             {
                 dataReference = ((IDatafixer<Datafixable>)v.Datafixer).ExportDowngradedData(dataReference);
             }

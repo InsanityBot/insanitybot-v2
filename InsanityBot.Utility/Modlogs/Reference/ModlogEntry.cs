@@ -12,7 +12,7 @@ namespace InsanityBot.Utility.Modlogs.Reference
 
         public override Boolean Equals(Object obj)
         {
-            if (((ModlogEntry)obj).Time == this.Time)
+            if(((ModlogEntry)obj).Time == this.Time)
             {
                 return true;
             }

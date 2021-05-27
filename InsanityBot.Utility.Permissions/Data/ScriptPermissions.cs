@@ -19,7 +19,7 @@ namespace InsanityBot.Utility.Permissions.Data
 
             ScriptPermissions perms = new();
 
-            foreach (String v2 in v)
+            foreach(String v2 in v)
             {
                 StreamReader reader = new(v2);
                 String nameHeader = reader.ReadLine();
@@ -51,9 +51,9 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             ScriptPermissions perms = BuildScriptPermissions();
 
-            foreach (PermissionDeclaration v in perms.Scripts)
+            foreach(PermissionDeclaration v in perms.Scripts)
             {
-                if (!this.Scripts.Contains(v))
+                if(!this.Scripts.Contains(v))
                 {
                     this.Scripts = this.Scripts.Append(v).ToArray();
                 }

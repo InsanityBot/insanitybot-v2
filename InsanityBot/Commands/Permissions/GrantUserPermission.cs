@@ -13,7 +13,6 @@ using System;
 using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Permissions
 {
@@ -29,7 +28,7 @@ namespace InsanityBot.Commands.Permissions
                 [RemainingText]
                 String args)
             {
-                if (args.StartsWith('-'))
+                if(args.StartsWith('-'))
                 {
                     await ParseGrantPermission(ctx, member, args);
                     return;
@@ -39,7 +38,7 @@ namespace InsanityBot.Commands.Permissions
 
             private async Task ParseGrantPermission(CommandContext ctx, DiscordMember member, String args)
             {
-                if (!args.Contains("-p"))
+                if(!args.Contains("-p"))
                 {
                     DiscordEmbedBuilder invalid = new()
                     {
@@ -63,7 +62,7 @@ namespace InsanityBot.Commands.Permissions
                             await ExecuteGrantPermission(ctx, member, o.Silent, o.Permission);
                         });
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     DiscordEmbedBuilder failed = new()
                     {
@@ -83,13 +82,13 @@ namespace InsanityBot.Commands.Permissions
 
             private async Task ExecuteGrantPermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
             {
-                if (!ctx.Member.HasPermission("insanitybot.permissions.user.grant"))
+                if(!ctx.Member.HasPermission("insanitybot.permissions.user.grant"))
                 {
                     await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
                 }
 
-                if (silent)
+                if(silent)
                 {
                     await ctx.Message.DeleteAsync();
                 }
@@ -125,7 +124,7 @@ namespace InsanityBot.Commands.Permissions
 
                     InsanityBot.Client.Logger.LogInformation(new EventId(9000, "Permissions"), $"Added permission {permission} to {member.Username}");
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     embedBuilder = new()
                     {
@@ -143,7 +142,7 @@ namespace InsanityBot.Commands.Permissions
                 }
                 finally
                 {
-                    if (!silent)
+                    if(!silent)
                     {
                         await ctx.Channel.SendMessageAsync(embedBuilder.Build());
                     }

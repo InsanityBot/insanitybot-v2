@@ -26,7 +26,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String Reason = "usedefault")
         {
-            if (Reason.StartsWith('-'))
+            if(Reason.StartsWith('-'))
             {
                 await ParseWhitelistCommand(ctx, member, Reason);
                 return;
@@ -41,7 +41,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -52,7 +52,7 @@ namespace InsanityBot.Commands.Moderation
                         await ExecuteWhitelistCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -76,7 +76,7 @@ namespace InsanityBot.Commands.Moderation
             Boolean Silent,
             Boolean DmMember)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.whitelist"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.whitelist"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -126,7 +126,7 @@ namespace InsanityBot.Commands.Moderation
                     Embed = moderationEmbedBuilder
                 });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {

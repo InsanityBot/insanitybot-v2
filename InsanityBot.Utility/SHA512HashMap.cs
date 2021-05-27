@@ -13,7 +13,7 @@ namespace InsanityBot.Utility
         {
             get
             {
-                if (!ContainsKey(key))
+                if(!ContainsKey(key))
                 {
                     return NullValue;
                 }
@@ -22,7 +22,7 @@ namespace InsanityBot.Utility
             }
             set
             {
-                if (ContainsKey(key))
+                if(ContainsKey(key))
                 {
                     base[key] = value;
                 }

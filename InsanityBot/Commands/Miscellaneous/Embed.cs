@@ -16,7 +16,7 @@ namespace InsanityBot.Commands.Miscellaneous
             [RemainingText]
             String text)
         {
-            if (!ctx.Member.HasPermission("insanitybot.miscellaneous.say.embed"))
+            if(!ctx.Member.HasPermission("insanitybot.miscellaneous.say.embed"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;

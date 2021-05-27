@@ -37,7 +37,7 @@ namespace InsanityBot.Utility.Modlogs
         /// <returns>The modlog instance of the user</returns>
         private static UserModlog Deserialize(String UserName, UInt64 UserId)
         {
-            if (!File.Exists($"./data/{UserId}/modlog.json"))
+            if(!File.Exists($"./data/{UserId}/modlog.json"))
             {
                 Create(UserName, UserId);
             }
@@ -58,12 +58,12 @@ namespace InsanityBot.Utility.Modlogs
 
         public static UserModlog Create(String UserName, UInt64 UserId)
         {
-            if (!Directory.Exists($"./data/{UserId}"))
+            if(!Directory.Exists($"./data/{UserId}"))
             {
                 Directory.CreateDirectory($"./data/{UserId}");
             }
 
-            if (!File.Exists($"./data/{UserId}/modlog.json"))
+            if(!File.Exists($"./data/{UserId}/modlog.json"))
             {
                 StreamWriter writer = new(File.Create($"./data/{UserId}/modlog.json"));
                 UserModlog modlog = new(UserName);
@@ -99,7 +99,7 @@ namespace InsanityBot.Utility.Modlogs
             try
             {
                 UserModlog user = Deserialize(member.Username, member.Id);
-                if (user == null)
+                if(user == null)
                 {
                     throw new ModlogNotFoundException("Invalid modlog file", member.Id);
                 }
@@ -113,7 +113,7 @@ namespace InsanityBot.Utility.Modlogs
                 user.ModlogEntryCount++;
                 Serialize(user, member.Id);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Console.WriteLine($"{e}: {e.Message}\n\n{e.StackTrace}");
             }

@@ -24,7 +24,7 @@ namespace InsanityBot.Datafixers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogMessage(EventData data, LogLevel level, String message)
         {
-            switch (level)
+            switch(level)
             {
                 case LogLevel.Debug:
                     LogDebug(data, message);
@@ -61,7 +61,7 @@ namespace InsanityBot.Datafixers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogDebug(EventData data, String message)
         {
-            if (MinimalLevel > LogLevel.Debug)
+            if(MinimalLevel > LogLevel.Debug)
             {
                 return;
             }
@@ -78,7 +78,7 @@ namespace InsanityBot.Datafixers
             => LogTrace(new EventData(0, 0, 0, 0, null), message);
         public static void LogTrace(EventData data, String message)
         {
-            if (MinimalLevel > LogLevel.Trace)
+            if(MinimalLevel > LogLevel.Trace)
             {
                 return;
             }
@@ -96,7 +96,7 @@ namespace InsanityBot.Datafixers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogInformation(EventData data, String message)
         {
-            if (MinimalLevel > LogLevel.Info)
+            if(MinimalLevel > LogLevel.Info)
             {
                 return;
             }
@@ -114,7 +114,7 @@ namespace InsanityBot.Datafixers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogWarning(EventData data, String message)
         {
-            if (MinimalLevel > LogLevel.Warning)
+            if(MinimalLevel > LogLevel.Warning)
             {
                 return;
             }
@@ -132,7 +132,7 @@ namespace InsanityBot.Datafixers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogError(EventData data, String message)
         {
-            if (MinimalLevel > LogLevel.Error)
+            if(MinimalLevel > LogLevel.Error)
             {
                 return;
             }
@@ -150,7 +150,7 @@ namespace InsanityBot.Datafixers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogCritical(EventData data, String message)
         {
-            if (MinimalLevel > LogLevel.Critical)
+            if(MinimalLevel > LogLevel.Critical)
             {
                 return;
             }

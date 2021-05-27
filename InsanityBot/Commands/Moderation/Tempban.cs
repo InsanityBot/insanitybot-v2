@@ -32,7 +32,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String Reason = "usedefault")
         {
-            if (time.StartsWith('-'))
+            if(time.StartsWith('-'))
             {
                 await ParseTempbanCommand(ctx, member, String.Join(' ', time, Reason));
                 return;
@@ -49,7 +49,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -62,7 +62,7 @@ namespace InsanityBot.Commands.Moderation
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -87,7 +87,7 @@ namespace InsanityBot.Commands.Moderation
             Boolean Silent,
             Boolean DmMember)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.tempban"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.tempban"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -157,7 +157,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (embedBuilder == null)
+                if(embedBuilder == null)
                 {
                     InsanityBot.Client.Logger.LogError(new EventId(1151, "Tempban"),
                         "Could not execute tempban command, an unknown exception occured.");
@@ -172,7 +172,7 @@ namespace InsanityBot.Commands.Moderation
 
         public static void InitializeUnban(String Identifier, Guid guid)
         {
-            if (!Identifier.StartsWith("tempban_"))
+            if(!Identifier.StartsWith("tempban_"))
             {
                 return;
             }
@@ -186,7 +186,7 @@ namespace InsanityBot.Commands.Moderation
 
                 UnbanCompletedEvent();
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1152, "Unban"), $"Could not unban user {Identifier[9..]}");
                 System.Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");

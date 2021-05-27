@@ -17,7 +17,7 @@ namespace InsanityBot.Utility.Timers
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Boolean CheckExpiry()
         {
-            if (DateTime.UtcNow > Expiry.ToUniversalTime())
+            if(DateTime.UtcNow > Expiry.ToUniversalTime())
             {
                 CallExpiredEvent(this.Identifier, this.Guid);
                 return true;

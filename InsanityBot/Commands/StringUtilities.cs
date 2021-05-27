@@ -136,12 +136,12 @@ namespace InsanityBot.Commands
         {
             try
             {
-                if (Int32.TryParse(value, out Int32 seconds))
+                if(Int32.TryParse(value, out Int32 seconds))
                 {
                     return new TimeSpan(0, 0, seconds);
                 }
 
-                if (TimeSpanParser.TryParse(value, out TimeSpan time))
+                if(TimeSpanParser.TryParse(value, out TimeSpan time))
                 {
                     return time;
                 }

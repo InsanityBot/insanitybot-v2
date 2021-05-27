@@ -24,13 +24,13 @@ namespace InsanityBot.Commands.Moderation
             DiscordMember member,
             String arguments = null)
         {
-            if (arguments == null)
+            if(arguments == null)
             {
                 await ExecuteUnmuteCommand(ctx, member, false, false);
                 return;
             }
 
-            if (arguments.StartsWith('-'))
+            if(arguments.StartsWith('-'))
             {
                 await ParseUnmuteCommand(ctx, member, arguments);
                 return;
@@ -48,7 +48,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason void"; //we dont need the reason but its required by the protocol
                 }
@@ -59,7 +59,7 @@ namespace InsanityBot.Commands.Moderation
                         await ExecuteUnmuteCommand(ctx, member, o.Silent, o.DmMember);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -89,20 +89,20 @@ namespace InsanityBot.Commands.Moderation
             params Object[] additionals)
         {
 
-            if (!automated && !ctx.Member.HasPermission("insanitybot.moderation.unmute"))
+            if(!automated && !ctx.Member.HasPermission("insanitybot.moderation.unmute"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
-            if (ctx == null && silent == false)
+            if(ctx == null && silent == false)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1134, "Unmute"),
                     "Invalid command arguments - internal error. Please report this on https://github.com/InsanityNetwork/InsanityBot/issues" +
                     "\nInsanityBot/Commands/Moderation/Unmute.cs: argument \"silent\" cannot be false without given command context");
                 return;
             }
-            if (automated && !silent)
+            if(automated && !silent)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1134, "Unmute"),
                     "Invalid command arguments - internal error. Please report this on https://github.com/InsanityNetwork/InsanityBot/issues" +
@@ -121,7 +121,7 @@ namespace InsanityBot.Commands.Moderation
                 }
             };
 
-            if (automated)
+            if(automated)
             {
                 moderationEmbedBuilder.AddField("Moderator", "InsanityBot", true);
             }
@@ -134,17 +134,17 @@ namespace InsanityBot.Commands.Moderation
 
             try
             {
-                if (silent)
+                if(silent)
                 {
                     _ = member.RevokeRoleAsync(InsanityBot.HomeGuild.GetRole(
                         ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"])),
                         "Silent unmute");
 
-                    if (additionals != null)
+                    if(additionals != null)
                     {
-                        for (Byte b = 0; b < additionals.Length; b++)
+                        for(Byte b = 0; b < additionals.Length; b++)
                         {
-                            if (additionals[b] is String str && str == "timer_guid")
+                            if(additionals[b] is String str && str == "timer_guid")
                             {
                                 moderationEmbedBuilder.AddField("Timer Guid", ((Guid)additionals[b + 1]).ToString(), true);
                             }
@@ -169,11 +169,11 @@ namespace InsanityBot.Commands.Moderation
                         ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"])),
                         "unmute");
 
-                    if (additionals.Length >= 2)
+                    if(additionals.Length >= 2)
                     {
-                        for (Byte b = 0; b <= additionals.Length; b++)
+                        for(Byte b = 0; b <= additionals.Length; b++)
                         {
-                            if (additionals[b] is String str && str == "timer_guid")
+                            if(additionals[b] is String str && str == "timer_guid")
                             {
                                 moderationEmbedBuilder.AddField("Timer Guid", ((Guid)additionals[b + 1]).ToString(), true);
                             }
@@ -181,9 +181,9 @@ namespace InsanityBot.Commands.Moderation
                     }
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (!silent)
+                if(!silent)
                 {
                     nonSilent = new DiscordEmbedBuilder
                     {
@@ -201,7 +201,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (!silent)
+                if(!silent)
                 {
                     _ = ctx.Channel.SendMessageAsync(embed: nonSilent.Build());
                 }

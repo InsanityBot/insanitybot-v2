@@ -15,7 +15,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Permissions
 {
@@ -29,7 +28,7 @@ namespace InsanityBot.Commands.Permissions
                 [RemainingText]
                 String args)
             {
-                if (args.StartsWith('-'))
+                if(args.StartsWith('-'))
                 {
                     await ParseAddRole(ctx, member, args);
                     return;
@@ -39,7 +38,7 @@ namespace InsanityBot.Commands.Permissions
 
             private async Task ParseAddRole(CommandContext ctx, DiscordMember member, String args)
             {
-                if (!args.Contains("-r"))
+                if(!args.Contains("-r"))
                 {
                     DiscordEmbedBuilder invalid = new()
                     {
@@ -64,7 +63,7 @@ namespace InsanityBot.Commands.Permissions
                             await ExecuteAddRole(ctx, member, o.Silent, o.RoleId);
                         });
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     DiscordEmbedBuilder failed = new()
                     {
@@ -84,13 +83,13 @@ namespace InsanityBot.Commands.Permissions
 
             private async Task ExecuteAddRole(CommandContext ctx, DiscordMember member, Boolean silent, UInt64 role)
             {
-                if (!ctx.Member.HasPermission("insanitybot.permissions.user.add_role"))
+                if(!ctx.Member.HasPermission("insanitybot.permissions.user.add_role"))
                 {
                     await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
                 }
 
-                if (silent)
+                if(silent)
                 {
                     await ctx.Message.DeleteAsync();
                 }
@@ -114,7 +113,7 @@ namespace InsanityBot.Commands.Permissions
                 try
                 {
                     UserPermissions permissions = InsanityBot.PermissionEngine.GetUserPermissions(member.Id);
-                    if (!permissions.AssignedRoles.Contains(role))
+                    if(!permissions.AssignedRoles.Contains(role))
                     {
                         permissions.AssignedRoles = permissions.AssignedRoles.Append(role).ToArray();
                     }
@@ -134,7 +133,7 @@ namespace InsanityBot.Commands.Permissions
 
                     InsanityBot.Client.Logger.LogInformation(new EventId(9003, "Permissions"), $"Added role {role} to {member.Username}");
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     embedBuilder = new()
                     {
@@ -153,7 +152,7 @@ namespace InsanityBot.Commands.Permissions
                 }
                 finally
                 {
-                    if (!silent)
+                    if(!silent)
                     {
                         await ctx.Channel.SendMessageAsync(embedBuilder.Build());
                     }

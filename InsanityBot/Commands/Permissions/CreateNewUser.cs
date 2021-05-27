@@ -13,7 +13,6 @@ using System;
 using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Permissions
 {
@@ -26,7 +25,7 @@ namespace InsanityBot.Commands.Permissions
                 [RemainingText]
                 String args = "void")
             {
-                if (args.StartsWith('-'))
+                if(args.StartsWith('-'))
                 {
                     await ParseCreatePermission(ctx, member, args);
                     return;
@@ -44,7 +43,7 @@ namespace InsanityBot.Commands.Permissions
                             await ExecuteCreatePermission(ctx, member, o.Silent);
                         });
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     DiscordEmbedBuilder failed = new()
                     {
@@ -64,13 +63,13 @@ namespace InsanityBot.Commands.Permissions
 
             private async Task ExecuteCreatePermission(CommandContext ctx, DiscordMember member, Boolean silent)
             {
-                if (!ctx.Member.HasPermission("insanitybot.permissions.user.create"))
+                if(!ctx.Member.HasPermission("insanitybot.permissions.user.create"))
                 {
                     await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
                 }
 
-                if (silent)
+                if(silent)
                 {
                     await ctx.Message.DeleteAsync();
                 }
@@ -105,7 +104,7 @@ namespace InsanityBot.Commands.Permissions
 
                     InsanityBot.Client.Logger.LogInformation(new EventId(9004, "Permissions"), $"Created permission file for {member.Username}");
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     embedBuilder = new()
                     {
@@ -123,7 +122,7 @@ namespace InsanityBot.Commands.Permissions
                 }
                 finally
                 {
-                    if (!silent)
+                    if(!silent)
                     {
                         await ctx.Channel.SendMessageAsync(embedBuilder.Build());
                     }

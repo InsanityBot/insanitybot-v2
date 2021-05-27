@@ -25,7 +25,7 @@ namespace InsanityBot.Datafixers.Language
 
         public DatafixerDowngradeResult DowngradeData(ref LanguageConfiguration data)
         {
-            if (data.DataVersion == "2.0.0-dev.00020")
+            if(data.DataVersion == "2.0.0-dev.00020")
             {
                 return DatafixerDowngradeResult.AlreadyDowngraded;
             }
@@ -40,7 +40,7 @@ namespace InsanityBot.Datafixers.Language
 
         public LanguageConfiguration ExportDowngradedData(LanguageConfiguration data)
         {
-            if (data.DataVersion == "2.0.0-dev.00020")
+            if(data.DataVersion == "2.0.0-dev.00020")
             {
                 return data;
             }
@@ -55,7 +55,7 @@ namespace InsanityBot.Datafixers.Language
 
         public LanguageConfiguration ExportUpgradedData(LanguageConfiguration data)
         {
-            if (data.DataVersion != "2.0.0-dev.00020")
+            if(data.DataVersion != "2.0.0-dev.00020")
             {
                 return data;
             }
@@ -70,7 +70,7 @@ namespace InsanityBot.Datafixers.Language
 
         public DatafixerUpgradeResult UpgradeData(ref LanguageConfiguration data)
         {
-            if (data.DataVersion != "2.0.0-dev.00020")
+            if(data.DataVersion != "2.0.0-dev.00020")
             {
                 return DatafixerUpgradeResult.AlreadyUpgraded;
             }

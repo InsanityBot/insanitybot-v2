@@ -17,16 +17,16 @@ namespace InsanityBot.Utility.Permissions
         {
             UserPermissions permissions = activeEngine.GetUserPermissions(member.Id);
 
-            if (permissions.IsAdministrator)
+            if(permissions.IsAdministrator)
             {
                 return true;
             }
 
-            if (permissions[permission] == PermissionValue.Allowed)
+            if(permissions[permission] == PermissionValue.Allowed)
             {
                 return true;
             }
-            else if (permissions[permission] == PermissionValue.Denied)
+            else if(permissions[permission] == PermissionValue.Denied)
             {
                 return false;
             }
@@ -37,20 +37,20 @@ namespace InsanityBot.Utility.Permissions
                            where !roles.Contains(v.Id)
                            select v.Id);
 
-            while (roles.Count != 0)
+            while(roles.Count != 0)
             {
                 RolePermissions rolePermissions = activeEngine.GetRolePermissions(roles[0]);
 
-                if (rolePermissions.IsAdministrator || rolePermissions[permission] == PermissionValue.Allowed)
+                if(rolePermissions.IsAdministrator || rolePermissions[permission] == PermissionValue.Allowed)
                 {
                     return true;
                 }
-                else if (rolePermissions[permission] == PermissionValue.Denied)
+                else if(rolePermissions[permission] == PermissionValue.Denied)
                 {
                     return false;
                 }
 
-                if (rolePermissions.Parent != 0)
+                if(rolePermissions.Parent != 0)
                 {
                     roles.Add(rolePermissions.Parent);
                 }
@@ -60,7 +60,7 @@ namespace InsanityBot.Utility.Permissions
 
             DefaultPermissions defaults = DefaultPermissions.Deserialize();
 
-            if (defaults[permission] == PermissionValue.Allowed || defaults.IsAdministrator)
+            if(defaults[permission] == PermissionValue.Allowed || defaults.IsAdministrator)
             {
                 return true;
             }

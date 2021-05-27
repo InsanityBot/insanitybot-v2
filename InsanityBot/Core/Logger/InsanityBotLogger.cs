@@ -23,28 +23,28 @@ namespace InsanityBot.Core.Logger
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, String> formatter)
         {
-            if (!this.IsEnabled(logLevel))
+            if(!this.IsEnabled(logLevel))
             {
                 return;
             }
 
-            if (this.Config.EventExclusions.Contains(eventId.Name))
+            if(this.Config.EventExclusions.Contains(eventId.Name))
             {
                 return;
             }
 
-            if (this.Config.EventIdExclusions.Contains(eventId.Id))
+            if(this.Config.EventIdExclusions.Contains(eventId.Id))
             {
                 return;
             }
 
-            lock (__lock)
+            lock(__lock)
             {
                 String ename = eventId.Name;
                 ename = ename?.Length > 12 ? ename?.Substring(0, 12) : ename;
                 System.Console.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
 
-                switch (logLevel)
+                switch(logLevel)
                 {
                     case LogLevel.Trace:
                         System.Console.ForegroundColor = ConsoleColor.Gray;
@@ -87,7 +87,7 @@ namespace InsanityBot.Core.Logger
 
                 String message = formatter(state, exception);
                 System.Console.WriteLine(message);
-                if (exception != null)
+                if(exception != null)
                 {
                     System.Console.WriteLine(exception);
                 }

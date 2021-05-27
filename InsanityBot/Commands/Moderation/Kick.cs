@@ -15,7 +15,6 @@ using System;
 using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -28,7 +27,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String arguments = "usedefault")
         {
-            if (arguments.StartsWith('-'))
+            if(arguments.StartsWith('-'))
             {
                 await ParseKickCommand(ctx, member, arguments);
                 return;
@@ -43,7 +42,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -54,7 +53,7 @@ namespace InsanityBot.Commands.Moderation
                         await ExecuteKickCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember, o.SendInvite);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -79,7 +78,7 @@ namespace InsanityBot.Commands.Moderation
             Boolean DmMember,
             Boolean Invite)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.kick"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.kick"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -123,17 +122,17 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
 
-                if (Invite || DmMember)
+                if(Invite || DmMember)
                 {
                     DiscordDmChannel channel = await member.CreateDmChannelAsync();
-                    if (DmMember)
+                    if(DmMember)
                     {
                         await channel.SendMessageAsync(GetReason(GetFormattedString(
                             InsanityBot.LanguageConfig["insanitybot.moderation.kick.reason"],
                             ctx, member), KickReason));
                     }
 
-                    if (Invite)
+                    if(Invite)
                     {
                         await channel.SendMessageAsync((await ctx.Channel.CreateInviteAsync()).ToString());
                     }
@@ -145,7 +144,7 @@ namespace InsanityBot.Commands.Moderation
                     Embed = moderationEmbedBuilder
                 });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
@@ -161,7 +160,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (!Silent)
+                if(!Silent)
                 {
                     await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
                 }

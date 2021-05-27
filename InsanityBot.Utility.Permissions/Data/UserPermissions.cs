@@ -36,12 +36,12 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             UserPermissions final = left;
 
-            if (right.StartsWith("script."))
+            if(right.StartsWith("script."))
             {
                 left[right] = PermissionValue.Allowed;
             }
 
-            if (final[right] != PermissionValue.Allowed)
+            if(final[right] != PermissionValue.Allowed)
             {
                 final[right]++;
             }
@@ -53,12 +53,12 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             UserPermissions final = left;
 
-            if (right.StartsWith("script."))
+            if(right.StartsWith("script."))
             {
                 left[right] = PermissionValue.Denied;
             }
 
-            if (final[right] != PermissionValue.Denied)
+            if(final[right] != PermissionValue.Denied)
             {
                 final[right]--;
             }
@@ -68,21 +68,21 @@ namespace InsanityBot.Utility.Permissions.Data
 
         public UserPermissions Update(DefaultPermissions defaults)
         {
-            if (defaults.UpdateGuid == this.UpdateGuid)
+            if(defaults.UpdateGuid == this.UpdateGuid)
             {
                 return this;
             }
 
-            foreach (System.Collections.Generic.KeyValuePair<String, PermissionValue> v in defaults.Permissions)
+            foreach(System.Collections.Generic.KeyValuePair<String, PermissionValue> v in defaults.Permissions)
             {
-                if (!this.Permissions.ContainsKey(v.Key))
+                if(!this.Permissions.ContainsKey(v.Key))
                 {
                     this.Permissions.Add(v.Key, PermissionValue.Inherited);
                 }
             }
-            foreach (System.Collections.Generic.KeyValuePair<String, PermissionValue> v in this.Permissions)
+            foreach(System.Collections.Generic.KeyValuePair<String, PermissionValue> v in this.Permissions)
             {
-                if (!defaults.Permissions.ContainsKey(v.Key))
+                if(!defaults.Permissions.ContainsKey(v.Key))
                 {
                     this.Permissions.Remove(v.Key);
                 }
@@ -100,7 +100,7 @@ namespace InsanityBot.Utility.Permissions.Data
             permissions.SnowflakeIdentifier = userId;
             permissions.UpdateGuid = defaults.UpdateGuid;
 
-            foreach (System.Collections.Generic.KeyValuePair<String, PermissionValue> v in defaults.Permissions)
+            foreach(System.Collections.Generic.KeyValuePair<String, PermissionValue> v in defaults.Permissions)
             {
                 permissions.Permissions.Add(v.Key, PermissionValue.Inherited);
             }
@@ -114,10 +114,10 @@ namespace InsanityBot.Utility.Permissions.Data
             UserPermissions permissions = JsonConvert.DeserializeObject<UserPermissions>(reader.ReadToEnd());
             reader.Close();
 
-            if (PermissionSettings.UpdateUserPermissions)
+            if(PermissionSettings.UpdateUserPermissions)
             {
                 DefaultPermissions defaults = DefaultPermissions.Deserialize();
-                if (permissions.UpdateGuid == defaults.UpdateGuid)
+                if(permissions.UpdateGuid == defaults.UpdateGuid)
                 {
                     return permissions;
                 }

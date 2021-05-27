@@ -19,7 +19,7 @@ namespace InsanityBot.Utility.Converters
         internal static IEnumerable<DatafixerRegistryEntry> ToUnsorted(this IEnumerable<SortedDatafixerRegistryEntry> entries, Type type)
         {
             List<DatafixerRegistryEntry> returnValue = new();
-            foreach (SortedDatafixerRegistryEntry entry in entries)
+            foreach(SortedDatafixerRegistryEntry entry in entries)
             {
                 returnValue.Add(new DatafixerRegistryEntry
                 {

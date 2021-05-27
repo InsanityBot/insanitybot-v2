@@ -42,7 +42,7 @@
             PermissionFileType = PermissionFileType.Declaration,
             GetFilePath = () =>
             {
-                if (PermissionSettings.PrecompiledScripts)
+                if(PermissionSettings.PrecompiledScripts)
                 {
                     return "./cache/scripts/compiled/decl.json";
                 }

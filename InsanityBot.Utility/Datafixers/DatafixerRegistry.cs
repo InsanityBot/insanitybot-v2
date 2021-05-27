@@ -32,7 +32,7 @@ namespace InsanityBot.Utility.Datafixers
             SortedRegistry = new Dictionary<Type, List<SortedDatafixerRegistryEntry>>();
             IsSorted = false;
 
-            switch (RegistryMode)
+            switch(RegistryMode)
             {
                 case 0:
                     GetRequiredDatafixersByTypeMethodHandler += GetRequiredDatafixers_Mode0;
@@ -56,12 +56,12 @@ namespace InsanityBot.Utility.Datafixers
         #region Registry Mode 0 
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode0(Type type)
         {
-            if (!IsSorted)
+            if(!IsSorted)
             {
                 SortRawRegistryMethodHandler();
             }
 
-            if (!SortedRegistry.ContainsKey(type))
+            if(!SortedRegistry.ContainsKey(type))
             {
                 return null;
             }
@@ -71,12 +71,12 @@ namespace InsanityBot.Utility.Datafixers
 
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode0(String typename)
         {
-            if (!IsSorted)
+            if(!IsSorted)
             {
                 SortRawRegistryMethodHandler();
             }
 
-            if (!SortedRegistry.ContainsKey(Type.GetType(typename)))
+            if(!SortedRegistry.ContainsKey(Type.GetType(typename)))
             {
                 return null;
             }
@@ -86,9 +86,9 @@ namespace InsanityBot.Utility.Datafixers
 
         private void SortRawRegistry_Mode0()
         {
-            foreach (DatafixerRegistryEntry v in RawRegistry)
+            foreach(DatafixerRegistryEntry v in RawRegistry)
             {
-                if (!SortedRegistry.ContainsKey(v.DatafixerTarget))
+                if(!SortedRegistry.ContainsKey(v.DatafixerTarget))
                 {
                     SortedRegistry.Add(v.DatafixerTarget, new List<SortedDatafixerRegistryEntry>());
                 }
@@ -102,7 +102,7 @@ namespace InsanityBot.Utility.Datafixers
         private void AddRegistryItem_Mode0(DatafixerRegistryEntry item)
         {
             RawRegistry.Add(item);
-            if (IsSorted)
+            if(IsSorted)
             {
                 IsSorted = false;
             }
@@ -110,11 +110,11 @@ namespace InsanityBot.Utility.Datafixers
 
         private void RemoveRegistryItem_Mode0(DatafixerRegistryEntry item)
         {
-            if (RawRegistry.Contains(item))
+            if(RawRegistry.Contains(item))
             {
                 RawRegistry.Remove(item);
             }
-            else if (SortedRegistry[item.DatafixerTarget].Contains(item.ToSortedDatafixerRegistryEntry()))
+            else if(SortedRegistry[item.DatafixerTarget].Contains(item.ToSortedDatafixerRegistryEntry()))
             {
                 SortedRegistry[item.DatafixerTarget].Remove(item.ToSortedDatafixerRegistryEntry());
             }
@@ -129,12 +129,12 @@ namespace InsanityBot.Utility.Datafixers
         #region Registry Mode 1
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode1(Type type)
         {
-            if (!IsSorted)
+            if(!IsSorted)
             {
                 SortRawRegistryMethodHandler();
             }
 
-            if (!SortedRegistry.ContainsKey(type))
+            if(!SortedRegistry.ContainsKey(type))
             {
                 return null;
             }
@@ -144,12 +144,12 @@ namespace InsanityBot.Utility.Datafixers
 
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode1(String typename)
         {
-            if (!IsSorted)
+            if(!IsSorted)
             {
                 SortRawRegistryMethodHandler();
             }
 
-            if (!SortedRegistry.ContainsKey(Type.GetType(typename)))
+            if(!SortedRegistry.ContainsKey(Type.GetType(typename)))
             {
                 return null;
             }
@@ -159,9 +159,9 @@ namespace InsanityBot.Utility.Datafixers
 
         private void SortRawRegistry_Mode1()
         {
-            foreach (DatafixerRegistryEntry v in RawRegistry)
+            foreach(DatafixerRegistryEntry v in RawRegistry)
             {
-                if (!SortedRegistry.ContainsKey(v.DatafixerTarget))
+                if(!SortedRegistry.ContainsKey(v.DatafixerTarget))
                 {
                     SortedRegistry.Add(v.DatafixerTarget, new List<SortedDatafixerRegistryEntry>());
                 }

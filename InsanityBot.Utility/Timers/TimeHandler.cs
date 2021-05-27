@@ -18,7 +18,7 @@ namespace InsanityBot.Utility.Timers
             };
             Countdown.Elapsed += CountdownElapsed;
 
-            if (!Directory.Exists("./cache/timers"))
+            if(!Directory.Exists("./cache/timers"))
             {
                 Directory.CreateDirectory("./cache/timers");
             }
@@ -29,7 +29,7 @@ namespace InsanityBot.Utility.Timers
 
             StreamReader reader;
 
-            foreach (String s in Directory.GetFiles("./cache/timers"))
+            foreach(String s in Directory.GetFiles("./cache/timers"))
             {
                 //keep this from throwing a fatal error
                 //if an exception occurs, it just means the timer adding procedure took a little longer than usual
@@ -50,14 +50,14 @@ namespace InsanityBot.Utility.Timers
         private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
         {
 
-            foreach (Timer t in Active)
+            foreach(Timer t in Active)
             {
-                if (t == null)
+                if(t == null)
                 {
                     continue;
                 }
 
-                if (!t.CheckExpiry())
+                if(!t.CheckExpiry())
                 {
                     continue;
                 }
@@ -76,7 +76,7 @@ namespace InsanityBot.Utility.Timers
 
             StreamWriter writer;
 
-            if (!File.Exists($"./cache/timers/{timer.Identifier}"))
+            if(!File.Exists($"./cache/timers/{timer.Identifier}"))
             {
                 File.Create($"./cache/timers/{timer.Identifier}").Close();
             }

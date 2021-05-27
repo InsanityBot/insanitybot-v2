@@ -21,7 +21,7 @@ namespace InsanityBot.Console.Integrated
             {
                 command = System.Console.ReadLine();
 
-                switch (command)
+                switch(command)
                 {
                     case "stop":
                     case "exit":
@@ -32,7 +32,7 @@ namespace InsanityBot.Console.Integrated
                         break;
                 }
             }
-            while (command != "stop" && command != "exit" && command != "return");
+            while(command != "stop" && command != "exit" && command != "return");
         }
     }
 }
