@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0-dev.00020",
+  "DataVersion": "2.0.0-dev.00032",
   "Configuration": {
 
     /* Toggles the experience module status, true or false
@@ -141,6 +141,8 @@
 
     // Channel ID of the destined modlog channel. Must be a valid Discord channel ID if moderation is enabled.
     "insanitybot.identifiers.commands.modlog_channel_id": 0,
+    // Channel ID of the destined admin log channel. Must be a valid Discord channel ID.
+    "insanitybot.identifiers.commands.admin_log_channel_id": 0,
     // Channel ID of the destined suggestion channel. Must be a valid Discord channel ID if suggestions are enabled.
     "insanitybot.identifiers.commands.suggestion_channel_id": 0,
     // Channel ID of the destination channel for accepted suggestions. Must be a valid Discord channel ID if suggestions are enabled.

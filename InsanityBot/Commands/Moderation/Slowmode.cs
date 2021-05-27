@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
@@ -122,8 +123,10 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
 
-                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder 
+                { 
+                    Embed = moderationEmbedBuilder 
+                });
             }
             catch (Exception e)
             {
@@ -197,8 +200,10 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
 
-                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                {
+                    Embed = moderationEmbedBuilder
+                });
             }
             catch (Exception e)
             {
