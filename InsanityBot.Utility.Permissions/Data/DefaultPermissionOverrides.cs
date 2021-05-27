@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
-
-using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Permissions.Data
 {
@@ -16,7 +16,7 @@ namespace InsanityBot.Utility.Permissions.Data
 
             Dictionary<String, Boolean> retValue = new();
 
-            foreach (String v in overrides)
+            foreach(String v in overrides)
             {
                 retValue.Add(v.Split(' ')[0],
                     Convert.ToBoolean(
@@ -32,7 +32,7 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             DefaultPermissions value = permissions;
 
-            foreach (KeyValuePair<String, Boolean> v in overrides)
+            foreach(KeyValuePair<String, Boolean> v in overrides)
             {
                 permissions[v.Key] = v.Value switch
                 {

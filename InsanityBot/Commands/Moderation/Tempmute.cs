@@ -1,22 +1,23 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-
-using CommandLine;
+﻿using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs.SafeAccessInterface;
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
 
-using static System.Convert;
+using System;
+using System.IO;
+using System.Threading.Tasks;
+
 using static InsanityBot.Commands.StringUtilities;
+using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -37,7 +38,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String Reason = "usedefault")
         {
-            if (time.StartsWith('-'))
+            if(time.StartsWith('-'))
             {
                 await ParseTempmuteCommand(ctx, member, String.Join(' ', time, Reason));
                 return;
@@ -54,7 +55,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -67,7 +68,7 @@ namespace InsanityBot.Commands.Moderation
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -92,7 +93,7 @@ namespace InsanityBot.Commands.Moderation
             Boolean Silent,
             Boolean DmMember)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.tempmute"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.tempmute"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -144,8 +145,10 @@ namespace InsanityBot.Commands.Moderation
                 _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
                     ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"])),
                     MuteReason);
-                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                {
+                    Embed = moderationEmbedBuilder
+                });
 
             }
             catch
@@ -162,7 +165,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (embedBuilder == null)
+                if(embedBuilder == null)
                 {
                     InsanityBot.Client.Logger.LogError(new EventId(1131, "Tempmute"),
                         "Could not execute tempmute command, an unknown exception occured.");
@@ -177,7 +180,7 @@ namespace InsanityBot.Commands.Moderation
 
         public static void InitializeUnmute(String Identifier, Guid guid)
         {
-            if (!Identifier.StartsWith("tempmute_"))
+            if(!Identifier.StartsWith("tempmute_"))
             {
                 return;
             }
@@ -191,7 +194,7 @@ namespace InsanityBot.Commands.Moderation
 
                 UnmuteCompletedEvent();
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1132, "Unmute"), $"Could not unmute user {Identifier[9..]}");
                 System.Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
@@ -204,8 +207,8 @@ namespace InsanityBot.Commands.Moderation
             return thing.GetAwaiter().GetResult();
         }
 
-        public static event UnmuteCompletedDelegate UnmuteCompletedEvent;
-        public static event MuteStartingDelegate MuteStartingEvent;
+        public static event TimedActionCompleteEventHandler UnmuteCompletedEvent;
+        public static event TimedActionStartEventHandler MuteStartingEvent;
     }
 
     public class TempmuteOptions : ModerationOptionBase

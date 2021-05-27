@@ -3,19 +3,19 @@
 // uncomment this if you want to allow external handlers for permissions.
 // this requires a full recompile to apply. the feature is also disabled for a *reason*.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-
 using DSharpPlus;
 using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Permissions.Data;
 
 using Newtonsoft.Json;
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace InsanityBot.Utility.Permissions
 {
@@ -117,7 +117,7 @@ namespace InsanityBot.Utility.Permissions
         private static void Initialize()
         {
 
-            if (!Directory.Exists("./config/permissions"))
+            if(!Directory.Exists("./config/permissions"))
             {
                 Console.WriteLine("Missing permission configuration, aborting startup. Please contact the InsanityBot team immediately" +
                     "\nPress any key to continue...");
@@ -126,7 +126,7 @@ namespace InsanityBot.Utility.Permissions
             }
 
             // check for default mappings and declarations
-            if (!File.Exists("./config/permissions/vanilla.mappings.json"))
+            if(!File.Exists("./config/permissions/vanilla.mappings.json"))
             {
                 Console.WriteLine("Missing vanilla permission mappings, aborting startup. Please contact the InsanityBot team immediately" +
                     "\nPress any key to continue...");
@@ -134,7 +134,7 @@ namespace InsanityBot.Utility.Permissions
                 Process.GetCurrentProcess().Kill();
             }
 
-            if (!File.Exists("./config/permissions/vanilla.pdecl.json"))
+            if(!File.Exists("./config/permissions/vanilla.pdecl.json"))
             {
                 Console.WriteLine("Missing vanilla permission declaration, aborting startup. Please contact the InsanityBot team immediately" +
                     "\nPress any key to continue...");
@@ -143,43 +143,43 @@ namespace InsanityBot.Utility.Permissions
             }
 
             // create role directory
-            if (!Directory.Exists(DefaultPermissionFileSpecifications.Role.Path))
+            if(!Directory.Exists(DefaultPermissionFileSpecifications.Role.Path))
             {
                 Directory.CreateDirectory(DefaultPermissionFileSpecifications.Role.Path);
             }
 
             // create script directory
-            if (!Directory.Exists(DefaultPermissionFileSpecifications.Script.Path))
+            if(!Directory.Exists(DefaultPermissionFileSpecifications.Script.Path))
             {
                 Directory.CreateDirectory(DefaultPermissionFileSpecifications.Script.Path);
             }
 
             // create mapping directory
-            if (!Directory.Exists("./mod-data/permissions/mappings"))
+            if(!Directory.Exists("./mod-data/permissions/mappings"))
             {
                 Directory.CreateDirectory("./mod-data/permissions/mappings");
             }
 
             // create declaration directory
-            if (!Directory.Exists("./mod-data/permissions/declarations"))
+            if(!Directory.Exists("./mod-data/permissions/declarations"))
             {
                 Directory.CreateDirectory("./mod-data/permissions/declarations");
             }
 
             // create intermediary directory
-            if (!Directory.Exists("./cache/permissions/intermediate"))
+            if(!Directory.Exists("./cache/permissions/intermediate"))
             {
                 Directory.CreateDirectory("./cache/permissions/intermediate");
             }
 
             // check whether default permissions are up-to-date
-            if (ShouldUpdateDefaultPermissions())
+            if(ShouldUpdateDefaultPermissions())
             {
                 UpdateDefaultPermissions();
             }
 
             // check whether mappings are up-to-date
-            if (ShouldUpdateMappings())
+            if(ShouldUpdateMappings())
             {
                 UpdateMappings();
             }
@@ -196,13 +196,13 @@ namespace InsanityBot.Utility.Permissions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Boolean ShouldUpdateDefaultPermissions()
         {
-            if (!File.Exists("./config/permissions/default.json"))
+            if(!File.Exists("./config/permissions/default.json"))
             {
                 File.Create("./config/permissions/default.json").Close();
                 return true;
             }
 
-            if (!File.Exists("./cache/permissions/intermediate/default"))
+            if(!File.Exists("./cache/permissions/intermediate/default"))
             {
                 File.Create("./cache/permissions/intermediate/default").Close();
                 return true;
@@ -218,7 +218,7 @@ namespace InsanityBot.Utility.Permissions
                                            where x.EndsWith(".pdecl.json")
                                            select x;
 
-            foreach (String v in modFiles)
+            foreach(String v in modFiles)
             {
                 reader = new(v);
                 permissions += JsonConvert.DeserializeObject<PermissionDeclaration[]>(reader.ReadToEnd());
@@ -227,7 +227,7 @@ namespace InsanityBot.Utility.Permissions
 
             reader = new("./config/permissions/default.json");
 
-            if (permissions != JsonConvert.DeserializeObject<DefaultPermissions>(reader.ReadToEnd()))
+            if(permissions != JsonConvert.DeserializeObject<DefaultPermissions>(reader.ReadToEnd()))
             {
                 reader.Close();
                 return true;
@@ -249,7 +249,7 @@ namespace InsanityBot.Utility.Permissions
                                            where x.EndsWith(".pdecl.json")
                                            select x;
 
-            foreach (String v in modFiles)
+            foreach(String v in modFiles)
             {
                 reader = new(v);
                 permissions += JsonConvert.DeserializeObject<PermissionDeclaration[]>(reader.ReadToEnd());
@@ -258,7 +258,7 @@ namespace InsanityBot.Utility.Permissions
 
             permissions.UpdateGuid = Guid.NewGuid();
 
-            if (!File.Exists("./config/permissions/default.json"))
+            if(!File.Exists("./config/permissions/default.json"))
             {
                 File.Create("./config/permissions/default.json").Close();
             }
@@ -270,7 +270,7 @@ namespace InsanityBot.Utility.Permissions
             List<String> checksums = new();
             checksums.Add("./config/permissions/vanilla.pdecl.json".GetSHA512Checksum());
 
-            foreach (String v in modFiles)
+            foreach(String v in modFiles)
             {
                 checksums.Add(v.GetSHA512Checksum());
             }
@@ -284,13 +284,13 @@ namespace InsanityBot.Utility.Permissions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Boolean ShouldUpdateMappings()
         {
-            if (!File.Exists("./config/permissions/mappings.json"))
+            if(!File.Exists("./config/permissions/mappings.json"))
             {
                 File.Create("./config/permissions/mappings.json").Close();
                 return true;
             }
 
-            if (!File.Exists("./cache/permissions/intermediate/mappings"))
+            if(!File.Exists("./cache/permissions/intermediate/mappings"))
             {
                 File.Create("./cache/permissions/intermediate/mappings").Close();
                 return true;
@@ -304,7 +304,7 @@ namespace InsanityBot.Utility.Permissions
                                            where x.EndsWith(".mappings.json")
                                            select x;
 
-            foreach (String v in modFiles)
+            foreach(String v in modFiles)
             {
                 reader = new(v);
                 mappings += JsonConvert.DeserializeObject<PermissionMapping>(reader.ReadToEnd());
@@ -313,7 +313,7 @@ namespace InsanityBot.Utility.Permissions
 
             reader = new("./config/permissions/mappings.json");
 
-            if (mappings != JsonConvert.DeserializeObject<PermissionMapping>(reader.ReadToEnd()))
+            if(mappings != JsonConvert.DeserializeObject<PermissionMapping>(reader.ReadToEnd()))
             {
                 reader.Close();
                 return true;
@@ -333,7 +333,7 @@ namespace InsanityBot.Utility.Permissions
                                            where x.EndsWith(".mappings.json")
                                            select x;
 
-            foreach (String v in modFiles)
+            foreach(String v in modFiles)
             {
                 reader = new(v);
                 mappings += JsonConvert.DeserializeObject<PermissionMapping>(reader.ReadToEnd());
@@ -347,7 +347,7 @@ namespace InsanityBot.Utility.Permissions
             List<String> checksums = new();
             checksums.Add("./config/permissions/vanilla.mappings.json".GetSHA512Checksum());
 
-            foreach (String v in modFiles)
+            foreach(String v in modFiles)
             {
                 checksums.Add(v.GetSHA512Checksum());
             }
@@ -373,7 +373,7 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaDeleteRolePermissions(UInt64 RoleId)
         {
-            if (File.Exists($"./data/role-permissions/{RoleId}.json"))
+            if(File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
                 File.Delete($"./data/role-permissions/{RoleId}.json");
             }
@@ -381,7 +381,7 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaDeleteUserPermissions(UInt64 UserId)
         {
-            if (File.Exists($"./data/{UserId}/permissions.json"))
+            if(File.Exists($"./data/{UserId}/permissions.json"))
             {
                 File.Delete($"./data/{UserId}/permissions.json");
             }
@@ -391,9 +391,9 @@ namespace InsanityBot.Utility.Permissions
         {
             PermissionMapping mapping = PermissionMapping.Deserialize("complete");
 
-            foreach (KeyValuePair<Int64, String[]> v in mapping.Mappings)
+            foreach(KeyValuePair<Int64, String[]> v in mapping.Mappings)
             {
-                if (Role.CheckPermission((DSharpPlus.Permissions)v.Key) == PermissionLevel.Allowed)
+                if(Role.CheckPermission((DSharpPlus.Permissions)v.Key) == PermissionLevel.Allowed)
                 {
                     GrantRolePermissions(Role.Id, v.Value);
                 }
@@ -404,7 +404,7 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaSetRolePermissions(RolePermissions Role)
         {
-            if (!File.Exists($"./data/role-permissions/{Role.SnowflakeIdentifier}.json"))
+            if(!File.Exists($"./data/role-permissions/{Role.SnowflakeIdentifier}.json"))
             {
                 CreateRolePermissions(Role.SnowflakeIdentifier);
             }
@@ -414,7 +414,7 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaSetUserPermissions(UserPermissions User)
         {
-            if (!File.Exists($"./data/{User.SnowflakeIdentifier}/permissions.json"))
+            if(!File.Exists($"./data/{User.SnowflakeIdentifier}/permissions.json"))
             {
                 CreateUserPermissions(User.SnowflakeIdentifier);
             }
@@ -424,7 +424,7 @@ namespace InsanityBot.Utility.Permissions
 
         private RolePermissions VanillaGetRolePermissions(UInt64 RoleId)
         {
-            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+            if(!File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
                 CreateRolePermissions(RoleId);
             }
@@ -434,7 +434,7 @@ namespace InsanityBot.Utility.Permissions
 
         private UserPermissions VanillaGetUserPermissions(UInt64 UserId)
         {
-            if (!File.Exists($"./data/{UserId}/permissions.json"))
+            if(!File.Exists($"./data/{UserId}/permissions.json"))
             {
                 CreateUserPermissions(UserId);
             }
@@ -448,7 +448,7 @@ namespace InsanityBot.Utility.Permissions
 
             Directory.CreateDirectory($"./data/role-permissions");
 
-            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+            if(!File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
                 File.Create($"./data/role-permissions/{RoleId}.json").Close();
             }
@@ -462,7 +462,7 @@ namespace InsanityBot.Utility.Permissions
 
             Directory.CreateDirectory($"./data/{UserId}");
 
-            if (!File.Exists($"./data/{UserId}/permissions.json"))
+            if(!File.Exists($"./data/{UserId}/permissions.json"))
             {
                 File.Create($"./data/{UserId}/permissions.json").Close();
             }
@@ -472,7 +472,7 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaSetRoleAdministrator(UInt64 RoleId, Boolean Administrator)
         {
-            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+            if(!File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
                 CreateRolePermissions(RoleId);
             }
@@ -484,7 +484,7 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaSetUserAdministrator(UInt64 UserId, Boolean Administrator)
         {
-            if (!File.Exists($"./data/{UserId}/permissions.json"))
+            if(!File.Exists($"./data/{UserId}/permissions.json"))
             {
                 CreateUserPermissions(UserId);
             }
@@ -496,16 +496,16 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaNeutralizeRolePermissions(UInt64 RoleId, String[] Permissions)
         {
-            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+            if(!File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
                 CreateRolePermissions(RoleId);
             }
 
             RolePermissions permissions = RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
 
-            foreach (String v in Permissions)
+            foreach(String v in Permissions)
             {
-                foreach (String v1 in ParseWildcards(v))
+                foreach(String v1 in ParseWildcards(v))
                 {
                     permissions[v1] = PermissionValue.Inherited;
                 }
@@ -516,16 +516,16 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaNeutralizeUserPermissions(UInt64 UserId, String[] Permissions)
         {
-            if (!File.Exists($"./data/{UserId}/permissions.json"))
+            if(!File.Exists($"./data/{UserId}/permissions.json"))
             {
                 CreateUserPermissions(UserId);
             }
 
             UserPermissions permissions = UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
 
-            foreach (String v in Permissions)
+            foreach(String v in Permissions)
             {
-                foreach (String v1 in ParseWildcards(v))
+                foreach(String v1 in ParseWildcards(v))
                 {
                     permissions[v1] = PermissionValue.Inherited;
                 }
@@ -536,16 +536,16 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaRevokeRolePermissions(UInt64 RoleId, String[] Permissions)
         {
-            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+            if(!File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
                 CreateRolePermissions(RoleId);
             }
 
             RolePermissions permissions = RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
 
-            foreach (String v in Permissions)
+            foreach(String v in Permissions)
             {
-                foreach (String v1 in ParseWildcards(v))
+                foreach(String v1 in ParseWildcards(v))
                 {
                     permissions[v1] = PermissionValue.Denied;
                 }
@@ -556,16 +556,16 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaRevokeUserPermissions(UInt64 UserId, String[] Permissions)
         {
-            if (!File.Exists($"./data/{UserId}/permissions.json"))
+            if(!File.Exists($"./data/{UserId}/permissions.json"))
             {
                 CreateUserPermissions(UserId);
             }
 
             UserPermissions permissions = UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
 
-            foreach (String v in Permissions)
+            foreach(String v in Permissions)
             {
-                foreach (String v1 in ParseWildcards(v))
+                foreach(String v1 in ParseWildcards(v))
                 {
                     permissions[v1] = PermissionValue.Denied;
                 }
@@ -576,16 +576,16 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaGrantRolePermissions(UInt64 RoleId, String[] Permissions)
         {
-            if (!File.Exists($"./data/role-permissions/{RoleId}.json"))
+            if(!File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
                 CreateRolePermissions(RoleId);
             }
 
             RolePermissions permissions = RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
 
-            foreach (String v in Permissions)
+            foreach(String v in Permissions)
             {
-                foreach (String v1 in ParseWildcards(v))
+                foreach(String v1 in ParseWildcards(v))
                 {
                     permissions[v1] = PermissionValue.Allowed;
                 }
@@ -596,16 +596,16 @@ namespace InsanityBot.Utility.Permissions
 
         private void VanillaGrantUserPermissions(UInt64 UserId, String[] Permissions)
         {
-            if (!File.Exists($"./data/{UserId}/permissions.json"))
+            if(!File.Exists($"./data/{UserId}/permissions.json"))
             {
                 CreateUserPermissions(UserId);
             }
 
             UserPermissions permissions = UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
 
-            foreach (String v in Permissions)
+            foreach(String v in Permissions)
             {
-                foreach (String v1 in ParseWildcards(v))
+                foreach(String v1 in ParseWildcards(v))
                 {
                     permissions[v1] = PermissionValue.Allowed;
                 }
@@ -630,12 +630,12 @@ namespace InsanityBot.Utility.Permissions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static String[] ParseWildcards(String permission)
         {
-            if (!permission.Contains('*'))
+            if(!permission.Contains('*'))
             {
                 return new[] { permission };
             }
 
-            if (permission[permission.IndexOf('*') - 1] != '.')
+            if(permission[permission.IndexOf('*') - 1] != '.')
             {
                 throw new ArgumentException("Invalid wildcard.", nameof(permission));
             }

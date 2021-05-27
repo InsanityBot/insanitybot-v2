@@ -1,11 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-using CommandLine;
+﻿using CommandLine;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -22,6 +15,7 @@ using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
 using InsanityBot.Console.Integrated;
 using InsanityBot.Core.Logger;
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -30,6 +24,13 @@ using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
+
+using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 using static System.Convert;
 
@@ -67,9 +68,9 @@ namespace InsanityBot
 
             //validate token and guild id
             #region token
-            if (String.IsNullOrWhiteSpace(Config.Token))
+            if(String.IsNullOrWhiteSpace(Config.Token))
             {
-                if (!CommandLineOptions.Interactive)
+                if(!CommandLineOptions.Interactive)
                 {
                     System.Console.WriteLine("Invalid Token. Please provide a valid token in .\\config\\main.json" +
                         "\nPress any key to continue...");
@@ -81,7 +82,7 @@ namespace InsanityBot
                     "To abort and exit InsanityBot, type \"cancel\"\nToken: ");
                 String token = System.Console.ReadLine();
 
-                if (token.ToLower().Trim() == "cancel")
+                if(token.ToLower().Trim() == "cancel")
                 {
                     System.Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
                     System.Console.ReadKey();
@@ -92,9 +93,9 @@ namespace InsanityBot
                 ConfigManager.Serialize(Config, "./config/main.json");
             }
 
-            if (Config.GuildId == 0)
+            if(Config.GuildId == 0)
             {
-                if (!CommandLineOptions.Interactive)
+                if(!CommandLineOptions.Interactive)
                 {
                     System.Console.WriteLine("Invalid GuildId. Please provide a valid guild ID in .\\config\\main.json" +
                         "\nPress any key to continue...");
@@ -106,14 +107,14 @@ namespace InsanityBot
                     "To abort and exit InsanityBot, type \"cancel\"\nGuild ID: ");
                 String guildId = System.Console.ReadLine();
 
-                if (guildId.ToLower().Trim() == "cancel")
+                if(guildId.ToLower().Trim() == "cancel")
                 {
                     System.Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
                     System.Console.ReadKey();
                     return;
                 }
 
-                if (UInt64.TryParse(guildId, out UInt64 id))
+                if(UInt64.TryParse(guildId, out UInt64 id))
                 {
                     Config.GuildId = id;
                     ConfigManager.Serialize(Config, "./config/main.json");
@@ -165,7 +166,7 @@ namespace InsanityBot
                 //create home guild so commands can use it
                 HomeGuild = await Client.GetGuildAsync(Convert.ToUInt64(Config.GuildId));
             }
-            catch (UnauthorizedException)
+            catch(UnauthorizedException)
             {
                 Client.Logger.LogCritical(new EventId(0000, "Main"),
                     "Your GuildId is either invalid or InsanityBot has not been invited to the server yet.");
@@ -189,27 +190,27 @@ namespace InsanityBot
             CommandsExtension = Client.GetCommandsNext();
 
             PaginationEmojis InteractivityPaginationEmotes = new();
-            if (ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"]) != 0)
+            if(ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"]) != 0)
             {
                 InteractivityPaginationEmotes.Right = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"])];
             }
 
-            if (ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"]) != 0)
+            if(ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"]) != 0)
             {
                 InteractivityPaginationEmotes.Left = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"])];
             }
 
-            if (ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"]) != 0)
+            if(ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"]) != 0)
             {
                 InteractivityPaginationEmotes.SkipRight = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"])];
             }
 
-            if (ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"]) != 0)
+            if(ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"]) != 0)
             {
                 InteractivityPaginationEmotes.SkipLeft = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"])];
             }
 
-            if (ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"]) != 0)
+            if(ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"]) != 0)
             {
                 InteractivityPaginationEmotes.Stop = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"])];
             }
@@ -255,17 +256,17 @@ namespace InsanityBot
 
         private static Task CommandsExtension_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)
         {
-            if (e.Exception.GetType() == typeof(CommandNotFoundException))
+            if(e.Exception.GetType() == typeof(CommandNotFoundException))
             {
                 return Task.CompletedTask;
             }
 
-            if (e.Exception.GetType() == typeof(ArgumentException))
+            if(e.Exception.GetType() == typeof(ArgumentException))
             {
                 return Task.CompletedTask;
             }
 
-            if (e.Exception.GetType() == typeof(ArgumentNullException))
+            if(e.Exception.GetType() == typeof(ArgumentNullException))
             {
                 return Task.CompletedTask;
             }
@@ -279,12 +280,12 @@ namespace InsanityBot
         {
             CommandsExtension.RegisterCommands<PermissionCommand>();
 
-            if ((Boolean)Config["insanitybot.modules.miscellaneous"])
+            if((Boolean)Config["insanitybot.modules.miscellaneous"])
             {
                 CommandsExtension.RegisterCommands<Say>();
                 CommandsExtension.RegisterCommands<Embed>();
             }
-            if ((Boolean)Config["insanitybot.modules.moderation"])
+            if((Boolean)Config["insanitybot.modules.moderation"])
             {
                 CommandsExtension.RegisterCommands<VerbalWarn>();
                 CommandsExtension.RegisterCommands<Warn>();
@@ -319,11 +320,17 @@ namespace InsanityBot
             Ban.BanStartingEvent += TimeHandler.DisableTimer;
         }
 
-        private static void InitializeAll() => TimeHandler.Start();
+        private static void InitializeAll()
+        {
+            TimeHandler.Start();
+            ModlogQueue = new(
+                (ModlogMessageType.Moderation, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.modlog_channel_id"]))),
+                (ModlogMessageType.Administration, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.admin_log_channel_id"]))));
+        }
 
         private static async Task HandleTCPConnections(Int64 Port)
         {
-            if (Port == 0)
+            if(Port == 0)
             {
                 return;
             }
@@ -339,7 +346,7 @@ namespace InsanityBot
                 NetworkStream stream = null;
                 Int32 i = 0;
 
-                while (true)
+                while(true)
                 {
                     client = null;
                     stream = null;
@@ -347,7 +354,7 @@ namespace InsanityBot
                     client = await listener.AcceptTcpClientAsync();
                     stream = client.GetStream();
 
-                    while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                    while((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                     {
                         bytes = Encoding.ASCII.GetBytes("200");
 
@@ -357,7 +364,7 @@ namespace InsanityBot
                     client.Close();
                 }
             }
-            catch (SocketException e)
+            catch(SocketException e)
             {
                 Client.Logger.LogCritical(e.Message);
             }

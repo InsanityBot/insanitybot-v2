@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
-
-using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Permissions.Data
 {
@@ -24,7 +24,7 @@ namespace InsanityBot.Utility.Permissions.Data
         public static RolePermissions operator -(RolePermissions left, RolePermissions right)
         {
             RolePermissions final = left;
-            if (final.Parent == right.SnowflakeIdentifier)
+            if(final.Parent == right.SnowflakeIdentifier)
             {
                 final.Parent = 0;
             }
@@ -35,7 +35,7 @@ namespace InsanityBot.Utility.Permissions.Data
         public static RolePermissions operator +(RolePermissions left, String right)
         {
             RolePermissions final = left;
-            if (final[right] != PermissionValue.Allowed)
+            if(final[right] != PermissionValue.Allowed)
             {
                 final[right]++;
             }
@@ -46,7 +46,7 @@ namespace InsanityBot.Utility.Permissions.Data
         public static RolePermissions operator -(RolePermissions left, String right)
         {
             RolePermissions final = left;
-            if (final[right] != PermissionValue.Denied)
+            if(final[right] != PermissionValue.Denied)
             {
                 final[right]--;
             }
@@ -56,21 +56,21 @@ namespace InsanityBot.Utility.Permissions.Data
 
         public RolePermissions Update(DefaultPermissions defaults)
         {
-            if (defaults.UpdateGuid == this.UpdateGuid)
+            if(defaults.UpdateGuid == this.UpdateGuid)
             {
                 return this;
             }
 
-            foreach (KeyValuePair<String, PermissionValue> v in defaults.Permissions)
+            foreach(KeyValuePair<String, PermissionValue> v in defaults.Permissions)
             {
-                if (!this.Permissions.ContainsKey(v.Key))
+                if(!this.Permissions.ContainsKey(v.Key))
                 {
                     this.Permissions.Add(v.Key, PermissionValue.Inherited);
                 }
             }
-            foreach (KeyValuePair<String, PermissionValue> v in this.Permissions)
+            foreach(KeyValuePair<String, PermissionValue> v in this.Permissions)
             {
-                if (!defaults.Permissions.ContainsKey(v.Key))
+                if(!defaults.Permissions.ContainsKey(v.Key))
                 {
                     this.Permissions.Remove(v.Key);
                 }
@@ -88,7 +88,7 @@ namespace InsanityBot.Utility.Permissions.Data
             permissions.SnowflakeIdentifier = roleId;
             permissions.UpdateGuid = defaults.UpdateGuid;
 
-            foreach (KeyValuePair<String, PermissionValue> v in defaults.Permissions)
+            foreach(KeyValuePair<String, PermissionValue> v in defaults.Permissions)
             {
                 permissions.Permissions.Add(v.Key, PermissionValue.Inherited);
             }
@@ -102,10 +102,10 @@ namespace InsanityBot.Utility.Permissions.Data
             RolePermissions permissions = JsonConvert.DeserializeObject<RolePermissions>(reader.ReadToEnd());
             reader.Close();
 
-            if (PermissionSettings.UpdateRolePermissions)
+            if(PermissionSettings.UpdateRolePermissions)
             {
                 DefaultPermissions defaults = DefaultPermissions.Deserialize();
-                if (permissions.UpdateGuid == defaults.UpdateGuid)
+                if(permissions.UpdateGuid == defaults.UpdateGuid)
                 {
                     return permissions;
                 }

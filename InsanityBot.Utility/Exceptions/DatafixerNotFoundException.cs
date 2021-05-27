@@ -1,6 +1,6 @@
-﻿using System;
+﻿using InsanityBot.Utility.Datafixers.Reference;
 
-using InsanityBot.Utility.Datafixers.Reference;
+using System;
 
 namespace InsanityBot.Utility.Exceptions
 {

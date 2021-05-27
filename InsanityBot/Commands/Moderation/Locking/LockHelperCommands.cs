@@ -1,13 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
+
+using System;
+using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
 
@@ -25,7 +25,7 @@ namespace InsanityBot.Commands.Moderation.Locking
             [Command("add")]
             public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
-                if (!ctx.Member.HasPermission("insanitybot.admin.lock_whitelist.add"))
+                if(!ctx.Member.HasPermission("insanitybot.admin.lock_whitelist.add"))
                 {
                     await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
@@ -50,12 +50,12 @@ namespace InsanityBot.Commands.Moderation.Locking
                 {
                     ChannelData data = channel.GetCachedChannelData();
 
-                    if (data.LockedRoles.Contains(role.Id))
+                    if(data.LockedRoles.Contains(role.Id))
                     {
                         data.LockedRoles.Remove(role.Id);
                     }
 
-                    if (data.WhitelistedRoles.Contains(role.Id))
+                    if(data.WhitelistedRoles.Contains(role.Id))
                     {
                         embedBuilder = new()
                         {
@@ -87,7 +87,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                         InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Added role {role.Id} to channel whitelist");
                     }
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     embedBuilder = new()
                     {
@@ -114,7 +114,7 @@ namespace InsanityBot.Commands.Moderation.Locking
 
             public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
-                if (!ctx.Member.HasPermission("insanitybot.admin.lock_whitelist.remove"))
+                if(!ctx.Member.HasPermission("insanitybot.admin.lock_whitelist.remove"))
                 {
                     await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
@@ -139,7 +139,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 {
                     ChannelData data = channel.GetCachedChannelData();
 
-                    if (data.WhitelistedRoles.Contains(role.Id))
+                    if(data.WhitelistedRoles.Contains(role.Id))
                     {
                         data.WhitelistedRoles.Remove(role.Id);
                     }
@@ -160,7 +160,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                     InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Removed role {role.Id} from channel whitelist");
 
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     embedBuilder = new()
                     {
@@ -193,7 +193,7 @@ namespace InsanityBot.Commands.Moderation.Locking
             [Command("add")]
             public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
-                if (!ctx.Member.HasPermission("insanitybot.admin.lock_blacklist.add"))
+                if(!ctx.Member.HasPermission("insanitybot.admin.lock_blacklist.add"))
                 {
                     await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
@@ -218,12 +218,12 @@ namespace InsanityBot.Commands.Moderation.Locking
                 {
                     ChannelData data = channel.GetCachedChannelData();
 
-                    if (data.WhitelistedRoles.Contains(role.Id))
+                    if(data.WhitelistedRoles.Contains(role.Id))
                     {
                         data.WhitelistedRoles.Remove(role.Id);
                     }
 
-                    if (data.LockedRoles.Contains(role.Id))
+                    if(data.LockedRoles.Contains(role.Id))
                     {
                         embedBuilder = new()
                         {
@@ -255,7 +255,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                         InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Added role {role.Id} to channel blacklist");
                     }
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     embedBuilder = new()
                     {
@@ -282,7 +282,7 @@ namespace InsanityBot.Commands.Moderation.Locking
 
             public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
-                if (!ctx.Member.HasPermission("insanitybot.admin.lock_blacklist.remove"))
+                if(!ctx.Member.HasPermission("insanitybot.admin.lock_blacklist.remove"))
                 {
                     await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
@@ -307,7 +307,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 {
                     ChannelData data = channel.GetCachedChannelData();
 
-                    if (data.LockedRoles.Contains(role.Id))
+                    if(data.LockedRoles.Contains(role.Id))
                     {
                         data.LockedRoles.Remove(role.Id);
                     }
@@ -328,7 +328,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                     InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Removed role {role.Id} from channel blacklist");
 
                 }
-                catch (Exception e)
+                catch(Exception e)
                 {
                     embedBuilder = new()
                     {

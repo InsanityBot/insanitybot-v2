@@ -1,15 +1,16 @@
-﻿using System;
-
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 
 using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.Core.Logger;
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
+
+using System;
 
 #pragma warning disable CA2211
 namespace InsanityBot
@@ -39,8 +40,9 @@ namespace InsanityBot
 
         public static PermissionEngine PermissionEngine;
         public static EmbedFormatterFactory EmbedFactory;
+        public static ModlogMessageQueue ModlogQueue;
 
-        public static String Version = "2.0.0-dev.00031";
+        public static String Version = "2.0.0-dev.00032";
     }
 }
 #pragma warning restore CA2211

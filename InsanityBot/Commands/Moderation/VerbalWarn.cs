@@ -1,19 +1,19 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using CommandLine;
+﻿using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Modlogs; // unsafe interface to allow faster method chaining
 using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using static System.Convert;
+using System;
+using System.Threading.Tasks;
+
 using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
@@ -28,12 +28,12 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String arguments = "usedefault")
         {
-            if (!(Boolean)InsanityBot.Config["insanitybot.commands.moderation.allow_minor_warns"])
+            if(!(Boolean)InsanityBot.Config["insanitybot.commands.moderation.allow_minor_warns"])
             {
                 return;
             }
 
-            if (arguments.StartsWith('-'))
+            if(arguments.StartsWith('-'))
             {
                 await ParseVerbalWarnCommand(ctx, member, arguments);
                 return;
@@ -48,7 +48,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -59,7 +59,7 @@ namespace InsanityBot.Commands.Moderation
                         await ExecuteVerbalWarnCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -84,13 +84,13 @@ namespace InsanityBot.Commands.Moderation
             Boolean silent,
             Boolean dmMember)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.verbal_warn"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.verbal_warn"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
-            if (silent)
+            if(silent)
             {
                 await ctx.Message.DeleteAsync();
             }
@@ -131,10 +131,12 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
 
-                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                {
+                    Embed = moderationEmbedBuilder
+                });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
@@ -152,9 +154,9 @@ namespace InsanityBot.Commands.Moderation
             {
                 await ctx.Channel.SendMessageAsync(embedBuilder.Build());
 
-                if ((Boolean)InsanityBot.Config["insanitybot.commands.moderation.convert_minor_warns_into_full_warn"])
+                if((Boolean)InsanityBot.Config["insanitybot.commands.moderation.convert_minor_warns_into_full_warn"])
                 {
-                    if ((member.GetUserModlog().VerbalLogEntryCount %
+                    if((member.GetUserModlog().VerbalLogEntryCount %
                         (Int64)InsanityBot.Config["insanitybot.commands.moderation.minor_warns_equal_full_warn"]) == 0)
                     {
                         await new Warn().WarnCommand(ctx, member, $"--silent --reason Too many verbal warns, count since last warn exceeded " +

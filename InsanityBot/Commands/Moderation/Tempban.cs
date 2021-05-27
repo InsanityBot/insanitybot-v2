@@ -1,22 +1,23 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-
-using CommandLine;
+﻿using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs.SafeAccessInterface;
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
 
-using static System.Convert;
+using System;
+using System.IO;
+using System.Threading.Tasks;
+
 using static InsanityBot.Commands.StringUtilities;
+using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -31,7 +32,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String Reason = "usedefault")
         {
-            if (time.StartsWith('-'))
+            if(time.StartsWith('-'))
             {
                 await ParseTempbanCommand(ctx, member, String.Join(' ', time, Reason));
                 return;
@@ -48,7 +49,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -61,7 +62,7 @@ namespace InsanityBot.Commands.Moderation
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -86,7 +87,7 @@ namespace InsanityBot.Commands.Moderation
             Boolean Silent,
             Boolean DmMember)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.tempban"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.tempban"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -136,8 +137,10 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
                 _ = InsanityBot.HomeGuild.BanMemberAsync(member, 0, BanReason);
-                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                {
+                    Embed = moderationEmbedBuilder
+                });
 
             }
             catch
@@ -154,7 +157,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (embedBuilder == null)
+                if(embedBuilder == null)
                 {
                     InsanityBot.Client.Logger.LogError(new EventId(1151, "Tempban"),
                         "Could not execute tempban command, an unknown exception occured.");
@@ -169,7 +172,7 @@ namespace InsanityBot.Commands.Moderation
 
         public static void InitializeUnban(String Identifier, Guid guid)
         {
-            if (!Identifier.StartsWith("tempban_"))
+            if(!Identifier.StartsWith("tempban_"))
             {
                 return;
             }
@@ -183,7 +186,7 @@ namespace InsanityBot.Commands.Moderation
 
                 UnbanCompletedEvent();
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1152, "Unban"), $"Could not unban user {Identifier[9..]}");
                 System.Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
@@ -196,8 +199,8 @@ namespace InsanityBot.Commands.Moderation
             return thing.GetAwaiter().GetResult();
         }
 
-        public static event UnbanCompletedDelegate UnbanCompletedEvent;
-        public static event BanStartingDelegate BanStartingEvent;
+        public static event TimedActionCompleteEventHandler UnbanCompletedEvent;
+        public static event TimedActionStartEventHandler BanStartingEvent;
     }
 
     public class TempbanOptions : ModerationOptionBase

@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
-
-using InsanityBot.Utility.Datafixers;
+﻿using InsanityBot.Utility.Datafixers;
 
 using Newtonsoft.Json;
+
+using System;
+using System.IO;
 
 namespace InsanityBot.Utility.Config
 {

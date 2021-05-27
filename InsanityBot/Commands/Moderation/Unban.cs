@@ -1,17 +1,17 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using CommandLine;
+﻿using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using static System.Convert;
+using System;
+using System.Threading.Tasks;
+
 using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
@@ -25,13 +25,13 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String arguments = null)
         {
-            if (arguments == null)
+            if(arguments == null)
             {
                 await ExecuteUnbanCommand(ctx, memberId, false, false);
                 return;
             }
 
-            if (arguments.StartsWith('-'))
+            if(arguments.StartsWith('-'))
             {
                 await ParseUnbanCommand(ctx, memberId, arguments);
                 return;
@@ -49,7 +49,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason void"; //we dont need the reason but its required by the protocol
                 }
@@ -60,7 +60,7 @@ namespace InsanityBot.Commands.Moderation
                         await ExecuteUnbanCommand(ctx, memberId, o.Silent, o.DmMember);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -89,20 +89,20 @@ namespace InsanityBot.Commands.Moderation
             params Object[] additionals)
         {
 
-            if (!automated && !ctx.Member.HasPermission("insanitybot.moderation.unban"))
+            if(!automated && !ctx.Member.HasPermission("insanitybot.moderation.unban"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
-            if (ctx == null && silent == false)
+            if(ctx == null && silent == false)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"),
                     "Invalid command arguments - internal error. Please report this on https://github.com/InsanityNetwork/InsanityBot/issues" +
                     "\nInsanityBot/Commands/Moderation/Unban.cs: argument \"silent\" cannot be false without given command context");
                 return;
             }
-            if (automated && !silent)
+            if(automated && !silent)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"),
                     "Invalid command arguments - internal error. Please report this on https://github.com/InsanityNetwork/InsanityBot/issues" +
@@ -121,7 +121,7 @@ namespace InsanityBot.Commands.Moderation
                 }
             };
 
-            if (automated)
+            if(automated)
             {
                 moderationEmbedBuilder.AddField("Moderator", "InsanityBot", true);
             }
@@ -134,15 +134,15 @@ namespace InsanityBot.Commands.Moderation
 
             try
             {
-                if (silent)
+                if(silent)
                 {
                     await InsanityBot.HomeGuild.UnbanMemberAsync(memberId);
 
-                    if (additionals != null)
+                    if(additionals != null)
                     {
-                        for (Byte b = 0; b < additionals.Length; b++)
+                        for(Byte b = 0; b < additionals.Length; b++)
                         {
-                            if (additionals[b] is String str && str == "timer_guid")
+                            if(additionals[b] is String str && str == "timer_guid")
                             {
                                 moderationEmbedBuilder.AddField("Timer Guid", ((Guid)additionals[b + 1]).ToString(), true);
                             }
@@ -165,11 +165,11 @@ namespace InsanityBot.Commands.Moderation
 
                     await InsanityBot.HomeGuild.UnbanMemberAsync(memberId);
 
-                    if (additionals.Length >= 2)
+                    if(additionals.Length >= 2)
                     {
-                        for (Byte b = 0; b <= additionals.Length; b++)
+                        for(Byte b = 0; b <= additionals.Length; b++)
                         {
-                            if (additionals[b] is String str && str == "timer_guid")
+                            if(additionals[b] is String str && str == "timer_guid")
                             {
                                 moderationEmbedBuilder.AddField("Timer Guid", ((Guid)additionals[b + 1]).ToString(), true);
                             }
@@ -177,9 +177,9 @@ namespace InsanityBot.Commands.Moderation
                     }
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                if (!silent)
+                if(!silent)
                 {
                     nonSilent = new DiscordEmbedBuilder
                     {
@@ -197,9 +197,9 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                if (!silent)
+                if(!silent)
                 {
-                    if (nonSilent != null)
+                    if(nonSilent != null)
                     {
                         _ = ctx.Channel.SendMessageAsync(embed: nonSilent.Build());
                     }
@@ -209,8 +209,10 @@ namespace InsanityBot.Commands.Moderation
                     }
                 }
 
-                await InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                {
+                    Embed = moderationEmbedBuilder
+                });
             }
         }
     }

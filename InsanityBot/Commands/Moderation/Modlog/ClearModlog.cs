@@ -1,18 +1,18 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-
-using CommandLine;
+﻿using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using static System.Convert;
+using System;
+using System.IO;
+using System.Threading.Tasks;
+
 using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation.Modlog
@@ -25,7 +25,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             String arguments = "usedefault")
         {
 
-            if (arguments.StartsWith('-'))
+            if(arguments.StartsWith('-'))
             {
                 await ParseClearModlogCommand(ctx, member, arguments);
                 return;
@@ -40,7 +40,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -51,7 +51,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         await ExecuteClearModlogCommand(ctx, member, o.Silent, String.Join(' ', o.Reason));
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -74,13 +74,13 @@ namespace InsanityBot.Commands.Moderation.Modlog
             Boolean silent,
             String reason)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.clear_modlog"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.clear_modlog"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
-            if (silent)
+            if(silent)
             {
                 await ctx.Message.DeleteAsync();
             }
@@ -119,10 +119,12 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         Text = "InsanityBot 2020-2021"
                     }
                 };
-                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                {
+                    Embed = moderationEmbedBuilder.Build()
+                });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
@@ -138,7 +140,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             }
             finally
             {
-                if (!silent)
+                if(!silent)
                 {
                     await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
                 }

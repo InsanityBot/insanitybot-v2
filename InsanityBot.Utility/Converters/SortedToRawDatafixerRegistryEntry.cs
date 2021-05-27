@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using InsanityBot.Utility.Datafixers.Reference;
 
-using InsanityBot.Utility.Datafixers.Reference;
+using System;
+using System.Collections.Generic;
 
 namespace InsanityBot.Utility.Converters
 {
@@ -19,7 +19,7 @@ namespace InsanityBot.Utility.Converters
         internal static IEnumerable<DatafixerRegistryEntry> ToUnsorted(this IEnumerable<SortedDatafixerRegistryEntry> entries, Type type)
         {
             List<DatafixerRegistryEntry> returnValue = new();
-            foreach (SortedDatafixerRegistryEntry entry in entries)
+            foreach(SortedDatafixerRegistryEntry entry in entries)
             {
                 returnValue.Add(new DatafixerRegistryEntry
                 {

@@ -1,12 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Modlogs.Reference;
 
-using Newtonsoft.Json;
+using System;
+using System.Threading.Tasks;
 
 namespace InsanityBot.Utility.Modlogs.SafeAccessInterface
 {
@@ -17,7 +14,7 @@ namespace InsanityBot.Utility.Modlogs.SafeAccessInterface
         /// </summary>
         public static Task<Boolean> TryAddModlogEntry(this DiscordUser user, ModlogEntry modlogEntry)
         {
-            if (user == null)
+            if(user == null)
             {
                 throw new ArgumentException("Could not add modlog entry to nonexistent user", nameof(user));
             }
@@ -83,7 +80,7 @@ namespace InsanityBot.Utility.Modlogs.SafeAccessInterface
         /// </summary>
         public static Task<Boolean> TryAddVerballogEntry(this DiscordUser user, String reason)
         {
-            if (user == null)
+            if(user == null)
             {
                 throw new ArgumentException("Could not add modlog entry to nonexistent user", nameof(user));
             }
@@ -93,7 +90,7 @@ namespace InsanityBot.Utility.Modlogs.SafeAccessInterface
                 (user as DiscordMember).AddVerbalModlogEntry(reason);
                 return Task.FromResult(true);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
                 return Task.FromResult(false);
@@ -116,7 +113,7 @@ namespace InsanityBot.Utility.Modlogs.SafeAccessInterface
                 modlog = (user as DiscordMember).GetUserModlog();
                 return Task.FromResult(true);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
                 modlog = null;

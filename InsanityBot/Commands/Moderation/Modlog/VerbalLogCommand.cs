@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
-using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using static System.Convert;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 using static InsanityBot.Commands.StringUtilities;
+using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation.Modlog
 {
@@ -25,7 +25,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
         public async Task VerbalLogCommand(CommandContext ctx,
             DiscordMember user)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.verballog"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.verballog"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -44,7 +44,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     }
                 };
 
-                if (modlog.VerbalLog.Count == 0)
+                if(modlog.VerbalLog.Count == 0)
                 {
                     modlogEmbed.Color = DiscordColor.SpringGreen;
                     modlogEmbed.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.empty_modlog"],
@@ -53,7 +53,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 }
                 else
                 {
-                    if (!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_verballog_scrolling"]))
+                    if(!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_verballog_scrolling"]))
                     {
                         modlogEmbed.Color = DiscordColor.Red;
                         modlogEmbed.Description = user.CreateVerballogDescription();
@@ -71,7 +71,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     }
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1171, "VerbalLog"), $"Could not retrieve verbal logs: {e}: {e.Message}");
 

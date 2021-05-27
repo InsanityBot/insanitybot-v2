@@ -1,10 +1,10 @@
-﻿using System;
-
-using Helium.Commons.Logging;
+﻿using Helium.Commons.Logging;
 
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Datafixers.Reference;
+
+using System;
 
 namespace InsanityBot.Datafixers.Main
 {
@@ -25,7 +25,7 @@ namespace InsanityBot.Datafixers.Main
 
         public DatafixerDowngradeResult DowngradeData(ref MainConfiguration data)
         {
-            if (data.DataVersion == "2.0.0-dev.00014")
+            if(data.DataVersion == "2.0.0-dev.00014")
             {
                 return DatafixerDowngradeResult.AlreadyDowngraded;
             }
@@ -42,7 +42,7 @@ namespace InsanityBot.Datafixers.Main
 
         public MainConfiguration ExportDowngradedData(MainConfiguration data)
         {
-            if (data.DataVersion == "2.0.0-dev.00014")
+            if(data.DataVersion == "2.0.0-dev.00014")
             {
                 return data;
             }
@@ -59,7 +59,7 @@ namespace InsanityBot.Datafixers.Main
 
         public MainConfiguration ExportUpgradedData(MainConfiguration data)
         {
-            if (data.DataVersion != "2.0.0-dev.00014")
+            if(data.DataVersion != "2.0.0-dev.00014")
             {
                 return data;
             }
@@ -76,7 +76,7 @@ namespace InsanityBot.Datafixers.Main
 
         public DatafixerUpgradeResult UpgradeData(ref MainConfiguration data)
         {
-            if (data.DataVersion != "2.0.0-dev.00014")
+            if(data.DataVersion != "2.0.0-dev.00014")
             {
                 return DatafixerUpgradeResult.AlreadyUpgraded;
             }

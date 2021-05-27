@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
-
-using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Timers
 {
@@ -18,52 +18,46 @@ namespace InsanityBot.Utility.Timers
             };
             Countdown.Elapsed += CountdownElapsed;
 
-            Countdown.Start();
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
-        {
-            if (!Directory.Exists("./cache/timers"))
+            if(!Directory.Exists("./cache/timers"))
             {
                 Directory.CreateDirectory("./cache/timers");
-                return;
             }
 
             //knowing that it exists, proceed to read contents
 
-            if (Directory.GetFiles("./cache/timers").Length == 0)
-            {
-                return;
-            }
-
-            //ok, it exists and has file contents. time to read.
-
-            List<Timer> ActiveTimers = new();
+            Active = new();
 
             StreamReader reader;
 
-            foreach (String s in Directory.GetFiles("./cache/timers"))
+            foreach(String s in Directory.GetFiles("./cache/timers"))
             {
                 //keep this from throwing a fatal error
                 //if an exception occurs, it just means the timer adding procedure took a little longer than usual
                 try
                 {
                     reader = new StreamReader(File.OpenRead(s));
-                    ActiveTimers.Add(JsonConvert.DeserializeObject<Timer>(reader.ReadToEnd()));
+                    Active.Add(JsonConvert.DeserializeObject<Timer>(reader.ReadToEnd()));
                     reader.Close();
                 }
                 catch { }
             }
 
-            foreach (Timer t in ActiveTimers)
+
+            Countdown.Start();
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
+        {
+
+            foreach(Timer t in Active)
             {
-                if (t == null)
+                if(t == null)
                 {
                     continue;
                 }
 
-                if (!t.CheckExpiry())
+                if(!t.CheckExpiry())
                 {
                     continue;
                 }
@@ -82,7 +76,7 @@ namespace InsanityBot.Utility.Timers
 
             StreamWriter writer;
 
-            if (!File.Exists($"./cache/timers/{timer.Identifier}"))
+            if(!File.Exists($"./cache/timers/{timer.Identifier}"))
             {
                 File.Create($"./cache/timers/{timer.Identifier}").Close();
             }
@@ -92,6 +86,8 @@ namespace InsanityBot.Utility.Timers
             writer.Write(JsonConvert.SerializeObject(timer));
 
             writer.Close();
+
+            Active.Add(timer);
 
             Thread.Sleep(50);
             Countdown.Start();
@@ -107,5 +103,6 @@ namespace InsanityBot.Utility.Timers
         public static void DisableTimer() => Countdown.Stop();
 
         private static System.Timers.Timer Countdown { get; set; }
+        private static List<Timer> Active { get; set; }
     }
 }

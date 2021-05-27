@@ -1,19 +1,19 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using CommandLine;
+﻿using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs.SafeAccessInterface;
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using static System.Convert;
+using System;
+using System.Threading.Tasks;
+
 using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
@@ -27,7 +27,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String Reason = "usedefault")
         {
-            if (Reason.StartsWith('-'))
+            if(Reason.StartsWith('-'))
             {
                 await ParseBanCommand(ctx, member, Reason);
                 return;
@@ -42,7 +42,7 @@ namespace InsanityBot.Commands.Moderation
             String cmdArguments = arguments;
             try
             {
-                if (!arguments.Contains("-r") && !arguments.Contains("--reason"))
+                if(!arguments.Contains("-r") && !arguments.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -50,7 +50,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<BanOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        if (o.Time == "default")
+                        if(o.Time == "default")
                         {
                             await ExecuteBanCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                         }
@@ -62,7 +62,7 @@ namespace InsanityBot.Commands.Moderation
                         }
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -86,7 +86,7 @@ namespace InsanityBot.Commands.Moderation
             Boolean Silent,
             Boolean DmMember)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.ban"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.ban"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -130,10 +130,12 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
                 _ = InsanityBot.HomeGuild.BanMemberAsync(member, 0, BanReason);
-                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder()
+                {
+                    Embed = moderationEmbedBuilder.Build()
+                });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {

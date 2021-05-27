@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
 using InsanityBot.Commands.Moderation.Modlog.Individual;
-using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using static System.Convert;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 using static InsanityBot.Commands.StringUtilities;
+using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation.Modlog
 {
@@ -27,7 +27,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
         public async Task ModlogCommand(CommandContext ctx,
             DiscordMember user)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -47,7 +47,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     }
                 };
 
-                if (modlog.ModlogEntryCount == 0)
+                if(modlog.ModlogEntryCount == 0)
                 {
                     modlogEmbed.Color = DiscordColor.SpringGreen;
                     modlogEmbed.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.empty_modlog"],
@@ -76,32 +76,32 @@ namespace InsanityBot.Commands.Moderation.Modlog
                                                     where v.Type == ModlogEntryType.ban
                                                     select v;
 
-                    if (warns.Any())
+                    if(warns.Any())
                     {
                         modlogEmbed.AddField("Warns", warns.Count().ToString(), true);
                     }
 
-                    if (mutes.Any())
+                    if(mutes.Any())
                     {
                         modlogEmbed.AddField("Mutes", mutes.Count().ToString(), true);
                     }
 
-                    if (blacklists.Any())
+                    if(blacklists.Any())
                     {
                         modlogEmbed.AddField("Blacklists", blacklists.Count().ToString(), true);
                     }
 
-                    if (kicks.Any())
+                    if(kicks.Any())
                     {
                         modlogEmbed.AddField("Kicks", kicks.Count().ToString(), true);
                     }
 
-                    if (bans.Any())
+                    if(bans.Any())
                     {
                         modlogEmbed.AddField("Bans", bans.Count().ToString(), true);
                     }
 
-                    if (!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_scrolling"]))
+                    if(!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_scrolling"]))
                     {
                         modlogEmbed.Color = DiscordColor.Red;
                         modlogEmbed.Description = user.CreateModlogDescription(false);
@@ -119,7 +119,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     }
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1170, "Modlog"), $"Could not retrieve modlogs: {e}: {e.Message}");
 
@@ -139,7 +139,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
         [Command("modlog")]
         public async Task ModlogCommand(CommandContext ctx, String type, DiscordMember member)
         {
-            switch (type.ToLower())
+            switch(type.ToLower())
             {
                 case "warn":
                 case "warns":

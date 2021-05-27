@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using CommandLine;
+﻿using CommandLine;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -11,6 +8,9 @@ using DSharpPlus.Entities;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
+
+using System;
+using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
 
@@ -31,7 +31,7 @@ namespace InsanityBot.Commands.Moderation.Locking
             {
                 String cmdArguments = args;
 
-                if (!args.Contains("-r") && !args.Contains("--reason"))
+                if(!args.Contains("-r") && !args.Contains("--reason"))
                 {
                     cmdArguments += " --reason usedefault";
                 }
@@ -42,7 +42,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                         await LockCommand(ctx, InsanityBot.HomeGuild.GetChannel(o.ChannelId), String.Join(' ', o.Reason), o.Silent);
                     });
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 DiscordEmbedBuilder failed = new()
                 {
@@ -65,7 +65,7 @@ namespace InsanityBot.Commands.Moderation.Locking
 
         private async Task LockCommand(CommandContext ctx, DiscordChannel channel, String reason = "usedefault", Boolean silent = false)
         {
-            if (!ctx.Member.HasPermission("insanitybot.moderation.lock"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.lock"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -100,18 +100,18 @@ namespace InsanityBot.Commands.Moderation.Locking
 
                 await channel.AddOverwriteAsync(InsanityBot.HomeGuild.EveryoneRole, deny: DSharpPlus.Permissions.SendMessages, reason: "InsanityBot - locking channel");
 
-                foreach (UInt64 v in data.LockedRoles)
+                foreach(UInt64 v in data.LockedRoles)
                 {
                     await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), deny: DSharpPlus.Permissions.SendMessages, reason: "InsanityBot - locking channel, removing access for listed roles");
                 }
 
-                foreach (UInt64 v in data.WhitelistedRoles)
+                foreach(UInt64 v in data.WhitelistedRoles)
                 {
                     await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v), allow: DSharpPlus.Permissions.SendMessages, reason: "InsanityBot - locking channel, re-adding access for whitelisted roles");
                 }
 
                 UInt64 exemptRole;
-                if ((exemptRole = Convert.ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.lock_exempt_role_id"])) != 0)
+                if((exemptRole = Convert.ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.lock_exempt_role_id"])) != 0)
                 {
                     await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(exemptRole), allow: DSharpPlus.Permissions.SendMessages, reason:
                         "InsanityBot - locking channel, granting access to whitelisted users");
@@ -127,7 +127,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                     }
                 };
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 embedBuilder = new DiscordEmbedBuilder
                 {
@@ -142,7 +142,7 @@ namespace InsanityBot.Commands.Moderation.Locking
             }
             finally
             {
-                if (!silent)
+                if(!silent)
                 {
                     await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
                 }

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-using DSharpPlus;
+﻿using DSharpPlus;
 
 using Microsoft.Extensions.Logging;
+
+using System;
+using System.Collections.Generic;
 
 namespace InsanityBot.Core.Logger
 {
@@ -14,12 +14,12 @@ namespace InsanityBot.Core.Logger
 
         public ILogger CreateLogger(String categoryName)
         {
-            if (this.__disposed)
+            if(this.__disposed)
             {
                 throw new InvalidOperationException("This logger factory is already disposed.");
             }
 
-            if (categoryName != typeof(BaseDiscordClient).FullName && categoryName != typeof(DiscordWebhookClient).FullName)
+            if(categoryName != typeof(BaseDiscordClient).FullName && categoryName != typeof(DiscordWebhookClient).FullName)
             {
                 throw new ArgumentException($"This factory can only provide instances of loggers for {typeof(BaseDiscordClient).FullName} or {typeof(DiscordWebhookClient).FullName}.", nameof(categoryName));
             }
@@ -31,14 +31,14 @@ namespace InsanityBot.Core.Logger
 
         public void Dispose()
         {
-            if (this.__disposed)
+            if(this.__disposed)
             {
                 return;
             }
 
             this.__disposed = true;
 
-            foreach (ILoggerProvider provider in this.Providers)
+            foreach(ILoggerProvider provider in this.Providers)
             {
                 provider.Dispose();
             }

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
-using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Permissions.Data
 {
@@ -71,15 +71,15 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             PermissionMapping retValue = left;
 
-            foreach (KeyValuePair<Int64, String[]> v in right.Mappings)
+            foreach(KeyValuePair<Int64, String[]> v in right.Mappings)
             {
-                if (!left.Mappings.ContainsKey(v.Key))
+                if(!left.Mappings.ContainsKey(v.Key))
                 {
                     left.Mappings.Add(v.Key, v.Value);
                 }
                 else
                 {
-                    foreach (String v1 in v.Value)
+                    foreach(String v1 in v.Value)
                     {
                         left.Mappings[v.Key] = left.Mappings[v.Key].Append(v1).ToArray();
                     }
@@ -92,7 +92,7 @@ namespace InsanityBot.Utility.Permissions.Data
         public static Dictionary<String, String[]> Export(PermissionMapping mapping)
         {
             Dictionary<String, String[]> result = new();
-            foreach (KeyValuePair<Int64, String[]> v in mapping.Mappings)
+            foreach(KeyValuePair<Int64, String[]> v in mapping.Mappings)
             {
                 result.Add(MappingTranslation[v.Key], v.Value);
             }
@@ -107,12 +107,12 @@ namespace InsanityBot.Utility.Permissions.Data
         {
             List<String> pRight = new(), pLeft = new();
 
-            foreach (KeyValuePair<Int64, String[]> v in left.Mappings)
+            foreach(KeyValuePair<Int64, String[]> v in left.Mappings)
             {
                 pLeft.AddRange(v.Value);
             }
 
-            foreach (KeyValuePair<Int64, String[]> v in right.Mappings)
+            foreach(KeyValuePair<Int64, String[]> v in right.Mappings)
             {
                 pRight.AddRange(v.Value);
             }

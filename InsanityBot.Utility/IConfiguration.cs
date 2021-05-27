@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using InsanityBot.Utility.Datafixers;
 
-using InsanityBot.Utility.Datafixers;
+using System;
+using System.Collections.Generic;
 
 namespace InsanityBot.Utility
 {

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 
 using Newtonsoft.Json;
+
+using System.Collections.Generic;
+using System.IO;
 
 namespace InsanityBot.Commands.Moderation.Locking
 {
@@ -17,12 +17,12 @@ namespace InsanityBot.Commands.Moderation.Locking
                 Overwrites = (List<DiscordOverwrite>)channel.PermissionOverwrites
             };
 
-            if (!Directory.Exists($"./cache/lock"))
+            if(!Directory.Exists($"./cache/lock"))
             {
                 Directory.CreateDirectory($"./cache/lock");
             }
 
-            if (!File.Exists($"./cache/lock/{channel.Id}"))
+            if(!File.Exists($"./cache/lock/{channel.Id}"))
             {
                 File.Create($"./cache/lock/{channel.Id}").Close();
             }
@@ -35,7 +35,7 @@ namespace InsanityBot.Commands.Moderation.Locking
 
         public static List<DiscordOverwrite> GetChannelData(this DiscordChannel channel)
         {
-            if (!File.Exists($"./cache/lock/{channel.Id}"))
+            if(!File.Exists($"./cache/lock/{channel.Id}"))
             {
                 return (List<DiscordOverwrite>)channel.PermissionOverwrites;
             }
@@ -46,12 +46,12 @@ namespace InsanityBot.Commands.Moderation.Locking
 
         public static void SerializeLockingOverwrites(this DiscordChannel channel, ChannelData data)
         {
-            if (!Directory.Exists($"./cache/lock"))
+            if(!Directory.Exists($"./cache/lock"))
             {
                 Directory.CreateDirectory($"./cache/lock");
             }
 
-            if (!File.Exists($"./cache/lock/{channel.Id}.ibcd"))
+            if(!File.Exists($"./cache/lock/{channel.Id}.ibcd"))
             {
                 File.Create($"./cache/lock/{channel.Id}.ibcd").Close();
             }
@@ -64,7 +64,7 @@ namespace InsanityBot.Commands.Moderation.Locking
 
         public static ChannelData GetCachedChannelData(this DiscordChannel channel)
         {
-            if (!File.Exists($"./cache/lock/{channel.Id}.ibcd"))
+            if(!File.Exists($"./cache/lock/{channel.Id}.ibcd"))
             {
                 return ChannelData.CreateNew();
             }
