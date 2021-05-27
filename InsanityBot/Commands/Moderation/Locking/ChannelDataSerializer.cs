@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 
 using Newtonsoft.Json;
+
+using System.Collections.Generic;
+using System.IO;
 
 namespace InsanityBot.Commands.Moderation.Locking
 {

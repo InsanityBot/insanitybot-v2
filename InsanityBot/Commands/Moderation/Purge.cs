@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-using CommandLine;
+﻿using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -12,6 +7,11 @@ using DSharpPlus.Entities;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
+
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 using static System.Convert;
 

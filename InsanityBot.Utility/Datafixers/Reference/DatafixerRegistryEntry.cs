@@ -1,6 +1,6 @@
-﻿using System;
+﻿using InsanityBot.Utility.Reference;
 
-using InsanityBot.Utility.Reference;
+using System;
 
 namespace InsanityBot.Utility.Datafixers.Reference
 {

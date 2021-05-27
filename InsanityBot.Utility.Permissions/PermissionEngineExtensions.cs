@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Permissions.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace InsanityBot.Utility.Permissions
 {

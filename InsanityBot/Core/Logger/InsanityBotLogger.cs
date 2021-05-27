@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-
-using DSharpPlus;
+﻿using DSharpPlus;
 
 using Microsoft.Extensions.Logging;
+
+using System;
+using System.Linq;
 
 namespace InsanityBot.Core.Logger
 {

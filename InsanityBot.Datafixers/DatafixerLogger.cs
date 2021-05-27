@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-
-using Helium.Commons.Logging;
+﻿using Helium.Commons.Logging;
 using Helium.Commons.Logging.Default;
+
+using System;
+using System.Runtime.CompilerServices;
 
 namespace InsanityBot.Datafixers
 {

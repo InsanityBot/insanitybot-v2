@@ -1,12 +1,12 @@
-﻿using System;
-using System.IO;
-
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Exceptions;
 using InsanityBot.Utility.Modlogs.Reference;
 
 using Newtonsoft.Json;
+
+using System;
+using System.IO;
 
 namespace InsanityBot.Utility.Modlogs
 {

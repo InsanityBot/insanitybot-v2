@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
-
-using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Timers
 {

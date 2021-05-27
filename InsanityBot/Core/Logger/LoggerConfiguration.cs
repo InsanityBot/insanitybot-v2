@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using InsanityBot.Utility;
 
-using InsanityBot.Utility;
+using System;
+using System.Collections.Generic;
 
 namespace InsanityBot.Core.Logger
 {

@@ -1,10 +1,10 @@
-﻿using System;
-using System.IO;
-
-using InsanityBot.Utility;
+﻿using InsanityBot.Utility;
 using InsanityBot.Utility.Datafixers;
 
 using Newtonsoft.Json;
+
+using System;
+using System.IO;
 
 namespace InsanityBot.Core.Logger
 {

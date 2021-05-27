@@ -1,8 +1,8 @@
-﻿using System;
-
-using DSharpPlus;
+﻿using DSharpPlus;
 
 using Microsoft.Extensions.Logging;
+
+using System;
 
 namespace InsanityBot.Core.Logger
 {

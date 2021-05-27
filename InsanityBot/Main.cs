@@ -1,11 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-using CommandLine;
+﻿using CommandLine;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -22,6 +15,7 @@ using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
 using InsanityBot.Console.Integrated;
 using InsanityBot.Core.Logger;
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -30,6 +24,13 @@ using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
+
+using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 using static System.Convert;
 
@@ -319,7 +320,13 @@ namespace InsanityBot
             Ban.BanStartingEvent += TimeHandler.DisableTimer;
         }
 
-        private static void InitializeAll() => TimeHandler.Start();
+        private static void InitializeAll()
+        {
+            TimeHandler.Start();
+            ModlogQueue = new(
+                (ModlogMessageType.Moderation, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.modlog_channel_id"]))),
+                (ModlogMessageType.Administration, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.admin_log_channel_id"]))));
+        }
 
         private static async Task HandleTCPConnections(Int64 Port)
         {

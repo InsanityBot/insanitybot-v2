@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using CommandLine;
+﻿using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -12,8 +9,11 @@ using InsanityBot.Utility.Permissions.Data;
 
 using Microsoft.Extensions.Logging;
 
-using static System.Convert;
+using System;
+using System.Threading.Tasks;
+
 using static InsanityBot.Commands.StringUtilities;
+using static System.Convert;
 
 namespace InsanityBot.Commands.Permissions
 {

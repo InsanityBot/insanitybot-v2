@@ -1,10 +1,10 @@
-﻿using System;
-
-using Helium.Commons.Logging;
+﻿using Helium.Commons.Logging;
 
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Datafixers.Reference;
 using InsanityBot.Utility.Language;
+
+using System;
 
 namespace InsanityBot.Datafixers.Language
 {

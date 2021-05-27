@@ -1,10 +1,10 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
 using Microsoft.Extensions.Logging;
+
+using System;
+using System.Runtime.CompilerServices;
 
 using TimeSpanParserUtil;
 

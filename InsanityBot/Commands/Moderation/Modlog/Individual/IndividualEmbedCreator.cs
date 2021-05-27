@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DSharpPlus.Entities;
 
-using DSharpPlus.Entities;
-
-using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
+
+using System;
 
 namespace InsanityBot.Commands.Moderation.Modlog.Individual
 {

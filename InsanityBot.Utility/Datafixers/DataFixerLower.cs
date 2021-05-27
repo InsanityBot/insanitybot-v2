@@ -1,10 +1,10 @@
-﻿using System;
+﻿using InsanityBot.Utility.Datafixers.Reference;
+using InsanityBot.Utility.Reference;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
-using InsanityBot.Utility.Datafixers.Reference;
-using InsanityBot.Utility.Reference;
 
 namespace InsanityBot.Utility.Datafixers
 {

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using Microsoft.Extensions.Logging;
 
-using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace InsanityBot.Console.Integrated
 {
@@ -25,7 +21,7 @@ namespace InsanityBot.Console.Integrated
             {
                 command = System.Console.ReadLine();
 
-                switch(command)
+                switch (command)
                 {
                     case "stop":
                     case "exit":
@@ -35,7 +31,7 @@ namespace InsanityBot.Console.Integrated
                     default:
                         break;
                 }
-            } 
+            }
             while (command != "stop" && command != "exit" && command != "return");
         }
     }
