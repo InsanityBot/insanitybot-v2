@@ -4,15 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.IO;
 
-using InsanityBot.Tickets.Daemon.Config;
-using InsanityBot.Tickets.Kyuu;
-using InsanityBot.Tickets.Kyuu.Tasks;
+using InsanityBot.Utility.Config;
 
 using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
 
-namespace InsanityBot.Tickets.Daemon
+namespace InsanityBot.Tickets
 {
     public class TicketDaemon
     {
@@ -22,7 +20,6 @@ namespace InsanityBot.Tickets.Daemon
         private List<DiscordTicket> Tickets { get; set; }
         private Dictionary<Guid, DiscordTicketData> AdditionalData { get; set; }
 
-        internal static List<KyuuTask> Tasks { get; private set; }
         internal static TicketConfiguration Configuration { get; set; }
 
         public TicketDaemon()
@@ -44,10 +41,7 @@ namespace InsanityBot.Tickets.Daemon
                 AdditionalData = JsonConvert.DeserializeObject<Dictionary<Guid, DiscordTicketData>>(
                     File.ReadAllText("./cache/tickets/data.json"));
 
-            Tasks = new();
             Configuration = new TicketConfigurationManager().Deserialize("./config/ticket.json");
-
-            KyuuLoader.Load();
         }
 
         public DiscordTicket GetDiscordTicket(UInt64 Id)

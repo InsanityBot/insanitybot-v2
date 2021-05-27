@@ -11,9 +11,9 @@ using InsanityBot.Utility.Datafixers;
 
 using Newtonsoft.Json;
 
-namespace InsanityBot.Tickets.Daemon.Config
+namespace InsanityBot.Utility.Config
 {
-    class TicketConfigurationManager : IConfigSerializer<TicketConfiguration, Object>,
+    public class TicketConfigurationManager : IConfigSerializer<TicketConfiguration, Object>,
         IConfigBuilder<TicketConfiguration, TicketConfigurationManager, Object>
     {
         public TicketConfiguration Config { get; set; }

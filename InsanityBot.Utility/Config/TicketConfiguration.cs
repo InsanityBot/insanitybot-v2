@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-using InsanityBot.Utility;
-using InsanityBot.Utility.Reference;
-
-namespace InsanityBot.Tickets.Daemon.Config
+namespace InsanityBot.Utility.Config
 {
-    class TicketConfiguration : IConfiguration<Object>
+    public class TicketConfiguration : IConfiguration<Object>
     {
         public String DataVersion { get; set; }
         public Dictionary<String, Object> Configuration { get; set; }
