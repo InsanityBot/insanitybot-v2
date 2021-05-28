@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.IO;
-
-using InsanityBot.Utility.Config;
+﻿using InsanityBot.Utility.Config;
 
 using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+
 namespace InsanityBot.Tickets
 {
     public class TicketDaemon
     {
-        internal delegate void KyuuTaskCreatedEventHandler();
-        internal static event KyuuTaskCreatedEventHandler KyuuTaskCreatedEvent;
-
         private List<DiscordTicket> Tickets { get; set; }
         private Dictionary<Guid, DiscordTicketData> AdditionalData { get; set; }
 
@@ -30,16 +27,24 @@ namespace InsanityBot.Tickets
                 Process.GetCurrentProcess().Kill();
             }
 
-            if (!File.Exists("./cache/tickets/tickets.json"))
+            if(!File.Exists("./cache/tickets/tickets.json"))
+            {
                 Tickets = new();
+            }
             else
+            {
                 Tickets = JsonConvert.DeserializeObject<List<DiscordTicket>>(File.ReadAllText("./cache/tickets/tickets.json"));
+            }
 
-            if (!File.Exists("./cache/tickets/data.json"))
+            if(!File.Exists("./cache/tickets/data.json"))
+            {
                 AdditionalData = new();
+            }
             else
+            {
                 AdditionalData = JsonConvert.DeserializeObject<Dictionary<Guid, DiscordTicketData>>(
                     File.ReadAllText("./cache/tickets/data.json"));
+            }
 
             Configuration = new TicketConfigurationManager().Deserialize("./config/ticket.json");
         }
@@ -62,8 +67,10 @@ namespace InsanityBot.Tickets
         {
             if(Tickets.Count > 0)
             {
-                if (!File.Exists("./cache/tickets/tickets.json"))
+                if(!File.Exists("./cache/tickets/tickets.json"))
+                {
                     File.Create("./cache/tickets/tickets.json").Close();
+                }
 
                 StreamWriter writer = new("./cache/tickets/tickets.json");
                 writer.Write(JsonConvert.SerializeObject(Tickets));
@@ -72,8 +79,10 @@ namespace InsanityBot.Tickets
 
             if(AdditionalData.Count > 0)
             {
-                if (!File.Exists("./cache/tickets/data.json"))
+                if(!File.Exists("./cache/tickets/data.json"))
+                {
                     File.Create("./cache/tickets/data.json").Close();
+                }
 
                 StreamWriter writer = new("./cache/tickets/data.json");
                 writer.Write(JsonConvert.SerializeObject(AdditionalData));
