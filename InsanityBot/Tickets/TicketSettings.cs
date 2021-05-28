@@ -10,7 +10,6 @@ namespace InsanityBot.Tickets
         public Boolean MetricMessageCount { get; set; }
         public Boolean MetricMessagePerResolution { get; set; }
 
-        public Boolean MentionStaffOnResponse { get; set; }
         public Boolean MentionClientOnResponse { get; set; }
         public Boolean MentionStaffRoleOnResponse { get; set; }
         public Boolean MentionAssignedStaffOnResponse { get; set; }

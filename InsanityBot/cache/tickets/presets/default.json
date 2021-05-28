@@ -10,6 +10,21 @@
       0
     ]
   },
+  "Settings": {
+    "MetricFirstResponse": true,
+    "MetricResponseTime": true,
+    "MetricResolutionTime": true,
+    "MetricMessageCount": true,
+    "MetricMessagePerResolution": true,
+
+    "MentionClientOnResponse": true,
+    "MentionStaffRoleOnResponse": false,
+    "MentionAssignedStaffOnResponse": false,
+    "MentionAllClientsOnResponse": false,
+
+    "AutoAssignStaff": true,
+    "AllowAddUsers": true
+  },
   "CreationMessages": null,
   "CreationEmbeds": null
 }
