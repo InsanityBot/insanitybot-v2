@@ -22,7 +22,6 @@ using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
 using InsanityBot.Core.Logger;
 using InsanityBot.Datafixers;
-using InsanityBot.Tickets.Daemon;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;

@@ -2,6 +2,12 @@
   "DataVersion": "2.0.0-beta.002-tickets.001",
   "Configuration": {
     "insanitybot.presets.allow_editing": true,
-    "insanitybot.presets.allow_editing_default": false
+    "insanitybot.presets.allow_editing_default": false,
+    "insanitybot.tickets.staff_roles": [
+      0
+    ],
+    "insanitybot.tickets.staff_users": [ // roles are parsed first, try to avoid duplicates
+      0
+    ]
   }
 }

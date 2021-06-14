@@ -1,6 +1,6 @@
 {
   "Category": 0,
-  "NameFormat": "ticket-{username:4}-{discriminator}",
+  "NameFormat": "ticket-{user.username:4}-{user.discriminator}",
   "Topic": null,
   "AccessRules": {
     "AllowedRoles": [
