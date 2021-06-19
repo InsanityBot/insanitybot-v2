@@ -14,10 +14,13 @@ namespace InsanityBot.Tickets
 {
     public class TicketDaemon
     {
-        private List<DiscordTicket> Tickets { get; set; }
+        private Dictionary<Guid, DiscordTicket> Tickets { get; set; }
         private Dictionary<Guid, DiscordTicketData> AdditionalData { get; set; }
 
         internal static TicketConfiguration Configuration { get; set; }
+
+        public static UInt32 TicketCount { get; private set; }
+        public static String RandomTicketName { get; }
 
         public TicketDaemon()
         {
@@ -33,7 +36,7 @@ namespace InsanityBot.Tickets
             }
             else
             {
-                Tickets = JsonConvert.DeserializeObject<List<DiscordTicket>>(File.ReadAllText("./cache/tickets/tickets.json"));
+                Tickets = JsonConvert.DeserializeObject<Dictionary<Guid, DiscordTicket>>(File.ReadAllText("./cache/tickets/tickets.json"));
             }
 
             if(!File.Exists("./cache/tickets/data.json"))
@@ -51,7 +54,7 @@ namespace InsanityBot.Tickets
 
         public DiscordTicket GetDiscordTicket(UInt64 Id)
         {
-            return (from v in Tickets
+            return (from v in Tickets.Values
                     where v.DiscordChannelId == Id
                     select v).ToList().First();
         }
