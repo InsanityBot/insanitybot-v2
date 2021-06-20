@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsanityBot.Utility.Datafixers
 {
-    public interface IDatafixable
-    {
-        public String DataVersion { get; set; }
-    }
+	public interface IDatafixable
+	{
+		public String DataVersion { get; set; }
+	}
 }

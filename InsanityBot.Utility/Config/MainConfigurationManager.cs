@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-
-using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Datafixers;
 
@@ -11,41 +7,41 @@ using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Config
 {
-    public class MainConfigurationManager : IConfigSerializer<MainConfiguration, Object>, 
-        IConfigBuilder<MainConfiguration, MainConfigurationManager, Object>
-    {
-        public MainConfiguration Config { get; set; }
+	public class MainConfigurationManager : IConfigSerializer<MainConfiguration, Object>,
+		IConfigBuilder<MainConfiguration, MainConfigurationManager, Object>
+	{
+		public MainConfiguration Config { get; set; }
 
-        public MainConfigurationManager AddConfigEntry(String Identifier, Object DefaultValue)
-        {
-            Config.Configuration.Add(Identifier, DefaultValue);
-            return this;
-        }
+		public MainConfigurationManager AddConfigEntry(String Identifier, Object DefaultValue)
+		{
+			this.Config.Configuration.Add(Identifier, DefaultValue);
+			return this;
+		}
 
-        public MainConfigurationManager RemoveConfigEntry(String Identifier)
-        {
-            Config.Configuration.Remove(Identifier);
-            return this;
-        }
+		public MainConfigurationManager RemoveConfigEntry(String Identifier)
+		{
+			this.Config.Configuration.Remove(Identifier);
+			return this;
+		}
 
-        public MainConfiguration Deserialize(String Filename)
-        {
-            using StreamReader reader = new(File.OpenRead(Filename));
+		public MainConfiguration Deserialize(String Filename)
+		{
+			using StreamReader reader = new(File.OpenRead(Filename));
 
-            MainConfiguration config = JsonConvert.DeserializeObject<MainConfiguration>(reader.ReadToEnd());
-            config = (MainConfiguration)DataFixerLower.UpgradeData(config);
-            reader.Close();
+			MainConfiguration config = JsonConvert.DeserializeObject<MainConfiguration>(reader.ReadToEnd());
+			config = (MainConfiguration)DataFixerLower.UpgradeData(config);
+			reader.Close();
 
-            Serialize(config, "./config/main.json");
-            return config;
-        }
+			this.Serialize(config, "./config/main.json");
+			return config;
+		}
 
-        public void Serialize(MainConfiguration Config, String Filename)
-        {
-            using StreamWriter writer = new(File.OpenWrite(Filename));
-            writer.BaseStream.SetLength(0);
-            writer.Flush();
-            writer.Write(JsonConvert.SerializeObject(Config, Formatting.Indented));
-        }
-    }
+		public void Serialize(MainConfiguration Config, String Filename)
+		{
+			using StreamWriter writer = new(File.OpenWrite(Filename));
+			writer.BaseStream.SetLength(0);
+			writer.Flush();
+			writer.Write(JsonConvert.SerializeObject(Config, Formatting.Indented));
+		}
+	}
 }
