@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
+using DSharpPlus;
+using DSharpPlus.EventArgs;
+
+using InsanityBot.Tickets.CustomCommands;
 using InsanityBot.Utility.Config;
 
 using Microsoft.Extensions.Logging;
@@ -18,6 +23,8 @@ namespace InsanityBot.Tickets
 		internal Dictionary<Guid, DiscordTicketData> AdditionalData { get; set; }
 
 		internal static TicketConfiguration Configuration { get; set; }
+
+		internal CustomCommandHandler CommandHandler { get; set; }
 
 		public static UInt32 TicketCount { get; private set; }
 		public static String RandomTicketName { get; }
@@ -91,6 +98,11 @@ namespace InsanityBot.Tickets
 				writer.Write(JsonConvert.SerializeObject(this.AdditionalData));
 				writer.Close();
 			}
+		}
+
+		public Task RouteCustomCommand(DiscordClient cl, MessageCreateEventArgs e)
+		{
+			return Task.CompletedTask;
 		}
 
 		~TicketDaemon()

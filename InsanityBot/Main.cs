@@ -310,6 +310,8 @@ namespace InsanityBot
 
 			Mute.MuteStartingEvent += TimeHandler.DisableTimer;
 			Ban.BanStartingEvent += TimeHandler.DisableTimer;
+
+			Client.MessageCreated += TicketDaemon.RouteCustomCommand;
 		}
 
 		private static void InitializeAll()

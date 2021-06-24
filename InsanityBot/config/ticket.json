@@ -8,6 +8,9 @@
     ],
     "insanitybot.tickets.staff_users": [ // roles are parsed first, try to avoid duplicates
       0
+    ],
+    "insanitybot.customcommands.prefices": [
+      "i."
     ]
   }
 }
