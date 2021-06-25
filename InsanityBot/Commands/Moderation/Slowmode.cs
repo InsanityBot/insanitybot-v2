@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
@@ -12,7 +13,6 @@ using System;
 using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -46,7 +46,8 @@ namespace InsanityBot.Commands.Moderation
         [GroupCommand]
         public async Task SlowmodeCommand(CommandContext ctx,
             [RemainingText]
-            String args = "usedefault") => await this.SlowmodeCommand(ctx, ctx.Channel, args);
+            String args = "usedefault")
+            => await this.SlowmodeCommand(ctx, ctx.Channel, args);
 
         private async Task ParseSlowmodeCommand(CommandContext ctx, DiscordChannel channel, String args)
         {
@@ -121,8 +122,10 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
 
-                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                {
+                    Embed = moderationEmbedBuilder
+                });
             }
             catch(Exception e)
             {
@@ -147,7 +150,8 @@ namespace InsanityBot.Commands.Moderation
         }
 
         [Command("reset")]
-        public async Task ResetSlowmodeCommand(CommandContext ctx, Boolean silent = false) => await this.ResetSlowmodeCommand(ctx, ctx.Channel, silent);
+        public async Task ResetSlowmodeCommand(CommandContext ctx, Boolean silent = false)
+            => await this.ResetSlowmodeCommand(ctx, ctx.Channel, silent);
 
         [Command("reset")]
         public async Task ResetSlowmodeCommand(CommandContext ctx,
@@ -195,8 +199,10 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
 
-                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                {
+                    Embed = moderationEmbedBuilder
+                });
             }
             catch(Exception e)
             {

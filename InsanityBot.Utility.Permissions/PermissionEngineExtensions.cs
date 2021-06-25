@@ -37,7 +37,7 @@ namespace InsanityBot.Utility.Permissions
                            where !roles.Contains(v.Id)
                            select v.Id);
 
-            do
+            while(roles.Count != 0)
             {
                 RolePermissions rolePermissions = activeEngine.GetRolePermissions(roles[0]);
 
@@ -56,7 +56,7 @@ namespace InsanityBot.Utility.Permissions
                 }
 
                 roles.Remove(roles[0]);
-            } while(roles.Count != 0);
+            }
 
             DefaultPermissions defaults = DefaultPermissions.Deserialize();
 

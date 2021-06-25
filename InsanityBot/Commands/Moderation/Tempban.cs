@@ -4,8 +4,9 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
@@ -124,7 +125,7 @@ namespace InsanityBot.Commands.Moderation
                 moderationEmbedBuilder.AddField("Timer GUID", callbackTimer.Guid.ToString(), true);
                 TimeHandler.AddTimer(callbackTimer);
 
-                member.AddModlogEntry(ModlogEntryType.ban, BanReason);
+                _ = member.TryAddModlogEntry(ModlogEntryType.ban, BanReason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.ban.success"],
@@ -136,8 +137,10 @@ namespace InsanityBot.Commands.Moderation
                     }
                 };
                 _ = InsanityBot.HomeGuild.BanMemberAsync(member, 0, BanReason);
-                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                {
+                    Embed = moderationEmbedBuilder
+                });
 
             }
             catch
@@ -186,7 +189,7 @@ namespace InsanityBot.Commands.Moderation
             catch(Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1152, "Unban"), $"Could not unban user {Identifier[9..]}");
-                Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
+                System.Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -196,8 +199,8 @@ namespace InsanityBot.Commands.Moderation
             return thing.GetAwaiter().GetResult();
         }
 
-        public static event UnbanCompletedDelegate UnbanCompletedEvent;
-        public static event BanStartingDelegate BanStartingEvent;
+        public static event TimedActionCompleteEventHandler UnbanCompletedEvent;
+        public static event TimedActionStartEventHandler BanStartingEvent;
     }
 
     public class TempbanOptions : ModerationOptionBase

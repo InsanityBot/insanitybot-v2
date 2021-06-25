@@ -4,8 +4,8 @@ using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
-using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
@@ -32,7 +32,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             }
             try
             {
-                UserModlog modlog = user.GetUserModlog();
+                _ = user.TryFetchModlog(out UserModlog modlog);
 
                 DiscordEmbedBuilder modlogEmbed = new()
                 {
@@ -63,7 +63,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                     else
                     {
                         modlogEmbed.Color = DiscordColor.Red;
-                        String embedDescription = user.CreateModlogDescription();
+                        String embedDescription = user.CreateVerballogDescription();
 
                         IEnumerable<DSharpPlus.Interactivity.Page> pages = InsanityBot.Interactivity.GeneratePagesInEmbed(embedDescription, SplitType.Line, modlogEmbed);
 
@@ -89,6 +89,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
         }
 
         [Command("verballog")]
-        public async Task VerbalLogCommand(CommandContext ctx) => await this.VerbalLogCommand(ctx, ctx.Member);
+        public async Task VerbalLogCommand(CommandContext ctx)
+            => await this.VerbalLogCommand(ctx, ctx.Member);
     }
 }

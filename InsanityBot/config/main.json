@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0-dev.00020",
+  "DataVersion": "2.0.0-dev.00032",
   "Configuration": {
 
     /* Toggles the experience module status, true or false
@@ -129,6 +129,7 @@
 
     // Enables join roles. true or false
     "insanitybot.miscellaneous.join_roles": true,
+    // These two are both overriden by the user having the MentionEveryone permission.
     // Enables the builtin feature to block role pings from i.say. This will also block @everyone pings. true or false
     "insanitybot.miscellaneous.block_say_role_pings": true,
     // Enables the builtin feature to block user pings from i.say. true or false
@@ -140,6 +141,8 @@
 
     // Channel ID of the destined modlog channel. Must be a valid Discord channel ID if moderation is enabled.
     "insanitybot.identifiers.commands.modlog_channel_id": 0,
+    // Channel ID of the destined admin log channel. Must be a valid Discord channel ID.
+    "insanitybot.identifiers.commands.admin_log_channel_id": 0,
     // Channel ID of the destined suggestion channel. Must be a valid Discord channel ID if suggestions are enabled.
     "insanitybot.identifiers.commands.suggestion_channel_id": 0,
     // Channel ID of the destination channel for accepted suggestions. Must be a valid Discord channel ID if suggestions are enabled.

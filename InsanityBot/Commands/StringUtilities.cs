@@ -13,9 +13,7 @@ namespace InsanityBot.Commands
     public static class StringUtilities
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static String GetFormattedString(String value, CommandContext context, DiscordMember commandTarget)
-        {
-            return value.Replace("{MENTION}", commandTarget.Mention)
+        public static String GetFormattedString(String value, CommandContext context, DiscordMember commandTarget) => value.Replace("{MENTION}", commandTarget.Mention)
                 .Replace("{USERNAME}", commandTarget.Username)
                 .Replace("{NICKNAME}", commandTarget.Nickname)
                 .Replace("{ID}", commandTarget.Id.ToString())
@@ -25,12 +23,9 @@ namespace InsanityBot.Commands
                 .Replace("{MODID}", context.Member.Id.ToString())
                 .Replace("{CHANNEL}", context.Channel.Mention)
                 .Replace("{CHANNELNAME}", context.Channel.Name);
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static String GetFormattedString(String value, CommandContext context, DiscordRole commandTarget)
-        {
-            return value.Replace("{MENTION}", commandTarget.Mention)
+        public static String GetFormattedString(String value, CommandContext context, DiscordRole commandTarget) => value.Replace("{MENTION}", commandTarget.Mention)
                 .Replace("{NAME}", commandTarget.Name)
                 .Replace("{ID}", commandTarget.Id.ToString())
                 .Replace("{MODMENTION}", context.Member.Mention)
@@ -39,7 +34,6 @@ namespace InsanityBot.Commands
                 .Replace("{MODID}", context.Member.Id.ToString())
                 .Replace("{CHANNEL}", context.Channel.Mention)
                 .Replace("{CHANNELNAME}", context.Channel.Name);
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static String GetFormattedString(String value, CommandContext context, DiscordMember commandTarget, DiscordRole role)
@@ -57,7 +51,6 @@ namespace InsanityBot.Commands
                 .Replace("{ROLE}", role.Mention)
                 .Replace("{ROLENAME}", role.Name)
                 .Replace("{ROLEID}", role.Id.ToString());
-        }
 
         public static String GetFormattedString(String value, CommandContext context, DiscordRole commandTarget, DiscordRole role)
         {
@@ -73,12 +66,9 @@ namespace InsanityBot.Commands
                 .Replace("{ROLE}", role.Mention)
                 .Replace("{ROLENAME}", role.Name)
                 .Replace("{ROLEID}", role.Id.ToString());
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static String GetFormattedString(String value, CommandContext context, DiscordMember commandTarget, String permission)
-        {
-            return value.Replace("{MENTION}", commandTarget.Mention)
+        public static String GetFormattedString(String value, CommandContext context, DiscordMember commandTarget, String permission) => value.Replace("{MENTION}", commandTarget.Mention)
                 .Replace("{USERNAME}", commandTarget.Username)
                 .Replace("{NICKNAME}", commandTarget.Nickname)
                 .Replace("{ID}", commandTarget.Id.ToString())
@@ -89,12 +79,9 @@ namespace InsanityBot.Commands
                 .Replace("{CHANNEL}", context.Channel.Mention)
                 .Replace("{CHANNELNAME}", context.Channel.Name)
                 .Replace("{PERMISSION}", permission);
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static String GetFormattedString(String value, CommandContext context, DiscordRole commandTarget, String permission)
-        {
-            return value.Replace("{MENTION}", commandTarget.Mention)
+        public static String GetFormattedString(String value, CommandContext context, DiscordRole commandTarget, String permission) => value.Replace("{MENTION}", commandTarget.Mention)
                 .Replace("{NAME}", commandTarget.Name)
                 .Replace("{ID}", commandTarget.Id.ToString())
                 .Replace("{MODMENTION}", context.Member.Mention)
@@ -104,62 +91,46 @@ namespace InsanityBot.Commands
                 .Replace("{CHANNEL}", context.Channel.Mention)
                 .Replace("{CHANNELNAME}", context.Channel.Name)
                 .Replace("{PERMISSION}", permission);
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static String GetFormattedString(String value, DiscordRole role, DiscordChannel channel)
-        {
-            return value.Replace("{ROLE}", role.Mention)
+        public static String GetFormattedString(String value, DiscordRole role, DiscordChannel channel) => value.Replace("{ROLE}", role.Mention)
                 .Replace("{ROLENAME}", role.Name)
                 .Replace("{ROLEID}", role.Id.ToString())
                 .Replace("{CHANNEL}", channel.Mention)
                 .Replace("{CHANNELNAME}", channel.Name)
                 .Replace("{CHANNELID}", channel.Id.ToString());
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static String GetFormattedString(String value, CommandContext context)
-        {
-            return value.Replace("{MODMENTION}", context.Member.Mention)
+        public static String GetFormattedString(String value, CommandContext context) => value.Replace("{MODMENTION}", context.Member.Mention)
                 .Replace("{MODUSERNAME}", context.Member.Username)
                 .Replace("{MODNICKNAME}", context.Member.Nickname)
                 .Replace("{MODID}", context.Member.Id.ToString())
                 .Replace("{CHANNEL}", context.Channel.Mention)
                 .Replace("{CHANNELNAME}", context.Channel.Name);
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static String GetFormattedString(String value, CommandContext context, UInt64 discordMemberId)
-        {
-            return value.Replace("{ID}", discordMemberId.ToString())
+        public static String GetFormattedString(String value, CommandContext context, UInt64 discordMemberId) => value.Replace("{ID}", discordMemberId.ToString())
                 .Replace("{MODMENTION}", context.Member.Mention)
                 .Replace("{MODUSERNAME}", context.Member.Username)
                 .Replace("{MODNICKNAME}", context.Member.Nickname)
                 .Replace("{MODID}", context.Member.Id.ToString())
                 .Replace("{CHANNEL}", context.Channel.Mention)
                 .Replace("{CHANNELNAME}", context.Channel.Name);
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static String GetFormattedString(String value, DiscordMember commandTarget)
-        {
-            return value.Replace("{MENTION}", commandTarget.Mention)
+        public static String GetFormattedString(String value, DiscordMember commandTarget) => value.Replace("{MENTION}", commandTarget.Mention)
                    .Replace("{USERNAME}", commandTarget.Username)
                    .Replace("{NICKNAME}", commandTarget.Nickname)
                    .Replace("{ID}", commandTarget.Id.ToString());
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static String GetReason(String value, String reason) => value.Replace("{REASON}", reason);
 
-        public static String GetMemberReason(String value, String reason, DiscordMember member)
-        {
-            return value.Replace("{REASON}", reason)
+        public static String GetMemberReason(String value, String reason, DiscordMember member) => value.Replace("{REASON}", reason)
                 .Replace("{MENTION}", member.Mention)
                 .Replace("{NICKNAME}", member.Nickname)
                 .Replace("{USERNAME}", member.Username)
                 .Replace("{ID}", member.Id.ToString());
-        }
 
         /// <summary>
         /// This method will fall back to 00:30:00 if both input value and the config-defined defaults fail to parse

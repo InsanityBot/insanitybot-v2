@@ -13,7 +13,9 @@ using InsanityBot.Commands.Moderation;
 using InsanityBot.Commands.Moderation.Locking;
 using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
+using InsanityBot.Console.Integrated;
 using InsanityBot.Core.Logger;
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Datafixers;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -64,24 +66,26 @@ namespace InsanityBot
             //read config from file
             Config = ConfigManager.Deserialize("./config/main.json");
 
+            //validate token and guild id
+            #region token
             if(String.IsNullOrWhiteSpace(Config.Token))
             {
                 if(!CommandLineOptions.Interactive)
                 {
-                    Console.WriteLine("Invalid Token. Please provide a valid token in .\\config\\main.json" +
+                    System.Console.WriteLine("Invalid Token. Please provide a valid token in .\\config\\main.json" +
                         "\nPress any key to continue...");
-                    Console.ReadKey();
+                    System.Console.ReadKey();
                     return;
                 }
 
-                Console.Write("Your config does not contain a token. To set a token now, paste your token here. " +
+                System.Console.Write("Your config does not contain a token. To set a token now, paste your token here. " +
                     "To abort and exit InsanityBot, type \"cancel\"\nToken: ");
-                String token = Console.ReadLine();
+                String token = System.Console.ReadLine();
 
                 if(token.ToLower().Trim() == "cancel")
                 {
-                    Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
-                    Console.ReadKey();
+                    System.Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
+                    System.Console.ReadKey();
                     return;
                 }
 
@@ -93,20 +97,20 @@ namespace InsanityBot
             {
                 if(!CommandLineOptions.Interactive)
                 {
-                    Console.WriteLine("Invalid GuildId. Please provide a valid guild ID in .\\config\\main.json" +
+                    System.Console.WriteLine("Invalid GuildId. Please provide a valid guild ID in .\\config\\main.json" +
                         "\nPress any key to continue...");
-                    Console.ReadKey();
+                    System.Console.ReadKey();
                     return;
                 }
 
-                Console.Write("Your config does not contain a valid guild ID. To set a guild ID now, paste your guild ID here. " +
+                System.Console.Write("Your config does not contain a valid guild ID. To set a guild ID now, paste your guild ID here. " +
                     "To abort and exit InsanityBot, type \"cancel\"\nGuild ID: ");
-                String guildId = Console.ReadLine();
+                String guildId = System.Console.ReadLine();
 
                 if(guildId.ToLower().Trim() == "cancel")
                 {
-                    Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
-                    Console.ReadKey();
+                    System.Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
+                    System.Console.ReadKey();
                     return;
                 }
 
@@ -117,17 +121,19 @@ namespace InsanityBot
                 }
                 else
                 {
-                    Console.WriteLine("The provided guild ID could not be parsed. Aborting and exiting InsanityBot.\n" +
+                    System.Console.WriteLine("The provided guild ID could not be parsed. Aborting and exiting InsanityBot.\n" +
                         "Press any key to continue...");
-                    Console.ReadKey();
+                    System.Console.ReadKey();
                     return;
                 }
             }
+            #endregion
 
             LanguageConfig = LanguageManager.Deserialize("./config/lang.json");
             LoggerConfig = LoggerManager.Deserialize("./config/logger.json");
 
             LoggerFactory loggerFactory = new();
+            EmbedFactory = new();
 
 
             //create discord config; increase the cache size if you want though itll take more RAM
@@ -239,6 +245,9 @@ namespace InsanityBot
             // if ((Boolean)Config["insanitybot.modules.experience"])
             ; // not implemented yet
 
+            //start integrated offthread console management - cannot disable
+            _ = Task.Run(() => { IntegratedCommandHandler.Initialize(); });
+
             //start offthread console management
             // if ((Boolean)Config["insanitybot.modules.console"])
             ; // not implemented yet
@@ -276,6 +285,7 @@ namespace InsanityBot
             if((Boolean)Config["insanitybot.modules.miscellaneous"])
             {
                 CommandsExtension.RegisterCommands<Say>();
+                CommandsExtension.RegisterCommands<Embed>();
             }
             if((Boolean)Config["insanitybot.modules.moderation"])
             {
@@ -314,7 +324,13 @@ namespace InsanityBot
             Client.MessageCreated += TicketDaemon.RouteCustomCommand;
         }
 
-        private static void InitializeAll() => TimeHandler.Start();
+        private static void InitializeAll()
+        {
+            TimeHandler.Start();
+            ModlogQueue = new(
+                (ModlogMessageType.Moderation, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.modlog_channel_id"]))),
+                (ModlogMessageType.Administration, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.admin_log_channel_id"]))));
+        }
 
         private static async Task HandleTCPConnections(Int64 Port)
         {

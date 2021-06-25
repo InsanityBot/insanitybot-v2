@@ -4,8 +4,9 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Modlogs;
+using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
@@ -130,7 +131,7 @@ namespace InsanityBot.Commands.Moderation
                 moderationEmbedBuilder.AddField("Timer GUID", callbackTimer.Guid.ToString(), true);
                 TimeHandler.AddTimer(callbackTimer);
 
-                member.AddModlogEntry(ModlogEntryType.mute, MuteReason);
+                _ = member.TryAddModlogEntry(ModlogEntryType.mute, MuteReason);
                 embedBuilder = new DiscordEmbedBuilder
                 {
                     Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.success"],
@@ -144,8 +145,10 @@ namespace InsanityBot.Commands.Moderation
                 _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
                     ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"])),
                     MuteReason);
-                _ = InsanityBot.HomeGuild.GetChannel(ToUInt64(InsanityBot.Config["insanitybot.identifiers.commands.modlog_channel_id"]))
-                    .SendMessageAsync(embed: moderationEmbedBuilder.Build());
+                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                {
+                    Embed = moderationEmbedBuilder
+                });
 
             }
             catch
@@ -194,7 +197,7 @@ namespace InsanityBot.Commands.Moderation
             catch(Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1132, "Unmute"), $"Could not unmute user {Identifier[9..]}");
-                Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
+                System.Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
             }
         }
 
@@ -204,8 +207,8 @@ namespace InsanityBot.Commands.Moderation
             return thing.GetAwaiter().GetResult();
         }
 
-        public static event UnmuteCompletedDelegate UnmuteCompletedEvent;
-        public static event MuteStartingDelegate MuteStartingEvent;
+        public static event TimedActionCompleteEventHandler UnmuteCompletedEvent;
+        public static event TimedActionStartEventHandler MuteStartingEvent;
     }
 
     public class TempmuteOptions : ModerationOptionBase

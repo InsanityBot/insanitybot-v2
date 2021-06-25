@@ -5,7 +5,7 @@ worked on when the slash command API is more mature and stable.
 
 ## Completed
 
-### Moderation
+#### Moderation
 
 - Warns
 - Verbal warns
@@ -20,33 +20,33 @@ worked on when the slash command API is more mature and stable.
 - Lock/Unlock channels
 - Purge
 
-### Miscellaneous
+#### Miscellaneous
 
 - Say
 - Embed
 
+#### Administration
+
+- Advanced permission management
+
 ## Work in Progress
 
-### Administration
-
-- advanced Permission management
-
-## Planned
-
-### Miscellaneous
-
-- Suggestions
-- Tags 
-- Custom commands
-
-### Tickets
+#### Tickets
 
 - Ticket categories
 - Response time stats
 - Add/remove users
 - Ticket presets
 
-### Experience
+## Planned
+
+#### Miscellaneous
+
+- Suggestions
+- Tags 
+- Custom commands
+
+#### Experience
 
 - Leveling
 - Level roles

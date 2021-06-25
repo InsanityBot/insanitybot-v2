@@ -7,17 +7,14 @@ namespace InsanityBot.Utility.Converters
 {
     internal static class SortedToRawDatafixerRegistryEntry
     {
-        internal static DatafixerRegistryEntry ToUnsorted(this SortedDatafixerRegistryEntry entry, Type type)
+        internal static DatafixerRegistryEntry ToUnsorted(this SortedDatafixerRegistryEntry entry, Type type) => new DatafixerRegistryEntry
         {
-            return new DatafixerRegistryEntry
-            {
-                BreakingChange = entry.BreakingChange,
-                Datafixer = entry.Datafixer,
-                DatafixerGuid = entry.DatafixerGuid,
-                DatafixerId = entry.DatafixerId,
-                DatafixerTarget = type
-            };
-        }
+            BreakingChange = entry.BreakingChange,
+            Datafixer = entry.Datafixer,
+            DatafixerGuid = entry.DatafixerGuid,
+            DatafixerId = entry.DatafixerId,
+            DatafixerTarget = type
+        };
 
         internal static IEnumerable<DatafixerRegistryEntry> ToUnsorted(this IEnumerable<SortedDatafixerRegistryEntry> entries, Type type)
         {

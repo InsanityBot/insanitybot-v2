@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsanityBot.Datafixers", "I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InsanityBot.Utility.Permissions", "InsanityBot.Utility.Permissions\InsanityBot.Utility.Permissions.csproj", "{9E053A6F-2591-460F-9E8A-61FF81BE61E2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DCF50F99-05EA-468F-87C9-F4AFC092F9CE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC1CF0E6-999B-4811-B670-11988B18948B}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection

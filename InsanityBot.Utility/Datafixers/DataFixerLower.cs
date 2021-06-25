@@ -16,17 +16,14 @@ namespace InsanityBot.Utility.Datafixers
 
         public static void SortRegistry() => Registry.SortDatafixers();
 
-        public static void AddDatafixer(IDatafixer datafixer, Type target)
+        public static void AddDatafixer(IDatafixer datafixer, Type target) => Registry.AddDatafixer(new DatafixerRegistryEntry
         {
-            Registry.AddDatafixer(new DatafixerRegistryEntry
-            {
-                Datafixer = datafixer,
-                BreakingChange = datafixer.BreakingChange,
-                DatafixerGuid = Guid.NewGuid(),
-                DatafixerId = datafixer.DatafixerId,
-                DatafixerTarget = target
-            });
-        }
+            Datafixer = datafixer,
+            BreakingChange = datafixer.BreakingChange,
+            DatafixerGuid = Guid.NewGuid(),
+            DatafixerId = datafixer.DatafixerId,
+            DatafixerTarget = target
+        });
 
         public static void LoadAllDatafixers()
         {

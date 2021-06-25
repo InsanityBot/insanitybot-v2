@@ -18,28 +18,14 @@ namespace InsanityBot.Utility.Timers
             };
             Countdown.Elapsed += CountdownElapsed;
 
-            Countdown.Start();
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
-        {
             if(!Directory.Exists("./cache/timers"))
             {
                 Directory.CreateDirectory("./cache/timers");
-                return;
             }
 
             //knowing that it exists, proceed to read contents
 
-            if(Directory.GetFiles("./cache/timers").Length == 0)
-            {
-                return;
-            }
-
-            //ok, it exists and has file contents. time to read.
-
-            List<Timer> ActiveTimers = new();
+            Active = new();
 
             StreamReader reader;
 
@@ -50,13 +36,21 @@ namespace InsanityBot.Utility.Timers
                 try
                 {
                     reader = new StreamReader(File.OpenRead(s));
-                    ActiveTimers.Add(JsonConvert.DeserializeObject<Timer>(reader.ReadToEnd()));
+                    Active.Add(JsonConvert.DeserializeObject<Timer>(reader.ReadToEnd()));
                     reader.Close();
                 }
                 catch { }
             }
 
-            foreach(Timer t in ActiveTimers)
+
+            Countdown.Start();
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
+        {
+
+            foreach(Timer t in Active)
             {
                 if(t == null)
                 {
@@ -93,6 +87,8 @@ namespace InsanityBot.Utility.Timers
 
             writer.Close();
 
+            Active.Add(timer);
+
             Thread.Sleep(50);
             Countdown.Start();
         }
@@ -107,5 +103,6 @@ namespace InsanityBot.Utility.Timers
         public static void DisableTimer() => Countdown.Stop();
 
         private static System.Timers.Timer Countdown { get; set; }
+        private static List<Timer> Active { get; set; }
     }
 }
