@@ -3,6 +3,9 @@
 using System;
 using System.IO;
 
+using System;
+using System.IO;
+
 namespace InsanityBot.Utility.Config
 {
     public class TicketConfigurationManager : IConfigSerializer<TicketConfiguration, Object>,
@@ -25,7 +28,13 @@ namespace InsanityBot.Utility.Config
         public TicketConfiguration Deserialize(String Filename)
         {
             using StreamReader reader = new(File.OpenRead(Filename));
-            return JsonConvert.DeserializeObject<TicketConfiguration>(reader.ReadToEnd());
+
+            TicketConfiguration config = JsonConvert.DeserializeObject<TicketConfiguration>(reader.ReadToEnd());
+            config = (TicketConfiguration)DataFixerLower.UpgradeData(config);
+            reader.Close();
+
+            this.Serialize(config, "./config/ticket.json");
+            return config;
         }
 
         public void Serialize(TicketConfiguration Config, String Filename)

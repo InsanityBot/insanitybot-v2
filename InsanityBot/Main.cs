@@ -52,7 +52,7 @@ namespace InsanityBot
 #if DEBUG
             DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
 #else
-            DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Warning;
+			DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Warning;
 #endif
 
             DataFixerLower.Initialize(0); //this can be switched out for 1 if you need to, insanitybot default is 0
@@ -160,6 +160,8 @@ namespace InsanityBot
                 UpdateRolePermissions = true,
                 UpdateUserPermissions = true
             });
+
+            TicketDaemon = new();
 
             try
             {
@@ -318,6 +320,8 @@ namespace InsanityBot
 
             Mute.MuteStartingEvent += TimeHandler.DisableTimer;
             Ban.BanStartingEvent += TimeHandler.DisableTimer;
+
+            Client.MessageCreated += TicketDaemon.RouteCustomCommand;
         }
 
         private static void InitializeAll()

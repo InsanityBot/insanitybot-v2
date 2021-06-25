@@ -1,0 +1,30 @@
+{
+  "Category": 0,
+  "NameFormat": "ticket-{user.username:4}-{user.discriminator}",
+  "Topic": null,
+  "AccessRules": {
+    "AllowedRoles": [
+      0
+    ],
+    "AllowedUsers": [
+      0
+    ]
+  },
+  "Settings": {
+    "MetricFirstResponse": true,
+    "MetricResponseTime": true,
+    "MetricResolutionTime": true,
+    "MetricMessageCount": true,
+    "MetricMessagePerResolution": true,
+
+    "MentionClientOnResponse": true,
+    "MentionStaffRoleOnResponse": false,
+    "MentionAssignedStaffOnResponse": false,
+    "MentionAllClientsOnResponse": false,
+
+    "AutoAssignStaff": true,
+    "AllowAddUsers": true
+  },
+  "CreationMessages": null,
+  "CreationEmbeds": null
+}

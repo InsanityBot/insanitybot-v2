@@ -36,7 +36,9 @@ namespace InsanityBot.Commands
                 .Replace("{CHANNELNAME}", context.Channel.Name);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static String GetFormattedString(String value, CommandContext context, DiscordMember commandTarget, DiscordRole role) => value.Replace("{MENTION}", commandTarget.Mention)
+        public static String GetFormattedString(String value, CommandContext context, DiscordMember commandTarget, DiscordRole role)
+        {
+            return value.Replace("{MENTION}", commandTarget.Mention)
                 .Replace("{USERNAME}", commandTarget.Username)
                 .Replace("{NICKNAME}", commandTarget.Nickname)
                 .Replace("{ID}", commandTarget.Id.ToString())
@@ -50,7 +52,9 @@ namespace InsanityBot.Commands
                 .Replace("{ROLENAME}", role.Name)
                 .Replace("{ROLEID}", role.Id.ToString());
 
-        public static String GetFormattedString(String value, CommandContext context, DiscordRole commandTarget, DiscordRole role) => value.Replace("{MENTION}", commandTarget.Mention)
+        public static String GetFormattedString(String value, CommandContext context, DiscordRole commandTarget, DiscordRole role)
+        {
+            return value.Replace("{MENTION}", commandTarget.Mention)
                 .Replace("{NAME}", commandTarget.Name)
                 .Replace("{ID}", commandTarget.Id.ToString())
                 .Replace("{MODMENTION}", context.Member.Mention)

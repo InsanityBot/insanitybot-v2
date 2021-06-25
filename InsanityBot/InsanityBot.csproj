@@ -11,10 +11,19 @@
 		<LangVersion>9</LangVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<None Remove="config\lang.json" />
 		<None Remove="config\main.json" />
 		<None Remove="config\logger.json" />
+		<None Remove="config\ticket.json" />
 		<None Remove="config\overrides.mappings.json" />
 		<None Remove="config\overrides.default.json" />
 		<None Remove="config\permissions\vanilla.pdecl.json" />
@@ -29,6 +38,9 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 		<EmbeddedResource Include="config\logger.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+		<EmbeddedResource Include="config\ticket.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 		<EmbeddedResource Include="config\overrides.mappings.json">
@@ -41,6 +53,16 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 		<EmbeddedResource Include="config\permissions\vanilla.mappings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="cache\tickets\presets\default.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="cache\tickets\presets\default.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 	</ItemGroup>

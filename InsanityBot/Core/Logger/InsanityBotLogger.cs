@@ -18,8 +18,7 @@ namespace InsanityBot.Core.Logger
 
         public IDisposable BeginScope<TState>(TState state) => throw new NotImplementedException();
 
-        public Boolean IsEnabled(LogLevel logLevel)
-            => logLevel >= (LogLevel)Convert.ToInt32(this.Config.Configuration["LogLevel"]);
+        public Boolean IsEnabled(LogLevel logLevel) => logLevel >= (LogLevel)Convert.ToInt32(this.Config.Configuration["LogLevel"]);
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, String> formatter)
         {

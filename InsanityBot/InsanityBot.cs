@@ -5,8 +5,10 @@ using DSharpPlus.Interactivity;
 
 using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.Core.Logger;
+using InsanityBot.Tickets;
 using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Config;
+using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
 
@@ -43,6 +45,8 @@ namespace InsanityBot
         public static ModlogMessageQueue ModlogQueue;
 
         public static String Version = "2.0.0-dev.00033";
+        public static String Version = "2.0.0-dev.00027";
+        public static TicketDaemon TicketDaemon;
     }
 }
 #pragma warning restore CA2211

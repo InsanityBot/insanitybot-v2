@@ -14,12 +14,10 @@ namespace InsanityBot.Datafixers
         public static LogLevel MinimalLevel { get; set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogMessage(String message)
-            => LogInformation(message);
+        public static void LogMessage(String message) => LogInformation(message);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogMessage(LogLevel level, String message)
-            => LogMessage(new EventData(0, 0, 0, 0, null), level, message);
+        public static void LogMessage(LogLevel level, String message) => LogMessage(new EventData(0, 0, 0, 0, null), level, message);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogMessage(EventData data, LogLevel level, String message)
@@ -55,8 +53,7 @@ namespace InsanityBot.Datafixers
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogDebug(String message)
-            => LogDebug(new EventData(0, 0, 0, 0, null), message);
+        public static void LogDebug(String message) => LogDebug(new EventData(0, 0, 0, 0, null), message);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogDebug(EventData data, String message)
@@ -74,8 +71,8 @@ namespace InsanityBot.Datafixers
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogTrace(String message)
-            => LogTrace(new EventData(0, 0, 0, 0, null), message);
+        public static void LogTrace(String message) => LogTrace(new EventData(0, 0, 0, 0, null), message);
+
         public static void LogTrace(EventData data, String message)
         {
             if(MinimalLevel > LogLevel.Trace)
@@ -91,8 +88,8 @@ namespace InsanityBot.Datafixers
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogInformation(String message)
-            => LogInformation(new EventData(0, 0, 0, 0, null), message);
+        public static void LogInformation(String message) => LogInformation(new EventData(0, 0, 0, 0, null), message);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogInformation(EventData data, String message)
         {
@@ -109,8 +106,8 @@ namespace InsanityBot.Datafixers
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogWarning(String message)
-            => LogWarning(new EventData(0, 0, 0, 0, null), message);
+        public static void LogWarning(String message) => LogWarning(new EventData(0, 0, 0, 0, null), message);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogWarning(EventData data, String message)
         {
@@ -127,8 +124,8 @@ namespace InsanityBot.Datafixers
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogError(String message)
-            => LogError(new EventData(0, 0, 0, 0, null), message);
+        public static void LogError(String message) => LogError(new EventData(0, 0, 0, 0, null), message);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogError(EventData data, String message)
         {
@@ -145,8 +142,8 @@ namespace InsanityBot.Datafixers
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogCritical(String message)
-            => LogCritical(new EventData(0, 0, 0, 0, null), message);
+        public static void LogCritical(String message) => LogCritical(new EventData(0, 0, 0, 0, null), message);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogCritical(EventData data, String message)
         {
@@ -163,8 +160,8 @@ namespace InsanityBot.Datafixers
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LogFatal(String message)
-            => LogFatal(new EventData(0, 0, 0, 0, null), message);
+        public static void LogFatal(String message) => LogFatal(new EventData(0, 0, 0, 0, null), message);
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogFatal(EventData data, String message)
         {
