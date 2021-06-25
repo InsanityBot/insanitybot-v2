@@ -1,6 +1,6 @@
 ﻿namespace InsanityBot.Utility.Reference
 {
-	public interface IConfigBuilder
-	{
-	}
+    public interface IConfigBuilder
+    {
+    }
 }

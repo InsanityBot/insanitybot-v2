@@ -2,12 +2,12 @@
 
 namespace InsanityBot.Utility.Modlogs.Reference
 {
-	public enum ModlogEntryType : Byte
-	{
-		warn,
-		mute,
-		blacklist,
-		kick,
-		ban
-	}
+    public enum ModlogEntryType : Byte
+    {
+        warn,
+        mute,
+        blacklist,
+        kick,
+        ban
+    }
 }

@@ -2,10 +2,10 @@
 
 namespace InsanityBot.Utility.Exceptions
 {
-	public class DurationTooLongException : Exception
-	{
-		public DurationTooLongException(String message) : base(message)
-		{
-		}
-	}
+    public class DurationTooLongException : Exception
+    {
+        public DurationTooLongException(String message) : base(message)
+        {
+        }
+    }
 }
