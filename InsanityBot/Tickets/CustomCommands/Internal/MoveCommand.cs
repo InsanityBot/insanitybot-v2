@@ -9,7 +9,7 @@ namespace InsanityBot.Tickets.CustomCommands.Internal
 	{
 		public void ProcessMoveCommand(CommandContext context, Object parameter)
 		{
-			if(parameter is not UInt64 destination)
+			if (parameter is not UInt64 destination)
 			{
 				throw new ArgumentException("Invalid datatype for move command destination.", nameof(parameter));
 			}

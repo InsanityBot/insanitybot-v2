@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 
@@ -17,15 +13,15 @@ namespace InsanityBot.Tickets.CustomCommands.Internal
 		{
 			TimeSpan time;
 
-			if(parameter is TimeSpan)
+			if (parameter is TimeSpan)
 			{
 				time = (TimeSpan)parameter;
 			}
-			else if(parameter is Int64)
+			else if (parameter is Int64)
 			{
 				time = new TimeSpan((Int64)parameter);
 			}
-			else if(parameter is String)
+			else if (parameter is String)
 			{
 				time = TimeSpanParser.Parse((String)parameter);
 			}

@@ -48,7 +48,7 @@ namespace InsanityBot
 
 			// initialize datafixers
 #if DEBUG
-            DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
+			DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
 #else
 			DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Warning;
 #endif

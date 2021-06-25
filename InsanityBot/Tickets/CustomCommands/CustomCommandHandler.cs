@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 
@@ -19,7 +16,7 @@ namespace InsanityBot.Tickets.CustomCommands
 
 		public void HandleCommand(CommandContext context, String command)
 		{
-			IEnumerable<Command> commands = from i in Commands
+			IEnumerable<Command> commands = from i in this.Commands
 											where i.Trigger == command
 											select i;
 		}
