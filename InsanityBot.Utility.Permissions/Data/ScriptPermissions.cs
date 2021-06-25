@@ -9,7 +9,7 @@ namespace InsanityBot.Utility.Permissions.Data
     {
         public PermissionDeclaration[] Scripts { get; set; }
 
-        public ScriptPermissions() => Scripts = Array.Empty<PermissionDeclaration>();
+        public ScriptPermissions() => this.Scripts = Array.Empty<PermissionDeclaration>();
 
         public static ScriptPermissions BuildScriptPermissions()
         {

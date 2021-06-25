@@ -12,13 +12,13 @@ namespace InsanityBot.Utility.Config
 
         public TicketConfigurationManager AddConfigEntry(String Identifier, Object DefaultValue)
         {
-            Config.Configuration.Add(Identifier, DefaultValue);
+            this.Config.Configuration.Add(Identifier, DefaultValue);
             return this;
         }
 
         public TicketConfigurationManager RemoveConfigEntry(String Identifier)
         {
-            Config.Configuration.Remove(Identifier);
+            this.Config.Configuration.Remove(Identifier);
             return this;
         }
 

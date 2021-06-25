@@ -14,8 +14,8 @@ namespace InsanityBot.Core.Logger
 
         public Object this[String key]
         {
-            get => Configuration[key];
-            set => Configuration[key] = value;
+            get => this.Configuration[key];
+            set => this.Configuration[key] = value;
         }
     }
 }

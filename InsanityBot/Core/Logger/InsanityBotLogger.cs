@@ -14,7 +14,7 @@ namespace InsanityBot.Core.Logger
 
         public InsanityBotLogger(LoggerConfiguration config) => this.Config = config;
 
-        public InsanityBotLogger(BaseDiscordClient client) => Config = InsanityBot.LoggerConfig;
+        public InsanityBotLogger(BaseDiscordClient client) => this.Config = InsanityBot.LoggerConfig;
 
         public IDisposable BeginScope<TState>(TState state) => throw new NotImplementedException();
 

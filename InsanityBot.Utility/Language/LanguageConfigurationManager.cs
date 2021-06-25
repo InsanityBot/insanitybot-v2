@@ -14,7 +14,7 @@ namespace InsanityBot.Utility.Language
 
         public LanguageConfigurationManager AddConfigEntry(String Identifier, String DefaultValue)
         {
-            Config.Configuration.Add(Identifier, DefaultValue);
+            this.Config.Configuration.Add(Identifier, DefaultValue);
             return this;
         }
 
@@ -26,13 +26,13 @@ namespace InsanityBot.Utility.Language
             config = (LanguageConfiguration)DataFixerLower.UpgradeData(config);
             reader.Close();
 
-            Serialize(config, "./config/lang.json");
+            this.Serialize(config, "./config/lang.json");
             return config;
         }
 
         public LanguageConfigurationManager RemoveConfigEntry(String Identifier)
         {
-            Config.Configuration.Remove(Identifier);
+            this.Config.Configuration.Remove(Identifier);
             return this;
         }
 

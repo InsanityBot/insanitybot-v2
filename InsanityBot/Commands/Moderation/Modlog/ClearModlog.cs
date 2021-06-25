@@ -27,10 +27,10 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
             if(arguments.StartsWith('-'))
             {
-                await ParseClearModlogCommand(ctx, member, arguments);
+                await this.ParseClearModlogCommand(ctx, member, arguments);
                 return;
             }
-            await ExecuteClearModlogCommand(ctx, member, false, arguments);
+            await this.ExecuteClearModlogCommand(ctx, member, false, arguments);
         }
 
         private async Task ParseClearModlogCommand(CommandContext ctx,
@@ -48,7 +48,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 await Parser.Default.ParseArguments<ClearModlogOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteClearModlogCommand(ctx, member, o.Silent, String.Join(' ', o.Reason));
+                        await this.ExecuteClearModlogCommand(ctx, member, o.Silent, String.Join(' ', o.Reason));
                     });
             }
             catch(Exception e)

@@ -15,16 +15,16 @@ namespace InsanityBot.Utility.Config
 
         public Object this[String Identifier]
         {
-            get => Configuration[Identifier];
-            set => Configuration[Identifier] = value;
+            get => this.Configuration[Identifier];
+            set => this.Configuration[Identifier] = value;
         }
 
         public MainConfiguration()
         {
-            DataVersion = "2.0.0-dev.00017";
-            Configuration = new Dictionary<String, Object>();
-            Token = " ";
-            GuildId = 0;
+            this.DataVersion = "2.0.0-dev.00017";
+            this.Configuration = new Dictionary<String, Object>();
+            this.Token = " ";
+            this.GuildId = 0;
         }
     }
 }

@@ -11,8 +11,8 @@ namespace InsanityBot.Utility.Config
         public String TicketIdentifier { get; set; }
         public Object this[String Identifier]
         {
-            get => Configuration[Identifier];
-            set => Configuration[Identifier] = value;
+            get => this.Configuration[Identifier];
+            set => this.Configuration[Identifier] = value;
         }
     }
 }

@@ -40,10 +40,10 @@ namespace InsanityBot.Commands.Moderation
         {
             if(time.StartsWith('-'))
             {
-                await ParseTempmuteCommand(ctx, member, String.Join(' ', time, Reason));
+                await this.ParseTempmuteCommand(ctx, member, String.Join(' ', time, Reason));
                 return;
             }
-            await ExecuteTempmuteCommand(ctx, member,
+            await this.ExecuteTempmuteCommand(ctx, member,
                                 time.ParseTimeSpan(TemporaryPunishmentType.Mute),
                                 Reason, false, false);
         }
@@ -63,7 +63,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<TempmuteOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteTempmuteCommand(ctx, member,
+                        await this.ExecuteTempmuteCommand(ctx, member,
                                 o.Time.ParseTimeSpan(TemporaryPunishmentType.Mute),
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });

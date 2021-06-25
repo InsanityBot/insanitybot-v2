@@ -30,10 +30,10 @@ namespace InsanityBot.Commands.Permissions
             {
                 if(args.StartsWith('-'))
                 {
-                    await ParseAddRole(ctx, member, args);
+                    await this.ParseAddRole(ctx, member, args);
                     return;
                 }
-                await ExecuteAddRole(ctx, member, false, Convert.ToUInt64(args));
+                await this.ExecuteAddRole(ctx, member, false, Convert.ToUInt64(args));
             }
 
             private async Task ParseAddRole(CommandContext ctx, DiscordMember member, String args)
@@ -60,7 +60,7 @@ namespace InsanityBot.Commands.Permissions
                     await Parser.Default.ParseArguments<RoleOptions>(args.Split(' '))
                         .WithParsedAsync(async o =>
                         {
-                            await ExecuteAddRole(ctx, member, o.Silent, o.RoleId);
+                            await this.ExecuteAddRole(ctx, member, o.Silent, o.RoleId);
                         });
                 }
                 catch(Exception e)

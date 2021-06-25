@@ -34,10 +34,10 @@ namespace InsanityBot.Commands.Moderation
         {
             if(Reason.StartsWith('-'))
             {
-                await ParseMuteCommand(ctx, member, Reason);
+                await this.ParseMuteCommand(ctx, member, Reason);
                 return;
             }
-            await ExecuteMuteCommand(ctx, member, Reason, false, false);
+            await this.ExecuteMuteCommand(ctx, member, Reason, false, false);
         }
 
         private async Task ParseMuteCommand(CommandContext ctx,
@@ -57,11 +57,11 @@ namespace InsanityBot.Commands.Moderation
                     {
                         if(o.Time == "default")
                         {
-                            await ExecuteMuteCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                            await this.ExecuteMuteCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                         }
                         else
                         {
-                            await ExecuteTempmuteCommand(ctx, member,
+                            await this.ExecuteTempmuteCommand(ctx, member,
                                 o.Time.ParseTimeSpan(TemporaryPunishmentType.Mute),
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                         }

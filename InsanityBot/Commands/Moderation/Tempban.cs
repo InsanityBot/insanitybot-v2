@@ -34,10 +34,10 @@ namespace InsanityBot.Commands.Moderation
         {
             if(time.StartsWith('-'))
             {
-                await ParseTempbanCommand(ctx, member, String.Join(' ', time, Reason));
+                await this.ParseTempbanCommand(ctx, member, String.Join(' ', time, Reason));
                 return;
             }
-            await ExecuteTempbanCommand(ctx, member,
+            await this.ExecuteTempbanCommand(ctx, member,
                                 time.ParseTimeSpan(TemporaryPunishmentType.Ban),
                                 Reason, false, false);
         }
@@ -57,7 +57,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<TempbanOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteTempbanCommand(ctx, member,
+                        await this.ExecuteTempbanCommand(ctx, member,
                                 o.Time.ParseTimeSpan(TemporaryPunishmentType.Ban),
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });

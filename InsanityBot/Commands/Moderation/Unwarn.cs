@@ -75,7 +75,7 @@ namespace InsanityBot.Commands.Moderation
         public async Task UnwarnCommand(CommandContext ctx,
             DiscordMember member,
             [RemainingText]
-            String WarningText) => await UnwarnCommand(ctx, member,
+            String WarningText) => await this.UnwarnCommand(ctx, member,
                 member.GetUserModlog().Modlog.IndexOf(member.GetUserModlog().Modlog.FirstOrDefault(md =>
                 {
                     return md.Reason.Contains(WarningText);

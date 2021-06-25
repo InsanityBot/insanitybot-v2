@@ -12,13 +12,13 @@ namespace InsanityBot.Utility.Config
 
         public ApplicationConfigurationManager AddConfigEntry(String Identifier, Object DefaultValue)
         {
-            Config.Configuration.Add(Identifier, DefaultValue);
+            this.Config.Configuration.Add(Identifier, DefaultValue);
             return this;
         }
 
         public ApplicationConfigurationManager RemoveConfigEntry(String Identifier)
         {
-            Config.Configuration.Remove(Identifier);
+            this.Config.Configuration.Remove(Identifier);
             return this;
         }
 

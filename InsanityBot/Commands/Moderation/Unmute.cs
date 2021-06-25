@@ -26,19 +26,19 @@ namespace InsanityBot.Commands.Moderation
         {
             if(arguments == null)
             {
-                await ExecuteUnmuteCommand(ctx, member, false, false);
+                await this.ExecuteUnmuteCommand(ctx, member, false, false);
                 return;
             }
 
             if(arguments.StartsWith('-'))
             {
-                await ParseUnmuteCommand(ctx, member, arguments);
+                await this.ParseUnmuteCommand(ctx, member, arguments);
                 return;
             }
 
             InsanityBot.Client.Logger.LogWarning(new EventId(1133, "ArgumentParser"),
                 "Unmute command was called with invalid arguments, running default arguments");
-            await ExecuteUnmuteCommand(ctx, member, false, false);
+            await this.ExecuteUnmuteCommand(ctx, member, false, false);
         }
 
         private async Task ParseUnmuteCommand(CommandContext ctx,
@@ -56,7 +56,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<UnmuteOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteUnmuteCommand(ctx, member, o.Silent, o.DmMember);
+                        await this.ExecuteUnmuteCommand(ctx, member, o.Silent, o.DmMember);
                     });
             }
             catch(Exception e)

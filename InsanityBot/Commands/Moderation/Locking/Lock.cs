@@ -19,10 +19,10 @@ namespace InsanityBot.Commands.Moderation.Locking
     public class Lock : BaseCommandModule
     {
         [Command("lock")]
-        public async Task LockCommand(CommandContext ctx) => await LockCommand(ctx, ctx.Channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
+        public async Task LockCommand(CommandContext ctx) => await this.LockCommand(ctx, ctx.Channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
 
         [Command("lock")]
-        public async Task LockCommand(CommandContext ctx, DiscordChannel channel) => await LockCommand(ctx, channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
+        public async Task LockCommand(CommandContext ctx, DiscordChannel channel) => await this.LockCommand(ctx, channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
 
         [Command("lock")]
         public async Task LockCommand(CommandContext ctx, String args)
@@ -39,7 +39,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 await Parser.Default.ParseArguments<LockOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await LockCommand(ctx, InsanityBot.HomeGuild.GetChannel(o.ChannelId), String.Join(' ', o.Reason), o.Silent);
+                        await this.LockCommand(ctx, InsanityBot.HomeGuild.GetChannel(o.ChannelId), String.Join(' ', o.Reason), o.Silent);
                     });
             }
             catch(Exception e)
@@ -61,7 +61,7 @@ namespace InsanityBot.Commands.Moderation.Locking
         }
 
         [Command("lock")]
-        public async Task LockCommand(CommandContext ctx, DiscordChannel channel, String args) => await LockCommand(ctx, args + $" -c {channel.Id}");
+        public async Task LockCommand(CommandContext ctx, DiscordChannel channel, String args) => await this.LockCommand(ctx, args + $" -c {channel.Id}");
 
         private async Task LockCommand(CommandContext ctx, DiscordChannel channel, String reason = "usedefault", Boolean silent = false)
         {

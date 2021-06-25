@@ -28,10 +28,10 @@ namespace InsanityBot.Commands.Moderation
         {
             if(Reason.StartsWith('-'))
             {
-                await ParseWhitelistCommand(ctx, member, Reason);
+                await this.ParseWhitelistCommand(ctx, member, Reason);
                 return;
             }
-            await ExecuteWhitelistCommand(ctx, member, Reason, false, false);
+            await this.ExecuteWhitelistCommand(ctx, member, Reason, false, false);
         }
 
         private async Task ParseWhitelistCommand(CommandContext ctx,
@@ -49,7 +49,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<WhitelistOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteWhitelistCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                        await this.ExecuteWhitelistCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
             catch(Exception e)

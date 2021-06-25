@@ -62,6 +62,6 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
         [Command("exportmodlog")]
         public async Task ExportModlogCommand(CommandContext ctx,
-            Boolean dmFile = false) => await ExportModlogCommand(ctx, ctx.Member, dmFile);
+            Boolean dmFile = false) => await this.ExportModlogCommand(ctx, ctx.Member, dmFile);
     }
 }

@@ -27,19 +27,19 @@ namespace InsanityBot.Commands.Moderation
         {
             if(arguments == null)
             {
-                await ExecuteUnbanCommand(ctx, memberId, false, false);
+                await this.ExecuteUnbanCommand(ctx, memberId, false, false);
                 return;
             }
 
             if(arguments.StartsWith('-'))
             {
-                await ParseUnbanCommand(ctx, memberId, arguments);
+                await this.ParseUnbanCommand(ctx, memberId, arguments);
                 return;
             }
 
             InsanityBot.Client.Logger.LogWarning(new EventId(1143, "ArgumentParser"),
                 "Unban command was called with invalid arguments, running default arguments");
-            await ExecuteUnbanCommand(ctx, memberId, false, false);
+            await this.ExecuteUnbanCommand(ctx, memberId, false, false);
         }
 
         private async Task ParseUnbanCommand(CommandContext ctx,
@@ -57,7 +57,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<UnbanOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteUnbanCommand(ctx, memberId, o.Silent, o.DmMember);
+                        await this.ExecuteUnbanCommand(ctx, memberId, o.Silent, o.DmMember);
                     });
             }
             catch(Exception e)

@@ -28,17 +28,17 @@ namespace InsanityBot.Commands.Moderation
         {
             if(args.StartsWith('-'))
             {
-                await ParseSlowmodeCommand(ctx, channel, args);
+                await this.ParseSlowmodeCommand(ctx, channel, args);
                 return;
             }
 
             try
             {
-                await ExecuteSlowmodeCommand(ctx, channel, args.ParseTimeSpan(), false);
+                await this.ExecuteSlowmodeCommand(ctx, channel, args.ParseTimeSpan(), false);
             }
             catch
             {
-                await ExecuteSlowmodeCommand(ctx, channel, ((String)InsanityBot.Config["insanitybot.commands.slowmode.default_slowmode"])
+                await this.ExecuteSlowmodeCommand(ctx, channel, ((String)InsanityBot.Config["insanitybot.commands.slowmode.default_slowmode"])
                     .ParseTimeSpan(), false);
             }
         }
@@ -47,7 +47,7 @@ namespace InsanityBot.Commands.Moderation
         public async Task SlowmodeCommand(CommandContext ctx,
             [RemainingText]
             String args = "usedefault")
-            => await SlowmodeCommand(ctx, ctx.Channel, args);
+            => await this.SlowmodeCommand(ctx, ctx.Channel, args);
 
         private async Task ParseSlowmodeCommand(CommandContext ctx, DiscordChannel channel, String args)
         {
@@ -56,7 +56,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<SlowmodeOptions>(args.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteSlowmodeCommand(ctx, channel, o.SlowmodeTime.ParseTimeSpan(), o.Silent);
+                        await this.ExecuteSlowmodeCommand(ctx, channel, o.SlowmodeTime.ParseTimeSpan(), o.Silent);
                     });
             }
             catch(Exception e)
@@ -151,7 +151,7 @@ namespace InsanityBot.Commands.Moderation
 
         [Command("reset")]
         public async Task ResetSlowmodeCommand(CommandContext ctx, Boolean silent = false)
-            => await ResetSlowmodeCommand(ctx, ctx.Channel, silent);
+            => await this.ResetSlowmodeCommand(ctx, ctx.Channel, silent);
 
         [Command("reset")]
         public async Task ResetSlowmodeCommand(CommandContext ctx,

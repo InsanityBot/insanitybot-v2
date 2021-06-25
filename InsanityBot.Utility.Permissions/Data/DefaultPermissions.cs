@@ -14,16 +14,16 @@ namespace InsanityBot.Utility.Permissions.Data
         // PermissionValue.Inherited is invalid here, for obvious reasons
         public override PermissionValue this[String key]
         {
-            get => Permissions[key];
+            get => this.Permissions[key];
             set
             {
                 if(value == PermissionValue.Inherited)
                 {
-                    Permissions[key] = PermissionValue.Denied; // fall back to denied
+                    this.Permissions[key] = PermissionValue.Denied; // fall back to denied
                 }
                 else
                 {
-                    Permissions[key] = value;
+                    this.Permissions[key] = value;
                 }
             }
         }

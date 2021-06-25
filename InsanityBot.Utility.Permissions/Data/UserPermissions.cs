@@ -10,12 +10,12 @@ namespace InsanityBot.Utility.Permissions.Data
     {
         public UInt64[] AssignedRoles { get; set; }
 
-        public UserPermissions() : base() => AssignedRoles = Array.Empty<UInt64>();
+        public UserPermissions() : base() => this.AssignedRoles = Array.Empty<UInt64>();
 
         public UserPermissions(UInt64 id) : base()
         {
-            SnowflakeIdentifier = id;
-            AssignedRoles = Array.Empty<UInt64>();
+            this.SnowflakeIdentifier = id;
+            this.AssignedRoles = Array.Empty<UInt64>();
         }
 
         public static UserPermissions operator +(UserPermissions left, RolePermissions right)

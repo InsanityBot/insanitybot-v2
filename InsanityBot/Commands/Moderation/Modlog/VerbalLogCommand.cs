@@ -90,6 +90,6 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
         [Command("verballog")]
         public async Task VerbalLogCommand(CommandContext ctx)
-            => await VerbalLogCommand(ctx, ctx.Member);
+            => await this.VerbalLogCommand(ctx, ctx.Member);
     }
 }

@@ -12,16 +12,16 @@ namespace InsanityBot.Utility.Permissions.Data
 
         public virtual PermissionValue this[String key]
         {
-            get => Permissions[key];
-            set => Permissions[key] = value;
+            get => this.Permissions[key];
+            set => this.Permissions[key] = value;
         }
 
         public PermissionBase()
         {
-            Permissions = new();
-            SnowflakeIdentifier = 0;
-            IsAdministrator = false;
-            UpdateGuid = new(new Byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+            this.Permissions = new();
+            this.SnowflakeIdentifier = 0;
+            this.IsAdministrator = false;
+            this.UpdateGuid = new(new Byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
         }
     }
 }

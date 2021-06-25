@@ -30,10 +30,10 @@ namespace InsanityBot.Commands.Moderation
         {
             if(Reason.StartsWith('-'))
             {
-                await ParseBlacklistCommand(ctx, member, Reason);
+                await this.ParseBlacklistCommand(ctx, member, Reason);
                 return;
             }
-            await ExecuteBlacklistCommand(ctx, member, Reason, false, false);
+            await this.ExecuteBlacklistCommand(ctx, member, Reason, false, false);
         }
 
         private async Task ParseBlacklistCommand(CommandContext ctx,
@@ -51,7 +51,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<BlacklistOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteBlacklistCommand(ctx, member,
+                        await this.ExecuteBlacklistCommand(ctx, member,
                             String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
