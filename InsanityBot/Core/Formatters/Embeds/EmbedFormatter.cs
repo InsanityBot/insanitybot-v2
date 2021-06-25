@@ -1,12 +1,16 @@
 ﻿using DSharpPlus.Entities;
 
+using Emzi0767;
+
 using InsanityBot.Core.Formatters.Abstractions;
 
 using Newtonsoft.Json;
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace InsanityBot.Core.Formatters.Embeds
 {
@@ -19,300 +23,203 @@ namespace InsanityBot.Core.Formatters.Embeds
         [MethodImpl(MethodImplOptions.AggressiveOptimization)]
         public DiscordEmbed Read(String value)
         {
+            if(String.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException("Null or whitespace-only embed string submitted.");
+            }
+
             if(value.StartsWith('{')) // if our string starts with a curly bracket, we can safely assume it is Json.
             {
                 return JsonConvert.DeserializeObject<DiscordEmbed>(value);
             }
 
-            String[] components = value.Split(" | ", StringSplitOptions.TrimEntries);
+            value += "\u0003"; // append EOT
+
+            Char currentCharacter, lastCharacter = '\u0000';
+            StringBuilder builder = new();
             DiscordEmbedBuilder embedBuilder = new();
-            Boolean activeObject = false, activeArray = false; // we know we do not have any complex data structures, don't worry
-            String activeObjectName = null;
+            Boolean activeObject = false, activeArray = false, skipContinue = false, endedOnObject = false;
+            String rootObject = "", currentObject = "";
+            FieldObjectBuilder fieldBuilder = new();
+            FooterObjectBuilder footerBuilder = new();
+            AuthorObjectBuilder authorBuilder = new();
 
-            AuthorObjectBuilder authorBuilder = null;
-            FieldObjectBuilder fieldBuilder = null;
-            FooterObjectBuilder footerBuilder = null;
-
-            foreach(String v in components)
+            foreach(Char c in value)
             {
-                #region Validity checks
-                if(!v.Contains(':') && !activeArray)
+                currentCharacter = c;
+
+                #region Character Checks
+
+                if(currentCharacter == '\u0003') // EOT character, our string ends here
                 {
-                    throw new FormatException($"Invalid embed format string: segment {v} does not contain a valid identifier:value pair.");
+                    if(!endedOnObject)
+                    {
+                        goto FINALIZE_OBJECT_CREATION;
+                    }
+                    break;
                 }
 
-                //update array and object states
-                if(v.Contains('{'))
+                if(currentCharacter == ':' && lastCharacter != '\\') // colon means an object transition, but not finalization
                 {
-                    if(activeObject)
-                    {
-                        throw new FormatException($"Invalid embed format string: segment {v} attempts to open a " +
-                            $"new object although there is already an opened object, multi-layers are not supported.");
-                    }
-                    else
-                    {
-                        activeObject = true;
-                        activeObjectName = v.Split(':')[0];
-
-                        if(activeObjectName != "author" && activeObjectName != "fields" && activeObjectName != "footer")
-                        {
-                            throw new FormatException($"Invalid embed format string: {activeObjectName} is not a valid object name.");
-                        }
-                    }
+                    currentObject = builder.ToString();
+                    builder.Clear();
+                    lastCharacter = currentCharacter;
+                    continue;
                 }
 
-                if(v.Contains('}'))
+                if(currentCharacter == '|' && lastCharacter == ' ') // end of object, finalize the object
                 {
-                    if(activeObject)
-                    {
-                        activeObject = false;
-                    }
-                    else
-                    {
-                        throw new FormatException($"Invalid embed format string: segment {v} attempts to close an " +
-                            $"object although none are opened.");
-                    }
+                    lastCharacter = currentCharacter;
+                    goto FINALIZE_OBJECT_CREATION;
                 }
 
-                if(v.Contains('['))
+                if(currentCharacter == '{' && (lastCharacter == ':' || lastCharacter == '[')) // opens sub-level object
                 {
-                    if(activeArray)
-                    {
-                        throw new FormatException($"Invalid embed format string: segment {v} attempts to open a " +
-                            $"new array although there is already an opened array, multi-layers are not supported.");
-                    }
-                    else
-                    {
-                        activeArray = true;
-                        if(v.Split(':')[0] != "fields")
-                        {
-                            throw new FormatException($"Invalid embed format string: segment {v} attempts to open a" +
-                                $"different array than \'fields\', no other arrays are supported.");
-                        }
-                    }
+                    rootObject = currentObject;
+                    activeObject = true;
+                    lastCharacter = currentCharacter;
+                    continue;
                 }
 
-                if(v.Contains(']'))
+                if(currentCharacter == '[' && lastCharacter == ':')
                 {
-                    if(activeArray)
-                    {
-                        activeArray = false;
-                    }
-                    else
-                    {
-                        throw new FormatException($"Invalid embed format string: segment {v} attempts to close an " +
-                            $"array although none are opened.");
-                    }
+                    activeArray = true;
+                    lastCharacter = currentCharacter;
+                    continue;
                 }
 
-                String identifier = v.Split(':')[0];
-                if(!AllowedIdentifiers.Contains(identifier))
+                if(currentCharacter == '}' && lastCharacter != '\\')
                 {
-                    throw new FormatException($"Invalid embed format string: segment {v} contains an invalid identifier.");
+                    endedOnObject = true;
+                    lastCharacter = currentCharacter;
+                    goto CLOSE_ACTIVE_OBJECTS;
                 }
+
+                if(currentCharacter == ']' && lastCharacter == '}')
+                {
+                    endedOnObject = true;
+                    continue;
+                }
+
+                // we can leave handling backslashes escaping :, | et al to discord, thankfully
+
                 #endregion
 
-                // parse simple top-level entries
-                switch(identifier)
+                endedOnObject = false;
+                builder.Append(currentCharacter);
+                lastCharacter = currentCharacter;
+
+                continue;
+
+            FINALIZE_OBJECT_CREATION:
+
+                #region Object Creation
+
+                String objectName = currentObject.Trim();
+                String objectValue = builder.ToString().Trim();
+                builder.Clear();
+
+                if(!activeArray && !activeObject) // top level object
                 {
-                    case "title":
-                        embedBuilder.WithTitle(String.Join(':', v.Split(':')[1..])); // ensure that any :s are perserved
-                        break;
-                    case "description":
-                        embedBuilder.WithDescription(String.Join(':', v.Split(':')[1..])); //ensure that any :s are preserved
-                        break;
-                    case "thumbnail":
-                        embedBuilder.WithThumbnail(v.Split(':')[1]);
-                        break;
-                    case "image":
-                        embedBuilder.WithImageUrl(v.Split(':')[1]);
-                        break;
-                    case "color":
-                        embedBuilder.WithColor(new(Int32.Parse(v.Split(':')[1].Replace("#", "0x"))));
-                        break;
-                } // deliberately no 'default', we still have more values to parse through
-
-                //parse complex top-level entries
-                #region complex top-level
-                String subObject = null;
-                switch(identifier)
-                {
-                    case "author":
-                        if(!activeObject)
-                        {
-                            throw new FormatException($"'author' object requires an object opening instruction, none was found.");
-                        }
-                        authorBuilder = new();
-                        subObject = v.Split('{')[1].Split(':')[0];
-
-                        switch(subObject)
-                        {
-                            case "name":
-                                authorBuilder.WithName(v.Split('{')[1].Split(':')[1]);
-                                break;
-                            case "icon":
-                                if(Uri.TryCreate(v.Split('{')[1].Split(':')[1], UriKind.Absolute, out Uri icon))
-                                {
-                                    authorBuilder.WithIcon(icon);
-                                }
-                                else
-                                {
-                                    throw new FormatException("Invalid argument passed as Uri.");
-                                }
-                                break;
-                            case "url":
-                                if(Uri.TryCreate(v.Split('{')[1].Split(':')[1], UriKind.Absolute, out Uri url))
-                                {
-                                    authorBuilder.WithUrl(url);
-                                }
-                                else
-                                {
-                                    throw new FormatException("Invalid argument passed as Uri.");
-                                }
-                                break;
-                            default:
-                                throw new FormatException($"Could not find field author.{v.Split('{')[1].Split(':')[0]}");
-                        }
-                        break;
-                    case "footer":
-                        if(!activeObject)
-                        {
-                            throw new FormatException($"'footer' object requires an object opening instruction, none was found.");
-                        }
-                        footerBuilder = new();
-                        subObject = v.Split('{')[1].Split(':')[0];
-
-                        switch(subObject)
-                        {
-                            case "icon":
-                                if(Uri.TryCreate(v.Split('{')[1].Split(':')[1], UriKind.Absolute, out Uri url))
-                                {
-                                    footerBuilder.WithUrl(url);
-                                }
-                                else
-                                {
-                                    throw new FormatException("Invalid argument passed as Uri.");
-                                }
-                                break;
-                            case "text":
-                                footerBuilder.WithText(v.Split('{')[1].Split(':')[1]);
-                                break;
-                            default:
-                                throw new FormatException($"Could not find field footer.{v.Split('{')[1].Split(':')[0]}");
-                        }
-                        break;
-                    case "fields":
-                        if(!(activeObject && activeArray))
-                        {
-                            throw new FormatException($"'fields' object-array pair requires an opening instruction, none was found.");
-                        }
-                        fieldBuilder = new();
-                        subObject = v.Split('{')[1].Split(':')[0];
-
-                        switch(subObject)
-                        {
-                            case "title":
-                                fieldBuilder.WithTitle(String.Join(':', v.Split('{')[1].Split(':')[1..]));
-                                break;
-                            case "value":
-                                fieldBuilder.WithValue(String.Join(':', v.Split('{')[1].Split(':')[1..]));
-                                break;
-                            case "inline":
-                                fieldBuilder.WithInline(Convert.ToBoolean(v.Split('{')[1].Split(':')[1]));
-                                break;
-                            default:
-                                throw new FormatException($"Could not find field fields.{v.Split('{')[1].Split(':')[0]}");
-                        }
-                        break;
-                }
-                #endregion
-
-                #region second-level
-                switch(identifier)
-                {
-                    case "name":
-                        if(!activeObject || activeObjectName != "author")
-                        {
-                            throw new FormatException($"Field 'name' requires to be embedded in an 'author' object");
-                        }
-                        authorBuilder.WithName(String.Join(':', v.Split(':')[1..]));
-                        break;
-                    case "icon":
-                        if(!activeObject || activeObjectName != "author")
-                        {
-                            throw new FormatException($"Field 'name' requires to be embedded in an 'author' object");
-                        }
-
-                        if(Uri.TryCreate(v.Split(':')[1], UriKind.Absolute, out Uri uri))
-                        {
-                            authorBuilder.WithIcon(uri);
-                        }
-                        else
-                        {
-                            throw new FormatException($"Could not parse url from 'icon' field");
-                        }
-                        break;
-                    case "url":
-                        if(!activeObject || (activeObjectName != "author" && activeObjectName != "footer"))
-                        {
-                            throw new FormatException($"Field 'url' requires to either be embedded in an 'author' or 'footer' object");
-                        }
-
-                        if(Uri.TryCreate(v.Split(':')[1], UriKind.Absolute, out Uri url))
-                        {
-                            if(activeObjectName == "author")
-                            {
-                                authorBuilder.WithUrl(url);
-                            }
-                            else
-                            {
-                                footerBuilder.WithUrl(url);
-                            }
-                        }
-                        else
-                        {
-                            throw new FormatException($"Could not parse url from 'url' field");
-                        }
-                        break;
-                    case "title":
-                        if(!activeObject)
-                        {
+                    switch(objectName)
+                    {
+                        case "title":
+                            embedBuilder.WithTitle(objectValue);
                             break;
-                        }
-                        if(activeObjectName != "fields")
-                        {
-                            throw new FormatException($"Field 'title' requires to be embedded in a 'fields' object");
-                        }
-                        fieldBuilder.WithTitle(String.Join(':', v.Split(':')[1..]));
-                        break;
-                    case "value":
-                        if(!activeObject || activeObjectName != "fields")
-                        {
-                            throw new FormatException($"Field 'value' requires to be embedded in a 'fields' object");
-                        }
-                        fieldBuilder.WithValue(String.Join(':', v.Split(':')[1..]));
-                        break;
-                    case "inline":
-                        if(!activeObject || activeObjectName != "fields")
-                        {
-                            throw new FormatException($"Field 'inline' requires to be embedded in a 'fields' object");
-                        }
-                        fieldBuilder.WithInline(Convert.ToBoolean(v.Split(':')[1]));
-                        break;
-                    case "text":
-                        if(!activeObject || activeObjectName != "fields")
-                        {
-                            throw new FormatException($"Field 'text' requires to be embedded in a 'footer' object");
-                        }
-                        footerBuilder.WithText(String.Join(':', v.Split(':')[1..]));
-                        break;
+                        case "description":
+                            embedBuilder.WithDescription(objectValue);
+                            break;
+                        case "url":
+                            embedBuilder.WithImageUrl(objectValue);
+                            break;
+                        case "thumbnail":
+                            embedBuilder.WithThumbnail(objectValue);
+                            break;
+                        case "color":
+                            embedBuilder.WithColor(new DiscordColor(objectValue));
+                            break;
+                        default:
+                            throw new FormatException($"Couldn't find embed top-level property {objectName}");
+                    }
                 }
+                else if(activeArray) // we can infer activeObject to be true too
+                {
+                    if(rootObject != "fields")
+                    {
+                        throw new FormatException("Only fields can be an array.");
+                    }
+
+                    switch(objectName)
+                    {
+                        case "title":
+                            fieldBuilder.WithTitle(objectValue);
+                            break;
+                        case "value":
+                            fieldBuilder.WithValue(objectValue);
+                            break;
+                        case "inline":
+                            fieldBuilder.WithInline(Convert.ToBoolean(objectValue));
+                            break;
+                        default:
+                            throw new FormatException($"{objectName} is not a valid field sub-identifier.");
+                    }
+                }
+                else
+                {
+                    switch(rootObject)
+                    {
+                        case "author":
+                            switch(objectName)
+                            {
+                                case "name":
+                                    authorBuilder.WithName(objectValue);
+                                    break;
+                                case "icon":
+                                    authorBuilder.WithIcon(new Uri(objectValue));
+                                    break;
+                                case "url":
+                                    authorBuilder.WithUrl(new Uri(objectValue));
+                                    break;
+                                default:
+                                    throw new FormatException($"author.{objectName} is not a valid field identifier.");
+                            }
+                            break;
+                        case "footer":
+                            switch(objectName)
+                            {
+                                case "text":
+                                    footerBuilder.WithText(objectValue);
+                                    break;
+                                case "url":
+                                    footerBuilder.WithUrl(new Uri(objectValue));
+                                    break;
+                                default:
+                                    throw new FormatException($"footer.{objectName} is not a valid field identifier.");
+                            }
+                            break;
+                        default:
+                            throw new FormatException($"{rootObject} is not a valid root object.");
+                    }
+                }
+
                 #endregion
 
-                //close everything as needed
-                if(v.Contains('}'))
+                if(!skipContinue)
                 {
-                    switch(activeObjectName)
+                    continue;
+                }
+
+            CLOSE_ACTIVE_OBJECTS:
+
+                if(activeObject)
+                {
+                    if(!skipContinue)
+                    {
+                        skipContinue = true;
+                        goto FINALIZE_OBJECT_CREATION;
+                    }
+
+                    switch(rootObject)
                     {
                         case "author":
                             embedBuilder = authorBuilder.Build(embedBuilder);
@@ -322,34 +229,17 @@ namespace InsanityBot.Core.Formatters.Embeds
                             break;
                         case "fields":
                             embedBuilder = fieldBuilder.Build(embedBuilder);
-                            fieldBuilder = new();
                             break;
-                        default:
-                            throw new FormatException($"Attempting to close invalid object {activeObjectName}");
                     }
+
+                    skipContinue = false;
+                    activeObject = false;
                 }
+
+                continue;
             }
 
             return embedBuilder.Build();
         }
-
-        private readonly List<String> AllowedIdentifiers = new()
-        {
-            "title",
-            "description",
-            "author",
-            "name",
-            "icon",
-            "url",
-            "thumbnail",
-            "image",
-            "fields",
-            "title",
-            "value",
-            "inline",
-            "footer",
-            "text",
-            "color"
-        };
     }
 }
