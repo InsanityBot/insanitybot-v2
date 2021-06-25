@@ -38,7 +38,7 @@ namespace InsanityBot.Core.Formatters.Embeds
             Char currentCharacter, lastCharacter = '\u0000';
             StringBuilder builder = new();
             DiscordEmbedBuilder embedBuilder = new();
-            Boolean activeObject = false, activeArray = false, skipContinue = false;
+            Boolean activeObject = false, activeArray = false, skipContinue = false, endedOnObject = false;
             String rootObject = "", currentObject = "";
             FieldObjectBuilder fieldBuilder = new();
             FooterObjectBuilder footerBuilder = new();
@@ -52,44 +52,60 @@ namespace InsanityBot.Core.Formatters.Embeds
 
                 if(currentCharacter == '\u0003') // EOT character, our string ends here
                 {
-                    goto FINALIZE_OBJECT_CREATION;
+                    if(!endedOnObject)
+                    {
+                        goto FINALIZE_OBJECT_CREATION;
+                    }
+                    break;
                 }
 
                 if(currentCharacter == ':' && lastCharacter != '\\') // colon means an object transition, but not finalization
                 {
                     currentObject = builder.ToString();
+                    builder.Clear();
+                    lastCharacter = currentCharacter;
+                    continue;
                 }
 
                 if(currentCharacter == '|' && lastCharacter == ' ') // end of object, finalize the object
                 {
+                    lastCharacter = currentCharacter;
                     goto FINALIZE_OBJECT_CREATION;
                 }
 
                 if(currentCharacter == '{' && (lastCharacter == ':' || lastCharacter == '[')) // opens sub-level object
                 {
-                    rootObject = builder.ToString();
+                    rootObject = currentObject;
                     activeObject = true;
+                    lastCharacter = currentCharacter;
+                    continue;
                 }
 
                 if(currentCharacter == '[' && lastCharacter == ':')
                 {
                     activeArray = true;
+                    lastCharacter = currentCharacter;
+                    continue;
                 }
 
                 if(currentCharacter == '}' && lastCharacter != '\\')
                 {
+                    endedOnObject = true;
+                    lastCharacter = currentCharacter;
                     goto CLOSE_ACTIVE_OBJECTS;
                 }
 
                 if(currentCharacter == ']' && lastCharacter == '}')
                 {
-                    goto CLOSE_ACTIVE_OBJECTS;
+                    endedOnObject = true;
+                    continue;
                 }
 
                 // we can leave handling backslashes escaping :, | et al to discord, thankfully
 
                 #endregion
 
+                endedOnObject = false;
                 builder.Append(currentCharacter);
                 lastCharacter = currentCharacter;
 
@@ -101,6 +117,7 @@ namespace InsanityBot.Core.Formatters.Embeds
 
                 String objectName = currentObject.Trim();
                 String objectValue = builder.ToString().Trim();
+                builder.Clear();
 
                 if(!activeArray && !activeObject) // top level object
                 {
@@ -194,12 +211,6 @@ namespace InsanityBot.Core.Formatters.Embeds
 
             CLOSE_ACTIVE_OBJECTS:
 
-                if(activeArray)
-                {
-                    activeArray = false;
-                    goto FINALIZE_OBJECT_CREATION;
-                }
-
                 if(activeObject)
                 {
                     if(!skipContinue)
@@ -208,7 +219,7 @@ namespace InsanityBot.Core.Formatters.Embeds
                         goto FINALIZE_OBJECT_CREATION;
                     }
 
-                    switch(currentObject)
+                    switch(rootObject)
                     {
                         case "author":
                             embedBuilder = authorBuilder.Build(embedBuilder);
