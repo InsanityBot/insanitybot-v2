@@ -43,10 +43,9 @@ namespace InsanityBot
         public static PermissionEngine PermissionEngine;
         public static EmbedFormatterFactory EmbedFactory;
         public static ModlogMessageQueue ModlogQueue;
+        public static TicketDaemon TicketDaemon;
 
         public static String Version = "2.0.0-dev.00033";
-        public static String Version = "2.0.0-dev.00027";
-        public static TicketDaemon TicketDaemon;
     }
 }
 #pragma warning restore CA2211
