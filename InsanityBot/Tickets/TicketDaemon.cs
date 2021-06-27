@@ -1,4 +1,5 @@
 ﻿using DSharpPlus;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
 
 using InsanityBot.Tickets.CustomCommands;
@@ -7,6 +8,7 @@ using InsanityBot.Utility.Config;
 using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using System;
 using System.Collections.Generic;
@@ -100,7 +102,25 @@ namespace InsanityBot.Tickets
             }
         }
 
-        public Task RouteCustomCommand(DiscordClient cl, MessageCreateEventArgs e) => Task.CompletedTask;
+        public Task RouteCustomCommand(DiscordClient cl, MessageCreateEventArgs e)
+        {
+            String command = null;
+
+            foreach(var v in Configuration["insanitybot.customcommands.prefices"] as JArray)
+            {
+                if(e.Message.Content.StartsWith(v.Value<String>()))
+                {
+                    command = e.Message.Content.Substring(v.Value<String>().Length);
+                    break;
+                }
+                return Task.CompletedTask;
+            }
+
+            CommandContext context = cl.GetCommandsNext().CreateFakeContext(e.Author, e.Channel, e.Message.Content, "i.", null);
+            CommandHandler.HandleCommand(context, command);
+
+            return Task.CompletedTask;
+        }
 
         ~TicketDaemon()
         {

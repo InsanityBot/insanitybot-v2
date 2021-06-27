@@ -6,5 +6,6 @@ namespace InsanityBot.Tickets.CustomCommands
     {
         public String Trigger { get; init; }
         public InternalCommand InternalCommand { get; init; }
+        public Object Parameter { get; init; }
     }
 }

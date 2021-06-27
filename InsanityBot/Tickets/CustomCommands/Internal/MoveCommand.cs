@@ -9,12 +9,12 @@ namespace InsanityBot.Tickets.CustomCommands.Internal
     {
         public void ProcessMoveCommand(CommandContext context, Object parameter)
         {
-            if(parameter is not UInt64 destination)
+            if(parameter is not Int64 destination)
             {
                 throw new ArgumentException("Invalid datatype for move command destination.", nameof(parameter));
             }
 
-            DiscordChannel category = InsanityBot.HomeGuild.GetChannel(destination);
+            DiscordChannel category = InsanityBot.HomeGuild.GetChannel(Convert.ToUInt64(destination));
 
             if(!category.IsCategory)
             {
