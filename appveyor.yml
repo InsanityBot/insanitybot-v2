@@ -1,0 +1,45 @@
+version: 2.0.0-dev-nightly.{build}
+skip_tags: true
+skip_commits:
+  message: \[skip-ci]\
+max_jobs: 2
+
+image: Visual Studio 2019
+shallow_clone: true
+clone_depth: 2
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "2.0.0.{build}"
+  
+dotnet_csproj:
+  patch: true
+  file: '**\.*csproj'
+  version: '{version}'
+  version_prefix: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
+# Build
+
+platform: Any CPU
+
+configuration: Release
+
+build:
+  project: InsanityBot.sln
+  
+build_script:
+  - dotnet restore
+  - dotnet build
+  
+after_build:
+  - 7z a InsanityBot.zip %APPVEYOR_BUILD_FOLDER%\InsanityBot\bin\Release\*
+  
+artifacts:
+  - path: InsanityBot.zip
+    name: Release
+    type: zip
