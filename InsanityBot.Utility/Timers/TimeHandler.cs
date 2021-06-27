@@ -49,21 +49,18 @@ namespace InsanityBot.Utility.Timers
         [MethodImpl(MethodImplOptions.Synchronized)]
         private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
         {
-
-            foreach(Timer t in Active)
+            for(int i = 0; i < Active.Count; i++)
             {
-                if(t == null)
+                if(Active[i] == null)
                 {
                     continue;
                 }
 
-                if(!t.CheckExpiry())
+                Boolean toRemove = Active[i].CheckExpiry();
+
+                if(toRemove)
                 {
-                    continue;
-                }
-                else
-                {
-                    return;
+                    Active.RemoveAt(i);
                 }
             }
 
