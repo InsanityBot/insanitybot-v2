@@ -42,7 +42,7 @@ namespace InsanityBot
         public static EmbedFormatterFactory EmbedFactory;
         public static ModlogMessageQueue ModlogQueue;
 
-        public static String Version = "2.0.0-dev.00033";
+        public static String Version = "2.0.0-dev.00034";
     }
 }
 #pragma warning restore CA2211
