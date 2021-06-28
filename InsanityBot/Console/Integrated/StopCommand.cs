@@ -9,7 +9,8 @@ namespace InsanityBot.Console.Integrated
         public void StopConsoleCommand()
         {
             InsanityBot.Client.Logger.LogInformation(new EventId(1100, "StopCommand"), $"Shutting down InsanityBot v{InsanityBot.Version}...");
-            Environment.Exit(0);
+
+            InsanityBot.Shutdown();
         }
     }
 }

@@ -162,6 +162,7 @@ namespace InsanityBot
             });
 
             TicketDaemon = new();
+            TicketDaemon.CommandHandler.Load();
 
             try
             {
@@ -376,6 +377,14 @@ namespace InsanityBot
             {
                 listener.Stop();
             }
+        }
+
+        public static void Shutdown()
+        {
+            TicketDaemon.SaveAll();
+            TicketDaemon.CommandHandler.Save();
+
+            Environment.Exit(0);
         }
     }
 }

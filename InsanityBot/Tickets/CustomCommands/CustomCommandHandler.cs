@@ -2,8 +2,11 @@
 
 using InsanityBot.Tickets.CustomCommands.Internal;
 
+using Newtonsoft.Json;
+
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace InsanityBot.Tickets.CustomCommands
@@ -39,6 +42,25 @@ namespace InsanityBot.Tickets.CustomCommands
                             $"aborting command execution");
                 }
             }
+        }
+
+        public void Load()
+        {
+            if(!File.Exists("./cache/tickets/customcommands.json"))
+                File.Create("./cache/tickets/customcommands.json").Close();
+
+            StreamReader reader = new("./cache/tickets/customcommands.json");
+
+            Commands = JsonConvert.DeserializeObject<List<Command>>(reader.ReadToEnd());
+            reader.Close();
+        }
+
+        public void Save()
+        {
+            // no init code, to be saved it has to be loaded first
+            StreamWriter writer = new("./cache/tickets/customcommands.json");
+            writer.Write(JsonConvert.SerializeObject(Commands));
+            writer.Close();
         }
     }
 }
