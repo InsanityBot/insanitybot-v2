@@ -3,8 +3,7 @@
 using System;
 using System.IO;
 
-using System;
-using System.IO;
+using InsanityBot.Utility.Datafixers;
 
 namespace InsanityBot.Utility.Config
 {
