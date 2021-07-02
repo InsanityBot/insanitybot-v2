@@ -384,6 +384,8 @@ namespace InsanityBot
             TicketDaemon.SaveAll();
             TicketDaemon.CommandHandler.Save();
 
+            Client.DisconnectAsync();
+
             Environment.Exit(0);
         }
     }

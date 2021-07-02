@@ -122,6 +122,20 @@ namespace InsanityBot.Tickets
             return Task.CompletedTask;
         }
 
+        internal Task<Guid> UpgradeProtoTicket(ProtoTicket ticket)
+        {
+            DiscordTicket upgrade = new()
+            {
+                Creator = ticket.Creator,
+                DiscordChannelId = ticket.DiscordChannelId,
+                Settings = ticket.Settings,
+                TicketGuid = Guid.NewGuid()
+            };
+
+            Tickets.Add(upgrade.TicketGuid, upgrade);
+            return Task.FromResult(upgrade.TicketGuid);
+        }
+
         ~TicketDaemon()
         {
             this.SaveAll();
