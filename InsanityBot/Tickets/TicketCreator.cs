@@ -19,6 +19,10 @@ namespace InsanityBot.Tickets
 
             List<DiscordOverwriteBuilder> permissions = new();
 
+            permissions.Add(new DiscordOverwriteBuilder()
+                .Deny(Permissions.AccessChannels)
+                .For(InsanityBot.HomeGuild.EveryoneRole));
+
             foreach(var v in preset.AccessRules.AllowedUsers)
             {
                 permissions.Add(new DiscordOverwriteBuilder()
