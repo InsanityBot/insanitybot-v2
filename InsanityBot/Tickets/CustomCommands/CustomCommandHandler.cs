@@ -17,6 +17,11 @@ namespace InsanityBot.Tickets.CustomCommands
 
         public void HandleCommand(CommandContext context, String command)
         {
+            if(this.Commands == null)
+            {
+                return;
+            }
+
             IEnumerable<Command> commands = from i in this.Commands
                                             where i.Trigger == command
                                             select i;

@@ -102,6 +102,10 @@ namespace InsanityBot.Tickets
             Transcriber = new();
             Transcriber.RegisterTranscriber<HumanReadableTranscriber>();
 
+            Presets = new();
+
+            CommandHandler = new();
+
             foreach(var v in Directory.GetFiles("./cache/tickets/presets", "*.json"))
             {
                 StreamReader reader = new(v);

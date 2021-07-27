@@ -17,6 +17,7 @@ using InsanityBot.Console.Integrated;
 using InsanityBot.Core.Logger;
 using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Datafixers;
+using InsanityBot.Tickets.Commands;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
@@ -311,7 +312,7 @@ namespace InsanityBot
             }
             if((Boolean)Config["insanitybot.modules.tickets"])
             {
-
+                CommandsExtension.RegisterCommands<NewTicketCommand>();
             }
         }
 
