@@ -58,10 +58,12 @@ namespace InsanityBot.Tickets.Placeholders
                     buildingLength = false;
                     replaceLength = Convert.ToInt32(builder.ToString());
                     builder.Clear();
-                    goto REPLACE_VALUES;
+
+                    tempValue = tempValue.Replace($"{{{placeholderName}:{replaceLength}}}", PlaceholderList.Placeholders[placeholderName].
+                             Invoke(InsanityBot.TicketDaemon.Tickets[ticket]).Substring(0, replaceLength));
                 }
 
-                if(buildingName && currentCharacter.IsBasicLetter())
+                if(buildingName && (currentCharacter.IsBasicLetter() || currentCharacter == '.'))
                 {
                     builder.Append(currentCharacter);
                 }
@@ -72,10 +74,6 @@ namespace InsanityBot.Tickets.Placeholders
                 }
 
                 continue;
-
-            REPLACE_VALUES:
-                tempValue = tempValue.Replace($"{{{placeholderName}:{replaceLength}}}", PlaceholderList.Placeholders[placeholderName].
-                         Invoke(InsanityBot.TicketDaemon.Tickets[ticket]).Substring(0, replaceLength));
             }
 
             return Task.FromResult(tempValue);
