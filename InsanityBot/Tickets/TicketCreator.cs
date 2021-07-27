@@ -6,18 +6,35 @@ using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.Tickets.Placeholders;
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace InsanityBot.Tickets
 {
     public class TicketCreator
     {
-        public async Task CreateTicket(TicketPreset preset, CommandContext context, String topic)
+        public async Task<Guid> CreateTicket(TicketPreset preset, CommandContext context, String topic)
         {
             DiscordChannel TicketCategory = InsanityBot.HomeGuild.GetChannel(preset.Category);
 
+            List<DiscordOverwriteBuilder> permissions = new();
+
+            foreach(var v in preset.AccessRules.AllowedUsers)
+            {
+                permissions.Add(new DiscordOverwriteBuilder()
+                    .Allow(Permissions.AccessChannels)
+                    .For(await InsanityBot.HomeGuild.GetMemberAsync(v)));
+            }
+
+            foreach(var v in preset.AccessRules.AllowedRoles)
+            {
+                permissions.Add(new DiscordOverwriteBuilder()
+                    .Allow(Permissions.AccessChannels)
+                    .For(InsanityBot.HomeGuild.GetRole(v)));
+            }
+
             DiscordChannel ticket = await InsanityBot.HomeGuild.CreateChannelAsync($"insanitybot-temp-{TicketDaemon.TicketCount}",
-                ChannelType.Private, TicketCategory);
+                ChannelType.Private, TicketCategory, overwrites: permissions);
 
             ProtoTicket proto = new()
             {
@@ -27,25 +44,9 @@ namespace InsanityBot.Tickets
                 TicketGuid = Guid.NewGuid()
             };
 
-            Task<Guid> finalGuidTask = InsanityBot.TicketDaemon.UpgradeProtoTicket(proto);
+            Guid finalGuid = await InsanityBot.TicketDaemon.UpgradeProtoTicket(proto);
 
-            // ticket channel manipulations according to the preset
-
-            foreach(var v in preset.AccessRules.AllowedUsers)
-            {
-                _ = ticket.AddOverwriteAsync(await InsanityBot.HomeGuild.GetMemberAsync(v),
-                    allow: Permissions.AccessChannels);
-            }
-
-            foreach(var v in preset.AccessRules.AllowedRoles)
-            {
-                _ = ticket.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(v),
-                    allow: Permissions.AccessChannels);
-            }
-
-            // by now the ticket needs to be upgraded
-
-            DiscordTicket virtualTicket = InsanityBot.TicketDaemon.Tickets[await finalGuidTask];
+            DiscordTicket virtualTicket = InsanityBot.TicketDaemon.Tickets[finalGuid];
 
             foreach(var v in preset.CreationMessages)
             {
@@ -67,6 +68,8 @@ namespace InsanityBot.Tickets
             });
 
             virtualTicket.Topic = ticket.Topic;
+
+            return virtualTicket.TicketGuid;
         }
     }
 }

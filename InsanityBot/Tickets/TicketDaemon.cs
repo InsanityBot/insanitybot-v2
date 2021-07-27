@@ -23,13 +23,27 @@ namespace InsanityBot.Tickets
     {
         internal Dictionary<Guid, DiscordTicket> Tickets { get; set; }
         internal Dictionary<Guid, DiscordTicketData> AdditionalData { get; set; }
-
         internal static TicketConfiguration Configuration { get; set; }
-
         internal CustomCommandHandler CommandHandler { get; set; }
-
+        internal TicketCreator TicketCreator { get; set; }
         public static UInt32 TicketCount { get; private set; }
-        public static String RandomTicketName { get; }
+        public static String RandomTicketName
+
+        {
+            get
+            {
+                String validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                Char[] stringChars = new Char[8];
+                Random random = new();
+
+                for(int i = 0; i < stringChars.Length; i++)
+                {
+                    stringChars[i] = validChars[random.Next(validChars.Length)];
+                }
+
+                 return new String(stringChars);
+            }
+        }
 
         public TicketDaemon()
         {
@@ -60,19 +74,23 @@ namespace InsanityBot.Tickets
 
             Configuration = new TicketConfigurationManager().Deserialize("./config/ticket.json");
         }
-
         public DiscordTicket GetDiscordTicket(UInt64 Id)
         {
             return (from v in this.Tickets.Values
                     where v.DiscordChannelId == Id
                     select v).ToList().First();
         }
-
         public DiscordTicketData GetTicketData(UInt64 Id)
         {
             return (from v in this.AdditionalData
                     where v.Key == this.GetDiscordTicket(Id).TicketGuid
                     select v).ToList().First().Value;
+        }
+
+        public async Task<Guid> CreateTicket(TicketPreset preset, CommandContext context, String topic)
+        {
+            await TicketCreator.CreateTicket(preset, context, topic);
+            TicketCount++;
         }
 
         public void SaveAll()
@@ -101,7 +119,6 @@ namespace InsanityBot.Tickets
                 writer.Close();
             }
         }
-
         public Task RouteCustomCommand(DiscordClient cl, MessageCreateEventArgs e)
         {
             String command = null;
@@ -121,7 +138,6 @@ namespace InsanityBot.Tickets
 
             return Task.CompletedTask;
         }
-
         internal Task<Guid> UpgradeProtoTicket(ProtoTicket ticket)
         {
             DiscordTicket upgrade = new()
