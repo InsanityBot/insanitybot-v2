@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,6 +50,13 @@ namespace InsanityBot.Tickets
             }
         }
         public List<TicketPreset> Presets { get; private set; }
+        public TicketPreset DefaultPreset
+        {
+            get
+            {
+                return Presets.First(xm => xm.Id == "default");
+            }
+        }
 
         public TicketDaemon()
         {

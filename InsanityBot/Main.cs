@@ -309,6 +309,10 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<Unlock>();
                 CommandsExtension.RegisterCommands<LockHelperCommands>();
             }
+            if((Boolean)Config["insanitybot.modules.tickets"])
+            {
+
+            }
         }
 
         private static void RegisterAllEvents()
