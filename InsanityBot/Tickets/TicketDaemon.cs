@@ -106,6 +106,8 @@ namespace InsanityBot.Tickets
 
             CommandHandler = new();
 
+            TicketCreator = new();
+
             foreach(var v in Directory.GetFiles("./cache/tickets/presets", "*.json"))
             {
                 StreamReader reader = new(v);
