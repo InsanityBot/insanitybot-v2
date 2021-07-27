@@ -1,8 +1,10 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 using InsanityBot.Tickets.CustomCommands;
+using InsanityBot.Tickets.Transcripts;
 using InsanityBot.Utility.Config;
 
 using Microsoft.Extensions.Logging;
@@ -15,6 +17,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace InsanityBot.Tickets
@@ -26,6 +29,7 @@ namespace InsanityBot.Tickets
         internal static TicketConfiguration Configuration { get; set; }
         internal CustomCommandHandler CommandHandler { get; set; }
         internal TicketCreator TicketCreator { get; set; }
+        public TicketTranscriber Transcriber { get; set; }
         public static UInt32 TicketCount { get; private set; }
         public static String RandomTicketName
 
@@ -72,7 +76,22 @@ namespace InsanityBot.Tickets
                     File.ReadAllText("./cache/tickets/data.json"));
             }
 
+            if(!Directory.Exists("./cache/tickets/transcripts"))
+            {
+                Directory.CreateDirectory("./cache/tickets/transcripts");
+            }
+
+            if(!File.Exists("./cache/tickets/transcripts/index.json"))
+            {
+                FileStream stream = File.Create("./cache/tickets/transcripts/index.json");
+                stream.Write(Encoding.UTF8.GetBytes("[]"));
+                stream.Close();
+            }
+
             Configuration = new TicketConfigurationManager().Deserialize("./config/ticket.json");
+
+            Transcriber = new();
+            Transcriber.RegisterTranscriber<HumanReadableTranscriber>();
         }
         public DiscordTicket GetDiscordTicket(UInt64 Id)
         {
@@ -91,6 +110,33 @@ namespace InsanityBot.Tickets
         {
             TicketCount++;
             return await TicketCreator.CreateTicket(preset, context, topic);
+        }
+
+        public async Task DeleteTicket(DiscordTicket ticket)
+        {
+            StreamWriter writer = new("./cache/tickets/transcripts/index.json");
+
+            writer.BaseStream.Position--;
+
+            // manually write json to save the performance cost of deserializing and serializing
+            await writer.WriteAsync($",{{\"readable\":\"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md\"," +
+                $"\"minimal\":\"./cache/tickets/transcripts/{ticket.DiscordChannelId}-minimal.json\"}}");
+
+            await Transcriber.Transcribe(ticket);
+
+            foreach(var v in ticket.AddedUsers)
+            {
+                DiscordMember member = await InsanityBot.HomeGuild.GetMemberAsync(v);
+
+                DiscordDmChannel dm = await member.CreateDmChannelAsync();
+
+                DiscordMessageBuilder messageBuilder = new DiscordMessageBuilder().WithFile("transcript.md", new FileStream(
+                    $"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md", FileMode.Open));
+
+                await dm.SendMessageAsync(messageBuilder);
+            }
+
+            await InsanityBot.HomeGuild.GetChannel(ticket.DiscordChannelId).DeleteAsync("Ticket closed");
         }
 
         public void SaveAll()
