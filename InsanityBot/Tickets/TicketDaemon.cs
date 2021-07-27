@@ -48,6 +48,7 @@ namespace InsanityBot.Tickets
                  return new String(stringChars);
             }
         }
+        public List<TicketPreset> Presets { get; private set; }
 
         public TicketDaemon()
         {
@@ -92,6 +93,13 @@ namespace InsanityBot.Tickets
 
             Transcriber = new();
             Transcriber.RegisterTranscriber<HumanReadableTranscriber>();
+
+            foreach(var v in Directory.GetFiles("./cache/tickets/presets", "*.json"))
+            {
+                StreamReader reader = new(v);
+                Presets.Add(JsonConvert.DeserializeObject<TicketPreset>(reader.ReadToEnd()));
+                reader.Close();
+            }
         }
         public DiscordTicket GetDiscordTicket(UInt64 Id)
         {

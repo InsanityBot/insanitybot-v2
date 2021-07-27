@@ -8,6 +8,9 @@ namespace InsanityBot.Tickets
     public record TicketPreset
     {
         [JsonProperty(Required = Required.Always)]
+        public String Id { get; set; }
+
+        [JsonProperty(Required = Required.Always)]
         public UInt64 Category { get; set; }
 
         [DefaultValue("ticket-{username:4}-{discriminator}")]
