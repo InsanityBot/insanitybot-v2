@@ -26,6 +26,10 @@
     "AutoAssignStaff": true,
     "AllowAddUsers": true
   },
-  "CreationMessages": null,
-  "CreationEmbeds": null
+  "CreationMessages": [
+
+  ],
+  "CreationEmbeds": [
+
+  ]
 }

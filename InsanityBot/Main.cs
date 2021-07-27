@@ -260,6 +260,7 @@ namespace InsanityBot
 
         private static Task CommandsExtension_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)
         {
+#if !DEBUG
             if(e.Exception.GetType() == typeof(CommandNotFoundException))
             {
                 return Task.CompletedTask;
@@ -274,6 +275,7 @@ namespace InsanityBot
             {
                 return Task.CompletedTask;
             }
+#endif
 
             Client.Logger.LogError(new EventId(1001, "CommandError"), $"{e.Command} failed:\n" +
                 $"{e.Exception}: {e.Exception.Message}\n{e.Exception.StackTrace}");

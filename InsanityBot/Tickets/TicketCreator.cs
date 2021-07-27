@@ -34,7 +34,7 @@ namespace InsanityBot.Tickets
             }
 
             DiscordChannel ticket = await InsanityBot.HomeGuild.CreateChannelAsync($"insanitybot-temp-{TicketDaemon.TicketCount}",
-                ChannelType.Private, TicketCategory, overwrites: permissions);
+                ChannelType.Text, TicketCategory, overwrites: permissions);
 
             ProtoTicket proto = new()
             {
