@@ -71,6 +71,8 @@ namespace InsanityBot.Tickets.Placeholders
                     builder.Append(currentCharacter);
                 }
 
+                continue;
+
             REPLACE_VALUES:
                 tempValue = tempValue.Replace($"{{{placeholderName}:{replaceLength}}}", PlaceholderList.Placeholders[placeholderName].
                          Invoke(InsanityBot.TicketDaemon.Tickets[ticket]).Substring(0, replaceLength));
