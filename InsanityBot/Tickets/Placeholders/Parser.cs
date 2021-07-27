@@ -23,6 +23,8 @@ namespace InsanityBot.Tickets.Placeholders
                 tempValue = tempValue.Replace($"{{{v.Key}}}", v.Value(InsanityBot.TicketDaemon.Tickets[ticket]));
             }
 
+            value = tempValue;
+
             value += "\u0003"; // append EOT character so we know where to break
             Char currentCharacter = ' ', lastCharacter = ' ';
             Int32 replaceLength = 0;
