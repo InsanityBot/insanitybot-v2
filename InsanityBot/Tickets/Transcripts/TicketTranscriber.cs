@@ -5,7 +5,7 @@ namespace InsanityBot.Tickets.Transcripts
 {
     public class TicketTranscriber
     {
-        private List<ITranscriber> Transcribers;
+        private readonly List<ITranscriber> Transcribers = new();
 
         public void RegisterTranscriber<T>() 
             where T : ITranscriber, new()
