@@ -1,4 +1,5 @@
 {
+  "Id": "default",
   "Category": 0,
   "NameFormat": "ticket-{user.username:4}-{user.discriminator}",
   "Topic": null,
