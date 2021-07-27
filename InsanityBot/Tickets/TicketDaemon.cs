@@ -89,8 +89,8 @@ namespace InsanityBot.Tickets
 
         public async Task<Guid> CreateTicket(TicketPreset preset, CommandContext context, String topic)
         {
-            await TicketCreator.CreateTicket(preset, context, topic);
             TicketCount++;
+            return await TicketCreator.CreateTicket(preset, context, topic);
         }
 
         public void SaveAll()
