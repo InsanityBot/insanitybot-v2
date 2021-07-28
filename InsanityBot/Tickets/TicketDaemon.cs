@@ -168,6 +168,16 @@ namespace InsanityBot.Tickets
                 }
             }
 
+            DiscordMember owner = await InsanityBot.HomeGuild.GetMemberAsync(ticket.Creator);
+            DiscordDmChannel ownerDm = await owner.CreateDmChannelAsync();
+
+            DiscordMessageBuilder ownerMessageBuilder = new DiscordMessageBuilder().WithFile("transcript.md", new FileStream(
+                        $"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md", FileMode.Open));
+
+            await ownerDm.SendMessageAsync(ownerMessageBuilder);
+
+            Tickets.Remove(ticket.TicketGuid);
+
             await InsanityBot.HomeGuild.GetChannel(ticket.DiscordChannelId).DeleteAsync("Ticket closed");
         }
 
