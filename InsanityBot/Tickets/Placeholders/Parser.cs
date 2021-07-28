@@ -20,6 +20,10 @@ namespace InsanityBot.Tickets.Placeholders
 
             foreach(KeyValuePair<String, Func<DiscordTicket, String>> v in PlaceholderList.Placeholders)
             {
+                if(v.Key.StartsWith("ticket."))
+                {
+                    continue;
+                }
                 tempValue = tempValue.Replace($"{{{v.Key}}}", v.Value(InsanityBot.TicketDaemon.Tickets[ticket]));
             }
 
@@ -60,6 +64,11 @@ namespace InsanityBot.Tickets.Placeholders
                     buildingLength = false;
                     replaceLength = Convert.ToInt32(builder.ToString());
                     builder.Clear();
+
+                    if(placeholderName.StartsWith("ticket."))
+                    {
+                        continue;
+                    }    
 
                     tempValue = tempValue.Replace($"{{{placeholderName}:{replaceLength}}}", PlaceholderList.Placeholders[placeholderName].
                              Invoke(InsanityBot.TicketDaemon.Tickets[ticket]).Substring(0, replaceLength));
