@@ -1,13 +1,13 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Permissions;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+
+using static InsanityBot.Tickets.Commands.LangPlaceholders;
 
 namespace InsanityBot.Tickets.Commands
 {
@@ -37,7 +37,16 @@ namespace InsanityBot.Tickets.Commands
                 }
             }
 
-            await InsanityBot.TicketDaemon.CreateTicket(preset, ctx, topic);
+            Guid ticketGuid = await InsanityBot.TicketDaemon.CreateTicket(preset, ctx, topic);
+
+            DiscordEmbedBuilder embedBuilder = new()
+            {
+                Description = InsanityBot.LanguageConfig["insanitybot.tickets.new"].ReplaceValues(ctx,
+                    InsanityBot.HomeGuild.GetChannel(InsanityBot.TicketDaemon.Tickets[ticketGuid].DiscordChannelId)),
+                Color = DiscordColor.SpringGreen
+            };
+
+            await ctx.Channel.SendMessageAsync(embedBuilder.Build());
         }
     }
 }

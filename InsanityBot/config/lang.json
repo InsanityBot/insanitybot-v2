@@ -103,7 +103,9 @@
     "insanitybot.permissions.role_permission_denied": "Denied permission {PERMISSION} for {MENTION}.",
     "insanitybot.permissions.parent_added": "Added parent {ROLE} to {MENTION}.",
     "insanitybot.permissions.role_created": "Created permission file for {MENTION}.",
-    "insanitybot.permissions.role_not_found": "Could not find role." // used by parents, does *not* support role-specific placeholders
+    "insanitybot.permissions.role_not_found": "Could not find role.", // used by parents, does *not* support role-specific placeholders
+    
+    "insanitybot.tickets.new": ":white_check_mark: Successfully created ticket {TICKETCHANNEL}."
   }
 }
 
