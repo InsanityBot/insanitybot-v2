@@ -61,7 +61,7 @@ namespace InsanityBot.Tickets.Placeholders
                 "global.number",
                 xm =>
                 {
-                    return TicketDaemon.TicketCount.ToString();
+                    return TicketDaemon.StaticTicketCount.ToString();
                 }
             },
             {

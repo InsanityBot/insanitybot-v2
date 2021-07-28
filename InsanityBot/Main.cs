@@ -2,6 +2,7 @@
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Exceptions;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
