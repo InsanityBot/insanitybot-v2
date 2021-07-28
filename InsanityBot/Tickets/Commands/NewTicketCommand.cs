@@ -7,15 +7,13 @@ using InsanityBot.Utility.Permissions;
 using System;
 using System.Threading.Tasks;
 
-using static InsanityBot.Tickets.Commands.LangPlaceholders;
-
 namespace InsanityBot.Tickets.Commands
 {
     public class NewTicketCommand : BaseCommandModule
     {
         [Command("new")]
         [Aliases("ticket", "create-ticket")]
-        public async Task CreateTicketCommand(CommandContext ctx,
+        public async Task NewTicket(CommandContext ctx,
             [RemainingText]
             String data = "default")
         {

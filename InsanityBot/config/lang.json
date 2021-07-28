@@ -104,8 +104,9 @@
     "insanitybot.permissions.parent_added": "Added parent {ROLE} to {MENTION}.",
     "insanitybot.permissions.role_created": "Created permission file for {MENTION}.",
     "insanitybot.permissions.role_not_found": "Could not find role.", // used by parents, does *not* support role-specific placeholders
-    
-    "insanitybot.tickets.new": ":white_check_mark: Successfully created ticket {TICKETCHANNEL}."
+
+    "insanitybot.tickets.new": ":white_check_mark: Successfully created ticket {TICKETCHANNEL}.",
+    "insanitybot.tickets.close": "Ticket {TICKETCHANNEL} will be closed in {TICKETCLOSETIME}."
   }
 }
 

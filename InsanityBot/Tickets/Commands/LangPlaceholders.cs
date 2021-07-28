@@ -16,5 +16,14 @@ namespace InsanityBot.Tickets.Commands
                 .Replace("{TICKETCHANNELID}", ticket.Id.ToString())
                 .Replace("{TICKETCHANNELNAME}", ticket.Name);
         }
+
+        public static String ReplaceValues(this String value, CommandContext context, DiscordChannel ticket, TimeSpan time)
+        {
+            return StringUtilities.GetFormattedString(value, context)
+                .Replace("{TICKETCHANNEL}", ticket.Mention)
+                .Replace("{TICKETCHANNELID}", ticket.Id.ToString())
+                .Replace("{TICKETCHANNELNAME}", ticket.Name)
+                .Replace("{TICKETCLOSETIME}", time.ToString());
+        }
     }
 }

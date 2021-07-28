@@ -150,18 +150,24 @@ namespace InsanityBot.Tickets
             await writer.WriteAsync($",{{\"readable\":\"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md\"," +
                 $"\"minimal\":\"./cache/tickets/transcripts/{ticket.DiscordChannelId}-minimal.json\"}}");
 
+            writer.Close();
+
             await Transcriber.Transcribe(ticket);
 
-            foreach(var v in ticket.AddedUsers)
+            if(!(ticket.AddedUsers == null))
             {
-                DiscordMember member = await InsanityBot.HomeGuild.GetMemberAsync(v);
 
-                DiscordDmChannel dm = await member.CreateDmChannelAsync();
+                foreach(var v in ticket.AddedUsers)
+                {
+                    DiscordMember member = await InsanityBot.HomeGuild.GetMemberAsync(v);
 
-                DiscordMessageBuilder messageBuilder = new DiscordMessageBuilder().WithFile("transcript.md", new FileStream(
-                    $"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md", FileMode.Open));
+                    DiscordDmChannel dm = await member.CreateDmChannelAsync();
 
-                await dm.SendMessageAsync(messageBuilder);
+                    DiscordMessageBuilder messageBuilder = new DiscordMessageBuilder().WithFile("transcript.md", new FileStream(
+                        $"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md", FileMode.Open));
+
+                    await dm.SendMessageAsync(messageBuilder);
+                }
             }
 
             await InsanityBot.HomeGuild.GetChannel(ticket.DiscordChannelId).DeleteAsync("Ticket closed");

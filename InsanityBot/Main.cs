@@ -319,6 +319,7 @@ namespace InsanityBot
             if((Boolean)Config["insanitybot.modules.tickets"])
             {
                 CommandsExtension.RegisterCommands<NewTicketCommand>();
+                CommandsExtension.RegisterCommands<CloseTicketCommand>();
             }
         }
 

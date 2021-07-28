@@ -175,5 +175,31 @@ namespace InsanityBot.Commands
                 return new TimeSpan(00, 30, 00);
             }
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TimeSpan ParseTimeSpan(this String value)
+        {
+            try
+            {
+                if(Int32.TryParse(value, out Int32 seconds))
+                {
+                    return new TimeSpan(0, 0, seconds);
+                }
+
+                if(TimeSpanParser.TryParse(value, out TimeSpan time))
+                {
+                    return time;
+                }
+                else
+                {
+                    return new TimeSpan(00, 30, 00);
+                }
+            }
+            catch
+            {
+                InsanityBot.Client.Logger.LogError(new EventId(9980, "TimeSpanParser"), $"Could not parse \"{value}\" as TimeSpan");
+                return new TimeSpan(00, 30, 00);
+            }
+        }
     }
 }
