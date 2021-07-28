@@ -16,7 +16,8 @@ namespace InsanityBot.Tickets.Commands
         [Command("new")]
         [Aliases("ticket", "create-ticket")]
         public async Task CreateTicketCommand(CommandContext ctx,
-            String data)
+            [RemainingText]
+            String data = "default")
         {
             if(!ctx.Member.HasPermission("insanitybot.tickets.new"))
             {
@@ -33,6 +34,12 @@ namespace InsanityBot.Tickets.Commands
                 {
                     topic = data[(data.Length - v.Id.Length)..];
                     preset = v;
+
+                    if(String.IsNullOrWhiteSpace(topic))
+                    {
+                        topic = preset.Topic;
+                    }
+
                     break;
                 }
             }
