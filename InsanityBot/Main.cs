@@ -397,6 +397,10 @@ namespace InsanityBot
 
             Client.DisconnectAsync();
 
+
+            TicketDaemonState state = new();
+            state.SaveDaemonState(TicketDaemon);
+
             Environment.Exit(0);
         }
     }
