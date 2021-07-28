@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,7 +30,14 @@ namespace InsanityBot.Tickets
         internal CustomCommandHandler CommandHandler { get; set; }
         internal TicketCreator TicketCreator { get; set; }
         public TicketTranscriber Transcriber { get; set; }
-        public static UInt32 TicketCount { get; private set; }
+        public UInt32 TicketCount { get; internal set; }
+        public static UInt32 StaticTicketCount
+        {
+            get
+            {
+                return InsanityBot.TicketDaemon.TicketCount;
+            }
+        }
         public static String RandomTicketName
 
         {
@@ -223,6 +229,9 @@ namespace InsanityBot.Tickets
         ~TicketDaemon()
         {
             this.SaveAll();
+
+            TicketDaemonState state = new();
+            state.SaveDaemonState(this);
         }
     }
 }

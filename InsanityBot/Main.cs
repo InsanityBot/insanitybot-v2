@@ -2,7 +2,6 @@
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Exceptions;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
@@ -17,6 +16,7 @@ using InsanityBot.Console.Integrated;
 using InsanityBot.Core.Logger;
 using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Datafixers;
+using InsanityBot.Tickets;
 using InsanityBot.Tickets.Commands;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -164,6 +164,9 @@ namespace InsanityBot
 
             TicketDaemon = new();
             TicketDaemon.CommandHandler.Load();
+
+            TicketDaemonState state = new();
+            state.RestoreDaemonState(ref TicketDaemon);
 
             try
             {
