@@ -142,9 +142,7 @@ namespace InsanityBot.Tickets
 
         public async Task DeleteTicket(DiscordTicket ticket)
         {
-            StreamWriter writer = new("./cache/tickets/transcripts/index.json");
-
-            writer.BaseStream.Position--;
+            StreamWriter writer = new(new FileStream("./cache/tickets/transcripts/index.json", FileMode.Append));
 
             // manually write json to save the performance cost of deserializing and serializing
             await writer.WriteAsync($",{{\"readable\":\"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md\"," +

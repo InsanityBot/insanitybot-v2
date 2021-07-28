@@ -55,7 +55,6 @@ namespace InsanityBot.Tickets.Commands
             }
             catch(Exception ex)
             {
-                await ctx.Channel.DeleteAsync("Ticket closed");
                 InsanityBot.Client.Logger.LogError(new EventId(3002, "TicketClose"),
                     $"Failed to fetch ticket from the daemon. Error:\n{ex}: {ex.Message}\n\n{ex.StackTrace}");
             }
