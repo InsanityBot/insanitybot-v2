@@ -70,6 +70,11 @@ View the InsanityBot commands [here](https://docs.insanity.network/en/InsanityBo
 [MacOS](https://docs.insanity.network/en/InsanityBot/MacOS-Installation) | 
 [Pterodactyl](https://docs.insanity.network/en/InsanityBot/Pterodactyl)
 
+Prerequisites:
+
+- .NET 5.x or newer, SDK and runtime
+- Administrator permissions on discord - with the ticket system, administrator is *required.*
+
 ## Support
 
 The fastest way to get support is via our [Discord server](https://discord.gg/8TKJaGs). Alternatively you can open a GitHub issue [here](https://github.com/InsanityNetwork/InsanityBot/issues/new/choose), however, you will likely have to wait longer to get a reply.
