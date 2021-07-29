@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
+using InsanityBot.Tickets.Closure;
 using InsanityBot.Tickets.CustomCommands;
 using InsanityBot.Tickets.Transcripts;
 using InsanityBot.Utility.Config;
@@ -63,6 +64,7 @@ namespace InsanityBot.Tickets
                 return Presets.First(xm => xm.Id == "default");
             }
         }
+        public ClosingQueue ClosingQueue { get; set; }
 
         public TicketDaemon()
         {
@@ -101,6 +103,16 @@ namespace InsanityBot.Tickets
                 FileStream stream = File.Create("./cache/tickets/transcripts/index.json");
                 stream.Write(Encoding.UTF8.GetBytes("[]"));
                 stream.Close();
+            }
+
+            if(!File.Exists("./cache/tickets/closequeue.json"))
+            {
+                this.ClosingQueue = new();
+            }
+            else
+            {
+                this.ClosingQueue = JsonConvert.DeserializeObject<ClosingQueue>(
+                    File.ReadAllText("./cache/tickets/closequeue.json"));
             }
 
             Configuration = new TicketConfigurationManager().Deserialize("./config/ticket.json");
@@ -204,6 +216,16 @@ namespace InsanityBot.Tickets
 
                 StreamWriter writer = new("./cache/tickets/data.json");
                 writer.Write(JsonConvert.SerializeObject(this.AdditionalData));
+                writer.Close();
+            }
+
+            if(!File.Exists("./cache/tickets/closequeue.json"))
+            {
+                File.Create("./cache/tickets/closequeue.json").Close();
+            }
+            using(StreamWriter writer = new("./cache/tickets/closequeue.json"))
+            {
+                writer.WriteLine(JsonConvert.SerializeObject(this.ClosingQueue));
                 writer.Close();
             }
         }

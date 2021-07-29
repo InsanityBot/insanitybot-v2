@@ -335,6 +335,7 @@ namespace InsanityBot
             Ban.BanStartingEvent += TimeHandler.DisableTimer;
 
             Client.MessageCreated += TicketDaemon.RouteCustomCommand;
+            Client.MessageCreated += TicketDaemon.ClosingQueue.HandleCancellation;
         }
 
         private static void InitializeAll()

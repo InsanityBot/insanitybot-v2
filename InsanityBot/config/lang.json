@@ -106,7 +106,8 @@
     "insanitybot.permissions.role_not_found": "Could not find role.", // used by parents, does *not* support role-specific placeholders
 
     "insanitybot.tickets.new": ":white_check_mark: Successfully created ticket {TICKETCHANNEL}.",
-    "insanitybot.tickets.close": "Ticket {TICKETCHANNEL} will be closed in {TICKETCLOSETIME}."
+    "insanitybot.tickets.close": "{TICKETCHANNEL} will be closed in {TICKETCLOSETIME}.",
+    "insanitybot.tickets.cancelled_closing": "Cancelled closing of {TICKETCHANNEL}."
   }
 }
 
