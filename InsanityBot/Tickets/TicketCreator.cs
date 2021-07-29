@@ -37,6 +37,14 @@ namespace InsanityBot.Tickets
                     .For(InsanityBot.HomeGuild.GetRole(v)));
             }
 
+            permissions.Add(new DiscordOverwriteBuilder()
+                .Allow(Permissions.AccessChannels)
+                .For(await InsanityBot.HomeGuild.GetMemberAsync(InsanityBot.Client.CurrentUser.Id)));
+
+            permissions.Add(new DiscordOverwriteBuilder()
+                .Allow(Permissions.AccessChannels)
+                .For(context.Member));
+
             DiscordChannel ticket = await InsanityBot.HomeGuild.CreateChannelAsync($"insanitybot-temp-{TicketDaemon.StaticTicketCount}",
                 ChannelType.Text, TicketCategory, overwrites: permissions);
 
