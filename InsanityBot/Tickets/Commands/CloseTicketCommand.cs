@@ -4,10 +4,7 @@ using DSharpPlus.Entities;
 
 using InsanityBot.Commands;
 
-using Microsoft.Extensions.Logging;
-
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -16,26 +13,36 @@ namespace InsanityBot.Tickets.Commands
     [ModuleLifespan(ModuleLifespan.Transient)]
     public class CloseTicketCommand : BaseCommandModule
     {
-        private Timer timer;
-        private CommandContext ctx;
 
         [Command("close")]
         public async Task CloseTicket(CommandContext ctx,
             [RemainingText]
-            String time = "30s")
+            String args = "30s")
         {
-            TimeSpan closeTime = time.ParseTimeSpan();
-            this.ctx = ctx;
+            String time = args;
+            Boolean forced = false;
 
-            timer = new()
+            if(args.StartsWith("--force"))
             {
-                AutoReset = false,
-                Interval = closeTime.TotalMilliseconds
-            };
+                time = args[7..];
+                forced = true;
+            }
+            if(args.StartsWith("-f"))
+            {
+                time = args[2..];
+                forced = true;
+            }
 
-            timer.Start();
+            TimeSpan closeTime = time.ParseTimeSpan();
 
-            timer.Elapsed += FinalCloseTicket;
+            if(!forced)
+            {
+                InsanityBot.TicketDaemon.ClosingQueue.AddToQueue(ctx.Channel.Id, closeTime);
+            }
+            else
+            {
+                InsanityBot.TicketDaemon.ClosingQueue.AddToQueue(ctx.Channel.Id, closeTime, false);
+            }
 
             DiscordEmbedBuilder embedBuilder = new()
             {
@@ -44,20 +51,6 @@ namespace InsanityBot.Tickets.Commands
             };
 
             await ctx.Channel.SendMessageAsync(embedBuilder.Build());
-        }
-
-        private async void FinalCloseTicket(Object sender, ElapsedEventArgs e)
-        {
-            try
-            {
-                await InsanityBot.TicketDaemon.DeleteTicket(
-                    InsanityBot.TicketDaemon.Tickets.First(xm => xm.Value.DiscordChannelId == ctx.Channel.Id).Value);
-            }
-            catch(Exception ex)
-            {
-                InsanityBot.Client.Logger.LogError(new EventId(3002, "TicketClose"),
-                    $"Failed to fetch ticket from the daemon. Error:\n{ex}: {ex.Message}\n\n{ex.StackTrace}");
-            }
         }
     }
 }

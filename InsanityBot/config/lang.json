@@ -107,7 +107,7 @@
 
     "insanitybot.tickets.new": ":white_check_mark: Successfully created ticket {TICKETCHANNEL}.",
     "insanitybot.tickets.close": "{TICKETCHANNEL} will be closed in {TICKETCLOSETIME}.",
-    "insanitybot.tickets.cancelled_closing": "Cancelled closing of {TICKETCHANNEL}."
+    "insanitybot.tickets.cancelled_closing": "Cancelled closing of {CHANNEL}."
   }
 }
 

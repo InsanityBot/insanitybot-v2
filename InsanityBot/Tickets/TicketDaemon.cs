@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using DSharpPlus.Exceptions;
 
 using InsanityBot.Tickets.Closure;
 using InsanityBot.Tickets.CustomCommands;
@@ -68,6 +69,8 @@ namespace InsanityBot.Tickets
 
         public TicketDaemon()
         {
+            Configuration = new TicketConfigurationManager().Deserialize("./config/ticket.json");
+
             if(!File.Exists("./cache/tickets/presets/default.json"))
             {
                 InsanityBot.Client.Logger.LogCritical(new EventId(2000, "TicketDaemon"), "Could not find default ticket preset, aborting...");
@@ -107,7 +110,7 @@ namespace InsanityBot.Tickets
 
             if(!File.Exists("./cache/tickets/closequeue.json"))
             {
-                this.ClosingQueue = new();
+                File.Create("./cache/tickets/closequeue.json").Close();
             }
             else
             {
@@ -115,7 +118,17 @@ namespace InsanityBot.Tickets
                     File.ReadAllText("./cache/tickets/closequeue.json"));
             }
 
-            Configuration = new TicketConfigurationManager().Deserialize("./config/ticket.json");
+            if(ClosingQueue == null) // file was null
+            {
+                ClosingQueue = new();
+            }
+
+            ClosingQueue.handler = new();
+
+            _ = Task.Run(() =>
+            {
+                ClosingQueue.handler.Start();
+            });
 
             Transcriber = new();
             Transcriber.RegisterTranscriber<HumanReadableTranscriber>();
@@ -178,7 +191,18 @@ namespace InsanityBot.Tickets
                         DiscordMessageBuilder messageBuilder = new DiscordMessageBuilder().WithFile("transcript.md", new FileStream(
                             $"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md", FileMode.Open));
 
-                        await dm.SendMessageAsync(messageBuilder);
+                        try
+                        {
+                            await dm.SendMessageAsync(messageBuilder);
+                        }
+                        catch(UnauthorizedException)
+                        { 
+                            // they have their dms closed. nothing to worry about.
+                        }
+                        catch(Exception)
+                        {
+                            throw;
+                        }
                     }
                 }
 
@@ -188,7 +212,18 @@ namespace InsanityBot.Tickets
                 DiscordMessageBuilder ownerMessageBuilder = new DiscordMessageBuilder().WithFile("transcript.md", new FileStream(
                             $"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md", FileMode.Open));
 
-                await ownerDm.SendMessageAsync(ownerMessageBuilder);
+                try
+                {
+                    await ownerDm.SendMessageAsync(ownerMessageBuilder);
+                }
+                catch(UnauthorizedException)
+                {
+                    // they have their dms closed. nothing to worry about.   
+                }
+                catch(Exception)
+                {
+                    throw;
+                }
             }
 
             Tickets.Remove(ticket.TicketGuid);

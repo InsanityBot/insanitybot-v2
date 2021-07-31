@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace InsanityBot.Tickets.Closure
@@ -21,6 +22,12 @@ namespace InsanityBot.Tickets.Closure
         [JsonIgnore]
         private List<UInt64> __channels;
 
+        [JsonIgnore]
+        private readonly Boolean __default_cancellable;
+
+        [JsonIgnore]
+        internal ClosingQueueHandler handler;
+
         public List<ClosingQueueEntry> Queue
         {
             get => __queue;
@@ -32,8 +39,36 @@ namespace InsanityBot.Tickets.Closure
             }
         }
         
-        public async Task HandleCancellation(DiscordClient cl, MessageCreateEventArgs e)
+        public Task HandleCancellation(DiscordClient cl, MessageCreateEventArgs e)
         {
+            _ = Task.Run(async () =>
+            {
+                await HandleCancellationAsync(cl, e);
+            });
+
+            return Task.CompletedTask;
+        }
+
+        private async Task HandleCancellationAsync(DiscordClient cl, MessageCreateEventArgs e)
+        {
+            foreach(var v in InsanityBot.Config.Prefixes)
+            {
+                if(e.Message.Content.StartsWith($"{v}close"))
+                {
+                    return;
+                }
+            }
+
+            if(e.Message.Author == cl.CurrentUser)
+            {
+                return;
+            }
+
+            if(__channels == null)
+            {
+                return;
+            }
+
             if(!__channels.Contains(e.Channel.Id))
             {
                 return;
@@ -57,6 +92,36 @@ namespace InsanityBot.Tickets.Closure
             };
 
             await e.Channel.SendMessageAsync(embedBuilder.Build());
+        }
+
+        [JsonConstructor]
+        public ClosingQueue()
+        {
+            __default_cancellable = (Boolean)TicketDaemon.Configuration["insanitybot.tickets.closing_cancellable"];
+
+            if(__channels == null)
+            {
+                __channels = new();
+            }
+
+            if(__queue == null)
+            {
+                __queue = new();
+            }
+        }
+
+        public void AddToQueue(UInt64 channelId, TimeSpan delay) => AddToQueue(channelId, delay, __default_cancellable);
+
+        public void AddToQueue(UInt64 channelId, TimeSpan delay, Boolean cancellable)
+        {
+            __queue.Add(new()
+            {
+                Cancellable = cancellable,
+                ChannelId = channelId,
+                CloseDate = DateTime.Now + delay
+            });
+
+            __channels.Add(channelId);
         }
     }
 }

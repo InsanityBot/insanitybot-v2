@@ -12,6 +12,7 @@
     "insanitybot.customcommands.prefices": [
       "i."
     ],
-    "insanitybot.tickets.transcripts.enable": true
+    "insanitybot.tickets.transcripts.enable": true,
+    "insanitybot.tickets.closing_cancellable": true
   }
 }

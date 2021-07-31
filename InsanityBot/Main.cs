@@ -163,12 +163,6 @@ namespace InsanityBot
                 UpdateUserPermissions = true
             });
 
-            TicketDaemon = new();
-            TicketDaemon.CommandHandler.Load();
-
-            TicketDaemonState state = new();
-            state.RestoreDaemonState(ref TicketDaemon);
-
             try
             {
                 //create home guild so commands can use it
@@ -258,6 +252,22 @@ namespace InsanityBot
             // if ((Boolean)Config["insanitybot.modules.console"])
             ; // not implemented yet
 
+            // load tickets
+            if((Boolean)Config["insanitybot.modules.tickets"])
+            {
+                _ = Task.Run(() =>
+                {
+                    TicketDaemon = new();
+                    TicketDaemon.CommandHandler.Load();
+
+                    TicketDaemonState state = new();
+                    state.RestoreDaemonState(ref TicketDaemon);
+
+                    Client.MessageCreated += TicketDaemon.RouteCustomCommand;
+                    Client.MessageCreated += TicketDaemon.ClosingQueue.HandleCancellation;
+                });
+            }
+
             //abort main thread, who needs it anyway
             Thread.Sleep(-1);
         }
@@ -333,9 +343,6 @@ namespace InsanityBot
 
             Mute.MuteStartingEvent += TimeHandler.DisableTimer;
             Ban.BanStartingEvent += TimeHandler.DisableTimer;
-
-            Client.MessageCreated += TicketDaemon.RouteCustomCommand;
-            Client.MessageCreated += TicketDaemon.ClosingQueue.HandleCancellation;
         }
 
         private static void InitializeAll()
