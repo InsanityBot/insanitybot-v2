@@ -189,7 +189,7 @@ namespace InsanityBot.Commands.Moderation
             catch(Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1152, "Unban"), $"Could not unban user {Identifier[9..]}");
-                System.Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
+                Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
             }
         }
 

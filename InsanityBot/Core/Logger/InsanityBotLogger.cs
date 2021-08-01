@@ -3,6 +3,7 @@
 using Microsoft.Extensions.Logging;
 
 using System;
+using System.IO;
 using System.Linq;
 
 namespace InsanityBot.Core.Logger
@@ -20,7 +21,7 @@ namespace InsanityBot.Core.Logger
 
         public Boolean IsEnabled(LogLevel logLevel) => logLevel >= (LogLevel)Convert.ToInt32(this.Config.Configuration["LogLevel"]);
 
-        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, String> formatter)
+        public void LogConsole<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, String> formatter)
         {
             if(!this.IsEnabled(logLevel))
             {
@@ -41,35 +42,35 @@ namespace InsanityBot.Core.Logger
             {
                 String ename = eventId.Name;
                 ename = ename?.Length > 12 ? ename?.Substring(0, 12) : ename;
-                System.Console.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
+                Console.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
 
                 switch(logLevel)
                 {
                     case LogLevel.Trace:
-                        System.Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.ForegroundColor = ConsoleColor.Gray;
                         break;
 
                     case LogLevel.Debug:
-                        System.Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Green;
                         break;
 
                     case LogLevel.Information:
-                        System.Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.ForegroundColor = ConsoleColor.Magenta;
                         break;
 
                     case LogLevel.Warning:
-                        System.Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
                         break;
 
                     case LogLevel.Error:
-                        System.Console.ForegroundColor = ConsoleColor.Red;
+                        Console.ForegroundColor = ConsoleColor.Red;
                         break;
 
                     case LogLevel.Critical:
-                        System.Console.BackgroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.Red;
                         break;
                 }
-                System.Console.Write(logLevel switch
+                Console.Write(logLevel switch
                 {
                     LogLevel.Trace => "[Trace]",
                     LogLevel.Debug => "[Debug]",
@@ -80,16 +81,96 @@ namespace InsanityBot.Core.Logger
                     LogLevel.None => "[None]",
                     _ => "[?????] "
                 });
-                System.Console.ResetColor();
+                Console.ResetColor();
 
-                System.Console.Write($" [{eventId.Id}/{ename}] ");
+                Console.Write($" [{eventId.Id}/{ename}] ");
 
                 String message = formatter(state, exception);
-                System.Console.WriteLine(message);
+                Console.WriteLine(message);
                 if(exception != null)
                 {
-                    System.Console.WriteLine(exception);
+                    Console.WriteLine(exception);
                 }
+            }
+        }
+
+        public void Initialize()
+        {
+            if((Boolean)InsanityBot.LoggerConfig.Configuration["LogToFile"])
+            {
+                if(!Directory.Exists("./logs"))
+                {
+                    Directory.CreateDirectory("./logs");
+                }
+
+                LogWriter = new(File.Create("./logs/latest.txt"));
+            }
+        }
+
+        public void Shutdown()
+        {
+            if((Boolean)InsanityBot.LoggerConfig.Configuration["LogToFile"])
+            {
+                File.Move("./logs/latest.txt", $"./logs/log-{DateTime.Now:yyyy-MM-dd-hh-mm-dd}.txt");
+            }
+        }
+
+        private StreamWriter LogWriter { get; set; }
+
+        public void LogFile<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, String> formatter)
+        {
+            if(!this.IsEnabled(logLevel))
+            {
+                return;
+            }
+
+            if(this.Config.EventExclusions.Contains(eventId.Name))
+            {
+                return;
+            }
+
+            if(this.Config.EventIdExclusions.Contains(eventId.Id))
+            {
+                return;
+            }
+
+            lock(__lock)
+            {
+                String ename = eventId.Name;
+                ename = ename?.Length > 12 ? ename?.Substring(0, 12) : ename;
+                LogWriter.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
+
+                LogWriter.Write(logLevel switch
+                {
+                    LogLevel.Trace => "[Trace]",
+                    LogLevel.Debug => "[Debug]",
+                    LogLevel.Information => "[Info]",
+                    LogLevel.Warning => "[Warn]",
+                    LogLevel.Error => "[Error]",
+                    LogLevel.Critical => "[Fatal]",
+                    LogLevel.None => "[None]",
+                    _ => "[?????] "
+                });
+
+                LogWriter.Write($" [{eventId.Id}/{ename}] ");
+
+                String message = formatter(state, exception);
+                LogWriter.WriteLine(message);
+
+                if(exception != null)
+                {
+                    LogWriter.WriteLine(exception);
+                }
+            }
+        }
+
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, String> formatter)
+        {
+            LogConsole(logLevel, eventId, state, exception, formatter);
+
+            if((Boolean)InsanityBot.LoggerConfig["LogToFile"])
+            {
+                LogFile(logLevel, eventId, state, exception, formatter);
             }
         }
     }

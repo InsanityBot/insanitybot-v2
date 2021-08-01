@@ -1,8 +1,9 @@
 {
-  "DataVersion": "2.0.0-dev.00023",
+  "DataVersion": "2.0.0-dev.00035",
   "Configuration": {
     "LogLevel": 2,
-    "TimestampFormat": "yyyy-MM-dd HH:mm:ss zzz"
+    "TimestampFormat": "yyyy-MM-dd HH:mm:ss zzz",
+    "LogToFile": true
   },
   "EventExclusions": [
 
