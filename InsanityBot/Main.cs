@@ -239,8 +239,6 @@ namespace InsanityBot
             //initialize various parts of InsanityBots framework
             InitializeAll();
 
-            (Client.Logger as InsanityBotLogger).Initialize();
-
             Client.Logger.LogInformation(new EventId(1000, "Main"), $"Startup successful!");
 
             //start offthread TCP connection
@@ -411,8 +409,6 @@ namespace InsanityBot
             TicketDaemon.CommandHandler.Save();
 
             Client.DisconnectAsync();
-
-            (Client.Logger as InsanityBotLogger).Shutdown();
 
             TicketDaemonState state = new();
             state.SaveDaemonState(TicketDaemon);
