@@ -10,9 +10,9 @@ namespace InsanityBot.Utility.Permissions.Data
     {
         public UInt64 Parent { get; set; }
 
-        public RolePermissions() : base() => Parent = 0;
+        public RolePermissions() : base() => this.Parent = 0;
 
-        public RolePermissions(UInt64 id) : base() => Parent = 0;
+        public RolePermissions(UInt64 id) : base() => this.Parent = 0;
 
         public static RolePermissions operator +(RolePermissions left, RolePermissions right)
         {

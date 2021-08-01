@@ -15,7 +15,7 @@ namespace InsanityBot.Core.Logger
 
         public LoggerConfigurationManager AddConfigEntry(String Identifier, Object DefaultValue)
         {
-            Config.Configuration.Add(Identifier, DefaultValue);
+            this.Config.Configuration.Add(Identifier, DefaultValue);
             return this;
         }
 
@@ -27,13 +27,13 @@ namespace InsanityBot.Core.Logger
             config = (LoggerConfiguration)DataFixerLower.UpgradeData(config);
             reader.Close();
 
-            Serialize(config, "./config/logger.json");
+            this.Serialize(config, "./config/logger.json");
             return config;
         }
 
         public LoggerConfigurationManager RemoveConfigEntry(String Identifier)
         {
-            Config.Configuration.Remove(Identifier);
+            this.Config.Configuration.Remove(Identifier);
             return this;
         }
 

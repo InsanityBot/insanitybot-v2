@@ -151,14 +151,12 @@ namespace InsanityBot.Utility.Modlogs
         /// Gets the UserModlog instance of this member. Only intended for low-level data manipulation and testing, 
         /// not for inclusion in production releases.
         /// </summary>
-        public static UserModlog GetUserModlog(this DiscordMember member)
-            => Deserialize(member.Username, member.Id);
+        public static UserModlog GetUserModlog(this DiscordMember member) => Deserialize(member.Username, member.Id);
 
         /// <summary>
         /// Sets the UserModlog instance of this member. Only intended for low-level data manipulation and testing,
         /// not for inclusion in production releases.
         /// </summary>
-        public static void SetUserModlog(this DiscordMember member, UserModlog user)
-            => Serialize(user, member.Id);
+        public static void SetUserModlog(this DiscordMember member, UserModlog user) => Serialize(user, member.Id);
     }
 }

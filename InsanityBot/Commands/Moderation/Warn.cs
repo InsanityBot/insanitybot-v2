@@ -15,6 +15,7 @@ using System;
 using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
+using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -29,10 +30,10 @@ namespace InsanityBot.Commands.Moderation
         {
             if(arguments.StartsWith('-'))
             {
-                await ParseWarnCommand(ctx, target, arguments);
+                await this.ParseWarnCommand(ctx, target, arguments);
                 return;
             }
-            await ExecuteWarn(ctx, target, arguments, false, false);
+            await this.ExecuteWarn(ctx, target, arguments, false, false);
         }
 
         private async Task ParseWarnCommand(CommandContext ctx, DiscordMember target, String arguments)
@@ -48,7 +49,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<WarnOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteWarn(ctx, target, String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                        await this.ExecuteWarn(ctx, target, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
             catch(Exception e)

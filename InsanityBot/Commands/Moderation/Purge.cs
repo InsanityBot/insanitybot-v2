@@ -28,10 +28,10 @@ namespace InsanityBot.Commands.Moderation
         {
             if(arguments.StartsWith('-'))
             {
-                await ParsePurgeCommand(ctx, messageCount, arguments);
+                await this.ParsePurgeCommand(ctx, messageCount, arguments);
                 return;
             }
-            await ExecutePurgeCommand(ctx, messageCount, false, arguments);
+            await this.ExecutePurgeCommand(ctx, messageCount, false, arguments);
         }
 
         private async Task ParsePurgeCommand(CommandContext ctx,
@@ -49,7 +49,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<PurgeOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecutePurgeCommand(ctx, messageCount, o.Silent, String.Join(' ', o.Reason));
+                        await this.ExecutePurgeCommand(ctx, messageCount, o.Silent, String.Join(' ', o.Reason));
                     });
             }
             catch(Exception e)

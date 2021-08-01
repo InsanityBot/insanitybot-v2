@@ -29,10 +29,10 @@ namespace InsanityBot.Commands.Moderation
         {
             if(arguments.StartsWith('-'))
             {
-                await ParseKickCommand(ctx, member, arguments);
+                await this.ParseKickCommand(ctx, member, arguments);
                 return;
             }
-            await ExecuteKickCommand(ctx, member, arguments, false, false, false);
+            await this.ExecuteKickCommand(ctx, member, arguments, false, false, false);
         }
 
         private async Task ParseKickCommand(CommandContext ctx,
@@ -50,7 +50,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<KickOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteKickCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember, o.SendInvite);
+                        await this.ExecuteKickCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember, o.SendInvite);
                     });
             }
             catch(Exception e)

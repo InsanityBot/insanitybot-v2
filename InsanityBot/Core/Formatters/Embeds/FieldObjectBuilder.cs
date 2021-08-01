@@ -30,7 +30,7 @@ namespace InsanityBot.Core.Formatters.Embeds
 
         public DiscordEmbedBuilder Build(DiscordEmbedBuilder embedBuilder)
         {
-            embedBuilder.AddField(Title, Value, Inline);
+            embedBuilder.AddField(this.Title, this.Value, this.Inline);
             return embedBuilder;
         }
     }

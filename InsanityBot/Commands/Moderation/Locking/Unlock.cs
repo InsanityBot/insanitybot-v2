@@ -20,10 +20,10 @@ namespace InsanityBot.Commands.Moderation.Locking
     public class Unlock : BaseCommandModule
     {
         [Command("unlock")]
-        public async Task UnlockCommand(CommandContext ctx) => await UnlockCommand(ctx, ctx.Channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
+        public async Task UnlockCommand(CommandContext ctx) => await this.UnlockCommand(ctx, ctx.Channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
 
         [Command("unlock")]
-        public async Task UnlockCommand(CommandContext ctx, DiscordChannel channel) => await UnlockCommand(ctx, channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
+        public async Task UnlockCommand(CommandContext ctx, DiscordChannel channel) => await this.UnlockCommand(ctx, channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
 
         [Command("unlock")]
         public async Task UnlockCommand(CommandContext ctx, String args)
@@ -40,7 +40,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 await Parser.Default.ParseArguments<LockOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await UnlockCommand(ctx, InsanityBot.HomeGuild.GetChannel(o.ChannelId), String.Join(' ', o.Reason), o.Silent);
+                        await this.UnlockCommand(ctx, InsanityBot.HomeGuild.GetChannel(o.ChannelId), String.Join(' ', o.Reason), o.Silent);
                     });
             }
             catch(Exception e)
@@ -62,7 +62,7 @@ namespace InsanityBot.Commands.Moderation.Locking
         }
 
         [Command("unlock")]
-        public async Task UnlockCommand(CommandContext ctx, DiscordChannel channel, String args) => await UnlockCommand(ctx, args + $" -c {channel.Id}");
+        public async Task UnlockCommand(CommandContext ctx, DiscordChannel channel, String args) => await this.UnlockCommand(ctx, args + $" -c {channel.Id}");
 
         private async Task UnlockCommand(CommandContext ctx, DiscordChannel channel, String reason = "usedefault", Boolean silent = false)
         {

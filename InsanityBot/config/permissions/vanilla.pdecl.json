@@ -89,6 +89,14 @@
     "Value": false
   },
   {
+    "Permission": "insanitybot.tickets.new",
+    "Value": true
+  },
+  {
+    "Permission": "insanitybot.tickets.close",
+    "Value": true
+  },
+  {
     "Permission": "insanitybot.admin.lock_whitelist.add",
     "Value": false
   },

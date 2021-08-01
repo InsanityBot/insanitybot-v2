@@ -21,7 +21,7 @@ namespace InsanityBot.Core.Logger
 
         }
 
-        public LoggerProvider(LoggerConfiguration config) => Configuration = config;
+        public LoggerProvider(LoggerConfiguration config) => this.Configuration = config;
 
         public ILogger CreateLogger(String categoryName)
         {
@@ -35,7 +35,7 @@ namespace InsanityBot.Core.Logger
                 throw new ArgumentException($"This provider can only provide instances of loggers for {typeof(BaseDiscordClient).FullName} or {typeof(DiscordWebhookClient).FullName}.", nameof(categoryName));
             }
 
-            return new InsanityBotLogger(Configuration);
+            return new InsanityBotLogger(this.Configuration);
         }
 
         public void Dispose() => this.__disposed = true;

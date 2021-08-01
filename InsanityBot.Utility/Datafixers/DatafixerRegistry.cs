@@ -28,25 +28,25 @@ namespace InsanityBot.Utility.Datafixers
 
         public DatafixerRegistry(Byte RegistryMode)
         {
-            RawRegistry = new List<DatafixerRegistryEntry>();
-            SortedRegistry = new Dictionary<Type, List<SortedDatafixerRegistryEntry>>();
-            IsSorted = false;
+            this.RawRegistry = new List<DatafixerRegistryEntry>();
+            this.SortedRegistry = new Dictionary<Type, List<SortedDatafixerRegistryEntry>>();
+            this.IsSorted = false;
 
             switch(RegistryMode)
             {
                 case 0:
-                    GetRequiredDatafixersByTypeMethodHandler += GetRequiredDatafixers_Mode0;
-                    GetRequiredDatafixersByStringMethodHandler += GetRequiredDatafixers_Mode0;
-                    SortRawRegistryMethodHandler += SortRawRegistry_Mode0;
-                    AddRegistryItemMethodHandler += AddRegistryItem_Mode0;
-                    RemoveRegistryItemMethodHandler += RemoveRegistryItem_Mode0;
+                    this.GetRequiredDatafixersByTypeMethodHandler += this.GetRequiredDatafixers_Mode0;
+                    this.GetRequiredDatafixersByStringMethodHandler += this.GetRequiredDatafixers_Mode0;
+                    this.SortRawRegistryMethodHandler += this.SortRawRegistry_Mode0;
+                    this.AddRegistryItemMethodHandler += this.AddRegistryItem_Mode0;
+                    this.RemoveRegistryItemMethodHandler += this.RemoveRegistryItem_Mode0;
                     break;
                 case 1:
-                    GetRequiredDatafixersByTypeMethodHandler += GetRequiredDatafixers_Mode1;
-                    GetRequiredDatafixersByStringMethodHandler += GetRequiredDatafixers_Mode1;
-                    SortRawRegistryMethodHandler += SortRawRegistry_Mode1;
-                    AddRegistryItemMethodHandler += AddRegistryItem_Mode1;
-                    RemoveRegistryItemMethodHandler += RemoveRegistryItem_Mode1;
+                    this.GetRequiredDatafixersByTypeMethodHandler += this.GetRequiredDatafixers_Mode1;
+                    this.GetRequiredDatafixersByStringMethodHandler += this.GetRequiredDatafixers_Mode1;
+                    this.SortRawRegistryMethodHandler += this.SortRawRegistry_Mode1;
+                    this.AddRegistryItemMethodHandler += this.AddRegistryItem_Mode1;
+                    this.RemoveRegistryItemMethodHandler += this.RemoveRegistryItem_Mode1;
                     break;
             }
         }
@@ -56,67 +56,67 @@ namespace InsanityBot.Utility.Datafixers
         #region Registry Mode 0 
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode0(Type type)
         {
-            if(!IsSorted)
+            if(!this.IsSorted)
             {
-                SortRawRegistryMethodHandler();
+                this.SortRawRegistryMethodHandler();
             }
 
-            if(!SortedRegistry.ContainsKey(type))
+            if(!this.SortedRegistry.ContainsKey(type))
             {
                 return null;
             }
 
-            return SortedRegistry[type].ToUnsorted(type);
+            return this.SortedRegistry[type].ToUnsorted(type);
         }
 
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode0(String typename)
         {
-            if(!IsSorted)
+            if(!this.IsSorted)
             {
-                SortRawRegistryMethodHandler();
+                this.SortRawRegistryMethodHandler();
             }
 
-            if(!SortedRegistry.ContainsKey(Type.GetType(typename)))
+            if(!this.SortedRegistry.ContainsKey(Type.GetType(typename)))
             {
                 return null;
             }
 
-            return SortedRegistry[Type.GetType(typename)].ToUnsorted(Type.GetType(typename));
+            return this.SortedRegistry[Type.GetType(typename)].ToUnsorted(Type.GetType(typename));
         }
 
         private void SortRawRegistry_Mode0()
         {
-            foreach(DatafixerRegistryEntry v in RawRegistry)
+            foreach(DatafixerRegistryEntry v in this.RawRegistry)
             {
-                if(!SortedRegistry.ContainsKey(v.DatafixerTarget))
+                if(!this.SortedRegistry.ContainsKey(v.DatafixerTarget))
                 {
-                    SortedRegistry.Add(v.DatafixerTarget, new List<SortedDatafixerRegistryEntry>());
+                    this.SortedRegistry.Add(v.DatafixerTarget, new List<SortedDatafixerRegistryEntry>());
                 }
 
-                SortedRegistry[v.DatafixerTarget].Add(v.ToSortedDatafixerRegistryEntry());
+                this.SortedRegistry[v.DatafixerTarget].Add(v.ToSortedDatafixerRegistryEntry());
             }
-            RawRegistry.Clear();
-            IsSorted = true;
+            this.RawRegistry.Clear();
+            this.IsSorted = true;
         }
 
         private void AddRegistryItem_Mode0(DatafixerRegistryEntry item)
         {
-            RawRegistry.Add(item);
-            if(IsSorted)
+            this.RawRegistry.Add(item);
+            if(this.IsSorted)
             {
-                IsSorted = false;
+                this.IsSorted = false;
             }
         }
 
         private void RemoveRegistryItem_Mode0(DatafixerRegistryEntry item)
         {
-            if(RawRegistry.Contains(item))
+            if(this.RawRegistry.Contains(item))
             {
-                RawRegistry.Remove(item);
+                this.RawRegistry.Remove(item);
             }
-            else if(SortedRegistry[item.DatafixerTarget].Contains(item.ToSortedDatafixerRegistryEntry()))
+            else if(this.SortedRegistry[item.DatafixerTarget].Contains(item.ToSortedDatafixerRegistryEntry()))
             {
-                SortedRegistry[item.DatafixerTarget].Remove(item.ToSortedDatafixerRegistryEntry());
+                this.SortedRegistry[item.DatafixerTarget].Remove(item.ToSortedDatafixerRegistryEntry());
             }
             else
             {
@@ -129,77 +129,77 @@ namespace InsanityBot.Utility.Datafixers
         #region Registry Mode 1
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode1(Type type)
         {
-            if(!IsSorted)
+            if(!this.IsSorted)
             {
-                SortRawRegistryMethodHandler();
+                this.SortRawRegistryMethodHandler();
             }
 
-            if(!SortedRegistry.ContainsKey(type))
+            if(!this.SortedRegistry.ContainsKey(type))
             {
                 return null;
             }
 
-            return SortedRegistry[type].ToUnsorted(type);
+            return this.SortedRegistry[type].ToUnsorted(type);
         }
 
         private IEnumerable<DatafixerRegistryEntry> GetRequiredDatafixers_Mode1(String typename)
         {
-            if(!IsSorted)
+            if(!this.IsSorted)
             {
-                SortRawRegistryMethodHandler();
+                this.SortRawRegistryMethodHandler();
             }
 
-            if(!SortedRegistry.ContainsKey(Type.GetType(typename)))
+            if(!this.SortedRegistry.ContainsKey(Type.GetType(typename)))
             {
                 return null;
             }
 
-            return SortedRegistry[Type.GetType(typename)].ToUnsorted(Type.GetType(typename));
+            return this.SortedRegistry[Type.GetType(typename)].ToUnsorted(Type.GetType(typename));
         }
 
         private void SortRawRegistry_Mode1()
         {
-            foreach(DatafixerRegistryEntry v in RawRegistry)
+            foreach(DatafixerRegistryEntry v in this.RawRegistry)
             {
-                if(!SortedRegistry.ContainsKey(v.DatafixerTarget))
+                if(!this.SortedRegistry.ContainsKey(v.DatafixerTarget))
                 {
-                    SortedRegistry.Add(v.DatafixerTarget, new List<SortedDatafixerRegistryEntry>());
+                    this.SortedRegistry.Add(v.DatafixerTarget, new List<SortedDatafixerRegistryEntry>());
                 }
 
-                SortedRegistry[v.DatafixerTarget].Add(v.ToSortedDatafixerRegistryEntry());
+                this.SortedRegistry[v.DatafixerTarget].Add(v.ToSortedDatafixerRegistryEntry());
             }
-            IsSorted = true;
+            this.IsSorted = true;
         }
 
         private void AddRegistryItem_Mode1(DatafixerRegistryEntry item)
         {
-            RawRegistry.Add(item);
-            SortedRegistry[item.DatafixerTarget].Add(item.ToSortedDatafixerRegistryEntry());
+            this.RawRegistry.Add(item);
+            this.SortedRegistry[item.DatafixerTarget].Add(item.ToSortedDatafixerRegistryEntry());
         }
 
         private void RemoveRegistryItem_Mode1(DatafixerRegistryEntry item)
         {
-            RawRegistry.Remove(item);
-            SortedRegistry[item.DatafixerTarget].Remove(item.ToSortedDatafixerRegistryEntry());
+            this.RawRegistry.Remove(item);
+            this.SortedRegistry[item.DatafixerTarget].Remove(item.ToSortedDatafixerRegistryEntry());
         }
         #endregion
 
         // interact with the private registry
         #region API
-        public IEnumerable<DatafixerRegistryEntry> GetDatafixers(Type type) => GetRequiredDatafixersByTypeMethodHandler(type);
+        public IEnumerable<DatafixerRegistryEntry> GetDatafixers(Type type) => this.GetRequiredDatafixersByTypeMethodHandler(type);
 
-        public IEnumerable<DatafixerRegistryEntry> GetDatafixers(String typename) => GetRequiredDatafixersByStringMethodHandler(typename);
+        public IEnumerable<DatafixerRegistryEntry> GetDatafixers(String typename) => this.GetRequiredDatafixersByStringMethodHandler(typename);
 
-        public void SortDatafixers() => SortRawRegistryMethodHandler();
+        public void SortDatafixers() => this.SortRawRegistryMethodHandler();
 
-        public void AddDatafixer(DatafixerRegistryEntry datafixer) => AddRegistryItemMethodHandler(datafixer);
+        public void AddDatafixer(DatafixerRegistryEntry datafixer) => this.AddRegistryItemMethodHandler(datafixer);
 
-        public void RemoveDatafixer(DatafixerRegistryEntry datafixer) => RemoveRegistryItemMethodHandler(datafixer);
+        public void RemoveDatafixer(DatafixerRegistryEntry datafixer) => this.RemoveRegistryItemMethodHandler(datafixer);
 
         internal Dictionary<Type, List<SortedDatafixerRegistryEntry>> GetAllDatafixers()
         {
-            SortRawRegistryMethodHandler();
-            return SortedRegistry;
+            this.SortRawRegistryMethodHandler();
+            return this.SortedRegistry;
         }
         #endregion
     }

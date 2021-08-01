@@ -23,7 +23,7 @@ namespace InsanityBot.Core.Formatters.Embeds
 
         public DiscordEmbedBuilder Build(DiscordEmbedBuilder embedBuilder)
         {
-            embedBuilder.WithFooter(Text, Url);
+            embedBuilder.WithFooter(this.Text, this.Url);
             return embedBuilder;
         }
     }

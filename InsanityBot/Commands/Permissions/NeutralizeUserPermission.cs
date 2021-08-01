@@ -28,10 +28,10 @@ namespace InsanityBot.Commands.Permissions
             {
                 if(args.StartsWith('-'))
                 {
-                    await ParseNeutralizePermission(ctx, member, args);
+                    await this.ParseNeutralizePermission(ctx, member, args);
                     return;
                 }
-                await ExecuteNeutralizePermission(ctx, member, false, args);
+                await this.ExecuteNeutralizePermission(ctx, member, false, args);
             }
 
             private async Task ParseNeutralizePermission(CommandContext ctx, DiscordMember member, String args)
@@ -57,7 +57,7 @@ namespace InsanityBot.Commands.Permissions
                     await Parser.Default.ParseArguments<PermissionOptions>(args.Split(' '))
                         .WithParsedAsync(async o =>
                         {
-                            await ExecuteNeutralizePermission(ctx, member, o.Silent, o.Permission);
+                            await this.ExecuteNeutralizePermission(ctx, member, o.Silent, o.Permission);
                         });
                 }
                 catch(Exception e)

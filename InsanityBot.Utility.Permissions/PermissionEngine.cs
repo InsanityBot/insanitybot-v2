@@ -91,25 +91,25 @@ namespace InsanityBot.Utility.Permissions
             PermissionSettings.UpdateRolePermissions = false;
             PermissionSettings.UpdateUserPermissions = false;
 
-            UpdateUserPermissions += VanillaUpdateUserPermissions;
-            UpdateRolePermissions += VanillaUpdateRolePermissions;
-            GrantUserPermissions += VanillaGrantUserPermissions;
-            GrantRolePermissions += VanillaGrantRolePermissions;
-            RevokeUserPermissions += VanillaRevokeUserPermissions;
-            RevokeRolePermissions += VanillaRevokeRolePermissions;
-            NeutralizeUserPermissions += VanillaNeutralizeUserPermissions;
-            NeutralizeRolePermissions += VanillaNeutralizeRolePermissions;
-            SetUserAdministrator += VanillaSetUserAdministrator;
-            SetRoleAdministrator += VanillaSetRoleAdministrator;
-            CreateUserPermissions += VanillaCreateUserPermissions;
-            CreateRolePermissions += VanillaCreateRolePermissions;
-            GetUserPermissions += VanillaGetUserPermissions;
-            GetRolePermissions += VanillaGetRolePermissions;
-            SetUserPermissions += VanillaSetUserPermissions;
-            SetRolePermissions += VanillaSetRolePermissions;
-            ApplyMappings += VanillaApplyMappings;
-            DeleteUserPermissions += VanillaDeleteUserPermissions;
-            DeleteRolePermissions += VanillaDeleteRolePermissions;
+            this.UpdateUserPermissions += this.VanillaUpdateUserPermissions;
+            this.UpdateRolePermissions += this.VanillaUpdateRolePermissions;
+            this.GrantUserPermissions += this.VanillaGrantUserPermissions;
+            this.GrantRolePermissions += this.VanillaGrantRolePermissions;
+            this.RevokeUserPermissions += this.VanillaRevokeUserPermissions;
+            this.RevokeRolePermissions += this.VanillaRevokeRolePermissions;
+            this.NeutralizeUserPermissions += this.VanillaNeutralizeUserPermissions;
+            this.NeutralizeRolePermissions += this.VanillaNeutralizeRolePermissions;
+            this.SetUserAdministrator += this.VanillaSetUserAdministrator;
+            this.SetRoleAdministrator += this.VanillaSetRoleAdministrator;
+            this.CreateUserPermissions += this.VanillaCreateUserPermissions;
+            this.CreateRolePermissions += this.VanillaCreateRolePermissions;
+            this.GetUserPermissions += this.VanillaGetUserPermissions;
+            this.GetRolePermissions += this.VanillaGetRolePermissions;
+            this.SetUserPermissions += this.VanillaSetUserPermissions;
+            this.SetRolePermissions += this.VanillaSetRolePermissions;
+            this.ApplyMappings += this.VanillaApplyMappings;
+            this.DeleteUserPermissions += this.VanillaDeleteUserPermissions;
+            this.DeleteRolePermissions += this.VanillaDeleteRolePermissions;
 
             Initialize();
         }
@@ -395,7 +395,7 @@ namespace InsanityBot.Utility.Permissions
             {
                 if(Role.CheckPermission((DSharpPlus.Permissions)v.Key) == PermissionLevel.Allowed)
                 {
-                    GrantRolePermissions(Role.Id, v.Value);
+                    this.GrantRolePermissions(Role.Id, v.Value);
                 }
             }
 
@@ -406,7 +406,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/role-permissions/{Role.SnowflakeIdentifier}.json"))
             {
-                CreateRolePermissions(Role.SnowflakeIdentifier);
+                this.CreateRolePermissions(Role.SnowflakeIdentifier);
             }
 
             RolePermissions.Serialize(Role);
@@ -416,7 +416,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/{User.SnowflakeIdentifier}/permissions.json"))
             {
-                CreateUserPermissions(User.SnowflakeIdentifier);
+                this.CreateUserPermissions(User.SnowflakeIdentifier);
             }
 
             UserPermissions.Serialize(User);
@@ -426,7 +426,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
-                CreateRolePermissions(RoleId);
+                this.CreateRolePermissions(RoleId);
             }
 
             return RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
@@ -436,7 +436,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/{UserId}/permissions.json"))
             {
-                CreateUserPermissions(UserId);
+                this.CreateUserPermissions(UserId);
             }
 
             return UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
@@ -474,7 +474,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
-                CreateRolePermissions(RoleId);
+                this.CreateRolePermissions(RoleId);
             }
 
             RolePermissions permissions = RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
@@ -486,7 +486,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/{UserId}/permissions.json"))
             {
-                CreateUserPermissions(UserId);
+                this.CreateUserPermissions(UserId);
             }
 
             UserPermissions permissions = UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
@@ -498,7 +498,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
-                CreateRolePermissions(RoleId);
+                this.CreateRolePermissions(RoleId);
             }
 
             RolePermissions permissions = RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
@@ -518,7 +518,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/{UserId}/permissions.json"))
             {
-                CreateUserPermissions(UserId);
+                this.CreateUserPermissions(UserId);
             }
 
             UserPermissions permissions = UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
@@ -538,7 +538,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
-                CreateRolePermissions(RoleId);
+                this.CreateRolePermissions(RoleId);
             }
 
             RolePermissions permissions = RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
@@ -558,7 +558,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/{UserId}/permissions.json"))
             {
-                CreateUserPermissions(UserId);
+                this.CreateUserPermissions(UserId);
             }
 
             UserPermissions permissions = UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());
@@ -578,7 +578,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/role-permissions/{RoleId}.json"))
             {
-                CreateRolePermissions(RoleId);
+                this.CreateRolePermissions(RoleId);
             }
 
             RolePermissions permissions = RolePermissions.Deserialize(RoleId).Update(DefaultPermissions.Deserialize());
@@ -598,7 +598,7 @@ namespace InsanityBot.Utility.Permissions
         {
             if(!File.Exists($"./data/{UserId}/permissions.json"))
             {
-                CreateUserPermissions(UserId);
+                this.CreateUserPermissions(UserId);
             }
 
             UserPermissions permissions = UserPermissions.Deserialize(UserId).Update(DefaultPermissions.Deserialize());

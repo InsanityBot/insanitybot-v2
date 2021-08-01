@@ -2,7 +2,6 @@
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Exceptions;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
@@ -13,10 +12,12 @@ using InsanityBot.Commands.Moderation;
 using InsanityBot.Commands.Moderation.Locking;
 using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
-using InsanityBot.Console.Integrated;
+using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
 using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Datafixers;
+using InsanityBot.Tickets;
+using InsanityBot.Tickets.Commands;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
@@ -33,6 +34,10 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using static System.Convert;
+
+#if !DEBUG
+using DSharpPlus.CommandsNext.Exceptions;
+#endif
 
 namespace InsanityBot
 {
@@ -52,7 +57,7 @@ namespace InsanityBot
 #if DEBUG
             DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
 #else
-            DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Warning;
+			DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Warning;
 #endif
 
             DataFixerLower.Initialize(0); //this can be switched out for 1 if you need to, insanitybot default is 0
@@ -250,12 +255,29 @@ namespace InsanityBot
             // if ((Boolean)Config["insanitybot.modules.console"])
             ; // not implemented yet
 
+            // load tickets
+            if((Boolean)Config["insanitybot.modules.tickets"])
+            {
+                _ = Task.Run(() =>
+                {
+                    TicketDaemon = new();
+                    TicketDaemon.CommandHandler.Load();
+
+                    TicketDaemonState state = new();
+                    state.RestoreDaemonState(ref TicketDaemon);
+
+                    Client.MessageCreated += TicketDaemon.RouteCustomCommand;
+                    Client.MessageCreated += TicketDaemon.ClosingQueue.HandleCancellation;
+                });
+            }
+
             //abort main thread, who needs it anyway
             Thread.Sleep(-1);
         }
 
         private static Task CommandsExtension_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)
         {
+#if !DEBUG
             if(e.Exception.GetType() == typeof(CommandNotFoundException))
             {
                 return Task.CompletedTask;
@@ -270,6 +292,7 @@ namespace InsanityBot
             {
                 return Task.CompletedTask;
             }
+#endif
 
             Client.Logger.LogError(new EventId(1001, "CommandError"), $"{e.Command} failed:\n" +
                 $"{e.Exception}: {e.Exception.Message}\n{e.Exception.StackTrace}");
@@ -305,6 +328,12 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<Lock>();
                 CommandsExtension.RegisterCommands<Unlock>();
                 CommandsExtension.RegisterCommands<LockHelperCommands>();
+            }
+            if((Boolean)Config["insanitybot.modules.tickets"])
+            {
+                CommandsExtension.RegisterCommands<NewTicketCommand>();
+                CommandsExtension.RegisterCommands<CloseTicketCommand>();
+                CommandsExtension.RegisterCommands<AddUserCommand>();
             }
         }
 
@@ -372,6 +401,20 @@ namespace InsanityBot
             {
                 listener.Stop();
             }
+        }
+
+        public static void Shutdown()
+        {
+            TicketDaemon.SaveAll();
+            TicketDaemon.CommandHandler.Save();
+
+            Client.DisconnectAsync();
+
+
+            TicketDaemonState state = new();
+            state.SaveDaemonState(TicketDaemon);
+
+            Environment.Exit(0);
         }
     }
 }

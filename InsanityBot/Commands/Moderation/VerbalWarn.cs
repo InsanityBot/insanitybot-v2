@@ -15,6 +15,7 @@ using System;
 using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
+using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -35,10 +36,10 @@ namespace InsanityBot.Commands.Moderation
 
             if(arguments.StartsWith('-'))
             {
-                await ParseVerbalWarnCommand(ctx, member, arguments);
+                await this.ParseVerbalWarnCommand(ctx, member, arguments);
                 return;
             }
-            await ExecuteVerbalWarnCommand(ctx, member, arguments, false, false);
+            await this.ExecuteVerbalWarnCommand(ctx, member, arguments, false, false);
         }
 
         private async Task ParseVerbalWarnCommand(CommandContext ctx,
@@ -56,7 +57,7 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<VerbalWarnOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await ExecuteVerbalWarnCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                        await this.ExecuteVerbalWarnCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                     });
             }
             catch(Exception e)

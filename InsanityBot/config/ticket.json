@@ -1,0 +1,19 @@
+{
+  "DataVersion": "2.0.0-beta.002-tickets.001",
+  "Configuration": {
+    "insanitybot.presets.allow_editing": true,
+    "insanitybot.presets.allow_editing_default": false,
+    "insanitybot.tickets.staff_roles": [
+      0
+    ],
+    "insanitybot.tickets.staff_users": [ // roles are parsed first, try to avoid duplicates
+      0
+    ],
+    "insanitybot.customcommands.prefices": [
+      "i."
+    ],
+    "insanitybot.tickets.transcripts.enable": true,
+    "insanitybot.tickets.closing_cancellable": true,
+    "insanitybot.tickets.ghost_mention_added_members": true
+  }
+}

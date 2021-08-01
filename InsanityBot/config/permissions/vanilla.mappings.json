@@ -31,7 +31,9 @@
     "0": [
       "insanitybot.moderation.verballog",
       "insanitybot.moderation.modlog",
-      "insanitybot.moderation.export_modlog"
+      "insanitybot.moderation.export_modlog",
+      "insanitybot.tickets.new",
+      "insanitybot.tickets.close"
     ]
   }
 }

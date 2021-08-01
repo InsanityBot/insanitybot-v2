@@ -167,11 +167,11 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
         [Command("modlog")]
         public async Task ModlogCommand(CommandContext ctx, String type)
-            => await ModlogCommand(ctx, type, ctx.Member);
+            => await this.ModlogCommand(ctx, type, ctx.Member);
 
 
         [Command("modlog")]
         public async Task ModlogCommand(CommandContext ctx)
-            => await ModlogCommand(ctx, ctx.Member);
+            => await this.ModlogCommand(ctx, ctx.Member);
     }
 }

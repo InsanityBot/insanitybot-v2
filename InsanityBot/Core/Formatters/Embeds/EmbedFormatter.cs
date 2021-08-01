@@ -1,14 +1,10 @@
 ﻿using DSharpPlus.Entities;
 
-using Emzi0767;
-
 using InsanityBot.Core.Formatters.Abstractions;
 
 using Newtonsoft.Json;
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Text;
 

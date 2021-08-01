@@ -29,10 +29,10 @@ namespace InsanityBot.Commands.Moderation
         {
             if(Reason.StartsWith('-'))
             {
-                await ParseBanCommand(ctx, member, Reason);
+                await this.ParseBanCommand(ctx, member, Reason);
                 return;
             }
-            await ExecuteBanCommand(ctx, member, Reason, false, false);
+            await this.ExecuteBanCommand(ctx, member, Reason, false, false);
         }
 
         private async Task ParseBanCommand(CommandContext ctx,
@@ -52,11 +52,11 @@ namespace InsanityBot.Commands.Moderation
                     {
                         if(o.Time == "default")
                         {
-                            await ExecuteBanCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
+                            await this.ExecuteBanCommand(ctx, member, String.Join(' ', o.Reason), o.Silent, o.DmMember);
                         }
                         else
                         {
-                            await ExecuteTempbanCommand(ctx, member,
+                            await this.ExecuteTempbanCommand(ctx, member,
                                 o.Time.ParseTimeSpan(TemporaryPunishmentType.Ban),
                                 String.Join(' ', o.Reason), o.Silent, o.DmMember);
                         }

@@ -13,22 +13,22 @@ namespace InsanityBot.Utility
         {
             get
             {
-                if(!ContainsKey(key))
+                if(!this.ContainsKey(key))
                 {
-                    return NullValue;
+                    return this.NullValue;
                 }
 
                 return base[key];
             }
             set
             {
-                if(ContainsKey(key))
+                if(this.ContainsKey(key))
                 {
                     base[key] = value;
                 }
                 else
                 {
-                    Add(key, value);
+                    this.Add(key, value);
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace InsanityBot.Utility
         public void Add(TValue value)
         {
             SHA512 sha512Provider = SHA512.Create();
-            Add(Encoding.UTF8.GetString(sha512Provider.ComputeHash(Encoding.UTF8.GetBytes(value.ToString()))), value);
+            this.Add(Encoding.UTF8.GetString(sha512Provider.ComputeHash(Encoding.UTF8.GetBytes(value.ToString()))), value);
         }
     }
 }

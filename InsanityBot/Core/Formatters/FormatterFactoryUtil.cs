@@ -10,8 +10,8 @@ namespace InsanityBot.Core.Formatters
         private Dictionary<String, IFormatterFactory> Factories { get; set; }
 
         public void RegisterFactory(String name, IFormatterFactory factory)
-            => Factories.Add(name, factory);
+            => this.Factories.Add(name, factory);
 
-        public IFormatterFactory this[String name] => Factories[name];
+        public IFormatterFactory this[String name] => this.Factories[name];
     }
 }

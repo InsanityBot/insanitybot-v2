@@ -14,13 +14,13 @@ namespace InsanityBot.Utility.Config
 
         public MainConfigurationManager AddConfigEntry(String Identifier, Object DefaultValue)
         {
-            Config.Configuration.Add(Identifier, DefaultValue);
+            this.Config.Configuration.Add(Identifier, DefaultValue);
             return this;
         }
 
         public MainConfigurationManager RemoveConfigEntry(String Identifier)
         {
-            Config.Configuration.Remove(Identifier);
+            this.Config.Configuration.Remove(Identifier);
             return this;
         }
 
@@ -32,7 +32,7 @@ namespace InsanityBot.Utility.Config
             config = (MainConfiguration)DataFixerLower.UpgradeData(config);
             reader.Close();
 
-            Serialize(config, "./config/main.json");
+            this.Serialize(config, "./config/main.json");
             return config;
         }
 

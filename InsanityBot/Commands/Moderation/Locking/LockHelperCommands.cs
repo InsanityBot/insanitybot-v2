@@ -20,7 +20,7 @@ namespace InsanityBot.Commands.Moderation.Locking
         public class Whitelist : BaseCommandModule
         {
             [Command("add")]
-            public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await AddWhitelistedRoleCommand(ctx, role, ctx.Channel);
+            public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.AddWhitelistedRoleCommand(ctx, role, ctx.Channel);
 
             [Command("add")]
             public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
@@ -110,7 +110,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
             }
 
-            public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await RemoveWhitelistedRoleCommand(ctx, role, ctx.Channel);
+            public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveWhitelistedRoleCommand(ctx, role, ctx.Channel);
 
             public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
@@ -188,7 +188,7 @@ namespace InsanityBot.Commands.Moderation.Locking
         public class Blacklist : BaseCommandModule
         {
             [Command("add")]
-            public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await AddBlacklistedRoleCommand(ctx, role, ctx.Channel);
+            public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.AddBlacklistedRoleCommand(ctx, role, ctx.Channel);
 
             [Command("add")]
             public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
@@ -278,7 +278,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
             }
 
-            public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await RemoveBlacklistedRoleCommand(ctx, role, ctx.Channel);
+            public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveBlacklistedRoleCommand(ctx, role, ctx.Channel);
 
             public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {

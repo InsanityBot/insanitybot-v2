@@ -22,11 +22,11 @@ namespace InsanityBot.Utility.Modlogs.Reference
 
         public UserModlog(String UserName)
         {
-            Username = UserName;
-            ModlogEntryCount = 0;
-            VerbalLogEntryCount = 0;
-            Modlog = new List<ModlogEntry>();
-            VerbalLog = new List<VerbalModlogEntry>();
+            this.Username = UserName;
+            this.ModlogEntryCount = 0;
+            this.VerbalLogEntryCount = 0;
+            this.Modlog = new List<ModlogEntry>();
+            this.VerbalLog = new List<VerbalModlogEntry>();
         }
     }
 }

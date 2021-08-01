@@ -29,7 +29,7 @@
     "insanitybot.modules.tags": true,
 
     /* Toggles the ticket module status, true or false
-    Currently unused. */
+    Tickets are a powerful way to handle... just about anything you may want a private channel for. */
     "insanitybot.modules.tickets": true,
 
     /* Toggles the admin module status, true or false
@@ -50,62 +50,89 @@
 
     // Send all help command output to DMs. true or false
     "insanitybot.commands.help.send_dms": true,
+
     // Enables verbal warns. true or false
     "insanitybot.commands.moderation.allow_minor_warns": true,
+
     // Enables verbal warns getting grouped into warns. true or false
     "insanitybot.commands.moderation.convert_minor_warns_into_full_warn": true,
+
     // Describes how many verbal warns should get grouped into one warn. 1 - 255
     "insanitybot.commands.moderation.minor_warns_equal_full_warn": 3,
+
     // Default time for a tempmute. 00:00:01 to multiple millennia.
     "insanitybot.commands.moderation.default_mute_time": "00:30:00",
+
     // Default time for a tempban. 00:00:01 to multiple millennia.
     "insanitybot.commands.moderation.default_ban_time": "00:30:00",
+
     // Maximum modlog entries per modlog message. 1 - 65535, keep in mind the message cannot exceed 2000 characters.
     "insanitybot.commands.modlog.max_modlog_entries_per_embed": 25,
+
     // Maximum verballog entries per verballog message. 1 - 65535, keep in mind the message cannot exceed 2000 characters.
     "insanitybot.commands.modlog.max_verballog_entries_per_embed": 20,
+
     // Enables modlog scrolling - paging of modlogs longer than the defined maximum entries using reactions. true or false
     "insanitybot.commands.modlog.allow_scrolling": true,
+
     // Enables verballog scrolling - paging of verballogs longer than the defined maximum entries using reactions. true or false
     "insanitybot.commands.modlog.allow_verballog_scrolling": true,
+
     // Defines the default slowmode if none is specified or the specified slowmode time is invalid.
     "insanitybot.commands.slowmode.default_slowmode": 5,
+
     // Enables suggestions to be denied by community votes. true or false
     "insanitybot.commands.suggestions.allow_community_denial": true,
+
     // Enables suggestions to be denied at a certain percentage rather than at a specific amount of downvotes.
     // If this is enabled, the downvotes_for_community_denial setting will control the minimum amount of downvotes needed. true or false
     "insanitybot.commands.suggestions.denial_by_downvote_percentage": false,
+
     // Floating-point percentage value for community denial, given the denial_by_downvote_percentage setting is set to true. 0 to 100
     "insanitybot.commands.suggestions.percentage_for_community_denial": 0,
+
     // Fixed amount of downvotes at which suggestions get community denied. If the denial_by_downvote_percentage setting is set to true,
     // this instead indicates the minimum amount of downvotes at which a suggestion can be denied. 1 to 65535
     "insanitybot.commands.suggestions.downvotes_for_community_denial": 10,
+
     // Enables suggestions to be accepted by community votes. true or false
     "insanitybot.commands.suggestions.allow_community_acceptance": false,
+
     // Enables suggestions to be accepted at a certain percentage rather than at a specific amount of upvotes.
     // If this is enabled, the upvotes_for_community_acceptance setting will control the minimum amount of upvotes needed. true or false
     "insanitybot.commands.suggestions.acceptance_by_upvote_percentage": false,
+
     // Floating-point percentage value for community acceptance, given the acceptance_by_upvote_percentage setting is set to true. 0 to 100
     "insanitybot.commands.suggestions.percentage_for_community_acceptance": 0,
+
     // Fixed amount of upvotes at which suggestions get community accepted. If the acceptance_by_upvote_percentage setting is set to true,
     // this instead indicates the minimum amount of upvotes at which a suggestion can be accepted. 1 to 65535
     "insanitybot.commands.suggestions.upvotes_for_community_acceptance": 0,
+
     // Enables staff to forcibly deny suggestions. true or false
     "insanitybot.commands.suggestions.allow_forcible_denial": true,
+
     // Enables staff to forcibly accept suggestions. true or false
     "insanitybot.commands.suggestions.allow_forcible_acceptance": true,
+
     // Enables the builtin feature to block role pings from suggestions - despite being embedded, this may be undesirable. true or false
     "insanitybot.commands.suggestions.block_role_pings": false,
+
     // Enables the builtin feature to block user pings from suggestions - despite being embedded, this may be undesirable. true or false
     "insanitybot.commands.suggestions.block_user_pings": false,
+
     // Enables the ticket preset system. true or false
     "insanitybot.commands.tickets.use_presets": true,
+
     // Enables the builtin feature to create tickets using a reaction on a certain message. true or false
     "insanitybot.commands.tickets.create_ticket_by_reaction": true,
+
     // Enables creation of ticket presets, given the use_presets setting is true. true or false
     "insanitybot.commands.tickets.presets.allow_create_command": true,
+
     // Enables deletion of ticket presets, given the use_presets setting is true. true or false
     "insanitybot.commands.tickets.presets.allow_delete_command": true,
+
     // Enables tickets to be created using the preset ID via command. If this is set to false, presets are only available to reaction tickets,
     // given the create_ticket_by_reaction setting is true. true or false
     "insanitybot.commands.tickets.presets.allow_creation_by_preset_identifier": true,
@@ -116,22 +143,29 @@
 
     // Enables message deletion logs. true or false
     "insanitybot.logging.log_message_delete": true,
+
     // Enables message editing logs. true or false
     "insanitybot.logging.log_message_edit": true,
+
     // Enables member join logs. true or false
     "insanitybot.logging.log_member_join": true,
+
     // Enables member leave logs. true or false
     "insanitybot.logging.log_member_leave": true,
+
     // Enables various log commands. true or false
     "insanitybot.logging.log_commands": false,
+
     // Enable members to be pinged in log entries. This may cause issues on mobile. true or false
     "insanitybot.logging.members.use_mentions": true,
 
     // Enables join roles. true or false
     "insanitybot.miscellaneous.join_roles": true,
+
     // These two are both overriden by the user having the MentionEveryone permission.
     // Enables the builtin feature to block role pings from i.say. This will also block @everyone pings. true or false
     "insanitybot.miscellaneous.block_say_role_pings": true,
+
     // Enables the builtin feature to block user pings from i.say. true or false
     "insanitybot.miscellaneous.block_say_user_pings": false,
 
@@ -141,47 +175,66 @@
 
     // Channel ID of the destined modlog channel. Must be a valid Discord channel ID if moderation is enabled.
     "insanitybot.identifiers.commands.modlog_channel_id": 0,
+
     // Channel ID of the destined admin log channel. Must be a valid Discord channel ID.
     "insanitybot.identifiers.commands.admin_log_channel_id": 0,
+
     // Channel ID of the destined suggestion channel. Must be a valid Discord channel ID if suggestions are enabled.
     "insanitybot.identifiers.commands.suggestion_channel_id": 0,
+
     // Channel ID of the destination channel for accepted suggestions. Must be a valid Discord channel ID if suggestions are enabled.
     "insanitybot.identifiers.commands.accepted_suggestions_channel_id": 0,
+
     // Channel ID of the destination channel for denied suggestions. Must be a valid Discord channel ID if suggestions are enabled.
     "insanitybot.identifiers.commands.denied_suggestions_channel_id": 0,
+
     // Emote ID of the suggestion upvote emote. Can be omitted/invalid, in which case InsanityBot will use the builtin default.
     "insanitybot.identifiers.commands.suggestion_upvote_emote_id": 0,
+
     // Emote ID of the suggestion downvote emote. Can be omitted/invalid, in which case InsanityBot will use the builtin default.
     "insanitybot.identifiers.commands.suggestion_downvote_emote_id": 0,
+
     // Emote ID of the suggestion accept emote. This can only be used by staff. Can be omitted/invalid, in which case InsanityBot
     // will use the builtin default.
     "insanitybot.identifiers.commands.suggestion_accept_emote_id": 0,
+
     // Emote ID of the suggestion deny emote. This can only be used by staff. Can be omitted/invalid, in which case InsanityBot will
     // use the builtin default.
     "insanitybot.identifiers.commands.suggestion_deny_emote_id": 0,
+
     // Category ID of the default ticket category. Must be a valid Discord category ID if tickets are enabled. This can be overriden
     // by ticket presets, in which case this will be used for presetless tickets.
     "insanitybot.identifiers.commands.ticket_category_id": 0,
+
     // Simple ticket reaction message ID. Can be omitted/invalid.
     "insanitybot.identifiers.commands.ticket_reaction_message_id": 0,
+
     // Simple ticket reaction emote ID. Can be omitted/invalid.
     "insanitybot.identifiers.commands.ticket_reaction_emote_id": 0,
+
     // Channel ID of the message delete log. Must be a valid Discord channel ID if message delete logging is enabled.
     "insanitybot.identifiers.logging.message_delete_log_channel_id": 0,
+
     // Channel ID of the message edit log. Must be a valid Discord channel ID if message edit logging is enabled.
     "insanitybot.identifiers.logging.message_edit_log_channel_id": 0,
+
     // Channel ID of the member join log. Must be a valid Discord channel ID if member join logging is enabled.
     "insanitybot.identifiers.logging.member_join_log_channel_id": 0,
+
     // Channel ID of the member leave log. Must be a valid Discord channel ID if member leave logging is enabled.
     "insanitybot.identifiers.logging.member_leave_log_channel_id": 0,
+
     // Array of role IDs for join roles. These must all be valid Discord role IDs if join roles are enabled.
     "insanitybot.identifiers.miscellaneous.join_role_ids": [
       0
     ],
+
     // Role ID of the mute role. Must be a valid Discord role ID if moderation is enabled.
     "insanitybot.identifiers.moderation.mute_role_id": 0,
+
     // Role ID of the blacklisting role. Must be a valid Discord role ID if moderation is enabled.
     "insanitybot.identifiers.moderation.blacklist_role_id": 0,
+
     // Role ID of the lock exempt role. Must be a valid Discord role ID if moderation is enabled.
     "insanitybot.identifiers.moderation.lock_exempt_role_id": 0,
 
@@ -195,13 +248,16 @@
     // TCP port to be used for uptime monitors, can be omitted. 1 - 65536. The port must be opened on your server.
     "insanitybot.tcp_port": 0
   },
+
   // InsanityBot prefixes. "admin." will always work. Cannot be omitted.
   "Prefixes": [
     "i.",
     "admin."
   ],
+
   // InsanityBot token. Cannot be omitted. Must be a valid Discord bot token.
   "Token": " ",
+
   // Guild ID of the central operating guild. All channels, roles and emotes listed in this config must originate from this guild.
   // Cannot be omitted. Must be a valid Discord guild ID.
   "GuildId": 0

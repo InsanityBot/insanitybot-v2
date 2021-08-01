@@ -30,7 +30,7 @@ namespace InsanityBot.Core.Formatters.Embeds
 
         public DiscordEmbedBuilder Build(DiscordEmbedBuilder builder)
         {
-            builder.WithAuthor(Name, Url, Icon);
+            builder.WithAuthor(this.Name, this.Url, this.Icon);
             return builder;
         }
     }
