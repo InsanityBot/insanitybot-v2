@@ -35,6 +35,10 @@ using System.Threading.Tasks;
 
 using static System.Convert;
 
+#if !DEBUG
+using DSharpPlus.CommandsNext.Exceptions;
+#endif
+
 namespace InsanityBot
 {
     public partial class InsanityBot
