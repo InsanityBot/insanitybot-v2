@@ -49,7 +49,7 @@ namespace InsanityBot.Utility.Timers
         [MethodImpl(MethodImplOptions.Synchronized)]
         private static void CountdownElapsed(Object sender, System.Timers.ElapsedEventArgs e)
         {
-            for(int i = 0; i < Active.Count; i++)
+            for(Int32 i = 0; i < Active.Count; i++)
             {
                 if(Active[i] == null)
                 {

@@ -26,7 +26,7 @@ namespace InsanityBot.Tickets.Commands
             String topic = data;
             TicketPreset preset = InsanityBot.TicketDaemon.DefaultPreset;
 
-            foreach(var v in InsanityBot.TicketDaemon.Presets)
+            foreach(TicketPreset v in InsanityBot.TicketDaemon.Presets)
             {
                 if(data.ToLower().StartsWith(v.Id.ToLower()))
                 {

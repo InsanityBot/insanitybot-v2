@@ -197,7 +197,7 @@ namespace InsanityBot.Commands.Moderation
             catch(Exception e)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1132, "Unmute"), $"Could not unmute user {Identifier[9..]}");
-                System.Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
+                Console.WriteLine($"{e}: {e.Message}\n{e.StackTrace}");
             }
         }
 

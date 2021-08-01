@@ -1,5 +1,5 @@
 {
-  "DataVersion": "2.0.0-dev.00022",
+  "DataVersion": "2.0.0-dev.00035",
   "Configuration": {
 
     /*
@@ -108,7 +108,8 @@
     "insanitybot.tickets.new": ":white_check_mark: Successfully created ticket {TICKETCHANNEL}.",
     "insanitybot.tickets.close": "{TICKETCHANNEL} will be closed in {TICKETCLOSETIME}.",
     "insanitybot.tickets.cancelled_closing": "Cancelled closing of {CHANNEL}.",
-    "insanitybot.tickets.add_user.not_a_ticket_channel": "{CHANNEL} is not a ticket channel, you cannot add users here."
+    "insanitybot.tickets.add_user.not_a_ticket_channel": "{CHANNEL} is not a ticket channel, you cannot add users here.",
+    "insanitybot.tickets.remove_user.not_a_ticket_channel": "{CHANNEL} is not a ticket channel, you cannot remove users from here."
   }
 }
 

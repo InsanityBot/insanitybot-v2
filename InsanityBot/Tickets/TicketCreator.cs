@@ -23,14 +23,14 @@ namespace InsanityBot.Tickets
                 .Deny(Permissions.AccessChannels)
                 .For(InsanityBot.HomeGuild.EveryoneRole));
 
-            foreach(var v in preset.AccessRules.AllowedUsers)
+            foreach(UInt64 v in preset.AccessRules.AllowedUsers)
             {
                 permissions.Add(new DiscordOverwriteBuilder()
                     .Allow(Permissions.AccessChannels)
                     .For(await InsanityBot.HomeGuild.GetMemberAsync(v)));
             }
 
-            foreach(var v in preset.AccessRules.AllowedRoles)
+            foreach(UInt64 v in preset.AccessRules.AllowedRoles)
             {
                 permissions.Add(new DiscordOverwriteBuilder()
                     .Allow(Permissions.AccessChannels)
@@ -60,13 +60,13 @@ namespace InsanityBot.Tickets
 
             DiscordTicket virtualTicket = InsanityBot.TicketDaemon.Tickets[finalGuid];
 
-            foreach(var v in preset.CreationMessages)
+            foreach(String v in preset.CreationMessages)
             {
                 String s = await Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid);
                 _ = ticket.SendMessageAsync(s);
             }
 
-            foreach(var v in preset.CreationEmbeds)
+            foreach(String v in preset.CreationEmbeds)
             {
                 DiscordEmbed e = ((EmbedFormatter)InsanityBot.EmbedFactory.GetFormatter()).Read(
                     await Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid));

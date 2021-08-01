@@ -2,10 +2,7 @@
 
 using Microsoft.Extensions.Logging;
 
-using Newtonsoft.Json;
-
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -19,27 +16,24 @@ namespace InsanityBot.Tickets.Closure
 
         public void Start()
         {
-            Countdown = new()
+            this.Countdown = new()
             {
                 Interval = 2000,
                 AutoReset = false
             };
-            Countdown.Elapsed += CountdownElapsed;
+            this.Countdown.Elapsed += this.CountdownElapsed;
 
-            Countdown.Start();
+            this.Countdown.Start();
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private void CountdownElapsed(Object sender, ElapsedEventArgs e) 
-        {
-            _ = CountdownElapsedAsync();
-        }
+        private void CountdownElapsed(Object sender, ElapsedEventArgs e) => _ = this.CountdownElapsedAsync();
 
         private async Task CountdownElapsedAsync()
         {
             DateTime compareAgainst = DateTime.Now;
 
-            for(int i = 0; i < InsanityBot.TicketDaemon.ClosingQueue.Queue.Count; i++)
+            for(Int32 i = 0; i < InsanityBot.TicketDaemon.ClosingQueue.Queue.Count; i++)
             {
                 ClosingQueueEntry q = InsanityBot.TicketDaemon.ClosingQueue.Queue[i];
 
@@ -76,7 +70,7 @@ namespace InsanityBot.Tickets.Closure
                 }
             }
 
-            Countdown.Start();
+            this.Countdown.Start();
         }
     }
 }

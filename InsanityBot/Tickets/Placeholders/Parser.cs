@@ -36,7 +36,7 @@ namespace InsanityBot.Tickets.Placeholders
             StringBuilder builder = new();
             Boolean buildingName = false, buildingLength = false;
 
-            for(int i = 0; ; i++)
+            for(Int32 i = 0; ; i++)
             {
                 lastCharacter = currentCharacter;
                 currentCharacter = value[i];
@@ -68,7 +68,7 @@ namespace InsanityBot.Tickets.Placeholders
                     if(placeholderName.StartsWith("ticket."))
                     {
                         continue;
-                    }    
+                    }
 
                     tempValue = tempValue.Replace($"{{{placeholderName}:{replaceLength}}}", PlaceholderList.Placeholders[placeholderName].
                              Invoke(InsanityBot.TicketDaemon.Tickets[ticket]).Substring(0, replaceLength));

@@ -33,13 +33,7 @@ namespace InsanityBot.Tickets
         internal TicketCreator TicketCreator { get; set; }
         public TicketTranscriber Transcriber { get; set; }
         public UInt32 TicketCount { get; internal set; }
-        public static UInt32 StaticTicketCount
-        {
-            get
-            {
-                return InsanityBot.TicketDaemon.TicketCount;
-            }
-        }
+        public static UInt32 StaticTicketCount => InsanityBot.TicketDaemon.TicketCount;
         public static String RandomTicketName
 
         {
@@ -49,7 +43,7 @@ namespace InsanityBot.Tickets
                 Char[] stringChars = new Char[8];
                 Random random = new();
 
-                for(int i = 0; i < stringChars.Length; i++)
+                for(Int32 i = 0; i < stringChars.Length; i++)
                 {
                     stringChars[i] = validChars[random.Next(validChars.Length)];
                 }
@@ -58,13 +52,7 @@ namespace InsanityBot.Tickets
             }
         }
         public List<TicketPreset> Presets { get; private set; }
-        public TicketPreset DefaultPreset
-        {
-            get
-            {
-                return Presets.First(xm => xm.Id == "default");
-            }
-        }
+        public TicketPreset DefaultPreset => this.Presets.First(xm => xm.Id == "default");
         public ClosingQueue ClosingQueue { get; set; }
 
         public TicketDaemon()
@@ -118,31 +106,31 @@ namespace InsanityBot.Tickets
                     File.ReadAllText("./cache/tickets/closequeue.json"));
             }
 
-            if(ClosingQueue == null) // file was null
+            if(this.ClosingQueue == null) // file was null
             {
-                ClosingQueue = new();
+                this.ClosingQueue = new();
             }
 
-            ClosingQueue.handler = new();
+            this.ClosingQueue.handler = new();
 
             _ = Task.Run(() =>
             {
-                ClosingQueue.handler.Start();
+                this.ClosingQueue.handler.Start();
             });
 
-            Transcriber = new();
-            Transcriber.RegisterTranscriber<HumanReadableTranscriber>();
+            this.Transcriber = new();
+            this.Transcriber.RegisterTranscriber<HumanReadableTranscriber>();
 
-            Presets = new();
+            this.Presets = new();
 
-            CommandHandler = new();
+            this.CommandHandler = new();
 
-            TicketCreator = new();
+            this.TicketCreator = new();
 
-            foreach(var v in Directory.GetFiles("./cache/tickets/presets", "*.json"))
+            foreach(String v in Directory.GetFiles("./cache/tickets/presets", "*.json"))
             {
                 StreamReader reader = new(v);
-                Presets.Add(JsonConvert.DeserializeObject<TicketPreset>(reader.ReadToEnd()));
+                this.Presets.Add(JsonConvert.DeserializeObject<TicketPreset>(reader.ReadToEnd()));
                 reader.Close();
             }
         }
@@ -161,8 +149,8 @@ namespace InsanityBot.Tickets
 
         public async Task<Guid> CreateTicket(TicketPreset preset, CommandContext context, String topic)
         {
-            TicketCount++;
-            return await TicketCreator.CreateTicket(preset, context, topic);
+            this.TicketCount++;
+            return await this.TicketCreator.CreateTicket(preset, context, topic);
         }
 
         public async Task DeleteTicket(DiscordTicket ticket)
@@ -177,12 +165,12 @@ namespace InsanityBot.Tickets
 
             if((Boolean)Configuration["insanitybot.tickets.transcripts.enable"])
             {
-                await Transcriber.Transcribe(ticket);
+                await this.Transcriber.Transcribe(ticket);
 
                 if(!(ticket.AddedUsers == null))
                 {
 
-                    foreach(var v in ticket.AddedUsers)
+                    foreach(UInt64 v in ticket.AddedUsers)
                     {
                         DiscordMember member = await InsanityBot.HomeGuild.GetMemberAsync(v);
 
@@ -226,7 +214,7 @@ namespace InsanityBot.Tickets
                 }
             }
 
-            Tickets.Remove(ticket.TicketGuid);
+            this.Tickets.Remove(ticket.TicketGuid);
 
             await InsanityBot.HomeGuild.GetChannel(ticket.DiscordChannelId).DeleteAsync("Ticket closed");
         }
@@ -268,7 +256,7 @@ namespace InsanityBot.Tickets
         {
             String command = null;
 
-            foreach(var v in Configuration["insanitybot.customcommands.prefices"] as JArray)
+            foreach(JToken v in Configuration["insanitybot.customcommands.prefices"] as JArray)
             {
                 if(e.Message.Content.StartsWith(v.Value<String>()))
                 {
@@ -279,7 +267,7 @@ namespace InsanityBot.Tickets
             }
 
             CommandContext context = cl.GetCommandsNext().CreateFakeContext(e.Author, e.Channel, e.Message.Content, "i.", null);
-            CommandHandler.HandleCommand(context, command);
+            this.CommandHandler.HandleCommand(context, command);
 
             return Task.CompletedTask;
         }
@@ -293,7 +281,7 @@ namespace InsanityBot.Tickets
                 TicketGuid = Guid.NewGuid()
             };
 
-            Tickets.Add(upgrade.TicketGuid, upgrade);
+            this.Tickets.Add(upgrade.TicketGuid, upgrade);
             return Task.FromResult(upgrade.TicketGuid);
         }
 

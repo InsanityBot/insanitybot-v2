@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 
-using System;
-
 namespace InsanityBot.ConsoleCommands.Integrated
 {
     internal class StopCommand

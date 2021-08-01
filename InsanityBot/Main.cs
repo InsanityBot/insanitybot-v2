@@ -77,20 +77,20 @@ namespace InsanityBot
             {
                 if(!CommandLineOptions.Interactive)
                 {
-                    System.Console.WriteLine("Invalid Token. Please provide a valid token in .\\config\\main.json" +
+                    Console.WriteLine("Invalid Token. Please provide a valid token in .\\config\\main.json" +
                         "\nPress any key to continue...");
-                    System.Console.ReadKey();
+                    Console.ReadKey();
                     return;
                 }
 
-                System.Console.Write("Your config does not contain a token. To set a token now, paste your token here. " +
+                Console.Write("Your config does not contain a token. To set a token now, paste your token here. " +
                     "To abort and exit InsanityBot, type \"cancel\"\nToken: ");
-                String token = System.Console.ReadLine();
+                String token = Console.ReadLine();
 
                 if(token.ToLower().Trim() == "cancel")
                 {
-                    System.Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
-                    System.Console.ReadKey();
+                    Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
+                    Console.ReadKey();
                     return;
                 }
 
@@ -102,20 +102,20 @@ namespace InsanityBot
             {
                 if(!CommandLineOptions.Interactive)
                 {
-                    System.Console.WriteLine("Invalid GuildId. Please provide a valid guild ID in .\\config\\main.json" +
+                    Console.WriteLine("Invalid GuildId. Please provide a valid guild ID in .\\config\\main.json" +
                         "\nPress any key to continue...");
-                    System.Console.ReadKey();
+                    Console.ReadKey();
                     return;
                 }
 
-                System.Console.Write("Your config does not contain a valid guild ID. To set a guild ID now, paste your guild ID here. " +
+                Console.Write("Your config does not contain a valid guild ID. To set a guild ID now, paste your guild ID here. " +
                     "To abort and exit InsanityBot, type \"cancel\"\nGuild ID: ");
-                String guildId = System.Console.ReadLine();
+                String guildId = Console.ReadLine();
 
                 if(guildId.ToLower().Trim() == "cancel")
                 {
-                    System.Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
-                    System.Console.ReadKey();
+                    Console.WriteLine("Operation aborted, exiting InsanityBot.\nPress any key to continue...");
+                    Console.ReadKey();
                     return;
                 }
 
@@ -126,9 +126,9 @@ namespace InsanityBot
                 }
                 else
                 {
-                    System.Console.WriteLine("The provided guild ID could not be parsed. Aborting and exiting InsanityBot.\n" +
+                    Console.WriteLine("The provided guild ID could not be parsed. Aborting and exiting InsanityBot.\n" +
                         "Press any key to continue...");
-                    System.Console.ReadKey();
+                    Console.ReadKey();
                     return;
                 }
             }
@@ -169,7 +169,7 @@ namespace InsanityBot
             try
             {
                 //create home guild so commands can use it
-                HomeGuild = await Client.GetGuildAsync(Convert.ToUInt64(Config.GuildId));
+                HomeGuild = await Client.GetGuildAsync(ToUInt64(Config.GuildId));
             }
             catch(UnauthorizedException)
             {
@@ -238,6 +238,8 @@ namespace InsanityBot
 
             //initialize various parts of InsanityBots framework
             InitializeAll();
+
+            (Client.Logger as InsanityBotLogger).Initialize();
 
             Client.Logger.LogInformation(new EventId(1000, "Main"), $"Startup successful!");
 
@@ -410,6 +412,7 @@ namespace InsanityBot
 
             Client.DisconnectAsync();
 
+            (Client.Logger as InsanityBotLogger).Shutdown();
 
             TicketDaemonState state = new();
             state.SaveDaemonState(TicketDaemon);

@@ -19,7 +19,7 @@ namespace InsanityBot.ConsoleCommands.Integrated
 
             do
             {
-                command = System.Console.ReadLine();
+                command = Console.ReadLine();
 
                 switch(command)
                 {
