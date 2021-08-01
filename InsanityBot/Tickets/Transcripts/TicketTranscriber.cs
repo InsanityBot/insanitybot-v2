@@ -7,15 +7,12 @@ namespace InsanityBot.Tickets.Transcripts
     {
         private readonly List<ITranscriber> Transcribers = new();
 
-        public void RegisterTranscriber<T>() 
-            where T : ITranscriber, new()
-        {
-            Transcribers.Add(new T());
-        }
+        public void RegisterTranscriber<T>()
+            where T : ITranscriber, new() => this.Transcribers.Add(new T());
 
         public async Task Transcribe(DiscordTicket ticket)
         {
-            foreach(var v in Transcribers)
+            foreach(ITranscriber v in this.Transcribers)
             {
                 await v.Transcribe(ticket);
             }

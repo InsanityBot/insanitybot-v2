@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace InsanityBot.Tickets.Closure
@@ -30,20 +29,20 @@ namespace InsanityBot.Tickets.Closure
 
         public List<ClosingQueueEntry> Queue
         {
-            get => __queue;
+            get => this.__queue;
             set
             {
-                __queue = value;
-                __channels = (from i in __queue
-                              select i.ChannelId).ToList();
+                this.__queue = value;
+                this.__channels = (from i in this.__queue
+                                   select i.ChannelId).ToList();
             }
         }
-        
+
         public Task HandleCancellation(DiscordClient cl, MessageCreateEventArgs e)
         {
             _ = Task.Run(async () =>
             {
-                await HandleCancellationAsync(cl, e);
+                await this.HandleCancellationAsync(cl, e);
             });
 
             return Task.CompletedTask;
@@ -51,7 +50,7 @@ namespace InsanityBot.Tickets.Closure
 
         private async Task HandleCancellationAsync(DiscordClient cl, MessageCreateEventArgs e)
         {
-            foreach(var v in InsanityBot.Config.Prefixes)
+            foreach(String v in InsanityBot.Config.Prefixes)
             {
                 if(e.Message.Content.StartsWith($"{v}close"))
                 {
@@ -64,17 +63,17 @@ namespace InsanityBot.Tickets.Closure
                 return;
             }
 
-            if(__channels == null)
+            if(this.__channels == null)
             {
                 return;
             }
 
-            if(!__channels.Contains(e.Channel.Id))
+            if(!this.__channels.Contains(e.Channel.Id))
             {
                 return;
             }
 
-            ClosingQueueEntry entry = (from i in __queue
+            ClosingQueueEntry entry = (from i in this.__queue
                                        where i.ChannelId == e.Channel.Id
                                        select i).First();
 
@@ -83,7 +82,7 @@ namespace InsanityBot.Tickets.Closure
                 return;
             }
 
-            __queue.Remove(entry);
+            this.__queue.Remove(entry);
 
             DiscordEmbedBuilder embedBuilder = new()
             {
@@ -97,31 +96,31 @@ namespace InsanityBot.Tickets.Closure
         [JsonConstructor]
         public ClosingQueue()
         {
-            __default_cancellable = (Boolean)TicketDaemon.Configuration["insanitybot.tickets.closing_cancellable"];
+            this.__default_cancellable = (Boolean)TicketDaemon.Configuration["insanitybot.tickets.closing_cancellable"];
 
-            if(__channels == null)
+            if(this.__channels == null)
             {
-                __channels = new();
+                this.__channels = new();
             }
 
-            if(__queue == null)
+            if(this.__queue == null)
             {
-                __queue = new();
+                this.__queue = new();
             }
         }
 
-        public void AddToQueue(UInt64 channelId, TimeSpan delay) => AddToQueue(channelId, delay, __default_cancellable);
+        public void AddToQueue(UInt64 channelId, TimeSpan delay) => this.AddToQueue(channelId, delay, this.__default_cancellable);
 
         public void AddToQueue(UInt64 channelId, TimeSpan delay, Boolean cancellable)
         {
-            __queue.Add(new()
+            this.__queue.Add(new()
             {
                 Cancellable = cancellable,
                 ChannelId = channelId,
                 CloseDate = DateTime.Now + delay
             });
 
-            __channels.Add(channelId);
+            this.__channels.Add(channelId);
         }
     }
 }

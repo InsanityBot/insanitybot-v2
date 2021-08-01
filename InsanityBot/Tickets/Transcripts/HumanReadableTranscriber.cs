@@ -1,10 +1,7 @@
 ﻿using DSharpPlus.Entities;
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace InsanityBot.Tickets.Transcripts
@@ -26,7 +23,7 @@ namespace InsanityBot.Tickets.Transcripts
 
             await writer.WriteAsync($"## Transcript:\n\n");
 
-            foreach(var v in await channel.GetMessagesAfterAsync(0, 10000))
+            foreach(DiscordMessage v in await channel.GetMessagesAfterAsync(0, 10000))
             {
                 await writer.WriteAsync($"{v.Author.Username}#{v.Author.Discriminator}: {v.Content}\n\n");
             }

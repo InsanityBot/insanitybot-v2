@@ -5,10 +5,9 @@ using DSharpPlus.Interactivity;
 
 using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.Core.Logger;
-using InsanityBot.Tickets;
 using InsanityBot.Core.Services.Internal.Modlogs;
+using InsanityBot.Tickets;
 using InsanityBot.Utility.Config;
-using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
 

@@ -6,7 +6,6 @@ using InsanityBot.Commands;
 
 using System;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace InsanityBot.Tickets.Commands
 {

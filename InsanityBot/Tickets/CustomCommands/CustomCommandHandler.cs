@@ -26,7 +26,7 @@ namespace InsanityBot.Tickets.CustomCommands
                                             where i.Trigger == command
                                             select i;
 
-            foreach(var v in commands)
+            foreach(Command v in commands)
             {
                 switch(v.InternalCommand)
                 {
@@ -52,11 +52,13 @@ namespace InsanityBot.Tickets.CustomCommands
         public void Load()
         {
             if(!File.Exists("./cache/tickets/customcommands.json"))
+            {
                 File.Create("./cache/tickets/customcommands.json").Close();
+            }
 
             StreamReader reader = new("./cache/tickets/customcommands.json");
 
-            Commands = JsonConvert.DeserializeObject<List<Command>>(reader.ReadToEnd());
+            this.Commands = JsonConvert.DeserializeObject<List<Command>>(reader.ReadToEnd());
             reader.Close();
         }
 
@@ -64,7 +66,7 @@ namespace InsanityBot.Tickets.CustomCommands
         {
             // no init code, to be saved it has to be loaded first
             StreamWriter writer = new("./cache/tickets/customcommands.json");
-            writer.Write(JsonConvert.SerializeObject(Commands));
+            writer.Write(JsonConvert.SerializeObject(this.Commands));
             writer.Close();
         }
     }

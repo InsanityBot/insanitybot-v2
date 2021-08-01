@@ -35,7 +35,7 @@ namespace InsanityBot.Tickets.Commands
                 return;
             }
 
-            foreach(var v in users)
+            foreach(DiscordMember v in users)
             {
                 _ = ctx.Channel.AddOverwriteAsync(v, Permissions.AccessChannels);
 
@@ -71,7 +71,7 @@ namespace InsanityBot.Tickets.Commands
                 return;
             }
 
-            foreach(var v in roles)
+            foreach(DiscordRole v in roles)
             {
                 _ = ctx.Channel.AddOverwriteAsync(v, Permissions.AccessChannels);
 
