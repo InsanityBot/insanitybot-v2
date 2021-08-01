@@ -20,6 +20,8 @@ namespace InsanityBot.Tickets.Commands
                                                                where t.Value.DiscordChannelId == ctx.Channel.Id
                                                                select t;
 
+            KeyValuePair<Guid, DiscordTicket> y = x.First();
+
             if(!x.Any())
             {
                 DiscordEmbedBuilder error = new()
@@ -36,6 +38,10 @@ namespace InsanityBot.Tickets.Commands
             foreach(var v in users)
             {
                 _ = ctx.Channel.AddOverwriteAsync(v, Permissions.AccessChannels);
+
+                DiscordTicket z = InsanityBot.TicketDaemon.Tickets[y.Key];
+                z.AddedUsers = z.AddedUsers.Append(v.Id).ToArray();
+                InsanityBot.TicketDaemon.Tickets[y.Key] = z;
 
                 if((Boolean)TicketDaemon.Configuration["insanitybot.tickets.ghost_mention_added_members"])
                 {
