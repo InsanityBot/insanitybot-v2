@@ -20,6 +20,7 @@ namespace InsanityBot
             DataFixerLower.AddDatafixer(new Lang0003_AddPermissions(), typeof(LanguageConfiguration));
             DataFixerLower.AddDatafixer(new Lang0004_AddSlowmode(), typeof(LanguageConfiguration));
             DataFixerLower.AddDatafixer(new Lang0005_AddResetSlowmode(), typeof(LanguageConfiguration));
+            DataFixerLower.AddDatafixer(new Lang0006_AddTickets(), typeof(LanguageConfiguration));
         }
     }
 }

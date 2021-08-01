@@ -44,7 +44,7 @@ namespace InsanityBot
         public static ModlogMessageQueue ModlogQueue;
         public static TicketDaemon TicketDaemon;
 
-        public static String Version = "2.0.0-dev.00034";
+        public static String Version = "2.0.0-dev.00035";
     }
 }
 #pragma warning restore CA2211
