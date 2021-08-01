@@ -13,6 +13,7 @@
       "i."
     ],
     "insanitybot.tickets.transcripts.enable": true,
-    "insanitybot.tickets.closing_cancellable": true
+    "insanitybot.tickets.closing_cancellable": true,
+    "insanitybot.tickets.ghost_mention_added_members": true
   }
 }

@@ -333,6 +333,7 @@ namespace InsanityBot
             {
                 CommandsExtension.RegisterCommands<NewTicketCommand>();
                 CommandsExtension.RegisterCommands<CloseTicketCommand>();
+                CommandsExtension.RegisterCommands<AddUserCommand>();
             }
         }
 
