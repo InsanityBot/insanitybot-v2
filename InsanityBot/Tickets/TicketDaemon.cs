@@ -54,7 +54,7 @@ namespace InsanityBot.Tickets
                     stringChars[i] = validChars[random.Next(validChars.Length)];
                 }
 
-                 return new String(stringChars);
+                return new String(stringChars);
             }
         }
         public List<TicketPreset> Presets { get; private set; }
@@ -196,7 +196,7 @@ namespace InsanityBot.Tickets
                             await dm.SendMessageAsync(messageBuilder);
                         }
                         catch(UnauthorizedException)
-                        { 
+                        {
                             // they have their dms closed. nothing to worry about.
                         }
                         catch(Exception)
@@ -233,35 +233,32 @@ namespace InsanityBot.Tickets
 
         public void SaveAll()
         {
-            if(this.Tickets.Count > 0)
-            {
-                if(!File.Exists("./cache/tickets/tickets.json"))
-                {
-                    File.Create("./cache/tickets/tickets.json").Close();
-                }
 
-                StreamWriter writer = new("./cache/tickets/tickets.json");
-                writer.Write(JsonConvert.SerializeObject(this.Tickets));
-                writer.Close();
+            if(!File.Exists("./cache/tickets/tickets.json"))
+            {
+                File.Create("./cache/tickets/tickets.json").Close();
             }
 
-            if(this.AdditionalData.Count > 0)
-            {
-                if(!File.Exists("./cache/tickets/data.json"))
-                {
-                    File.Create("./cache/tickets/data.json").Close();
-                }
+            StreamWriter writer = new("./cache/tickets/tickets.json");
+            writer.Write(JsonConvert.SerializeObject(this.Tickets));
+            writer.Close();
 
-                StreamWriter writer = new("./cache/tickets/data.json");
-                writer.Write(JsonConvert.SerializeObject(this.AdditionalData));
-                writer.Close();
+
+            if(!File.Exists("./cache/tickets/data.json"))
+            {
+                File.Create("./cache/tickets/data.json").Close();
             }
+
+            writer = new("./cache/tickets/data.json");
+            writer.Write(JsonConvert.SerializeObject(this.AdditionalData));
+            writer.Close();
+
 
             if(!File.Exists("./cache/tickets/closequeue.json"))
             {
                 File.Create("./cache/tickets/closequeue.json").Close();
             }
-            using(StreamWriter writer = new("./cache/tickets/closequeue.json"))
+            using(writer = new("./cache/tickets/closequeue.json"))
             {
                 writer.WriteLine(JsonConvert.SerializeObject(this.ClosingQueue));
                 writer.Close();
