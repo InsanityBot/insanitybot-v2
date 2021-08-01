@@ -2,7 +2,6 @@
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Exceptions;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
@@ -13,7 +12,7 @@ using InsanityBot.Commands.Moderation;
 using InsanityBot.Commands.Moderation.Locking;
 using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
-using InsanityBot.Console.Integrated;
+using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
 using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Datafixers;
