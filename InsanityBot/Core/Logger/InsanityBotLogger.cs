@@ -12,6 +12,41 @@ namespace InsanityBot.Core.Logger
     {
         private LoggerConfiguration Config { get; set; }
         private static readonly Object __lock = new();
+        private StreamWriter logWriter;
+
+        private StreamWriter LogWriter
+        {
+            get
+            {
+                if(logWriter == null)
+                {
+                    if((Boolean)InsanityBot.LoggerConfig.Configuration["LogToFile"])
+                    {
+                        if(!Directory.Exists("./logs"))
+                        {
+                            Directory.CreateDirectory("./logs");
+                        }
+
+                        try
+                        {
+                            File.Move("./logs/latest.txt", $"./logs/log-{DateTime.Now:yyyy-MM-dd-hh-mm-dd}.txt");
+                        }
+                        catch
+                        {
+                            // the file didnt exist, no worries
+                        }
+
+                        logWriter = new(File.Create("./logs/latest.txt"));
+                        return logWriter;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("File logging is disabled yet was called.");
+                    }
+                }
+                return logWriter;
+            }
+        }
 
         public InsanityBotLogger(LoggerConfiguration config) => this.Config = config;
 
@@ -94,29 +129,6 @@ namespace InsanityBot.Core.Logger
             }
         }
 
-        public void Initialize()
-        {
-            if((Boolean)InsanityBot.LoggerConfig.Configuration["LogToFile"])
-            {
-                if(!Directory.Exists("./logs"))
-                {
-                    Directory.CreateDirectory("./logs");
-                }
-
-                LogWriter = new(File.Create("./logs/latest.txt"));
-            }
-        }
-
-        public void Shutdown()
-        {
-            if((Boolean)InsanityBot.LoggerConfig.Configuration["LogToFile"])
-            {
-                File.Move("./logs/latest.txt", $"./logs/log-{DateTime.Now:yyyy-MM-dd-hh-mm-dd}.txt");
-            }
-        }
-
-        private StreamWriter LogWriter { get; set; }
-
         public void LogFile<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, String> formatter)
         {
             if(!this.IsEnabled(logLevel))
@@ -161,6 +173,8 @@ namespace InsanityBot.Core.Logger
                 {
                     LogWriter.WriteLine(exception);
                 }
+
+                LogWriter.Flush();
             }
         }
 
