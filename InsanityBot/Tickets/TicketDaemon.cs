@@ -147,10 +147,10 @@ namespace InsanityBot.Tickets
                     select v).ToList().First().Value;
         }
 
-        public async Task<Guid> CreateTicket(TicketPreset preset, CommandContext context, String topic)
+        public Guid CreateTicket(TicketPreset preset, CommandContext context, String topic)
         {
             this.TicketCount++;
-            return await this.TicketCreator.CreateTicket(preset, context, topic);
+            return this.TicketCreator.CreateTicket(preset, context, topic);
         }
 
         public async Task DeleteTicket(DiscordTicket ticket)
@@ -271,7 +271,7 @@ namespace InsanityBot.Tickets
 
             return Task.CompletedTask;
         }
-        internal Task<Guid> UpgradeProtoTicket(ProtoTicket ticket)
+        internal Guid UpgradeProtoTicket(ProtoTicket ticket)
         {
             DiscordTicket upgrade = new()
             {
@@ -282,7 +282,7 @@ namespace InsanityBot.Tickets
             };
 
             this.Tickets.Add(upgrade.TicketGuid, upgrade);
-            return Task.FromResult(upgrade.TicketGuid);
+            return upgrade.TicketGuid;
         }
 
         ~TicketDaemon()

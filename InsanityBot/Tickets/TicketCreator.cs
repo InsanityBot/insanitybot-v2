@@ -13,7 +13,7 @@ namespace InsanityBot.Tickets
 {
     public class TicketCreator
     {
-        public async Task<Guid> CreateTicket(TicketPreset preset, CommandContext context, String topic)
+        public Guid CreateTicket(TicketPreset preset, CommandContext context, String topic)
         {
             DiscordChannel TicketCategory = InsanityBot.HomeGuild.GetChannel(preset.Category);
 
@@ -27,7 +27,7 @@ namespace InsanityBot.Tickets
             {
                 permissions.Add(new DiscordOverwriteBuilder()
                     .Allow(Permissions.AccessChannels)
-                    .For(await InsanityBot.HomeGuild.GetMemberAsync(v)));
+                    .For(InsanityBot.HomeGuild.GetMemberAsync(v).Result));
             }
 
             foreach(UInt64 v in preset.AccessRules.AllowedRoles)
@@ -39,14 +39,14 @@ namespace InsanityBot.Tickets
 
             permissions.Add(new DiscordOverwriteBuilder()
                 .Allow(Permissions.AccessChannels)
-                .For(await InsanityBot.HomeGuild.GetMemberAsync(InsanityBot.Client.CurrentUser.Id)));
+                .For(InsanityBot.HomeGuild.GetMemberAsync(InsanityBot.Client.CurrentUser.Id).Result));
 
             permissions.Add(new DiscordOverwriteBuilder()
                 .Allow(Permissions.AccessChannels)
                 .For(context.Member));
 
-            DiscordChannel ticket = await InsanityBot.HomeGuild.CreateChannelAsync($"insanitybot-temp-{TicketDaemon.StaticTicketCount}",
-                ChannelType.Text, TicketCategory, overwrites: permissions);
+            DiscordChannel ticket = InsanityBot.HomeGuild.CreateChannelAsync($"insanitybot-temp-{InsanityBot.TicketDaemon.TicketCount}",
+                ChannelType.Text, TicketCategory, overwrites: permissions).Result;
 
             ProtoTicket proto = new()
             {
@@ -56,24 +56,24 @@ namespace InsanityBot.Tickets
                 TicketGuid = Guid.NewGuid()
             };
 
-            Guid finalGuid = await InsanityBot.TicketDaemon.UpgradeProtoTicket(proto);
+            Guid finalGuid = InsanityBot.TicketDaemon.UpgradeProtoTicket(proto);
 
             DiscordTicket virtualTicket = InsanityBot.TicketDaemon.Tickets[finalGuid];
 
             foreach(String v in preset.CreationMessages)
             {
-                String s = await Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid);
+                String s = Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid).Result;
                 _ = ticket.SendMessageAsync(s);
             }
 
             foreach(String v in preset.CreationEmbeds)
             {
                 DiscordEmbed e = ((EmbedFormatter)InsanityBot.EmbedFactory.GetFormatter()).Read(
-                    await Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid));
+                    Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid).Result);
                 _ = ticket.SendMessageAsync(e);
             }
 
-            await ticket.ModifyAsync(async xm =>
+            ticket.ModifyAsync(async xm =>
             {
                 xm.Name = await Parser.ParseTicketPlaceholders(preset.NameFormat, virtualTicket.TicketGuid);
                 xm.Topic = await Parser.ParseTicketPlaceholders(topic ?? preset.Topic, virtualTicket.TicketGuid);

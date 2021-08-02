@@ -42,7 +42,7 @@ namespace InsanityBot.Tickets.Commands
                 }
             }
 
-            Guid ticketGuid = await InsanityBot.TicketDaemon.CreateTicket(preset, ctx, topic);
+            Guid ticketGuid = InsanityBot.TicketDaemon.CreateTicket(preset, ctx, topic);
 
             DiscordEmbedBuilder embedBuilder = new()
             {
