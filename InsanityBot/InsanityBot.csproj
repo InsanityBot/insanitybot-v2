@@ -59,10 +59,14 @@
 
 	<ItemGroup>
 		<None Remove="cache\tickets\presets\default.json" />
+		<None Remove="cache\embeds\default.json" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<EmbeddedResource Include="cache\tickets\presets\default.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource  Include="cache\embeds\default.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 	</ItemGroup>
@@ -79,5 +83,4 @@
 		<ProjectReference Include="..\InsanityBot.Utility\InsanityBot.Utility.csproj" />
 		<ProjectReference Include="..\Insanitybot.Datafixers\Insanitybot.Datafixers.csproj" />
 	</ItemGroup>
-
 </Project>
