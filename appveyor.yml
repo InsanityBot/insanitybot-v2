@@ -37,7 +37,7 @@ build_script:
   - dotnet build
   
 after_build:
-  - 7z a InsanityBot.zip %APPVEYOR_BUILD_FOLDER%\InsanityBot\bin\Release\*
+  - 7z a InsanityBot.zip %APPVEYOR_BUILD_FOLDER%\InsanityBot\bin\Release\net5.0\*
   
 artifacts:
   - path: InsanityBot.zip

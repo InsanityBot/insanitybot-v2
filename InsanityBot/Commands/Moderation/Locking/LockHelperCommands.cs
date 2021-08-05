@@ -110,8 +110,10 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
             }
 
+            [Command("remove")]
             public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveWhitelistedRoleCommand(ctx, role, ctx.Channel);
 
+            [Command("remove")]
             public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
                 if(!ctx.Member.HasPermission("insanitybot.admin.lock_whitelist.remove"))
@@ -278,8 +280,10 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
             }
 
+            [Command("remove")]
             public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveBlacklistedRoleCommand(ctx, role, ctx.Channel);
 
+            [Command("remove")]
             public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
                 if(!ctx.Member.HasPermission("insanitybot.admin.lock_blacklist.remove"))

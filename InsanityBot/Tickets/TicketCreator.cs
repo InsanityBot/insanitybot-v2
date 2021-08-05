@@ -19,31 +19,26 @@ namespace InsanityBot.Tickets
 
             List<DiscordOverwriteBuilder> permissions = new();
 
-            permissions.Add(new DiscordOverwriteBuilder()
-                .Deny(Permissions.AccessChannels)
-                .For(InsanityBot.HomeGuild.EveryoneRole));
+            permissions.Add(new DiscordOverwriteBuilder(InsanityBot.HomeGuild.EveryoneRole)
+                .Deny(Permissions.AccessChannels));
 
             foreach(UInt64 v in preset.AccessRules.AllowedUsers)
             {
-                permissions.Add(new DiscordOverwriteBuilder()
-                    .Allow(Permissions.AccessChannels)
-                    .For(InsanityBot.HomeGuild.GetMemberAsync(v).Result));
+                permissions.Add(new DiscordOverwriteBuilder(InsanityBot.HomeGuild.GetMemberAsync(v).Result)
+                    .Allow(Permissions.AccessChannels));
             }
 
             foreach(UInt64 v in preset.AccessRules.AllowedRoles)
             {
-                permissions.Add(new DiscordOverwriteBuilder()
-                    .Allow(Permissions.AccessChannels)
-                    .For(InsanityBot.HomeGuild.GetRole(v)));
+                permissions.Add(new DiscordOverwriteBuilder(InsanityBot.HomeGuild.GetRole(v))
+                    .Allow(Permissions.AccessChannels));
             }
 
-            permissions.Add(new DiscordOverwriteBuilder()
-                .Allow(Permissions.AccessChannels)
-                .For(InsanityBot.HomeGuild.GetMemberAsync(InsanityBot.Client.CurrentUser.Id).Result));
+            permissions.Add(new DiscordOverwriteBuilder(InsanityBot.HomeGuild.GetMemberAsync(InsanityBot.Client.CurrentUser.Id).Result)
+                .Allow(Permissions.AccessChannels));
 
-            permissions.Add(new DiscordOverwriteBuilder()
-                .Allow(Permissions.AccessChannels)
-                .For(context.Member));
+            permissions.Add(new DiscordOverwriteBuilder(context.Member)
+                .Allow(Permissions.AccessChannels));
 
             DiscordChannel ticket = InsanityBot.HomeGuild.CreateChannelAsync($"insanitybot-temp-{InsanityBot.TicketDaemon.TicketCount}",
                 ChannelType.Text, TicketCategory, overwrites: permissions).Result;
