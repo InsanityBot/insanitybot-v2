@@ -23,7 +23,7 @@ namespace InsanityBot.Tickets
 
             foreach(UInt64 v in preset.AccessRules.AllowedUsers)
             {
-                permissions.Add(new DiscordOverwriteBuilder(InsanityBot.HomeGuild.GetMemberAsync(v).Result)
+                permissions.Add(new DiscordOverwriteBuilder(InsanityBot.HomeGuild.GetMemberAsync(v).GetAwaiter().GetResult())
                     .Allow(Permissions.AccessChannels));
             }
 
@@ -33,14 +33,14 @@ namespace InsanityBot.Tickets
                     .Allow(Permissions.AccessChannels));
             }
 
-            permissions.Add(new DiscordOverwriteBuilder(InsanityBot.HomeGuild.GetMemberAsync(InsanityBot.Client.CurrentUser.Id).Result)
+            permissions.Add(new DiscordOverwriteBuilder(InsanityBot.HomeGuild.GetMemberAsync(InsanityBot.Client.CurrentUser.Id).GetAwaiter().GetResult())
                 .Allow(Permissions.AccessChannels));
 
             permissions.Add(new DiscordOverwriteBuilder(context.Member)
                 .Allow(Permissions.AccessChannels));
 
             ticket = InsanityBot.HomeGuild.CreateChannelAsync($"insanitybot-temp-{InsanityBot.TicketDaemon.TicketCount}",
-                ChannelType.Text, TicketCategory, overwrites: permissions).Result;
+                ChannelType.Text, TicketCategory, overwrites: permissions).GetAwaiter().GetResult();
 
             ProtoTicket proto = new()
             {
@@ -56,14 +56,14 @@ namespace InsanityBot.Tickets
 
             foreach(String v in preset.CreationMessages)
             {
-                String s = Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid).Result;
+                String s = Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid).GetAwaiter().GetResult();
                 _ = ticket.SendMessageAsync(s);
             }
 
             foreach(String v in preset.CreationEmbeds)
             {
                 DiscordEmbed e = ((EmbedFormatter)InsanityBot.EmbedFactory.GetFormatter()).Read(
-                    Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid).Result);
+                    Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid).GetAwaiter().GetResult());
                 _ = ticket.SendMessageAsync(e);
             }
 
