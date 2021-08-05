@@ -7,13 +7,12 @@ using InsanityBot.Tickets.Placeholders;
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace InsanityBot.Tickets
 {
     public class TicketCreator
     {
-        public Guid CreateTicket(TicketPreset preset, CommandContext context, String topic)
+        public Guid CreateTicket(TicketPreset preset, CommandContext context, String topic, out DiscordChannel ticket)
         {
             DiscordChannel TicketCategory = InsanityBot.HomeGuild.GetChannel(preset.Category);
 
@@ -40,7 +39,7 @@ namespace InsanityBot.Tickets
             permissions.Add(new DiscordOverwriteBuilder(context.Member)
                 .Allow(Permissions.AccessChannels));
 
-            DiscordChannel ticket = InsanityBot.HomeGuild.CreateChannelAsync($"insanitybot-temp-{InsanityBot.TicketDaemon.TicketCount}",
+            ticket = InsanityBot.HomeGuild.CreateChannelAsync($"insanitybot-temp-{InsanityBot.TicketDaemon.TicketCount}",
                 ChannelType.Text, TicketCategory, overwrites: permissions).Result;
 
             ProtoTicket proto = new()
