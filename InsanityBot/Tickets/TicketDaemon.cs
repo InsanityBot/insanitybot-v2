@@ -181,7 +181,7 @@ namespace InsanityBot.Tickets
 
                         try
                         {
-                            await dm.SendMessageAsync(messageBuilder);
+                            _ = dm.SendMessageAsync(messageBuilder);
                         }
                         catch(UnauthorizedException)
                         {
@@ -202,7 +202,7 @@ namespace InsanityBot.Tickets
 
                 try
                 {
-                    await ownerDm.SendMessageAsync(ownerMessageBuilder);
+                    _ = ownerDm.SendMessageAsync(ownerMessageBuilder);
                 }
                 catch(UnauthorizedException)
                 {

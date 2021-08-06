@@ -18,7 +18,7 @@ namespace InsanityBot.Tickets.Closure
         {
             this.Countdown = new()
             {
-                Interval = 2000,
+                Interval = 250,
                 AutoReset = false
             };
             this.Countdown.Elapsed += this.CountdownElapsed;
