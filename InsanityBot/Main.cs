@@ -358,7 +358,7 @@ namespace InsanityBot
                 (ModlogMessageType.Moderation, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.modlog_channel_id"]))),
                 (ModlogMessageType.Administration, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.admin_log_channel_id"]))));
 
-            EmbedHandler.Initialize(Client.Logger);
+            Embeds.Initialize(Client.Logger);
         }
 
         private static async Task HandleTCPConnections(Int64 Port)

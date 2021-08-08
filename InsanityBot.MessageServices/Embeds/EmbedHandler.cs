@@ -13,19 +13,19 @@ using System.Linq;
 
 namespace InsanityBot.MessageServices.Embeds
 {
-    public static class EmbedHandler
+    public class EmbedHandler
     {
-        private static DefaultEmbeds _defaultEmbeds;
-        private static Dictionary<String, DiscordEmbedBuilder> _embeds = new();
+        private DefaultEmbeds _defaultEmbeds;
+        private Dictionary<String, DiscordEmbedBuilder> _embeds = new();
 
-        public static void Initialize(ILogger<BaseDiscordClient> logger)
+        public void Initialize(ILogger<BaseDiscordClient> logger)
         {
             _defaultEmbeds = new();
             _embeds = _defaultEmbeds.Embeds;
             LoadPatches(logger);
         }
 
-        public static void LoadPatches(ILogger<BaseDiscordClient> logger)
+        public void LoadPatches(ILogger<BaseDiscordClient> logger)
         {
             if(!File.Exists("./config/embeds.json"))
             {
@@ -72,6 +72,18 @@ namespace InsanityBot.MessageServices.Embeds
                 {
                     _embeds[v].Title = j["title"].Value<String>();
                 }
+            }
+        }
+
+        public DiscordEmbedBuilder this[String s]
+        {
+            get
+            {
+                if(s.StartsWith("default "))
+                {
+                    return _defaultEmbeds.Embeds[s[7..]];
+                }
+                return _embeds[s];
             }
         }
     }

@@ -6,6 +6,7 @@ using DSharpPlus.Interactivity;
 using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.Core.Logger;
 using InsanityBot.Core.Services.Internal.Modlogs;
+using InsanityBot.MessageServices.Embeds;
 using InsanityBot.Tickets;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Language;
@@ -43,6 +44,7 @@ namespace InsanityBot
         public static EmbedFormatterFactory EmbedFactory;
         public static ModlogMessageQueue ModlogQueue;
         public static TicketDaemon TicketDaemon;
+        public static EmbedHandler Embeds;
 
         public static String Version = "2.0.0-dev.00036";
     }
