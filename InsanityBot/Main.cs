@@ -16,6 +16,7 @@ using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
 using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Datafixers;
+using InsanityBot.MessageServices.Embeds;
 using InsanityBot.Tickets;
 using InsanityBot.Tickets.Commands;
 using InsanityBot.Utility.Config;
@@ -149,7 +150,8 @@ namespace InsanityBot
                 TokenType = TokenType.Bot,
                 MessageCacheSize = 4096,
                 LoggerFactory = loggerFactory,
-                HttpTimeout = new(00, 00, 30)
+                HttpTimeout = new(00, 00, 30),
+                Intents = DiscordIntents.All
             };
 
             //create and connect client
@@ -355,6 +357,8 @@ namespace InsanityBot
             ModlogQueue = new(
                 (ModlogMessageType.Moderation, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.modlog_channel_id"]))),
                 (ModlogMessageType.Administration, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.admin_log_channel_id"]))));
+
+            EmbedHandler.Initialize(Client.Logger);
         }
 
         private static async Task HandleTCPConnections(Int64 Port)
