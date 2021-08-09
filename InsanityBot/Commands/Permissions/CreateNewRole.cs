@@ -45,16 +45,9 @@ namespace InsanityBot.Commands.Permissions
                 }
                 catch(Exception e)
                 {
-                    DiscordEmbedBuilder failed = new()
-                    {
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_parse"],
-                            ctx, role),
-                        Color = DiscordColor.Red,
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        }
-                    };
+                    DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_parse"], ctx, role));
+                     
                     InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                     await ctx.Channel.SendMessageAsync(failed.Build());
@@ -75,15 +68,7 @@ namespace InsanityBot.Commands.Permissions
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
-                DiscordEmbedBuilder moderationEmbedBuilder = new()
-                {
-                    Title = "ADMIN: Permission File Created",
-                    Color = new(0xff6347),
-                    Footer = new()
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.permissions.role.create"];
 
                 moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
                     .AddField("Role", role.Mention, true);
@@ -92,29 +77,15 @@ namespace InsanityBot.Commands.Permissions
                 {
                     InsanityBot.PermissionEngine.CreateRolePermissions(role.Id);
 
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.role_created"], ctx, role)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.admin.permissions.role.create"];
+                    embedBuilder.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.role_created"], ctx, role);
 
                     InsanityBot.Client.Logger.LogInformation(new EventId(9014, "Permissions"), $"Created permission file for {role.Name}");
                 }
                 catch(Exception e)
                 {
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.role_could_not_create"], ctx, role)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.role_could_not_create"], ctx, role));
 
                     InsanityBot.Client.Logger.LogCritical(new EventId(9014, "Permissions"), $"Administrative action failed: could not create " +
                         $"permission file for {role.Name}. Please contact the InsanityBot team immediately.\n" +

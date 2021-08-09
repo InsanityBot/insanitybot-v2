@@ -61,15 +61,9 @@ namespace InsanityBot.Commands.Moderation
             }
             catch(Exception e)
             {
-                DiscordEmbedBuilder failed = new()
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.failure"], ctx),
-                    Color = DiscordColor.Red,
-                    Footer = new()
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.failure"], ctx));
+                
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                 await ctx.Channel.SendMessageAsync(failed.Build());
@@ -90,15 +84,7 @@ namespace InsanityBot.Commands.Moderation
             }
 
             DiscordEmbedBuilder embedBuilder = null;
-            DiscordEmbedBuilder moderationEmbedBuilder = new()
-            {
-                Title = "Slowmode",
-                Color = DiscordColor.Blue,
-                Footer = new()
-                {
-                    Text = "InsanityBot 2020-2021"
-                }
-            };
+            DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.slowmode"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
                 .AddField("Channel", channel.Mention, true)
@@ -111,17 +97,10 @@ namespace InsanityBot.Commands.Moderation
                     xm.PerUserRateLimit = slowmodeTime.Seconds;
                 });
 
-                embedBuilder = new()
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.success"],
-                        ctx).Replace("{TIME}", slowmodeTime.ToString()),
-                    Color = DiscordColor.Blue,
-                    Footer = new()
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
-
+                embedBuilder = InsanityBot.Embeds["insanitybot.moderation.slowmode"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.success"], ctx)
+                        .Replace("{TIME}", slowmodeTime.ToString()));
+                
                 _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
@@ -129,15 +108,9 @@ namespace InsanityBot.Commands.Moderation
             }
             catch(Exception e)
             {
-                embedBuilder = new()
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.failure"], ctx),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.failure"], ctx));
+                
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally
@@ -156,75 +129,7 @@ namespace InsanityBot.Commands.Moderation
         [Command("reset")]
         public async Task ResetSlowmodeCommand(CommandContext ctx,
             DiscordChannel channel, Boolean silent = false)
-        {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.slowmode"))
-            {
-                await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
-                return;
-            }
-
-            if(silent)
-            {
-                await ctx.Message.DeleteAsync();
-            }
-
-            DiscordEmbedBuilder embedBuilder = null;
-            DiscordEmbedBuilder moderationEmbedBuilder = new()
-            {
-                Title = "Slowmode reset",
-                Color = DiscordColor.Blue,
-                Footer = new()
-                {
-                    Text = "InsanityBot 2020-2021"
-                }
-            };
-
-            moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
-                .AddField("Channel", channel.Mention, true);
-
-            try
-            {
-                await channel.ModifyAsync(xm =>
-                {
-                    xm.PerUserRateLimit = 0;
-                });
-
-                embedBuilder = new()
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode_reset.success"], ctx),
-                    Color = DiscordColor.Blue,
-                    Footer = new()
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
-
-                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
-                {
-                    Embed = moderationEmbedBuilder
-                });
-            }
-            catch(Exception e)
-            {
-                embedBuilder = new()
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode_reset.failure"], ctx),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
-                InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
-            }
-            finally
-            {
-                if(!silent)
-                {
-                    await ctx.Channel.SendMessageAsync(embedBuilder.Build());
-                }
-            }
-        }
+            => await this.ExecuteSlowmodeCommand(ctx, channel, new(0), silent);
     }
 
     public class SlowmodeOptions : ModerationOptionBase

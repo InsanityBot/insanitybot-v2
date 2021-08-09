@@ -38,16 +38,9 @@ namespace InsanityBot.Commands.Permissions
             {
                 if(!args.Contains("-p"))
                 {
-                    DiscordEmbedBuilder invalid = new()
-                    {
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_not_found"],
-                            ctx, member),
-                        Color = DiscordColor.Red,
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        }
-                    };
+                    DiscordEmbedBuilder invalid = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_not_found"], ctx, member));
+                    
                     await ctx.Channel.SendMessageAsync(invalid.Build());
                     return;
                 }
@@ -62,16 +55,8 @@ namespace InsanityBot.Commands.Permissions
                 }
                 catch(Exception e)
                 {
-                    DiscordEmbedBuilder failed = new()
-                    {
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_parse"],
-                            ctx, member),
-                        Color = DiscordColor.Red,
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        }
-                    };
+                    DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_parse"], ctx, member));
                     InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                     await ctx.Channel.SendMessageAsync(failed.Build());
@@ -92,15 +77,7 @@ namespace InsanityBot.Commands.Permissions
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
-                DiscordEmbedBuilder moderationEmbedBuilder = new()
-                {
-                    Title = "ADMIN: Permission Denied",
-                    Color = new(0xff6347),
-                    Footer = new()
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.permissions.user.deny"];
 
                 moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
                     .AddField("User", member.Mention, true)
@@ -110,29 +87,15 @@ namespace InsanityBot.Commands.Permissions
                 {
                     InsanityBot.PermissionEngine.RevokeUserPermissions(member.Id, new[] { permission });
 
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_denied"], ctx, member, permission)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.admin.permissions.user.deny"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_denied"], ctx, member, permission));
 
                     InsanityBot.Client.Logger.LogInformation(new EventId(9002, "Permissions"), $"Denied permission {permission} for {member.Username}");
                 }
                 catch(Exception e)
                 {
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_deny"], ctx, member)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_deny"], ctx, member));
 
                     InsanityBot.Client.Logger.LogCritical(new EventId(9002, "Permissions"), $"Administrative action failed: could not deny " +
                         $"permission {permission} for {member.Username}. Please contact the InsanityBot team immediately.\n" +

@@ -53,16 +53,9 @@ namespace InsanityBot.Commands.Moderation.Modlog
             }
             catch(Exception e)
             {
-                DiscordEmbedBuilder failed = new()
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.clear_modlog.failure"],
-                        ctx, member),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.clear_modlog.failure"], ctx, member));
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                 await ctx.Channel.SendMessageAsync(embed: failed.Build());
@@ -92,15 +85,8 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 _ => GetFormattedString(reason, ctx, member)
             };
 
-            DiscordEmbedBuilder embedBuilder = null, moderationEmbedBuilder = new()
-            {
-                Title = "Modlog Cleared",
-                Color = DiscordColor.SpringGreen,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    Text = "InsanityBot 2020-2021"
-                }
-            };
+            DiscordEmbedBuilder embedBuilder = null;
+            DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.clear_modlog"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
                 .AddField("Member", member.Mention, true)
@@ -126,16 +112,9 @@ namespace InsanityBot.Commands.Moderation.Modlog
             }
             catch(Exception e)
             {
-                embedBuilder = new DiscordEmbedBuilder
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.clear_modlog.failure"],
-                        ctx, member),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.clear_modlog.failure"], ctx, member));
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally

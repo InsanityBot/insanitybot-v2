@@ -1,0 +1,329 @@
+{
+  "insanitybot.error": {
+    "color": "#ff0000"
+  },
+  "insanitybot.lacking_permission": {
+    "color": "#ff0000"
+  },
+  "insanitybot.lacking_admin_permission": {
+    "color": "#ff0000"
+  },
+  "insanitybot.moderation.ban": {
+    "color": "#ff0000",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.ban": {
+    "color": "#420c09",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Ban"
+  },
+  "insanitybot.moderation.blacklist": {
+    "color": "#010101",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.blacklist": {
+    "color": "#420c09",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Blacklist"
+  },
+  "insanitybot.moderation.kick": {
+    "color": "#ff0000",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.kick": {
+    "color": "#420c09",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Kick"
+  },
+  "insanitybot.moderation.mute": {
+    "color": "#ff0000",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.mute": {
+    "color": "#420c09",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Mute"
+  },
+  "insanitybot.moderation.purge": {
+    "color": "#82eefd",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.purge": {
+    "color": "#82eefd",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Purge"
+  },
+  "insanitybot.moderation.slowmode": {
+    "color": "#82eefd",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.slowmode": {
+    "color": "#82eefd",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Slowmode"
+  },
+  "insanitybot.moderation.unban": {
+    "color": "#b0fc38",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.unban": {
+    "color": "#b0fc38",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Unban"
+  },
+  "insanitybot.moderation.unmute": {
+    "color": "#b0fc38",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.unmute": {
+    "color": "#b0fc38",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Unmute"
+  },
+  "insanitybot.moderation.unwarn": {
+    "color": "#b0fc38",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.unwarn": {
+    "color": "#b0fc38",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Unwarn"
+  },
+  "insanitybot.moderation.verbalwarn": {
+    "color": "#fffdd0",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.verbalwarn": {
+    "color": "#fffdd0",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Verbal Warn"
+  },
+  "insanitybot.moderation.warn": {
+    "color": "#fce205",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.warn": {
+    "color": "#420c09",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Warn"
+  },
+  "insanitybot.moderation.whitelist": {
+    "color": "#ffffff",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.whitelist": {
+    "color": "#b0fc38",
+    "footer": "InsanityBot 2020-2021"
+  },
+
+  "insanitybot.moderation.lock": {
+    "color": "#281e5d",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.lock": {
+    "color": "#281e5d",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Lock"
+  },
+  "insanitybot.moderation.unlock": {
+    "color": "#234f1e",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.unlock": {
+    "color": "#234f1e",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Unlock"
+  },
+  "insanitybot.moderation.clear_modlog": {
+    "color": "#b0fc38",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.modlog.clear_modlog": {
+    "color": "#b0fc38",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Modlog Cleared"
+  },
+
+  "insanitybot.admin.lock.whitelist": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.lock.whitelist": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Added to lock whitelist"
+  },
+  "insanitybot.admin.lock.unwhitelist": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.lock.unwhitelist": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Removed from lock whitelist"
+  },
+  "insanitybot.admin.lock.blacklist": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.lock.blacklist": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Added to lock blacklist"
+  },
+  "insanitybot.admin.lock.unblacklist": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.lock.unblacklist": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Removed from lock blacklist"
+  },
+
+  "insanitybot.modlog.empty": {
+    "color": "#aef359"
+  },
+  "insanitybot.modlog.entries": {
+    "color": "#ff0000"
+  },
+  "insanitybot.verballog.empty": {
+    "color": "#aef359"
+  },
+  "insanitybot.verballog.entries": {
+    "color": "#ff0000"
+  },
+
+  "insanitybot.admin.permissions.role.parent": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.permissions.role.parent": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Registered role parent"
+  },
+  "insanitybot.admin.permissions.role.create": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.permissions.role.create": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Created role permissions"
+  },
+  "insanitybot.admin.permissions.role.deny": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.permissions.role.deny": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Denied role permission"
+  },
+  "insanitybot.admin.permissions.role.grant": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.permissions.role.grant": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Granted role permission"
+  },
+  "insanitybot.admin.permissions.role.neutral": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.permissions.role.neutral": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Nullified role permission"
+  },
+  "insanitybot.admin.permissions.user.addrole": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.permissions.user.addrole": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Added role to user"
+  },
+  "insanitybot.admin.permissions.user.create": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.permissions.user.create": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Created user permissions"
+  },
+  "insanitybot.admin.permissions.user.deny": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.permissions.user.deny": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Denied user permission"
+  },
+  "insanitybot.admin.permissions.user.grant": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.permissions.user.grant": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Granted user permission"
+  },
+  "insanitybot.admin.permissions.user.neutral": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.adminlog.permissions.user.neutral": {
+    "color": "#ff6347",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Neutralized user permission"
+  },
+
+  "insanitybot.tickets.new": {
+    "color": "#b0fc38",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.ticketlog.new": {
+    "color": "#b0fc38",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Created ticket"
+  },
+  "insanitybot.tickets.close": {
+    "color": "#281e5d",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.ticketlog.close_queue": {
+    "color": "#281e5d",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Queued ticket closing"
+  },
+  "insanitybot.ticketlog.close": {
+    "color": "#281e5d",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Closed ticket"
+  },
+  "insanitybot.tickets.add": {
+    "color": "#e11584",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.ticketlog.add": {
+    "color": "#e11584",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Added user to ticket"
+  },
+  "insanitybot.tickets.remove": {
+    "color": "#e11584",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.ticketlog.remove": {
+    "color": "#e11584",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Removed user from ticket"
+  }
+}

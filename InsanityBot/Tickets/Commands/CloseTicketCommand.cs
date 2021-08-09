@@ -43,11 +43,8 @@ namespace InsanityBot.Tickets.Commands
                 InsanityBot.TicketDaemon.ClosingQueue.AddToQueue(ctx.Channel.Id, closeTime, false);
             }
 
-            DiscordEmbedBuilder embedBuilder = new()
-            {
-                Description = InsanityBot.LanguageConfig["insanitybot.tickets.close"].ReplaceValues(ctx, ctx.Channel, closeTime),
-                Color = DiscordColor.SpringGreen
-            };
+            DiscordEmbedBuilder embedBuilder = InsanityBot.Embeds["insanitybot.tickets.close"]
+                .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.close"].ReplaceValues(ctx, ctx.Channel, closeTime));
 
             await ctx.Channel.SendMessageAsync(embedBuilder.Build());
         }

@@ -84,11 +84,8 @@ namespace InsanityBot.Tickets.Closure
 
             this.__queue.Remove(entry);
 
-            DiscordEmbedBuilder embedBuilder = new()
-            {
-                Description = InsanityBot.LanguageConfig["insanitybot.tickets.cancelled_closing"].ReplaceValues(cl, e, entry.CloseDate),
-                Color = DiscordColor.SpringGreen
-            };
+            DiscordEmbedBuilder embedBuilder = InsanityBot.Embeds["insanitybot.tickets.close"]
+                .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.cancelled_closing"].ReplaceValues(cl, e, entry.CloseDate));
 
             await e.Channel.SendMessageAsync(embedBuilder.Build());
         }

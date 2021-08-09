@@ -32,15 +32,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
-                DiscordEmbedBuilder moderationEmbedBuilder = new()
-                {
-                    Title = "ADMIN: Lock Whitelist Add",
-                    Color = new(0xff6347),
-                    Footer = new()
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.whitelist"];
 
                 moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
                     .AddField("Role", role.Mention, true)
@@ -57,29 +49,15 @@ namespace InsanityBot.Commands.Moderation.Locking
 
                     if(data.WhitelistedRoles.Contains(role.Id))
                     {
-                        embedBuilder = new()
-                        {
-                            Color = new(0xff6347),
-                            Footer = new()
-                            {
-                                Text = "InsanityBot 2020-2021"
-                            },
-                            Description = GetFormattedString(
-                                InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.already_present"], role, channel)
-                        };
+                        embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                            .WithDescription(GetFormattedString(
+                                InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.already_present"], role, channel));
                     }
                     else
                     {
-                        embedBuilder = new()
-                        {
-                            Color = new(0xff6347),
-                            Footer = new()
-                            {
-                                Text = "InsanityBot 2020-2021"
-                            },
-                            Description = GetFormattedString(
-                                InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.success"], role, channel)
-                        };
+                        embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.whitelist"]
+                            .WithDescription(GetFormattedString(
+                                InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.success"], role, channel));
 
                         data.WhitelistedRoles.Add(role.Id);
                         channel.SerializeLockingOverwrites(data);
@@ -89,16 +67,9 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
                 catch(Exception e)
                 {
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.failure"], role, channel)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(
+                            InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.failure"], role, channel));
 
                     InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
                         $"Administrative action failed: could not add {role.Id} to channel whitelist. Please contact the InsanityBot team immediately.\n" +
@@ -110,8 +81,10 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
             }
 
+            [Command("remove")]
             public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveWhitelistedRoleCommand(ctx, role, ctx.Channel);
 
+            [Command("remove")]
             public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
                 if(!ctx.Member.HasPermission("insanitybot.admin.lock_whitelist.remove"))
@@ -121,15 +94,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
-                DiscordEmbedBuilder moderationEmbedBuilder = new()
-                {
-                    Title = "ADMIN: Lock Whitelist Remove",
-                    Color = new(0xff6347),
-                    Footer = new()
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.unwhitelist"];
 
                 moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
                     .AddField("Role", role.Mention, true)
@@ -144,16 +109,9 @@ namespace InsanityBot.Commands.Moderation.Locking
                         data.WhitelistedRoles.Remove(role.Id);
                     }
 
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.remove.success"], role, channel)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.unwhitelist"]
+                        .WithDescription(GetFormattedString(
+                            InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.remove.success"], role, channel));
 
                     channel.SerializeLockingOverwrites(data);
 
@@ -162,16 +120,9 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
                 catch(Exception e)
                 {
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.remove.failure"], role, channel)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(
+                            InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.remove.failure"], role, channel));
 
                     InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
                         $"Administrative action failed: could not remove {role.Id} from channel whitelist. Please contact the InsanityBot team immediately.\n" +
@@ -200,15 +151,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
-                DiscordEmbedBuilder moderationEmbedBuilder = new()
-                {
-                    Title = "ADMIN: Lock Blacklist Add",
-                    Color = new(0xff6347),
-                    Footer = new()
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.blacklist"];
 
                 moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
                     .AddField("Role", role.Mention, true)
@@ -225,29 +168,15 @@ namespace InsanityBot.Commands.Moderation.Locking
 
                     if(data.LockedRoles.Contains(role.Id))
                     {
-                        embedBuilder = new()
-                        {
-                            Color = new(0xff6347),
-                            Footer = new()
-                            {
-                                Text = "InsanityBot 2020-2021"
-                            },
-                            Description = GetFormattedString(
-                                InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.already_present"], role, channel)
-                        };
+                        embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                            .WithDescription(GetFormattedString(
+                                InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.already_present"], role, channel));
                     }
                     else
                     {
-                        embedBuilder = new()
-                        {
-                            Color = new(0xff6347),
-                            Footer = new()
-                            {
-                                Text = "InsanityBot 2020-2021"
-                            },
-                            Description = GetFormattedString(
-                                InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.success"], role, channel)
-                        };
+                        embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.blacklist"]
+                            .WithDescription(GetFormattedString(
+                                InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.success"], role, channel));
 
                         data.LockedRoles.Add(role.Id);
                         channel.SerializeLockingOverwrites(data);
@@ -257,16 +186,9 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
                 catch(Exception e)
                 {
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.failure"], role, channel)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(
+                            InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.failure"], role, channel));
 
                     InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
                         $"Administrative action failed: could not add {role.Id} to channel blacklist. Please contact the InsanityBot team immediately.\n" +
@@ -278,8 +200,10 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
             }
 
+            [Command("remove")]
             public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveBlacklistedRoleCommand(ctx, role, ctx.Channel);
 
+            [Command("remove")]
             public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
                 if(!ctx.Member.HasPermission("insanitybot.admin.lock_blacklist.remove"))
@@ -289,15 +213,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
-                DiscordEmbedBuilder moderationEmbedBuilder = new()
-                {
-                    Title = "ADMIN: Lock Blacklist Remove",
-                    Color = new(0xff6347),
-                    Footer = new()
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.unblacklist"];
 
                 moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
                     .AddField("Role", role.Mention, true)
@@ -312,16 +228,9 @@ namespace InsanityBot.Commands.Moderation.Locking
                         data.LockedRoles.Remove(role.Id);
                     }
 
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.remove.success"], role, channel)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.unblacklist"]
+                        .WithDescription(GetFormattedString(
+                            InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.remove.success"], role, channel));
 
                     channel.SerializeLockingOverwrites(data);
 
@@ -330,16 +239,9 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
                 catch(Exception e)
                 {
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.remove.failure"], role, channel)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(
+                            InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.remove.failure"], role, channel));
 
                     InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
                         $"Administrative action failed: could not remove {role.Id} from channel blacklist. Please contact the InsanityBot team immediately.\n" +

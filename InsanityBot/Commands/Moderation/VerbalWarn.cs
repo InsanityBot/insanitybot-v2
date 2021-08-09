@@ -61,16 +61,8 @@ namespace InsanityBot.Commands.Moderation
             }
             catch(Exception e)
             {
-                DiscordEmbedBuilder failed = new()
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.verbal_warn.failure"],
-                        ctx, member),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.verbal_warn.failure"], ctx, member));
 
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
@@ -102,15 +94,8 @@ namespace InsanityBot.Commands.Moderation
                 _ => GetFormattedString(reason, ctx, member)
             };
 
-            DiscordEmbedBuilder embedBuilder = null, moderationEmbedBuilder = new()
-            {
-                Title = "Verbal Warn",
-                Color = DiscordColor.Yellow,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    Text = "InsanityBot 2020-2021"
-                }
-            };
+            DiscordEmbedBuilder embedBuilder = null;
+            DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.verbalwarn"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
                 .AddField("Member", member.Mention, true)
@@ -120,16 +105,9 @@ namespace InsanityBot.Commands.Moderation
             {
                 _ = member.TryAddVerballogEntry(VerbalWarnReason);
 
-                embedBuilder = new DiscordEmbedBuilder
-                {
-                    Description = GetMemberReason(InsanityBot.LanguageConfig["insanitybot.moderation.verbal_warn.reason"],
-                        VerbalWarnReason, member),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.moderation.verbalwarn"]
+                    .WithDescription(GetMemberReason(InsanityBot.LanguageConfig["insanitybot.moderation.verbal_warn.reason"],
+                        VerbalWarnReason, member));
 
                 _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
                 {
@@ -138,16 +116,9 @@ namespace InsanityBot.Commands.Moderation
             }
             catch(Exception e)
             {
-                embedBuilder = new DiscordEmbedBuilder
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.verbal_warn.failure"],
-                        ctx, member),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.verbal_warn.failure"], ctx, member));
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally

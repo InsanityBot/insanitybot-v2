@@ -18,7 +18,7 @@ namespace InsanityBot.Tickets.Closure
         {
             this.Countdown = new()
             {
-                Interval = 2000,
+                Interval = 250,
                 AutoReset = false
             };
             this.Countdown.Elapsed += this.CountdownElapsed;
@@ -52,13 +52,10 @@ namespace InsanityBot.Tickets.Closure
 
                         DiscordChannel channel = InsanityBot.HomeGuild.GetChannel(q.ChannelId);
 
-                        DiscordEmbedBuilder error = new()
-                        {
-                            Description = "Failed to delete the ticket. This could be an InsanityBot or a Discord API issue." +
-                                "\nPlease contact InsanityBot development at once and provide us with the console log.",
-                            Color = DiscordColor.Red
-                        };
-
+                        DiscordEmbedBuilder error = InsanityBot.Embeds["insanitybot.error"]
+                            .WithDescription("Failed to delete the ticket. This could be an InsanityBot or a Discord API issue." +
+                                "\nPlease contact InsanityBot development at once and provide us with the console log.");
+                        
                         await channel.SendMessageAsync(error.Build());
 
                         InsanityBot.TicketDaemon.ClosingQueue.Queue.Remove(q);

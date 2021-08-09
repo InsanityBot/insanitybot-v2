@@ -147,10 +147,10 @@ namespace InsanityBot.Tickets
                     select v).ToList().First().Value;
         }
 
-        public Guid CreateTicket(TicketPreset preset, CommandContext context, String topic)
+        public Guid CreateTicket(TicketPreset preset, CommandContext context, String topic, out DiscordChannel channel)
         {
             this.TicketCount++;
-            return this.TicketCreator.CreateTicket(preset, context, topic);
+            return this.TicketCreator.CreateTicket(preset, context, topic, out channel);
         }
 
         public async Task DeleteTicket(DiscordTicket ticket)
@@ -181,7 +181,7 @@ namespace InsanityBot.Tickets
 
                         try
                         {
-                            await dm.SendMessageAsync(messageBuilder);
+                            _ = dm.SendMessageAsync(messageBuilder);
                         }
                         catch(UnauthorizedException)
                         {
@@ -202,7 +202,7 @@ namespace InsanityBot.Tickets
 
                 try
                 {
-                    await ownerDm.SendMessageAsync(ownerMessageBuilder);
+                    _ = ownerDm.SendMessageAsync(ownerMessageBuilder);
                 }
                 catch(UnauthorizedException)
                 {

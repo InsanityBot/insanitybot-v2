@@ -4,6 +4,8 @@ using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Permissions;
 
+using Microsoft.Extensions.Logging;
+
 using System;
 using System.Threading.Tasks;
 
@@ -42,14 +44,22 @@ namespace InsanityBot.Tickets.Commands
                 }
             }
 
-            Guid ticketGuid = InsanityBot.TicketDaemon.CreateTicket(preset, ctx, topic);
+            Guid ticketGuid = InsanityBot.TicketDaemon.CreateTicket(preset, ctx, topic, out DiscordChannel channel);
 
-            DiscordEmbedBuilder embedBuilder = new()
+            DiscordEmbedBuilder embedBuilder;
+
+            try
             {
-                Description = InsanityBot.LanguageConfig["insanitybot.tickets.new"].ReplaceValues(ctx,
-                    InsanityBot.HomeGuild.GetChannel(InsanityBot.TicketDaemon.Tickets[ticketGuid].DiscordChannelId)),
-                Color = DiscordColor.SpringGreen
-            };
+                embedBuilder = InsanityBot.Embeds["insanitybot.tickets.new"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.new"].ReplaceValues(ctx, channel));
+            }
+            catch(Exception e)
+            {
+                embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription("Failed to create ticket");
+
+                InsanityBot.Client.Logger.LogError($"{e}: {e.Message}\n{e.StackTrace}");
+            }
 
             await ctx.Channel.SendMessageAsync(embedBuilder.Build());
         }

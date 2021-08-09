@@ -55,16 +55,9 @@ namespace InsanityBot.Commands.Moderation
             }
             catch(Exception e)
             {
-                DiscordEmbedBuilder failed = new()
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.failure"],
-                        ctx, member),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.failure"], ctx, member));
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                 await ctx.Channel.SendMessageAsync(embed: failed.Build());
@@ -94,15 +87,7 @@ namespace InsanityBot.Commands.Moderation
 
             DiscordEmbedBuilder embedBuilder = null;
 
-            DiscordEmbedBuilder moderationEmbedBuilder = new()
-            {
-                Title = "KICK",
-                Color = DiscordColor.Red,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    Text = "InsanityBot 2020-2021"
-                }
-            };
+            DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.kick"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
                 .AddField("Member", member.Mention, true)
@@ -111,16 +96,8 @@ namespace InsanityBot.Commands.Moderation
             try
             {
                 _ = member.TryAddModlogEntry(ModlogEntryType.kick, KickReason);
-                embedBuilder = new DiscordEmbedBuilder
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.success"],
-                        ctx, member),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.moderation.kick"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.success"], ctx, member));
 
                 if(Invite || DmMember)
                 {
@@ -146,16 +123,10 @@ namespace InsanityBot.Commands.Moderation
             }
             catch(Exception e)
             {
-                embedBuilder = new DiscordEmbedBuilder
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.failure"],
-                        ctx, member),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.failure"],
+                        ctx, member));
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally

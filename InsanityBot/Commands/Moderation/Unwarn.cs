@@ -40,29 +40,14 @@ namespace InsanityBot.Commands.Moderation
                 modlog.ModlogEntryCount--;
                 _ = member.TrySetModlog(modlog);
 
-                embedBuilder = new DiscordEmbedBuilder
-                {
-                    Color = DiscordColor.SpringGreen,
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unwarn.success"],
-                        ctx, member),
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.moderation.unwarn"];
+                embedBuilder.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unwarn.success"], ctx, member);
             }
             catch(Exception e)
             {
-                embedBuilder = new DiscordEmbedBuilder
-                {
-                    Color = DiscordColor.Red,
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unwarn.failure"],
-                        ctx, member),
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unwarn.failure"], ctx, member));
+                
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally

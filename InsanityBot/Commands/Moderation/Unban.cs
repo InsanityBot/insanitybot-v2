@@ -62,16 +62,9 @@ namespace InsanityBot.Commands.Moderation
             }
             catch(Exception e)
             {
-                DiscordEmbedBuilder failed = new()
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.failure"],
-                        ctx, memberId),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.failure"], ctx, memberId));
+                
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"), $"{e}: {e.Message}");
 
                 await ctx.Channel.SendMessageAsync(embed: failed.Build());
@@ -98,28 +91,20 @@ namespace InsanityBot.Commands.Moderation
             if(ctx == null && silent == false)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"),
-                    "Invalid command arguments - internal error. Please report this on https://github.com/InsanityNetwork/InsanityBot/issues" +
+                    "Invalid command arguments - internal error. Please report this on https://github.com/InsanityBot/InsanityBot/issues" +
                     "\nInsanityBot/Commands/Moderation/Unban.cs: argument \"silent\" cannot be false without given command context");
                 return;
             }
             if(automated && !silent)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"),
-                    "Invalid command arguments - internal error. Please report this on https://github.com/InsanityNetwork/InsanityBot/issues" +
+                    "Invalid command arguments - internal error. Please report this on https://github.com/InsanityBot/InsanityBot/issues" +
                     "\nInsanityBot/Commands/Moderation/Unban.cs: argument \"silent\" cannot be false for an automated unban");
                 return;
             }
 
             DiscordEmbedBuilder nonSilent = null;
-            DiscordEmbedBuilder moderationEmbedBuilder = new()
-            {
-                Title = "UNBAN",
-                Color = DiscordColor.SpringGreen,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    Text = "InsanityBot 2020-2021"
-                }
-            };
+            DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.unban"];
 
             if(automated)
             {
@@ -151,17 +136,8 @@ namespace InsanityBot.Commands.Moderation
                 }
                 else
                 {
-                    nonSilent = new DiscordEmbedBuilder
-                    {
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.success"],
-                               ctx, memberId),
-                        Color = DiscordColor.Green,
-                        Footer = new DiscordEmbedBuilder.EmbedFooter
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        }
-                    };
-
+                    nonSilent = InsanityBot.Embeds["insanitybot.moderation.unban"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.success"], ctx, memberId));
 
                     await InsanityBot.HomeGuild.UnbanMemberAsync(memberId);
 
@@ -181,16 +157,8 @@ namespace InsanityBot.Commands.Moderation
             {
                 if(!silent)
                 {
-                    nonSilent = new DiscordEmbedBuilder
-                    {
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.failure"],
-                            ctx, memberId),
-                        Color = DiscordColor.Red,
-                        Footer = new DiscordEmbedBuilder.EmbedFooter
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        }
-                    };
+                    nonSilent = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.failure"], ctx, memberId));
                 }
 
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"), $"{e}: {e.Message}");

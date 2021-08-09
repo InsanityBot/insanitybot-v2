@@ -34,35 +34,27 @@ namespace InsanityBot.Commands.Moderation.Modlog
             {
                 _ = user.TryFetchModlog(out UserModlog modlog);
 
-                DiscordEmbedBuilder modlogEmbed = new()
-                {
-                    Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.embed_title"],
-                        ctx, user),
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder modlogEmbed = null;
 
                 if(modlog.VerbalLog.Count == 0)
                 {
-                    modlogEmbed.Color = DiscordColor.SpringGreen;
+                    modlogEmbed = InsanityBot.Embeds["insanitybot.verballog.empty"];
                     modlogEmbed.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.empty_modlog"],
                         ctx, user);
                     _ = ctx.Channel.SendMessageAsync(embed: modlogEmbed.Build());
                 }
                 else
                 {
+                    modlogEmbed = InsanityBot.Embeds["insanitybot.verballog.entries"];
+
                     if(!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_verballog_scrolling"]))
                     {
-                        modlogEmbed.Color = DiscordColor.Red;
                         modlogEmbed.Description = user.CreateVerballogDescription();
 
                         await ctx.Channel.SendMessageAsync(embed: modlogEmbed.Build());
                     }
                     else
                     {
-                        modlogEmbed.Color = DiscordColor.Red;
                         String embedDescription = user.CreateVerballogDescription();
 
                         IEnumerable<DSharpPlus.Interactivity.Page> pages = InsanityBot.Interactivity.GeneratePagesInEmbed(embedDescription, SplitType.Line, modlogEmbed);
@@ -75,15 +67,9 @@ namespace InsanityBot.Commands.Moderation.Modlog
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1171, "VerbalLog"), $"Could not retrieve verbal logs: {e}: {e.Message}");
 
-                DiscordEmbedBuilder failedModlog = new()
-                {
-                    Color = DiscordColor.Red,
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.failed"], ctx, user),
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder failedModlog = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.failed"], ctx, user));
+                
                 await ctx.Channel.SendMessageAsync(embed: failedModlog.Build());
             }
         }
