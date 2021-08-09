@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
@@ -32,38 +33,30 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
             {
                 _ = user.TryFetchModlog(out UserModlog modlog);
 
-                DiscordEmbedBuilder modlogEmbed = new()
-                {
-                    Title = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.embed_title"],
-                        ctx, user),
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder modlogEmbed = null;
 
                 if(modlog.ModlogEntryCount == 0)
                 {
-                    modlogEmbed.Color = DiscordColor.SpringGreen;
-                    modlogEmbed.Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.empty_modlog"],
-                        ctx, user);
+                    modlogEmbed = InsanityBot.Embeds["insanitybot.modlog.empty"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.empty_modlog"], ctx, user));
+
                     _ = ctx.Channel.SendMessageAsync(embed: modlogEmbed.Build());
                 }
                 else
                 {
+                    modlogEmbed = InsanityBot.Embeds["insanitybot.modlog.entries"];
+
                     if(!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_scrolling"]))
                     {
-                        modlogEmbed.Color = DiscordColor.Red;
                         modlogEmbed.Description = user.CreateModlogDescription(ModlogEntryType.kick, false);
 
                         await ctx.Channel.SendMessageAsync(embed: modlogEmbed.Build());
                     }
                     else
                     {
-                        modlogEmbed.Color = DiscordColor.Red;
                         String embedDescription = user.CreateModlogDescription(ModlogEntryType.kick);
 
-                        IEnumerable<DSharpPlus.Interactivity.Page> pages = InsanityBot.Interactivity.GeneratePagesInEmbed(embedDescription, SplitType.Line, modlogEmbed);
+                        IEnumerable<Page> pages = InsanityBot.Interactivity.GeneratePagesInEmbed(embedDescription, SplitType.Line, modlogEmbed);
 
                         await ctx.Channel.SendPaginatedMessageAsync(ctx.Member, pages);
                     }
@@ -73,15 +66,9 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1170, "Modlog"), $"Could not retrieve modlogs: {e}: {e.Message}");
 
-                DiscordEmbedBuilder failedModlog = new()
-                {
-                    Color = DiscordColor.Red,
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.failed"], ctx, user),
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder failedModlog = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.modlog.failed"], ctx, user));
+                    
                 await ctx.Channel.SendMessageAsync(embed: failedModlog.Build());
             }
         }

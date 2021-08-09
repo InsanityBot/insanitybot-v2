@@ -54,15 +54,8 @@ namespace InsanityBot.Commands.Moderation
             }
             catch(Exception e)
             {
-                DiscordEmbedBuilder failed = new()
-                {
-                    Description = InsanityBot.LanguageConfig["insanitybot.moderation.purge.failure"],
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.failure"]);
 
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
@@ -93,15 +86,8 @@ namespace InsanityBot.Commands.Moderation
                 _ => reason
             };
 
-            DiscordEmbedBuilder tmpEmbedBuilder = null, moderationEmbedBuilder = new()
-            {
-                Title = "Purge",
-                Color = DiscordColor.Yellow,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    Text = "InsanityBot 2020-2021"
-                }
-            };
+            DiscordEmbedBuilder tmpEmbedBuilder = null;
+            DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.purge"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
                 .AddField("Messages", messageCount.ToString(), true)
@@ -112,26 +98,19 @@ namespace InsanityBot.Commands.Moderation
                 Byte batches = (Byte)(messageCount / 100),
                     leftover = (Byte)((messageCount % 100) + 1);
 
-                IReadOnlyList<DiscordMessage> messageHolder = null;
+                IReadOnlyList<DiscordMessage> messageBuffer = null;
 
                 for(Byte b = 0; b < batches; b++)
                 {
-                    messageHolder = await ctx.Channel.GetMessagesAsync(100);
-                    _ = ctx.Channel.DeleteMessagesAsync(messageHolder);
+                    messageBuffer = await ctx.Channel.GetMessagesAsync(100);
+                    _ = ctx.Channel.DeleteMessagesAsync(messageBuffer);
                 }
 
-                messageHolder = await ctx.Channel.GetMessagesAsync(leftover);
-                _ = ctx.Channel.DeleteMessagesAsync(messageHolder);
+                messageBuffer = await ctx.Channel.GetMessagesAsync(leftover);
+                _ = ctx.Channel.DeleteMessagesAsync(messageBuffer);
 
-                tmpEmbedBuilder = new DiscordEmbedBuilder
-                {
-                    Description = InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"],
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                tmpEmbedBuilder = InsanityBot.Embeds["insanitybot.moderation.purge"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"]);
 
                 _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
                 {
@@ -140,15 +119,9 @@ namespace InsanityBot.Commands.Moderation
             }
             catch(Exception e)
             {
-                tmpEmbedBuilder = new DiscordEmbedBuilder
-                {
-                    Description = InsanityBot.LanguageConfig["insanitybot.moderation.purge.failure"],
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                tmpEmbedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.failure"]);
+                
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally

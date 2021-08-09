@@ -45,16 +45,9 @@ namespace InsanityBot.Commands.Moderation.Locking
             }
             catch(Exception e)
             {
-                DiscordEmbedBuilder failed = new()
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unlock.failure"],
-                        ctx),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unlock.failure"], ctx)); 
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                 await ctx.Channel.SendMessageAsync(embed: failed.Build());
@@ -79,15 +72,7 @@ namespace InsanityBot.Commands.Moderation.Locking
             };
 
             DiscordEmbedBuilder embedBuilder = null;
-            DiscordEmbedBuilder moderationEmbedBuilder = new()
-            {
-                Title = "UNLOCK",
-                Color = DiscordColor.Blue,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    Text = "InsanityBot 2020-2021"
-                }
-            };
+            DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.unlock"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
                 .AddField("Channel", channel.Mention, true)
@@ -120,27 +105,14 @@ namespace InsanityBot.Commands.Moderation.Locking
                     await channel.AddOverwriteAsync(await v.GetRoleAsync(), v.Allowed, v.Denied, "InsanityBot - unlocking channel, restoring previous permissions");
                 }
 
-                embedBuilder = new DiscordEmbedBuilder
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unlock.success"], ctx),
-                    Color = DiscordColor.Blue,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.moderation.unlock"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unlock.success"], ctx));
             }
             catch(Exception e)
             {
-                embedBuilder = new DiscordEmbedBuilder
-                {
-                    Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unlock.failure"], ctx),
-                    Color = DiscordColor.Red,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unlock.failure"], ctx));
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally

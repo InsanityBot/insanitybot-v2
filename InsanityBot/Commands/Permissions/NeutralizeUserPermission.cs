@@ -38,16 +38,8 @@ namespace InsanityBot.Commands.Permissions
             {
                 if(!args.Contains("-p"))
                 {
-                    DiscordEmbedBuilder invalid = new()
-                    {
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_not_found"],
-                            ctx, member),
-                        Color = DiscordColor.Red,
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        }
-                    };
+                    DiscordEmbedBuilder invalid = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_not_found"], ctx, member));
                     await ctx.Channel.SendMessageAsync(invalid.Build());
                     return;
                 }
@@ -62,16 +54,8 @@ namespace InsanityBot.Commands.Permissions
                 }
                 catch(Exception e)
                 {
-                    DiscordEmbedBuilder failed = new()
-                    {
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_parse"],
-                            ctx, member),
-                        Color = DiscordColor.Red,
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        }
-                    };
+                    DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permission.error.could_not_parse"], ctx, member));
                     InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                     await ctx.Channel.SendMessageAsync(failed.Build());
@@ -92,15 +76,7 @@ namespace InsanityBot.Commands.Permissions
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
-                DiscordEmbedBuilder moderationEmbedBuilder = new()
-                {
-                    Title = "ADMIN: Permission Neutralized",
-                    Color = new(0xff6347),
-                    Footer = new()
-                    {
-                        Text = "InsanityBot 2020-2021"
-                    }
-                };
+                DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.permissions.user.neutral"];
 
                 moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
                     .AddField("User", member.Mention, true)
@@ -110,29 +86,15 @@ namespace InsanityBot.Commands.Permissions
                 {
                     InsanityBot.PermissionEngine.NeutralizeUserPermissions(member.Id, new[] { permission });
 
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_neutralized"], ctx, member, permission)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.admin.permissions.user.neutral"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_neutralized"], ctx, member, permission));
 
                     InsanityBot.Client.Logger.LogInformation(new EventId(9001, "Permissions"), $"Neutralized permission override {permission} from {member.Username}");
                 }
                 catch(Exception e)
                 {
-                    embedBuilder = new()
-                    {
-                        Color = new(0xff6347),
-                        Footer = new()
-                        {
-                            Text = "InsanityBot 2020-2021"
-                        },
-                        Description = GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_neutralize"], ctx, member)
-                    };
+                    embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_neutralize"], ctx, member));
 
                     InsanityBot.Client.Logger.LogCritical(new EventId(9001, "Permissions"), $"Administrative action failed: could not neutralize " +
                         $"permission override {permission} from {member.Username}. Please contact the InsanityBot team immediately\n" +

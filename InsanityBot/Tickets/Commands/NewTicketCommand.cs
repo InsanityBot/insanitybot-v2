@@ -50,19 +50,13 @@ namespace InsanityBot.Tickets.Commands
 
             try
             {
-                embedBuilder = new()
-                {
-                    Description = InsanityBot.LanguageConfig["insanitybot.tickets.new"].ReplaceValues(ctx, channel),
-                    Color = DiscordColor.SpringGreen
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.tickets.new"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.new"].ReplaceValues(ctx, channel));
             }
             catch(Exception e)
             {
-                embedBuilder = new()
-                {
-                    Description = "Failed to create ticket",
-                    Color = DiscordColor.Red
-                };
+                embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription("Failed to create ticket");
 
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}\n{e.StackTrace}");
             }

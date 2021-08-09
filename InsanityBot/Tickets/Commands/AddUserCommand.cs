@@ -24,12 +24,9 @@ namespace InsanityBot.Tickets.Commands
 
             if(!x.Any())
             {
-                DiscordEmbedBuilder error = new()
-                {
-                    Description = InsanityBot.LanguageConfig["insanitybot.tickets.add_user.not_a_ticket_channel"].ReplaceValues(
-                        ctx, ctx.Channel),
-                    Color = DiscordColor.Red
-                };
+                DiscordEmbedBuilder error = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.add_user.not_a_ticket_channel"]
+                        .ReplaceValues(ctx, ctx.Channel));
 
                 _ = ctx.Channel.SendMessageAsync(error.Build());
                 return;
@@ -60,12 +57,9 @@ namespace InsanityBot.Tickets.Commands
 
             if(!x.Any())
             {
-                DiscordEmbedBuilder error = new()
-                {
-                    Description = InsanityBot.LanguageConfig["insanitybot.tickets.add_user.not_a_ticket_channel"].ReplaceValues(
-                        ctx, ctx.Channel),
-                    Color = DiscordColor.Red
-                };
+                DiscordEmbedBuilder error = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.add_user.not_a_ticket_channel"]
+                        .ReplaceValues(ctx, ctx.Channel));
 
                 _ = ctx.Channel.SendMessageAsync(error.Build());
                 return;
