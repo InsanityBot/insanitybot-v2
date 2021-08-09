@@ -21,7 +21,7 @@ namespace InsanityBot.Commands.Moderation
         [Command("purge")]
         [Aliases("clear")]
         public async Task PurgeCommand(CommandContext ctx,
-            Int32 messageCount,
+            UInt64 messageCount,
 
             [RemainingText]
             String arguments = "usedefault")
@@ -35,7 +35,7 @@ namespace InsanityBot.Commands.Moderation
         }
 
         private async Task ParsePurgeCommand(CommandContext ctx,
-            Int32 messageCount,
+            UInt64 messageCount,
             String arguments)
         {
             String cmdArguments = arguments;
@@ -64,7 +64,7 @@ namespace InsanityBot.Commands.Moderation
         }
 
         private async Task ExecutePurgeCommand(CommandContext ctx,
-            Int32 messageCount,
+            UInt64 messageCount,
             Boolean silent,
             String reason)
         {
@@ -95,27 +95,55 @@ namespace InsanityBot.Commands.Moderation
 
             try
             {
-                Byte batches = (Byte)(messageCount / 100),
-                    leftover = (Byte)((messageCount % 100) + 1);
-
-                IReadOnlyList<DiscordMessage> messageBuffer = null;
-
-                for(Byte b = 0; b < batches; b++)
+                // its small enough to be a message count
+                if(messageCount < (UInt64)Int16.MaxValue)
                 {
-                    messageBuffer = await ctx.Channel.GetMessagesAsync(100);
+                    Byte batches = (Byte)(messageCount / 100),
+                        leftover = (Byte)((messageCount % 100) + 1);
+
+                    IReadOnlyList<DiscordMessage> messageBuffer = null;
+
+                    for(Byte b = 0; b < batches; b++)
+                    {
+                        messageBuffer = await ctx.Channel.GetMessagesAsync(100);
+                        _ = ctx.Channel.DeleteMessagesAsync(messageBuffer);
+                    }
+
+                    messageBuffer = await ctx.Channel.GetMessagesAsync(leftover);
                     _ = ctx.Channel.DeleteMessagesAsync(messageBuffer);
+
+                    tmpEmbedBuilder = InsanityBot.Embeds["insanitybot.moderation.purge"]
+                        .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"]);
+
+                    _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                    {
+                        Embed = moderationEmbedBuilder
+                    });
                 }
-
-                messageBuffer = await ctx.Channel.GetMessagesAsync(leftover);
-                _ = ctx.Channel.DeleteMessagesAsync(messageBuffer);
-
-                tmpEmbedBuilder = InsanityBot.Embeds["insanitybot.moderation.purge"]
-                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"]);
-
-                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                else // its a discord snowflake
                 {
-                    Embed = moderationEmbedBuilder
-                });
+                    DiscordMessage message = await ctx.Channel.GetMessageAsync(messageCount);
+
+                    if(message == null)
+                    {
+                        DiscordEmbedBuilder error = InsanityBot.Embeds["insanitybot.error"]
+                            .WithDescription("Invalid message snowflake.");
+
+                        await ctx.Channel.SendMessageAsync(error.Build());
+                        return;
+                    }
+
+                    IReadOnlyList<DiscordMessage> messages = await ctx.Channel.GetMessagesAfterAsync(messageCount, Int16.MaxValue);
+                    _ = ctx.Channel.DeleteMessagesAsync(messages);
+
+                    tmpEmbedBuilder = InsanityBot.Embeds["insanitybot.moderation.purge"]
+                        .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"]);
+
+                    _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                    {
+                        Embed = moderationEmbedBuilder
+                    });
+                }
             }
             catch(Exception e)
             {

@@ -358,6 +358,7 @@ namespace InsanityBot
                 (ModlogMessageType.Moderation, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.modlog_channel_id"]))),
                 (ModlogMessageType.Administration, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.admin_log_channel_id"]))));
 
+            Embeds = new();
             Embeds.Initialize(Client.Logger);
         }
 
