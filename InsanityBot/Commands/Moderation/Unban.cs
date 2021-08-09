@@ -91,14 +91,14 @@ namespace InsanityBot.Commands.Moderation
             if(ctx == null && silent == false)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"),
-                    "Invalid command arguments - internal error. Please report this on https://github.com/InsanityNetwork/InsanityBot/issues" +
+                    "Invalid command arguments - internal error. Please report this on https://github.com/InsanityBot/InsanityBot/issues" +
                     "\nInsanityBot/Commands/Moderation/Unban.cs: argument \"silent\" cannot be false without given command context");
                 return;
             }
             if(automated && !silent)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"),
-                    "Invalid command arguments - internal error. Please report this on https://github.com/InsanityNetwork/InsanityBot/issues" +
+                    "Invalid command arguments - internal error. Please report this on https://github.com/InsanityBot/InsanityBot/issues" +
                     "\nInsanityBot/Commands/Moderation/Unban.cs: argument \"silent\" cannot be false for an automated unban");
                 return;
             }
