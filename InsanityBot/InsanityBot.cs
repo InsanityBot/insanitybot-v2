@@ -46,7 +46,7 @@ namespace InsanityBot
         public static TicketDaemon TicketDaemon;
         public static EmbedHandler Embeds;
 
-        public static String Version = "2.0.0-dev.00036";
+        public static String Version = "2.0.0-dev.00037";
     }
 }
 #pragma warning restore CA2211
