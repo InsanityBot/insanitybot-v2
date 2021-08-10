@@ -57,7 +57,7 @@ namespace InsanityBot.Tickets
 
         public TicketDaemon()
         {
-            Configuration = new TicketConfigurationManager().Deserialize("./config/ticket.json");
+            Configuration = new ConfigurationManager().Deserialize<TicketConfiguration>("./config/ticket.json");
 
             if(!File.Exists("./cache/tickets/presets/default.json"))
             {

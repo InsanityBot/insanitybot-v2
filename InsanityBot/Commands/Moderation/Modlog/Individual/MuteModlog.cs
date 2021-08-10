@@ -21,7 +21,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
 {
     public class MuteModlog
     {
-        public async Task MuteModlogCommand(CommandContext ctx, DiscordMember user)
+        public async Task MuteModlogCommand(CommandContext ctx, DiscordUser user)
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
             {
@@ -46,7 +46,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
                 {
                     modlogEmbed = InsanityBot.Embeds["insanitybot.modlog.entries"];
 
-                    if(!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_scrolling"]))
+                    if(!InsanityBot.Config.Value<Boolean>("insanitybot.commands.modlog.allow_scrolling"))
                     {
                         modlogEmbed.Description = user.CreateModlogDescription(ModlogEntryType.mute, false);
 

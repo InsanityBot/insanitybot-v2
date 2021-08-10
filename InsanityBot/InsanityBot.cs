@@ -22,7 +22,7 @@ namespace InsanityBot
 
         public static CommandLineOptions CommandLineOptions { get; set; }
 
-        public static MainConfigurationManager ConfigManager { get; set; }
+        public static ConfigurationManager ConfigManager { get; set; }
         public static MainConfiguration Config { get; set; }
 
         public static DiscordConfiguration ClientConfiguration { get; set; }
@@ -35,11 +35,9 @@ namespace InsanityBot
 
         public static InteractivityExtension Interactivity { get; set; }
 
-        public static LanguageConfigurationManager LanguageManager { get; set; }
         public static LanguageConfiguration LanguageConfig { get; set; }
 
         public static LoggerConfiguration LoggerConfig { get; set; }
-        public static LoggerConfigurationManager LoggerManager { get; set; }
 
         public static PermissionEngine PermissionEngine { get; set; }
         public static EmbedFormatterFactory EmbedFactory { get; set; }

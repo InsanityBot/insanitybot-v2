@@ -97,7 +97,7 @@ namespace InsanityBot.Commands.Moderation
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.whitelist.success"], ctx, member));
                  
                 _ = member.RevokeRoleAsync(InsanityBot.HomeGuild.GetRole(
-                    ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.blacklist_role_id"])),
+                    InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.blacklist_role_id")),
                     WhitelistReason);
                 _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
                 {

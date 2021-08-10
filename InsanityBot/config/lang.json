@@ -1,115 +1,173 @@
 {
-  "DataVersion": "2.0.0-dev.00035",
+  "DataVersion": "2.0.0-dev.00038",
   "Configuration": {
-
-    /*
-    Simple, placeholder-based command messages. Not all strings support all placeholders, if you are unsure, ask in our Discord
-    or check out the docs at https://docs.insanity.network/. Mod commands may have custom placeholders. null strings are not allowed.
-    */
-
-    "insanitybot.error.lacking_permission": "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.",
-    "insanitybot.error.lacking_admin_permission": "You cannot execute this command as you are not a server administrator!",
-    "insanitybot.error.generic": "The command failed to execute. Please retry or contact your administrators.",
-
-    "insanitybot.moderation.warn.success": "{MENTION} was warned successfully.",
-    "insanitybot.moderation.unwarn.success": "{MENTION} was unwarned successfully",
-    "insanitybot.moderation.mute.success": "{MENTION} was muted successfully.",
-    "insanitybot.moderation.unmute.success": "{MENTION} was unmuted successfully.",
-    "insanitybot.moderation.blacklist.success": "{MENTION} was blacklisted successfully.",
-    "insanitybot.moderation.whitelist.success": "{MENTION} was whitelisted successfully.",
-    "insanitybot.moderation.kick.success": "{MENTION} was kicked successfully.",
-    "insanitybot.moderation.ban.success": "{MENTION} was banned successfully.",
-    "insanitybot.moderation.unban.success": "{ID} was unbanned successfully.",
-    "insanitybot.moderation.clear_modlog.success": "{MENTION}'s modlog was cleared successfully.",
-    "insanitybot.moderation.purge.success": "Messages were deleted successfully.",
-    "insanitybot.moderation.lock.success": "{CHANNEL} was locked successfully.",
-    "insanitybot.moderation.unlock.success": "{CHANNEL} was unlocked successfully.",
-    "insanitybot.moderation.slowmode.success": "{CHANNEL} slowmode was set to {TIME}.",
-    "insanitybot.moderation.slowmode_reset.success": "{CHANNEL} slowmode was removed successfully.",
-
-    "insanitybot.moderation.verbal_warn.failure": "{MENTION} could not be verbally warned.",
-    "insanitybot.moderation.unwarn.failure": "{MENTION} could not be unwarned.",
-    "insanitybot.moderation.warn.failure": "{MENTION} could not be warned.",
-    "insanitybot.moderation.mute.failure": "{MENTION} could not be muted.",
-    "insanitybot.moderation.unmute.failure": "{MENTION} could not be unmuted.",
-    "insanitybot.moderation.blacklist.failure": "{MENTION} could not be blacklisted.",
-    "insanitybot.moderation.whitelist.failure": "{MENTION} could not be whitelisted.",
-    "insanitybot.moderation.kick.failure": "{MENTION} could not be kicked.",
-    "insanitybot.moderation.ban.failure": "{MENTION} could not be banned.",
-    "insanitybot.moderation.unban.failure": "{ID} could not be unbanned.",
-    "insanitybot.moderation.clear_modlog.failure": "{MENTION}'s modlog could not be cleared.",
-    "insanitybot.moderation.purge.failure": "Messages could not be deleted.",
-    "insanitybot.moderation.lock.failure": "{CHANNEL} could not be locked.",
-    "insanitybot.moderation.unlock.failure": "{CHANNEL} could not be unlocked.",
-    "insanitybot.moderation.slowmode.failure": "Could not set slowmode for {CHANNEL}.",
-    "insanitybot.moderation.slowmode_reset.failure": "Could not remove slowmode for {CHANNEL}.",
-
-    "insanitybot.moderation.verbal_warn.reason": "{MENTION}, {REASON}",
-    "insanitybot.moderation.warn.reason": "You were warned for {REASON}.",
-    "insanitybot.moderation.mute.reason": "You were muted for {REASON}.",
-    "insanitybot.moderation.unmute.reason": "You were unmuted!",
-    "insanitybot.moderation.blacklist.reason": "You were blacklisted for {REASON}.",
-    "insanitybot.moderation.whitelist.reason": "You were whitelisted!",
-    "insanitybot.moderation.kick.reason": "You were kicked for {REASON}.",
-    "insanitybot.moderation.ban.reason": "You were banned for {REASON}.",
-
-    "insanitybot.moderation.no_reason_given": "No reason given",
-    "insanitybot.moderation.export_modlog.no_modlog": "{MENTION} does not have an existing modlog file.",
-    "insanitybot.moderation.purge.default_reason": "No reason given.",
-
-    "insanitybot.commands.modlog.embed_title": "Modlog of {USERNAME}",
-    "insanitybot.commands.modlog.empty_modlog": ":white_check_mark: This member has no modlog entries",
-    "insanitybot.commands.modlog.overflow": "... and more entries",
-    "insanitybot.commands.modlog.failed": "Could not retrieve modlog for {MENTION}",
-    "insanitybot.commands.modlog.paged.page_number": "Page {PAGE}/{PAGE_TOTAL}",
-
-    "insanitybot.commands.verbal_log.embed_title": "Verbal Log of {USERNAME}",
-    "insanitybot.commands.verbal_log.empty_modlog": ":white_check_mark: This member has no verbal log entries",
-    "insanitybot.commands.verbal_log.overflow": "... and more entries",
-    "insanitybot.commands.verbal_log.failed": "Could not retrieve verbal log for {MENTION}",
-    "insanitybot.commands.verbal_log.paged.page_number": "Page {PAGE}/{PAGE_TOTAL}",
-
-    "insanitybot.commands.lock.whitelist.add.success": "{ROLE} was added successfully to the whitelist for {CHANNEL}.",
-    "insanitybot.commands.lock.whitelist.add.failure": "{ROLE} could not be added to the whitelist for {CHANNEL}.",
-    "insanitybot.commands.lock.whitelist.add.already_present": "{ROLE} was already whitelisted in {CHANNEL}.",
-    "insanitybot.commands.lock.whitelist.remove.success": "{ROLE} was removed successfully from the whitelist for {CHANNEL}.",
-    "insanitybot.commands.lock.whitelist.remove.failure": "{ROLE} could not be removed from the whitelist for {CHANNEL}.",
-    "insanitybot.commands.lock.blacklist.add.success": "{ROLE} was added successfully to the blacklist for {CHANNEL}.",
-    "insanitybot.commands.lock.blacklist.add.failure": "{ROLE} could not be added to the blacklist for {CHANNEL}.",
-    "insanitybot.commands.lock.blacklist.add.already_present": "{ROLE} was already blacklisted in {CHANNEL}.",
-    "insanitybot.commands.lock.blacklist.remove.success": "{ROLE} was removed successfully from the blacklist for {CHANNEL}.",
-    "insanitybot.commands.lock.blacklist.remove.failure": "{ROLE} could not be removed from the blacklist for {CHANNEL}.",
-
-    "insanitybot.permissions.error.permission_not_found": "Permission {PERMISSION} could not be found.",
-    "insanitybot.permissions.error.no_permission_passed": "No permission was passed to the command.",
-    "insanitybot.permissions.error.could_not_parse": "Could not parse command arguments.",
-    "insanitybot.permissions.error.could_not_grant": "Could not grant permission {PERMISSION} to {MENTION}.",
-    "insanitybot.permissions.error.could_not_neutralize": "Could not neutralize permission override {PERMISSION} from {MENTION}",
-    "insanitybot.permissions.error.could_not_deny": "Could not deny permission {PERMISSION} for {MENTION}.",
-    "insanitybot.permissions.error.could_not_add_role": "Could not add role {ROLE} to {MENTION}.",
-    "insanitybot.permissions.error.could_not_create": "Failed to create permission file for {MENTION}",
-    "insanitybot.permissions.error.role_could_not_grant": "Could not grant permission {PERMISSION} to {MENTION}.",
-    "insanitybot.permissions.error.role_could_not_neutralize": "Could not neutralize permission override {PERMISSION} from {MENTION}.",
-    "insanitybot.permissions.error.role_could_not_deny": "Could not deny permission {PERMISSION} for {MENTION}.",
-    "insanitybot.permissions.error.role_could_not_add_parent": "Could not add parent {ROLE} to {MENTION}.",
-    "insanitybot.permissions.error.role_could_not_create": "Failed to create permission file for {MENTION}.",
-    "insanitybot.permissions.permission_granted": "Granted permission {PERMISSION} to {MENTION}.",
-    "insanitybot.permissions.permission_neutralized": "Neutralized permission override {PERMISSION} from {MENTION}.",
-    "insanitybot.permissions.permission_denied": "Denied permission {PERMISSION} for {MENTION}.",
-    "insanitybot.permissions.role_added": "Added role {ROLE} to {MENTION}.",
-    "insanitybot.permissions.user_created": "Created permission file for {MENTION}.",
-    "insanitybot.permissions.role_permission_granted": "Granted permission {PERMISSION} to {MENTION}.",
-    "insanitybot.permissions.role_permission_neutralized": "Neutralized permission override {PERMISSION} from {MENTION}.",
-    "insanitybot.permissions.role_permission_denied": "Denied permission {PERMISSION} for {MENTION}.",
-    "insanitybot.permissions.parent_added": "Added parent {ROLE} to {MENTION}.",
-    "insanitybot.permissions.role_created": "Created permission file for {MENTION}.",
-    "insanitybot.permissions.role_not_found": "Could not find role.", // used by parents, does *not* support role-specific placeholders
-
-    "insanitybot.tickets.new": ":white_check_mark: Successfully created ticket {TICKETCHANNEL}.",
-    "insanitybot.tickets.close": "{TICKETCHANNEL} will be closed in {TICKETCLOSETIME}.",
-    "insanitybot.tickets.cancelled_closing": "Cancelled closing of {CHANNEL}.",
-    "insanitybot.tickets.add_user.not_a_ticket_channel": "{CHANNEL} is not a ticket channel, you cannot add users here.",
-    "insanitybot.tickets.remove_user.not_a_ticket_channel": "{CHANNEL} is not a ticket channel, you cannot remove users from here."
+    "insanitybot": {
+      "error": {
+        "lacking_permission": "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.",
+        "lacking_admin_permission": "You cannot execute this command as you are not a server administrator!",
+        "generic": "The command failed to execute. Please retry or contact your administrators"
+      },
+      "moderation": {
+        "warn": {
+          "success": "{MENTION} was warned successfully.",
+          "failure": "{MENTION} could not be warned.",
+          "reason": "You were warned for {REASON}."
+        },
+        "unwarn": {
+          "success": "{MENTION} was unwarned successfully.",
+          "failure": "{MENTION} could not be unwarned."
+        },
+        "mute": {
+          "success": "{MENTION} was muted successfully.",
+          "failure": "{MENTION} could not be muted.",
+          "reason": "You were muted for {REASON}."
+        },
+        "unmute": {
+          "success": "{MENTION} was unmuted successfully.",
+          "failure": "{MENTION} could not be unmuted.",
+          "reason": "You were unmuted!"
+        },
+        "blacklist": {
+          "success": "{MENTION} was blacklisted successfully.",
+          "failure": "{MENTION} could not be blacklisted",
+          "reason": "You were blacklisted for {REASON}."
+        },
+        "whitelist": {
+          "success": "{MENTION} was whitelisted successfully.",
+          "failure": "{MENTION} could not be whitelisted.",
+          "reason": "You were whitelisted!"
+        },
+        "kick": {
+          "success": "{MENTION} was kicked successfully.",
+          "failure": "{MENTION} could not be kicked.",
+          "reason": "You were kicked for {REASON}."
+        },
+        "ban": {
+          "success": "{MENTION} was banned successfully",
+          "failure": "{MENTION} could not be banned.",
+          "reason": "You were banned for {REASON}."
+        },
+        "unban": {
+          "success": "{MENTION} was unbanned successfully.",
+          "failure": "{MENTION} could not be unbanned."
+        },
+        "clear_modlog": {
+          "success": "{MENTION}'s modlog was cleared successfully.",
+          "failure": "{MENTION}'s modlog could not be cleared."
+        },
+        "purge": {
+          "success": "Messages were deleted successfully.",
+          "failure": "Messages could not be deleted.",
+          "default_reason": "No reason given."
+        },
+        "lock": {
+          "success": "{CHANNEL} was locked successfully.",
+          "failure": "{CHANNEL} could not be locked."
+        },
+        "unlock": {
+          "success": "{CHANNEL} was unlocked successfully.",
+          "failure": "{CHANNEL} could not be unlocked."
+        },
+        "slowmode": {
+          "success": "{CHANNEL} slowmode was set to {TIME}",
+          "failure": "Could not set slowmode for {CHANNEL}",
+          "reset": {
+            "success": "{CHANNEL} slowmode was removed successfully",
+            "failure": "Could not remove slowmode for {CHANNEL}"
+          }
+        },
+        "verbal_warn": {
+          "failure": "{MENTION} could not be verbally warned",
+          "reason": "{MENTION}, {REASON}"
+        },
+        "no_reason_given": "No reason given.",
+        "export_modlog": {
+          "no_modlog": "{MENTION} does not have an existing modlog file."
+        }
+      },
+      "commands": {
+        "modlog": {
+          "embed_title": "Modlog of {MENTION}",
+          "empty_modlog": ":white_check_mark: This member has no modlog entries.",
+          "overflow": "... and more entries",
+          "failed": "Could not retrieve modlog for {MENTION}.",
+          "paged": {
+            "page_number": "Page {PAGE}/{PAGE_TOTAL}"
+          }
+        },
+        "verbal_log": {
+          "embed_title": "Verballog of {MENTION}",
+          "empty_modlog": ":white_check_mark: This member has no verballog entries.",
+          "overflow": "... and more entries",
+          "failed": "Could not retrieve verballog for {MENTION}.",
+          "paged": {
+            "page_number": "Page {PAGE}/{PAGE_TOTAL}"
+          }
+        },
+        "lock": {
+          "whitelist": {
+            "add": {
+              "success": "{ROLE} was added successfully to the whitelist for {CHANNEL}.",
+              "failure": "{ROLE} could not be added to the whitelist for {CHANNEL}.",
+              "already_present": "{ROLE} was already whitelisted in {CHANNEL}."
+            },
+            "remove": {
+              "success": "{ROLE} was removed successfully from the whitelist for {CHANNEL}.",
+              "failure": "{ROLE} could not be removed from the whitelist for {CHANNEL}."
+            }
+          },
+          "blacklist": {
+            "add": {
+              "success": "{ROLE} was added successfully to the blacklist for {CHANNEL}.",
+              "failure": "{ROLE} could not be added to the blacklist for {CHANNEL}.",
+              "already_present": "{ROLE} was already blacklisted in {CHANNEL}."
+            },
+            "remove": {
+              "success": "{ROLE} was removed successfully from the blacklist for {CHANNEL}.",
+              "failure": "{ROLE} could not be removed from the blacklist for {CHANNEL}."
+            }
+          }
+        }
+      },
+      "permissions": {
+        "error": {
+          "permission_not_found": "Permission {PERMISSION} could not be found.",
+          "no_permission_passed": "No permission was passed to the command.",
+          "could_not_parse": "Could not parse command arguments.",
+          "could_not_grant": "Could not grant permission {PERMISSION} to {MENTION}.",
+          "could_not_neutralize": "Could not nullify permission override {PERMISSION} from {MENTION}",
+          "could_not_deny": "Could not deny permission {PERMISSION} for {MENTION}.",
+          "could_not_add_role": "Could not add role {ROLE} to {MENTION}.",
+          "could_not_create": "Failed to create permission file for {MENTION}",
+          "role_could_not_grant": "Could not grant permission {PERMISSION} to {MENTION}.",
+          "role_could_not_neutralize": "Could not nullify permission override {PERMISSION} from {MENTION}.",
+          "role_could_not_deny": "Could not deny permission {PERMISSION} for {MENTION}.",
+          "role_could_not_add_parent": "Could not add parent {ROLE} to {MENTION}.",
+          "role_could_not_create": "Failed to create permission file for {MENTION}."
+        },
+        "permission_granted": "Granted permission {PERMISSION} to {MENTION}.",
+        "permission_neutralized": "Nullified permission override {PERMISSION} from {MENTION}.",
+        "permission_denied": "Denied permission {PERMISSION} for {MENTION}.",
+        "role_added": "Added role {ROLE} to {MENTION}.",
+        "user_created": "Created permission file for {MENTION}.",
+        "role_permission_granted": "Granted permission {PERMISSION} to {MENTION}.",
+        "role_permission_neutralized": "Nullified permission override {PERMISSION} from {MENTION}.",
+        "role_permission_denied": "Denied permission {PERMISSION} for {MENTION}.",
+        "parent_added": "Added parent {ROLE} to {MENTION}.",
+        "role_created": "Created permission file for {MENTION}.",
+        "role_not_found": "Could not find role."
+      },
+      "tickets": {
+        "new": ":white_check_mark: Successfully created ticket {TICKETCHANNEL}.",
+        "close": "{TICKETCHANNEL} will be closed in {TICKETCLOSETIME}.",
+        "cancelled_closing": "Cancelled closing of {CHANNEL}.",
+        "add_user": {
+          "not_a_ticket_channel": "{CHANNEL} is not a ticket channel, you cannot add users here."
+        },
+        "remove_user": {
+          "not_a_ticket_channel": "{CHANNEL} is not a ticket channel, you cannot remove users from here."
+        }
+      }
+    }
   }
 }
-

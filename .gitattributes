@@ -65,3 +65,4 @@
 # Parse json as json5
 
 *.json linguist-language=json5
+*.json linguist-detectable

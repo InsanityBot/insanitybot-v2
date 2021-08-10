@@ -1,12 +1,14 @@
 ﻿using InsanityBot.Utility.Datafixers;
 
+using Newtonsoft.Json.Linq;
+
 using System;
 using System.Collections.Generic;
 
 namespace InsanityBot.Utility
 {
-    public interface IConfiguration<T> : IDatafixable
+    public interface IConfiguration : IDatafixable
     {
-        public Dictionary<String, T> Configuration { get; set; }
+        public JObject Configuration { get; set; }
     }
 }

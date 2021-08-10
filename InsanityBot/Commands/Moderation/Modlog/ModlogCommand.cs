@@ -25,7 +25,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
     {
         [Command("modlog")]
         public async Task ModlogCommand(CommandContext ctx,
-            DiscordMember user)
+            DiscordUser user)
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
             {
@@ -95,7 +95,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         modlogEmbed.AddField("Bans", bans.Count().ToString(), true);
                     }
 
-                    if(!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_scrolling"]))
+                    if(!InsanityBot.Config.Value<Boolean>("insanitybot.commands.modlog.allow_scrolling"))
                     {
                         modlogEmbed.Description = user.CreateModlogDescription(false);
 
@@ -123,7 +123,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
         }
 
         [Command("modlog")]
-        public async Task ModlogCommand(CommandContext ctx, String type, DiscordMember member)
+        public async Task ModlogCommand(CommandContext ctx, String type, DiscordUser member)
         {
             switch(type.ToLower())
             {

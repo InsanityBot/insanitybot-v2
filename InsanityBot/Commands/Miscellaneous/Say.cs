@@ -25,7 +25,7 @@ namespace InsanityBot.Commands.Miscellaneous
 
             if((ctx.Message.MentionedRoles.Count != 0 || ctx.Message.Content.Contains("@everyone") || ctx.Message.Content.Contains("@here"))
                 && ((ctx.Member.PermissionsIn(ctx.Channel) & DSharpPlus.Permissions.MentionEveryone) != DSharpPlus.Permissions.MentionEveryone)
-                && ToBoolean(InsanityBot.Config["insanitybot.miscellaneous.block_say_role_pings"]))
+                && InsanityBot.Config.Value<Boolean>("insanitybot.miscellaneous.block_say_role_pings"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
@@ -33,7 +33,7 @@ namespace InsanityBot.Commands.Miscellaneous
 
             if(ctx.Message.MentionedUsers.Count != 0
                 && ((ctx.Member.PermissionsIn(ctx.Channel) & DSharpPlus.Permissions.MentionEveryone) != DSharpPlus.Permissions.MentionEveryone)
-                && ToBoolean(InsanityBot.Config["insanitybot.miscellaneous.block_say_user_pings"]))
+                && InsanityBot.Config.Value<Boolean>("insanitybot.miscellaneous.block_say_user_pings"))
             {
                 await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;

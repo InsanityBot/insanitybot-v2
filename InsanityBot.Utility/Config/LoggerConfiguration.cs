@@ -1,14 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
 
 using System;
-using System.Collections.Generic;
 
 namespace InsanityBot.Utility.Config
 {
-    public class TicketConfiguration : IConfiguration
+    public class LoggerConfiguration : IConfiguration
     {
-        public String DataVersion { get; set; }
         public JObject Configuration { get; set; }
+        public String[] EventExclusions { get; set; }
+        public Int32[] EventIdExclusions { get; set; }
+        public String DataVersion { get; set; }
 
         public Object this[String Identifier]
         {
@@ -23,12 +24,6 @@ namespace InsanityBot.Utility.Config
         public void SetValue(String identifier, Object value)
         {
             Configuration[identifier] = JToken.FromObject(value);
-        }
-
-        public TicketConfiguration()
-        {
-            this.DataVersion = "2.0.0";
-            this.Configuration = new();
         }
     }
 }
