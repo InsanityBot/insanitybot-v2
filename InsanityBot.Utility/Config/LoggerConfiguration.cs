@@ -1,19 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
 
 using System;
-using System.Collections.Generic;
 
 namespace InsanityBot.Utility.Config
 {
-    public class MainConfiguration : IConfiguration
+    public class LoggerConfiguration : IConfiguration
     {
-        public String DataVersion { get; set; }
         public JObject Configuration { get; set; }
-
-        public List<String> Prefixes { get; set; }
-
-        public String Token { get; set; }
-        public UInt64 GuildId { get; set; }
+        public String[] EventExclusions { get; set; }
+        public Int32[] EventIdExclusions { get; set; }
+        public String DataVersion { get; set; }
 
         public Object this[String Identifier]
         {
@@ -28,13 +24,6 @@ namespace InsanityBot.Utility.Config
         public void SetValue(String identifier, Object value)
         {
             Configuration[identifier] = JToken.FromObject(value);
-        }
-
-        public MainConfiguration()
-        {
-            this.Configuration = new();
-            this.Token = " ";
-            this.GuildId = 0;
         }
     }
 }

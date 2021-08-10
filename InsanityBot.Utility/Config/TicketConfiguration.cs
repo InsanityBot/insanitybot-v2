@@ -1,17 +1,28 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+
+using System;
 using System.Collections.Generic;
 
 namespace InsanityBot.Utility.Config
 {
-    public class TicketConfiguration : IConfiguration<Object>
+    public class TicketConfiguration : IConfiguration
     {
         public String DataVersion { get; set; }
-        public Dictionary<String, Object> Configuration { get; set; }
+        public JObject Configuration { get; set; }
 
         public Object this[String Identifier]
         {
-            get => this.Configuration[Identifier];
-            set => this.Configuration[Identifier] = value;
+            get => Configuration.SelectToken(Identifier).Value<Object>();
+        }
+
+        public T Value<T>(String identifier)
+        {
+            return Configuration.SelectToken(identifier).Value<T>();
+        }
+
+        public void SetValue(String identifier, Object value)
+        {
+            Configuration[identifier] = JToken.FromObject(value);
         }
 
         public TicketConfiguration()

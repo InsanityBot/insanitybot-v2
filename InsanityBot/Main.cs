@@ -65,12 +65,10 @@ namespace InsanityBot
             RegisterDatafixers();
 
             //load main config
-            ConfigManager = new MainConfigurationManager();
-            LanguageManager = new LanguageConfigurationManager();
-            LoggerManager = new LoggerConfigurationManager();
+            ConfigManager = new ConfigurationManager();
 
             //read config from file
-            Config = ConfigManager.Deserialize("./config/main.json");
+            Config = ConfigManager.Deserialize<MainConfiguration>("./config/main.json");
 
             //validate token and guild id
             #region token
@@ -135,8 +133,8 @@ namespace InsanityBot
             }
             #endregion
 
-            LanguageConfig = LanguageManager.Deserialize("./config/lang.json");
-            LoggerConfig = LoggerManager.Deserialize("./config/logger.json");
+            LanguageConfig = ConfigManager.Deserialize<LanguageConfiguration>("./config/lang.json");
+            LoggerConfig = ConfigManager.Deserialize<LoggerConfiguration>("./config/logger.json");
 
             LoggerFactory loggerFactory = new();
             EmbedFactory = new();

@@ -1,23 +1,28 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+
+using System;
 using System.Collections.Generic;
 
 namespace InsanityBot.Utility.Language
 {
-    public class LanguageConfiguration : IConfiguration<String>
+    public class LanguageConfiguration : IConfiguration
     {
         public String DataVersion { get; set; }
-        public Dictionary<String, String> Configuration { get; set; }
+        public JObject Configuration { get; set; }
 
         public LanguageConfiguration()
         {
-            this.DataVersion = "2.0.0-dev.00017";
-            this.Configuration = new Dictionary<String, String>();
+            this.Configuration = new();
         }
 
-        public String this[String index]
+        public String this[String Identifier]
         {
-            get => this.Configuration[index];
-            set => this.Configuration[index] = value;
+            get => Configuration.SelectToken(Identifier).Value<String>();
+        }
+
+        public void SetValue(String identifier, String value)
+        {
+            Configuration[identifier] = JToken.FromObject(value);
         }
     }
 }
