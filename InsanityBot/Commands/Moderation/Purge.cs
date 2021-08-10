@@ -90,7 +90,7 @@ namespace InsanityBot.Commands.Moderation
             DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.purge"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
-                .AddField("Messages", messageCount.ToString(), true)
+                .AddField("Channel", ctx.Channel.Mention)
                 .AddField("Reason", ModlogEmbedReason, true);
 
             try
@@ -115,6 +115,8 @@ namespace InsanityBot.Commands.Moderation
                     tmpEmbedBuilder = InsanityBot.Embeds["insanitybot.moderation.purge"]
                         .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"]);
 
+                    moderationEmbedBuilder.AddField("Messages", messageCount.ToString(), true);
+
                     _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
                     {
                         Embed = moderationEmbedBuilder
@@ -138,6 +140,8 @@ namespace InsanityBot.Commands.Moderation
 
                     tmpEmbedBuilder = InsanityBot.Embeds["insanitybot.moderation.purge"]
                         .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"]);
+
+                    moderationEmbedBuilder.AddField("Messages", messages.Count.ToString(), true);
 
                     _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
                     {
