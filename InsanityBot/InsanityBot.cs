@@ -49,6 +49,6 @@ namespace InsanityBot
         }
         public static EmbedHandler Embeds { get; set; }
 
-        public static String Version => "2.0.0-dev.00037";
+        public static String Version => "2.0.0-dev.00038";
     }
 }
