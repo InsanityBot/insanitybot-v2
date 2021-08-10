@@ -95,7 +95,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
 
                 UInt64 exemptRole;
-                if((exemptRole = Convert.ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.lock_exempt_role_id"])) != 0)
+                if((exemptRole = InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.lock_exempt_role_id")) != 0)
                 {
                     await channel.AddOverwriteAsync(InsanityBot.HomeGuild.GetRole(exemptRole), allow: DSharpPlus.Permissions.SendMessages, reason:
                         "InsanityBot - locking channel, granting access to whitelisted users");

@@ -65,12 +65,10 @@ namespace InsanityBot
             RegisterDatafixers();
 
             //load main config
-            ConfigManager = new MainConfigurationManager();
-            LanguageManager = new LanguageConfigurationManager();
-            LoggerManager = new LoggerConfigurationManager();
+            ConfigManager = new ConfigurationManager();
 
             //read config from file
-            Config = ConfigManager.Deserialize("./config/main.json");
+            Config = ConfigManager.Deserialize<MainConfiguration>("./config/main.json");
 
             //validate token and guild id
             #region token
@@ -135,8 +133,8 @@ namespace InsanityBot
             }
             #endregion
 
-            LanguageConfig = LanguageManager.Deserialize("./config/lang.json");
-            LoggerConfig = LoggerManager.Deserialize("./config/logger.json");
+            LanguageConfig = ConfigManager.Deserialize<LanguageConfiguration>("./config/lang.json");
+            LoggerConfig = ConfigManager.Deserialize<LoggerConfiguration>("./config/logger.json");
 
             LoggerFactory loggerFactory = new();
             EmbedFactory = new();
@@ -188,7 +186,7 @@ namespace InsanityBot
             {
                 CaseSensitive = false,
                 StringPrefixes = Config.Prefixes,
-                DmHelp = (Boolean)Config["insanitybot.commands.help.send_dms"],
+                DmHelp = Config.Value<Boolean>("insanitybot.commands.help.send_dms"),
                 IgnoreExtraArguments = true
             };
 
@@ -196,37 +194,10 @@ namespace InsanityBot
             Client.UseCommandsNext(CommandConfiguration);
             CommandsExtension = Client.GetCommandsNext();
 
-            PaginationEmojis InteractivityPaginationEmotes = new();
-            if(ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"]) != 0)
-            {
-                InteractivityPaginationEmotes.Right = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_right_emote_id"])];
-            }
-
-            if(ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"]) != 0)
-            {
-                InteractivityPaginationEmotes.Left = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.scroll_left_emote_id"])];
-            }
-
-            if(ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"]) != 0)
-            {
-                InteractivityPaginationEmotes.SkipRight = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.skip_right_emote_id"])];
-            }
-
-            if(ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"]) != 0)
-            {
-                InteractivityPaginationEmotes.SkipLeft = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.skip_left_emote_id"])];
-            }
-
-            if(ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"]) != 0)
-            {
-                InteractivityPaginationEmotes.Stop = HomeGuild.Emojis[ToUInt64(Config["insanitybot.identifiers.interactivity.stop_emote_id"])];
-            }
-
             Interactivity = Client.UseInteractivity(new()
             {
                 PaginationBehaviour = PaginationBehaviour.Ignore,
-                PaginationDeletion = PaginationDeletion.DeleteEmojis,
-                PaginationEmojis = InteractivityPaginationEmotes
+                PaginationDeletion = PaginationDeletion.DeleteEmojis
             });
 
             CommandsExtension.CommandErrored += CommandsExtension_CommandErrored;
@@ -244,7 +215,7 @@ namespace InsanityBot
             Client.Logger.LogInformation(new EventId(1000, "Main"), $"Startup successful!");
 
             //start offthread TCP connection
-            _ = HandleTCPConnections((Int64)Config["insanitybot.tcp_port"]);
+            _ = HandleTCPConnections(Config.Value<Int64>("insanitybot.tcp_port"));
 
             //start offthread XP management
             // if ((Boolean)Config["insanitybot.modules.experience"])
@@ -258,7 +229,7 @@ namespace InsanityBot
             ; // not implemented yet
 
             // load tickets
-            if((Boolean)Config["insanitybot.modules.tickets"])
+            if(Config.Value<Boolean>("insanitybot.modules.tickets"))
             {
                 _ = Task.Run(() =>
                 {
@@ -266,7 +237,7 @@ namespace InsanityBot
                     TicketDaemon.CommandHandler.Load();
 
                     TicketDaemonState state = new();
-                    state.RestoreDaemonState(ref TicketDaemon);
+                    state.RestoreDaemonState(ref _ticketDaemon);
 
                     Client.MessageCreated += TicketDaemon.RouteCustomCommand;
                     Client.MessageCreated += TicketDaemon.ClosingQueue.HandleCancellation;
@@ -305,12 +276,12 @@ namespace InsanityBot
         {
             CommandsExtension.RegisterCommands<PermissionCommand>();
 
-            if((Boolean)Config["insanitybot.modules.miscellaneous"])
+            if(Config.Value<Boolean>("insanitybot.modules.miscellaneous"))
             {
                 CommandsExtension.RegisterCommands<Say>();
                 CommandsExtension.RegisterCommands<Embed>();
             }
-            if((Boolean)Config["insanitybot.modules.moderation"])
+            if(Config.Value<Boolean>("insanitybot.modules.moderation"))
             {
                 CommandsExtension.RegisterCommands<VerbalWarn>();
                 CommandsExtension.RegisterCommands<Warn>();
@@ -331,7 +302,7 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<Unlock>();
                 CommandsExtension.RegisterCommands<LockHelperCommands>();
             }
-            if((Boolean)Config["insanitybot.modules.tickets"])
+            if(Config.Value<Boolean>("insanitybot.modules.tickets"))
             {
                 CommandsExtension.RegisterCommands<NewTicketCommand>();
                 CommandsExtension.RegisterCommands<CloseTicketCommand>();
@@ -355,8 +326,8 @@ namespace InsanityBot
         {
             TimeHandler.Start();
             ModlogQueue = new(
-                (ModlogMessageType.Moderation, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.modlog_channel_id"]))),
-                (ModlogMessageType.Administration, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.admin_log_channel_id"]))));
+                (ModlogMessageType.Moderation, HomeGuild.GetChannel(Config.Value<UInt64>("insanitybot.identifiers.commands.modlog_channel_id"))),
+                (ModlogMessageType.Administration, HomeGuild.GetChannel(Config.Value<UInt64>("insanitybot.identifiers.commands.admin_log_channel_id"))));
 
             Embeds = new();
             Embeds.Initialize(Client.Logger);

@@ -28,7 +28,7 @@ namespace InsanityBot.Commands.Moderation
             [RemainingText]
             String arguments = "usedefault")
         {
-            if(!(Boolean)InsanityBot.Config["insanitybot.commands.moderation.allow_minor_warns"])
+            if(!InsanityBot.Config.Value<Boolean>("insanitybot.commands.moderation.allow_minor_warns"))
             {
                 return;
             }
@@ -125,13 +125,13 @@ namespace InsanityBot.Commands.Moderation
             {
                 await ctx.Channel.SendMessageAsync(embedBuilder.Build());
 
-                if((Boolean)InsanityBot.Config["insanitybot.commands.moderation.convert_minor_warns_into_full_warn"])
+                if(InsanityBot.Config.Value<Boolean>("insanitybot.commands.moderation.convert_minor_warns_into_full_warn"))
                 {
                     if((member.GetUserModlog().VerbalLogEntryCount %
-                        (Int64)InsanityBot.Config["insanitybot.commands.moderation.minor_warns_equal_full_warn"]) == 0)
+                        InsanityBot.Config.Value<Int64>("insanitybot.commands.moderation.minor_warns_equal_full_warn")) == 0)
                     {
                         await new Warn().WarnCommand(ctx, member, $"--silent --reason Too many verbal warns, count since last warn exceeded " +
-                            $"{(Int64)InsanityBot.Config["insanitybot.commands.moderation.minor_warns_equal_full_warn"]}");
+                            $"{InsanityBot.Config.Value<Int64>("insanitybot.commands.moderation.minor_warns_equal_full_warn")}");
                     }
                 }
             }

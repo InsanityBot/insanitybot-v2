@@ -122,7 +122,7 @@ namespace InsanityBot.Commands.Moderation
                 if(silent)
                 {
                     _ = member.RevokeRoleAsync(InsanityBot.HomeGuild.GetRole(
-                        ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"])),
+                        InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.mute_role_id")),
                         "Silent unmute");
 
                     if(additionals != null)
@@ -142,7 +142,7 @@ namespace InsanityBot.Commands.Moderation
                         .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unmute.success"], ctx, member));
 
                     _ = member.RevokeRoleAsync(InsanityBot.HomeGuild.GetRole(
-                        ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.mute_role_id"])),
+                        InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.mute_role_id")),
                         "unmute");
 
                     if(additionals.Length >= 2)

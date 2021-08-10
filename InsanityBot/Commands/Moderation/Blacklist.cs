@@ -100,7 +100,7 @@ namespace InsanityBot.Commands.Moderation
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.blacklist.success"], ctx, member));
 
                 _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
-                    ToUInt64(InsanityBot.Config["insanitybot.identifiers.moderation.blacklist_role_id"])),
+                    InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.blacklist_role_id")),
                     BlacklistReason);
                 _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
                 {

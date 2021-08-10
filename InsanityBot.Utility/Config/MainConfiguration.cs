@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+
+using System;
 using System.Collections.Generic;
 
 namespace InsanityBot.Utility.Config
 {
-    public class MainConfiguration : IConfiguration<Object>
+    public class MainConfiguration : IConfiguration
     {
         public String DataVersion { get; set; }
-        public Dictionary<String, Object> Configuration { get; set; }
+        public JObject Configuration { get; set; }
 
         public List<String> Prefixes { get; set; }
 
@@ -15,14 +17,22 @@ namespace InsanityBot.Utility.Config
 
         public Object this[String Identifier]
         {
-            get => this.Configuration[Identifier];
-            set => this.Configuration[Identifier] = value;
+            get => Configuration.SelectToken(Identifier)?.Value<Object>();
+        }
+
+        public T Value<T>(String identifier)
+        {
+            return Configuration.SelectToken(identifier).Value<T>();
+        }
+
+        public void SetValue(String identifier, Object value)
+        {
+            Configuration[identifier] = JToken.FromObject(value);
         }
 
         public MainConfiguration()
         {
-            this.DataVersion = "2.0.0-dev.00017";
-            this.Configuration = new Dictionary<String, Object>();
+            this.Configuration = new();
             this.Token = " ";
             this.GuildId = 0;
         }
