@@ -21,7 +21,7 @@ namespace InsanityBot.Commands.Permissions
         public partial class UserPermissionCommand : BaseCommandModule
         {
             [Command("neutralize")]
-            [Aliases("revoke", "neutral")]
+            [Aliases("revoke", "neutral", "nullify")]
             public async Task NeutralizePermissionCommand(CommandContext ctx, DiscordMember member,
                 [RemainingText]
                 String args)

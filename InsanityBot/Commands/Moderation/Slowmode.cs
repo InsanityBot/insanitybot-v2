@@ -63,14 +63,14 @@ namespace InsanityBot.Commands.Moderation
             {
                 DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.failure"], ctx));
-                
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                 await ctx.Channel.SendMessageAsync(failed.Build());
             }
         }
 
-        private async Task ExecuteSlowmodeCommand(CommandContext ctx, DiscordChannel channel, TimeSpan slowmodeTime, Boolean silent)
+        private async Task ExecuteSlowmodeCommand(CommandContext ctx, DiscordChannel channel, TimeSpan slowmodeTime, Boolean silent, Boolean auto = false)
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.slowmode"))
             {
@@ -98,9 +98,13 @@ namespace InsanityBot.Commands.Moderation
                 });
 
                 embedBuilder = InsanityBot.Embeds["insanitybot.moderation.slowmode"]
-                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.success"], ctx)
-                        .Replace("{TIME}", slowmodeTime.ToString()));
-                
+                    .WithDescription(auto switch
+                    {
+                        false => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.success"], ctx)
+                            .Replace("{TIME}", slowmodeTime.ToString()),
+                        true => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.reset.success"], ctx)
+                    });
+
                 _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
@@ -109,8 +113,12 @@ namespace InsanityBot.Commands.Moderation
             catch(Exception e)
             {
                 embedBuilder = InsanityBot.Embeds["insanitybot.error"]
-                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.failure"], ctx));
-                
+                    .WithDescription(auto switch
+                    {
+                        false => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.failure"], ctx),
+                        true => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.slowmode.reset.failure"], ctx)
+                    });
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally
@@ -123,13 +131,15 @@ namespace InsanityBot.Commands.Moderation
         }
 
         [Command("reset")]
+        [Aliases("remove", "clear")]
         public async Task ResetSlowmodeCommand(CommandContext ctx, Boolean silent = false)
             => await this.ResetSlowmodeCommand(ctx, ctx.Channel, silent);
 
         [Command("reset")]
+        [Aliases("remove", "clear")]
         public async Task ResetSlowmodeCommand(CommandContext ctx,
             DiscordChannel channel, Boolean silent = false)
-            => await this.ExecuteSlowmodeCommand(ctx, channel, new(0), silent);
+            => await this.ExecuteSlowmodeCommand(ctx, channel, new(0), silent, true);
     }
 
     public class SlowmodeOptions : ModerationOptionBase

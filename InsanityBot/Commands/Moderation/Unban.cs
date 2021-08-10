@@ -20,30 +20,30 @@ namespace InsanityBot.Commands.Moderation
     {
         [Command("unban")]
         public async Task UnbanCommand(CommandContext ctx,
-            UInt64 memberId,
+            DiscordUser member,
 
             [RemainingText]
             String arguments = null)
         {
             if(arguments == null)
             {
-                await this.ExecuteUnbanCommand(ctx, memberId, false, false);
+                await this.ExecuteUnbanCommand(ctx, member, false, false);
                 return;
             }
 
             if(arguments.StartsWith('-'))
             {
-                await this.ParseUnbanCommand(ctx, memberId, arguments);
+                await this.ParseUnbanCommand(ctx, member, arguments);
                 return;
             }
 
             InsanityBot.Client.Logger.LogWarning(new EventId(1143, "ArgumentParser"),
                 "Unban command was called with invalid arguments, running default arguments");
-            await this.ExecuteUnbanCommand(ctx, memberId, false, false);
+            await this.ExecuteUnbanCommand(ctx, member, false, false);
         }
 
         private async Task ParseUnbanCommand(CommandContext ctx,
-            UInt64 memberId,
+            DiscordUser member,
             String arguments)
         {
             String cmdArguments = arguments;
@@ -57,13 +57,13 @@ namespace InsanityBot.Commands.Moderation
                 await Parser.Default.ParseArguments<UnbanOptions>(cmdArguments.Split(' '))
                     .WithParsedAsync(async o =>
                     {
-                        await this.ExecuteUnbanCommand(ctx, memberId, o.Silent, o.DmMember);
+                        await this.ExecuteUnbanCommand(ctx, member, o.Silent, o.DmMember);
                     });
             }
             catch(Exception e)
             {
                 DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
-                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.failure"], ctx, memberId));
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.failure"], ctx, member));
                 
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"), $"{e}: {e.Message}");
 
@@ -76,7 +76,7 @@ namespace InsanityBot.Commands.Moderation
          * (silent is enforced by auto mode)
          * and its used to verify permissions, but that check is never called when auto mode is enabled */
         private async Task ExecuteUnbanCommand(CommandContext ctx,
-            UInt64 memberId,
+            DiscordUser member,
             Boolean silent,
             Boolean automated = false,
             params Object[] additionals)
@@ -115,13 +115,13 @@ namespace InsanityBot.Commands.Moderation
                 moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true);
             }
 
-            moderationEmbedBuilder.AddField("Member", memberId.ToString(), true);
+            moderationEmbedBuilder.AddField("Member", member.ToString(), true);
 
             try
             {
                 if(silent)
                 {
-                    await InsanityBot.HomeGuild.UnbanMemberAsync(memberId);
+                    await InsanityBot.HomeGuild.UnbanMemberAsync(member);
 
                     if(additionals != null)
                     {
@@ -137,9 +137,9 @@ namespace InsanityBot.Commands.Moderation
                 else
                 {
                     nonSilent = InsanityBot.Embeds["insanitybot.moderation.unban"]
-                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.success"], ctx, memberId));
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.success"], ctx, member));
 
-                    await InsanityBot.HomeGuild.UnbanMemberAsync(memberId);
+                    await InsanityBot.HomeGuild.UnbanMemberAsync(member);
 
                     if(additionals.Length >= 2)
                     {
@@ -158,7 +158,7 @@ namespace InsanityBot.Commands.Moderation
                 if(!silent)
                 {
                     nonSilent = InsanityBot.Embeds["insanitybot.error"]
-                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.failure"], ctx, memberId));
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unban.failure"], ctx, member));
                 }
 
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"), $"{e}: {e.Message}");

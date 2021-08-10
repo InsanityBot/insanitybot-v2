@@ -21,7 +21,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
 {
     public class MuteModlog
     {
-        public async Task MuteModlogCommand(CommandContext ctx, DiscordMember user)
+        public async Task MuteModlogCommand(CommandContext ctx, DiscordUser user)
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
             {

@@ -21,7 +21,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
 {
     public class WarnModlog
     {
-        public async Task WarnModlogCommand(CommandContext ctx, DiscordMember user)
+        public async Task WarnModlogCommand(CommandContext ctx, DiscordUser user)
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
             {

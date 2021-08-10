@@ -21,7 +21,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
 {
     public class BlacklistModlog
     {
-        public async Task BlacklistModlogCommand(CommandContext ctx, DiscordMember user)
+        public async Task BlacklistModlogCommand(CommandContext ctx, DiscordUser user)
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
             {

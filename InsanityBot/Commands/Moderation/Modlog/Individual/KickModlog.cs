@@ -21,7 +21,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
 {
     public class KickModlog
     {
-        public async Task KickModlogCommand(CommandContext ctx, DiscordMember user)
+        public async Task KickModlogCommand(CommandContext ctx, DiscordUser user)
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
             {

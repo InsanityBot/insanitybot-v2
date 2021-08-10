@@ -25,7 +25,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
     {
         [Command("modlog")]
         public async Task ModlogCommand(CommandContext ctx,
-            DiscordMember user)
+            DiscordUser user)
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.modlog"))
             {
@@ -123,7 +123,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
         }
 
         [Command("modlog")]
-        public async Task ModlogCommand(CommandContext ctx, String type, DiscordMember member)
+        public async Task ModlogCommand(CommandContext ctx, String type, DiscordUser member)
         {
             switch(type.ToLower())
             {
