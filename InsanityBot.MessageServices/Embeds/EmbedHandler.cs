@@ -81,9 +81,9 @@ namespace InsanityBot.MessageServices.Embeds
             {
                 if(s.StartsWith("default "))
                 {
-                    return _defaultEmbeds.Embeds[s[7..]];
+                    return new(_defaultEmbeds.Embeds[s[7..]].Build());
                 }
-                return _embeds[s];
+                return new(_embeds[s].Build());
             }
         }
     }
