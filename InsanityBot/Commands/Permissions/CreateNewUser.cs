@@ -50,7 +50,7 @@ namespace InsanityBot.Commands.Permissions
                     
                     InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
-                    await ctx.Channel.SendMessageAsync(failed.Build());
+                    await ctx.Channel?.SendMessageAsync(failed.Build());
                 }
             }
 
@@ -58,19 +58,19 @@ namespace InsanityBot.Commands.Permissions
             {
                 if(!ctx.Member.HasPermission("insanitybot.permissions.user.create"))
                 {
-                    await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
+                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
                 }
 
                 if(silent)
                 {
-                    await ctx.Message.DeleteAsync();
+                    await ctx.Message?.DeleteAsync();
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.permissions.user.create"];
 
-                moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
+                moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
                     .AddField("User", member.Mention, true);
 
                 try
@@ -102,7 +102,7 @@ namespace InsanityBot.Commands.Permissions
                 {
                     if(!silent)
                     {
-                        await ctx.Channel.SendMessageAsync(embedBuilder.Build());
+                        await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
                     }
 
                     _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Administration, new DiscordMessageBuilder

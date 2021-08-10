@@ -87,7 +87,7 @@ namespace InsanityBot.Tickets.Closure
             DiscordEmbedBuilder embedBuilder = InsanityBot.Embeds["insanitybot.tickets.close"]
                 .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.cancelled_closing"].ReplaceValues(cl, e, entry.CloseDate));
 
-            await e.Channel.SendMessageAsync(embedBuilder.Build());
+            await e.Channel?.SendMessageAsync(embedBuilder.Build());
         }
 
         [JsonConstructor]

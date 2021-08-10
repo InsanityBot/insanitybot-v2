@@ -18,7 +18,7 @@ namespace InsanityBot.Tickets.Commands
             params DiscordMember[] users)
         {
             IEnumerable<KeyValuePair<Guid, DiscordTicket>> x = from t in InsanityBot.TicketDaemon.Tickets
-                                                               where t.Value.DiscordChannelId == ctx.Channel.Id
+                                                               where t.Value.DiscordChannelId == ctx.Channel?.Id
                                                                select t;
 
             KeyValuePair<Guid, DiscordTicket> y = x.First();
@@ -29,13 +29,13 @@ namespace InsanityBot.Tickets.Commands
                     .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.remove_user.not_a_ticket_channel"]
                         .ReplaceValues(ctx, ctx.Channel));
 
-                await ctx.Channel.SendMessageAsync(error.Build());
+                await ctx.Channel?.SendMessageAsync(error.Build());
                 return;
             }
 
             foreach(DiscordMember v in users)
             {
-                _ = ctx.Channel.AddOverwriteAsync(v, deny: Permissions.AccessChannels);
+                _ = ctx.Channel?.AddOverwriteAsync(v, deny: Permissions.AccessChannels);
 
                 DiscordTicket z = InsanityBot.TicketDaemon.Tickets[y.Key];
                 z.AddedUsers = (from a in z.AddedUsers
@@ -49,7 +49,7 @@ namespace InsanityBot.Tickets.Commands
             params DiscordRole[] roles)
         {
             IEnumerable<KeyValuePair<Guid, DiscordTicket>> x = from t in InsanityBot.TicketDaemon.Tickets
-                                                               where t.Value.DiscordChannelId == ctx.Channel.Id
+                                                               where t.Value.DiscordChannelId == ctx.Channel?.Id
                                                                select t;
 
             if(!x.Any())
@@ -61,13 +61,13 @@ namespace InsanityBot.Tickets.Commands
                     Color = DiscordColor.Red
                 };
 
-                await ctx.Channel.SendMessageAsync(error.Build());
+                await ctx.Channel?.SendMessageAsync(error.Build());
                 return;
             }
 
             foreach(DiscordRole v in roles)
             {
-                _ = ctx.Channel.AddOverwriteAsync(v, deny: Permissions.AccessChannels);
+                _ = ctx.Channel?.AddOverwriteAsync(v, deny: Permissions.AccessChannels);
             }
         }
     }

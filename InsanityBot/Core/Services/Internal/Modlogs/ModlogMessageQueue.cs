@@ -22,7 +22,7 @@ namespace InsanityBot.Core.Services.Internal.Modlogs
         {
             _ = Task.Run(() =>
             {
-                this.Channels[type].SendMessageAsync(message);
+                this.Channels[type]?.SendMessageAsync(message);
             });
             return Task.CompletedTask;
         }

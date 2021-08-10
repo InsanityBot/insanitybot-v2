@@ -68,7 +68,7 @@ namespace InsanityBot.Commands.Moderation
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.ban.failure"], ctx, member));
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
-                await ctx.Channel.SendMessageAsync(embed: failed.Build());
+                await ctx.Channel?.SendMessageAsync(embed: failed.Build());
             }
         }
 
@@ -80,7 +80,7 @@ namespace InsanityBot.Commands.Moderation
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.ban"))
             {
-                await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
@@ -96,7 +96,7 @@ namespace InsanityBot.Commands.Moderation
 
             DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.ban"];
 
-            moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
+            moderationEmbedBuilder.AddField("Moderator", ctx.Member?.Mention, true)
                 .AddField("Member", member.Mention, true)
                 .AddField("Reason", BanReason, true);
 
@@ -121,7 +121,7 @@ namespace InsanityBot.Commands.Moderation
             }
             finally
             {
-                await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
+                await ctx.Channel?.SendMessageAsync(embed: embedBuilder.Build());
             }
         }
     }

@@ -17,7 +17,7 @@ namespace InsanityBot.Tickets.Commands
             params DiscordMember[] users)
         {
             IEnumerable<KeyValuePair<Guid, DiscordTicket>> x = from t in InsanityBot.TicketDaemon.Tickets
-                                                               where t.Value.DiscordChannelId == ctx.Channel.Id
+                                                               where t.Value.DiscordChannelId == ctx.Channel?.Id
                                                                select t;
 
             KeyValuePair<Guid, DiscordTicket> y = x.First();
@@ -28,13 +28,13 @@ namespace InsanityBot.Tickets.Commands
                     .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.add_user.not_a_ticket_channel"]
                         .ReplaceValues(ctx, ctx.Channel));
 
-                _ = ctx.Channel.SendMessageAsync(error.Build());
+                _ = ctx.Channel?.SendMessageAsync(error.Build());
                 return;
             }
 
             foreach(DiscordMember v in users)
             {
-                _ = ctx.Channel.AddOverwriteAsync(v, Permissions.AccessChannels);
+                _ = ctx.Channel?.AddOverwriteAsync(v, Permissions.AccessChannels);
 
                 DiscordTicket z = InsanityBot.TicketDaemon.Tickets[y.Key];
                 z.AddedUsers = z.AddedUsers.Append(v.Id).ToArray();
@@ -42,7 +42,7 @@ namespace InsanityBot.Tickets.Commands
 
                 if(TicketDaemon.Configuration.Value<Boolean>("insanitybot.tickets.ghost_mention_added_members"))
                 {
-                    DiscordMessage msg = await ctx.Channel.SendMessageAsync(v.Mention);
+                    DiscordMessage msg = await ctx.Channel?.SendMessageAsync(v.Mention);
                     _ = msg.DeleteAsync();
                 }
             }
@@ -52,7 +52,7 @@ namespace InsanityBot.Tickets.Commands
             params DiscordRole[] roles)
         {
             IEnumerable<KeyValuePair<Guid, DiscordTicket>> x = from t in InsanityBot.TicketDaemon.Tickets
-                                                               where t.Value.DiscordChannelId == ctx.Channel.Id
+                                                               where t.Value.DiscordChannelId == ctx.Channel?.Id
                                                                select t;
 
             if(!x.Any())
@@ -61,17 +61,17 @@ namespace InsanityBot.Tickets.Commands
                     .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.add_user.not_a_ticket_channel"]
                         .ReplaceValues(ctx, ctx.Channel));
 
-                _ = ctx.Channel.SendMessageAsync(error.Build());
+                _ = ctx.Channel?.SendMessageAsync(error.Build());
                 return;
             }
 
             foreach(DiscordRole v in roles)
             {
-                _ = ctx.Channel.AddOverwriteAsync(v, Permissions.AccessChannels);
+                _ = ctx.Channel?.AddOverwriteAsync(v, Permissions.AccessChannels);
 
                 if(TicketDaemon.Configuration.Value<Boolean>("insanitybot.tickets.ghost_mention_added_members"))
                 {
-                    DiscordMessage msg = await ctx.Channel.SendMessageAsync(v.Mention);
+                    DiscordMessage msg = await ctx.Channel?.SendMessageAsync(v.Mention);
                     _ = msg.DeleteAsync();
                 }
             }

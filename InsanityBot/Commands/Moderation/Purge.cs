@@ -59,7 +59,7 @@ namespace InsanityBot.Commands.Moderation
 
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
-                await ctx.Channel.SendMessageAsync(embed: failed.Build());
+                await ctx.Channel?.SendMessageAsync(embed: failed.Build());
             }
         }
 
@@ -70,14 +70,14 @@ namespace InsanityBot.Commands.Moderation
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.purge"))
             {
-                await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
             //if silent delete command
             if(silent)
             {
-                await ctx.Message.DeleteAsync();
+                await ctx.Message?.DeleteAsync();
             }
 
             String ModlogEmbedReason = reason switch
@@ -89,8 +89,8 @@ namespace InsanityBot.Commands.Moderation
             DiscordEmbedBuilder tmpEmbedBuilder = null;
             DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.purge"];
 
-            moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
-                .AddField("Channel", ctx.Channel.Mention)
+            moderationEmbedBuilder.AddField("Moderator", ctx.Member?.Mention, true)
+                .AddField("Channel", ctx.Channel?.Mention)
                 .AddField("Reason", ModlogEmbedReason, true);
 
             try
@@ -105,12 +105,12 @@ namespace InsanityBot.Commands.Moderation
 
                     for(Byte b = 0; b < batches; b++)
                     {
-                        messageBuffer = await ctx.Channel.GetMessagesAsync(100);
-                        _ = ctx.Channel.DeleteMessagesAsync(messageBuffer);
+                        messageBuffer = await ctx.Channel?.GetMessagesAsync(100);
+                        _ = ctx.Channel?.DeleteMessagesAsync(messageBuffer);
                     }
 
-                    messageBuffer = await ctx.Channel.GetMessagesAsync(leftover);
-                    _ = ctx.Channel.DeleteMessagesAsync(messageBuffer);
+                    messageBuffer = await ctx.Channel?.GetMessagesAsync(leftover);
+                    _ = ctx.Channel?.DeleteMessagesAsync(messageBuffer);
 
                     tmpEmbedBuilder = InsanityBot.Embeds["insanitybot.moderation.purge"]
                         .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"]);
@@ -124,19 +124,19 @@ namespace InsanityBot.Commands.Moderation
                 }
                 else // its a discord snowflake
                 {
-                    DiscordMessage message = await ctx.Channel.GetMessageAsync(messageCount);
+                    DiscordMessage message = await ctx.Channel?.GetMessageAsync(messageCount);
 
                     if(message == null)
                     {
                         DiscordEmbedBuilder error = InsanityBot.Embeds["insanitybot.error"]
                             .WithDescription("Invalid message snowflake.");
 
-                        await ctx.Channel.SendMessageAsync(error.Build());
+                        await ctx.Channel?.SendMessageAsync(error.Build());
                         return;
                     }
 
-                    IReadOnlyList<DiscordMessage> messages = await ctx.Channel.GetMessagesAfterAsync(messageCount, Int16.MaxValue);
-                    _ = ctx.Channel.DeleteMessagesAsync(messages);
+                    IReadOnlyList<DiscordMessage> messages = await ctx.Channel?.GetMessagesAfterAsync(messageCount, Int16.MaxValue);
+                    _ = ctx.Channel?.DeleteMessagesAsync(messages);
 
                     tmpEmbedBuilder = InsanityBot.Embeds["insanitybot.moderation.purge"]
                         .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"]);
@@ -160,7 +160,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 if(!silent)
                 {
-                    DiscordMessage msg = await ctx.Channel.SendMessageAsync(embed: tmpEmbedBuilder.Build());
+                    DiscordMessage msg = await ctx.Channel?.SendMessageAsync(embed: tmpEmbedBuilder.Build());
                     Thread.Sleep(5000);
                     await msg.DeleteAsync();
                 }

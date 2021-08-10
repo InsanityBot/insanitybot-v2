@@ -27,14 +27,14 @@ namespace InsanityBot.Commands.Moderation.Locking
             {
                 if(!ctx.Member.HasPermission("insanitybot.admin.lock_whitelist.add"))
                 {
-                    await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
+                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.whitelist"];
 
-                moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
+                moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
                     .AddField("Role", role.Mention, true)
                     .AddField("Channel", channel.Mention, true);
 
@@ -77,7 +77,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
                 finally
                 {
-                    await ctx.Channel.SendMessageAsync(embedBuilder.Build());
+                    await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
                 }
             }
 
@@ -89,14 +89,14 @@ namespace InsanityBot.Commands.Moderation.Locking
             {
                 if(!ctx.Member.HasPermission("insanitybot.admin.lock_whitelist.remove"))
                 {
-                    await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
+                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.unwhitelist"];
 
-                moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
+                moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
                     .AddField("Role", role.Mention, true)
                     .AddField("Channel", channel.Mention, true);
 
@@ -130,7 +130,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
                 finally
                 {
-                    await ctx.Channel.SendMessageAsync(embedBuilder.Build());
+                    await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
                 }
             }
         }
@@ -146,14 +146,14 @@ namespace InsanityBot.Commands.Moderation.Locking
             {
                 if(!ctx.Member.HasPermission("insanitybot.admin.lock_blacklist.add"))
                 {
-                    await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
+                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.blacklist"];
 
-                moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
+                moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
                     .AddField("Role", role.Mention, true)
                     .AddField("Channel", channel.Mention, true);
 
@@ -196,7 +196,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
                 finally
                 {
-                    await ctx.Channel.SendMessageAsync(embedBuilder.Build());
+                    await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
                 }
             }
 
@@ -208,14 +208,14 @@ namespace InsanityBot.Commands.Moderation.Locking
             {
                 if(!ctx.Member.HasPermission("insanitybot.admin.lock_blacklist.remove"))
                 {
-                    await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
+                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
                     return;
                 }
 
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.unblacklist"];
 
-                moderationEmbedBuilder.AddField("Administrator", ctx.Member.Mention, true)
+                moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
                     .AddField("Role", role.Mention, true)
                     .AddField("Channel", channel.Mention, true);
 
@@ -249,7 +249,7 @@ namespace InsanityBot.Commands.Moderation.Locking
                 }
                 finally
                 {
-                    await ctx.Channel.SendMessageAsync(embedBuilder.Build());
+                    await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
                 }
             }
         }
