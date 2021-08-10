@@ -60,7 +60,7 @@ namespace InsanityBot.Commands.Moderation
 
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
-                await ctx.Channel.SendMessageAsync(embed: failed.Build());
+                await ctx.Channel?.SendMessageAsync(embed: failed.Build());
             }
         }
 
@@ -73,7 +73,7 @@ namespace InsanityBot.Commands.Moderation
         {
             if(!ctx.Member.HasPermission("insanitybot.moderation.kick"))
             {
-                await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                 return;
             }
 
@@ -89,7 +89,7 @@ namespace InsanityBot.Commands.Moderation
 
             DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.kick"];
 
-            moderationEmbedBuilder.AddField("Moderator", ctx.Member.Mention, true)
+            moderationEmbedBuilder.AddField("Moderator", ctx.Member?.Mention, true)
                 .AddField("Member", member.Mention, true)
                 .AddField("Reason", KickReason, true);
 
@@ -104,14 +104,14 @@ namespace InsanityBot.Commands.Moderation
                     DiscordDmChannel channel = await member.CreateDmChannelAsync();
                     if(DmMember)
                     {
-                        await channel.SendMessageAsync(GetReason(GetFormattedString(
+                        await channel?.SendMessageAsync(GetReason(GetFormattedString(
                             InsanityBot.LanguageConfig["insanitybot.moderation.kick.reason"],
                             ctx, member), KickReason));
                     }
 
                     if(Invite)
                     {
-                        await channel.SendMessageAsync((await ctx.Channel.CreateInviteAsync()).ToString());
+                        await channel?.SendMessageAsync((await ctx.Channel?.CreateInviteAsync()).ToString());
                     }
                 }
 
@@ -133,7 +133,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 if(!Silent)
                 {
-                    await ctx.Channel.SendMessageAsync(embed: embedBuilder.Build());
+                    await ctx.Channel?.SendMessageAsync(embed: embedBuilder.Build());
                 }
             }
         }

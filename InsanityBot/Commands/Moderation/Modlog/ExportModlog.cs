@@ -25,7 +25,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
             {
                 if(!ctx.Member.HasPermission("insanitybot.moderation.export_modlog"))
                 {
-                    await ctx.Channel.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
                     return;
                 }
 
@@ -37,12 +37,12 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 }
                 else
                 {
-                    exportChannel = await ctx.Member.CreateDmChannelAsync();
+                    exportChannel = await ctx.Member?.CreateDmChannelAsync();
                 }
 
                 if(!File.Exists($"./data/{member.Id}/modlog.json"))
                 {
-                    await ctx.Channel.SendMessageAsync(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.export_modlog.no_modlog"],
+                    await ctx.Channel?.SendMessageAsync(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.export_modlog.no_modlog"],
                         ctx, member));
                     return;
                 }
@@ -52,7 +52,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 DiscordMessageBuilder messageBuilder = new();
                 messageBuilder.WithFile("modlog_export.json", stream);
 
-                await exportChannel.SendMessageAsync(messageBuilder);
+                await exportChannel?.SendMessageAsync(messageBuilder);
             }
             catch(Exception e)
             {

@@ -13,7 +13,7 @@ namespace InsanityBot.Tickets.CustomCommands.Internal
                 throw new ArgumentException("Invalid datatype for message string.", nameof(parameter));
             }
 
-            context.Channel.SendMessageAsync(value);
+            context.Channel?.SendMessageAsync(value);
         }
     }
 }

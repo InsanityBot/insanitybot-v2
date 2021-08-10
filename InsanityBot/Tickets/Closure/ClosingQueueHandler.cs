@@ -56,7 +56,7 @@ namespace InsanityBot.Tickets.Closure
                             .WithDescription("Failed to delete the ticket. This could be an InsanityBot or a Discord API issue." +
                                 "\nPlease contact InsanityBot development at once and provide us with the console log.");
                         
-                        await channel.SendMessageAsync(error.Build());
+                        await channel?.SendMessageAsync(error.Build());
 
                         InsanityBot.TicketDaemon.ClosingQueue.Queue.Remove(q);
                     }

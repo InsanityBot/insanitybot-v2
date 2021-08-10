@@ -57,14 +57,14 @@ namespace InsanityBot.Tickets
             foreach(String v in preset.CreationMessages)
             {
                 String s = Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid).GetAwaiter().GetResult();
-                _ = ticket.SendMessageAsync(s);
+                _ = ticket?.SendMessageAsync(s);
             }
 
             foreach(String v in preset.CreationEmbeds)
             {
                 DiscordEmbed e = ((EmbedFormatter)InsanityBot.EmbedFactory.GetFormatter()).Read(
                     Parser.ParseTicketPlaceholders(v, virtualTicket.TicketGuid).GetAwaiter().GetResult());
-                _ = ticket.SendMessageAsync(e);
+                _ = ticket?.SendMessageAsync(e);
             }
 
             ticket.ModifyAsync(async xm =>

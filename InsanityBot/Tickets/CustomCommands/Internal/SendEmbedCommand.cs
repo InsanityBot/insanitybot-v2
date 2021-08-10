@@ -15,7 +15,7 @@ namespace InsanityBot.Tickets.CustomCommands.Internal
                 throw new ArgumentException("Invalid datatype for embed format string.", nameof(parameter));
             }
 
-            context.Channel.SendMessageAsync((InsanityBot.EmbedFactory.GetFormatter() as EmbedFormatter).Read(embed));
+            context.Channel?.SendMessageAsync((InsanityBot.EmbedFactory.GetFormatter() as EmbedFormatter).Read(embed));
         }
     }
 }
