@@ -2,6 +2,7 @@
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
 
 using InsanityBot.Core.Services.Internal.Modlogs;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Logging;
 
 using System;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
@@ -142,7 +144,7 @@ namespace InsanityBot.Commands.Moderation
         }
 
 
-        public static void InitializeUnban(String Identifier, Guid guid)
+        public static async void InitializeUnban(String Identifier, Guid guid)
         {
             if(!Identifier.StartsWith("tempban_"))
             {
@@ -153,7 +155,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 File.Delete($"./cache/timers/{Identifier}");
 
-                new Ban().ExecuteUnbanCommand(null, ToUInt64(Identifier),
+                new Ban().ExecuteUnbanCommand(null, await InsanityBot.Client.GetUserAsync(ToUInt64(Identifier)),
                     true, false, true, "timer_guid", guid).GetAwaiter().GetResult();
 
                 UnbanCompletedEvent();
