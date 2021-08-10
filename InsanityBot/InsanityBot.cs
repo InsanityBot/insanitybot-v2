@@ -14,39 +14,43 @@ using InsanityBot.Utility.Permissions;
 
 using System;
 
-#pragma warning disable CA2211
 namespace InsanityBot
 {
     public partial class InsanityBot
     {
-        public static CommandLineOptions CommandLineOptions;
+        private static TicketDaemon _ticketDaemon;
 
-        public static MainConfigurationManager ConfigManager;
-        public static MainConfiguration Config;
+        public static CommandLineOptions CommandLineOptions { get; set; }
 
-        public static DiscordConfiguration ClientConfiguration;
-        public static DiscordClient Client;
+        public static MainConfigurationManager ConfigManager { get; set; }
+        public static MainConfiguration Config { get; set; }
 
-        public static DiscordGuild HomeGuild;
+        public static DiscordConfiguration ClientConfiguration { get; set; }
+        public static DiscordClient Client { get; set; }
 
-        public static CommandsNextExtension CommandsExtension;
-        public static CommandsNextConfiguration CommandConfiguration;
+        public static DiscordGuild HomeGuild { get; set; }
 
-        public static InteractivityExtension Interactivity;
+        public static CommandsNextExtension CommandsExtension { get; set; }
+        public static CommandsNextConfiguration CommandConfiguration { get; set; }
 
-        public static LanguageConfigurationManager LanguageManager;
-        public static LanguageConfiguration LanguageConfig;
+        public static InteractivityExtension Interactivity { get; set; }
 
-        public static LoggerConfiguration LoggerConfig;
-        public static LoggerConfigurationManager LoggerManager;
+        public static LanguageConfigurationManager LanguageManager { get; set; }
+        public static LanguageConfiguration LanguageConfig { get; set; }
 
-        public static PermissionEngine PermissionEngine;
-        public static EmbedFormatterFactory EmbedFactory;
-        public static ModlogMessageQueue ModlogQueue;
-        public static TicketDaemon TicketDaemon;
-        public static EmbedHandler Embeds;
+        public static LoggerConfiguration LoggerConfig { get; set; }
+        public static LoggerConfigurationManager LoggerManager { get; set; }
 
-        public static String Version = "2.0.0-dev.00037";
+        public static PermissionEngine PermissionEngine { get; set; }
+        public static EmbedFormatterFactory EmbedFactory { get; set; }
+        public static ModlogMessageQueue ModlogQueue { get; set; }
+        public static TicketDaemon TicketDaemon
+        {
+            get => _ticketDaemon;
+            set => _ticketDaemon = value;
+        }
+        public static EmbedHandler Embeds { get; set; }
+
+        public static String Version => "2.0.0-dev.00037";
     }
 }
-#pragma warning restore CA2211

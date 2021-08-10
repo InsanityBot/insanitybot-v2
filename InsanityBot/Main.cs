@@ -266,7 +266,7 @@ namespace InsanityBot
                     TicketDaemon.CommandHandler.Load();
 
                     TicketDaemonState state = new();
-                    state.RestoreDaemonState(ref TicketDaemon);
+                    state.RestoreDaemonState(ref _ticketDaemon);
 
                     Client.MessageCreated += TicketDaemon.RouteCustomCommand;
                     Client.MessageCreated += TicketDaemon.ClosingQueue.HandleCancellation;
