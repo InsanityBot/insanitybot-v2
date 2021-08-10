@@ -3,6 +3,7 @@
   "Configuration": {
     "insanitybot": {
       "modules": {
+        "moderation": true,
         "experience": true,
         "logging": true,
         "miscellaneous": true,

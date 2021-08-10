@@ -95,7 +95,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         modlogEmbed.AddField("Bans", bans.Count().ToString(), true);
                     }
 
-                    if(!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_scrolling"]))
+                    if(!InsanityBot.Config.Value<Boolean>("insanitybot.commands.modlog.allow_scrolling"))
                     {
                         modlogEmbed.Description = user.CreateModlogDescription(false);
 

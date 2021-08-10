@@ -184,7 +184,7 @@ namespace InsanityBot.Core.Logger
         {
             LogConsole(logLevel, eventId, state, exception, formatter);
 
-            if((Boolean)InsanityBot.LoggerConfig["LogToFile"])
+            if(InsanityBot.LoggerConfig.Value<Boolean>("LogToFile"))
             {
                 LogFile(logLevel, eventId, state, exception, formatter);
             }

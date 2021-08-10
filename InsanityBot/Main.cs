@@ -186,7 +186,7 @@ namespace InsanityBot
             {
                 CaseSensitive = false,
                 StringPrefixes = Config.Prefixes,
-                DmHelp = (Boolean)Config["insanitybot.commands.help.send_dms"],
+                DmHelp = Config.Value<Boolean>("insanitybot.commands.help.send_dms"),
                 IgnoreExtraArguments = true
             };
 
@@ -215,7 +215,7 @@ namespace InsanityBot
             Client.Logger.LogInformation(new EventId(1000, "Main"), $"Startup successful!");
 
             //start offthread TCP connection
-            _ = HandleTCPConnections((Int64)Config["insanitybot.tcp_port"]);
+            _ = HandleTCPConnections(Config.Value<Int64>("insanitybot.tcp_port"));
 
             //start offthread XP management
             // if ((Boolean)Config["insanitybot.modules.experience"])
@@ -229,7 +229,7 @@ namespace InsanityBot
             ; // not implemented yet
 
             // load tickets
-            if((Boolean)Config["insanitybot.modules.tickets"])
+            if(Config.Value<Boolean>("insanitybot.modules.tickets"))
             {
                 _ = Task.Run(() =>
                 {
@@ -276,12 +276,12 @@ namespace InsanityBot
         {
             CommandsExtension.RegisterCommands<PermissionCommand>();
 
-            if((Boolean)Config["insanitybot.modules.miscellaneous"])
+            if(Config.Value<Boolean>("insanitybot.modules.miscellaneous"))
             {
                 CommandsExtension.RegisterCommands<Say>();
                 CommandsExtension.RegisterCommands<Embed>();
             }
-            if((Boolean)Config["insanitybot.modules.moderation"])
+            if(Config.Value<Boolean>("insanitybot.modules.moderation"))
             {
                 CommandsExtension.RegisterCommands<VerbalWarn>();
                 CommandsExtension.RegisterCommands<Warn>();
@@ -302,7 +302,7 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<Unlock>();
                 CommandsExtension.RegisterCommands<LockHelperCommands>();
             }
-            if((Boolean)Config["insanitybot.modules.tickets"])
+            if(Config.Value<Boolean>("insanitybot.modules.tickets"))
             {
                 CommandsExtension.RegisterCommands<NewTicketCommand>();
                 CommandsExtension.RegisterCommands<CloseTicketCommand>();
@@ -326,8 +326,8 @@ namespace InsanityBot
         {
             TimeHandler.Start();
             ModlogQueue = new(
-                (ModlogMessageType.Moderation, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.modlog_channel_id"]))),
-                (ModlogMessageType.Administration, HomeGuild.GetChannel(ToUInt64(Config["insanitybot.identifiers.commands.admin_log_channel_id"]))));
+                (ModlogMessageType.Moderation, HomeGuild.GetChannel(Config.Value<UInt64>("insanitybot.identifiers.commands.modlog_channel_id"))),
+                (ModlogMessageType.Administration, HomeGuild.GetChannel(Config.Value<UInt64>("insanitybot.identifiers.commands.admin_log_channel_id"))));
 
             Embeds = new();
             Embeds.Initialize(Client.Logger);

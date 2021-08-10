@@ -93,7 +93,7 @@ namespace InsanityBot.Tickets.Closure
         [JsonConstructor]
         public ClosingQueue()
         {
-            this.__default_cancellable = (Boolean)TicketDaemon.Configuration["insanitybot.tickets.closing_cancellable"];
+            this.__default_cancellable = TicketDaemon.Configuration.Value<Boolean>("insanitybot.tickets.closing_cancellable");
 
             if(this.__channels == null)
             {

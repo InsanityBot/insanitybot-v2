@@ -18,7 +18,7 @@ namespace InsanityBot.Utility.Config
             config = (T)DataFixerLower.UpgradeData(config);
             reader.Close();
 
-            this.Serialize(config, "./config/main.json");
+            this.Serialize(config, Filename);
             return config;
         }
 

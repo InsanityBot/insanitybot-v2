@@ -17,7 +17,7 @@ namespace InsanityBot.Utility.Config
 
         public Object this[String Identifier]
         {
-            get => Configuration.SelectToken(Identifier).Value<Object>();
+            get => Configuration.SelectToken(Identifier)?.Value<Object>();
         }
 
         public T Value<T>(String identifier)

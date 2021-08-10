@@ -27,7 +27,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
             }
             else
             {
-                for(Int32 b = 0; b < Convert.ToInt16(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]); b++)
+                for(Int32 b = 0; b < InsanityBot.Config.Value<Int16>("insanitybot.commands.modlog.max_modlog_entries_per_embed"); b++)
                 {
                     if(modlog.Modlog[b].Type == type)
                     {
@@ -36,7 +36,7 @@ namespace InsanityBot.Commands.Moderation.Modlog.Individual
                 }
 
 
-                if(modlog.ModlogEntryCount > Convert.ToInt16(InsanityBot.Config["insanitybot.commands.modlog.max_modlog_entries_per_embed"]))
+                if(modlog.ModlogEntryCount > InsanityBot.Config.Value<Int16>("insanitybot.commands.modlog.max_modlog_entries_per_embed"))
                 {
                     description += InsanityBot.LanguageConfig["insanitybot.commands.modlog.overflow"];
                 }

@@ -174,8 +174,8 @@ namespace InsanityBot.Commands
                 {
                     return type switch
                     {
-                        TemporaryPunishmentType.Mute => TimeSpan.Parse((String)InsanityBot.Config["insanitybot.commands.default_mute_time"]),
-                        TemporaryPunishmentType.Ban => TimeSpan.Parse((String)InsanityBot.Config["insanitybot.commands.default_ban_time"]),
+                        TemporaryPunishmentType.Mute => TimeSpan.Parse(InsanityBot.Config.Value<String>("insanitybot.commands.default_mute_time")),
+                        TemporaryPunishmentType.Ban => TimeSpan.Parse(InsanityBot.Config.Value<String>("insanitybot.commands.default_ban_time")),
                         _ => new TimeSpan(00, 30, 00)
                     };
                 }

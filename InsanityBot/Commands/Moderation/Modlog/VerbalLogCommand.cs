@@ -47,7 +47,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
                 {
                     modlogEmbed = InsanityBot.Embeds["insanitybot.verballog.entries"];
 
-                    if(!ToBoolean(InsanityBot.Config["insanitybot.commands.modlog.allow_verballog_scrolling"]))
+                    if(!InsanityBot.Config.Value<Boolean>("insanitybot.commands.modlog.allow_verballog_scrolling"))
                     {
                         modlogEmbed.Description = user.CreateVerballogDescription();
 

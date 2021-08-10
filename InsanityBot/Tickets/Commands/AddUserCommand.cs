@@ -40,7 +40,7 @@ namespace InsanityBot.Tickets.Commands
                 z.AddedUsers = z.AddedUsers.Append(v.Id).ToArray();
                 InsanityBot.TicketDaemon.Tickets[y.Key] = z;
 
-                if((Boolean)TicketDaemon.Configuration["insanitybot.tickets.ghost_mention_added_members"])
+                if(TicketDaemon.Configuration.Value<Boolean>("insanitybot.tickets.ghost_mention_added_members"))
                 {
                     DiscordMessage msg = await ctx.Channel.SendMessageAsync(v.Mention);
                     _ = msg.DeleteAsync();
@@ -69,7 +69,7 @@ namespace InsanityBot.Tickets.Commands
             {
                 _ = ctx.Channel.AddOverwriteAsync(v, Permissions.AccessChannels);
 
-                if((Boolean)TicketDaemon.Configuration["insanitybot.tickets.ghost_mention_added_members"])
+                if(TicketDaemon.Configuration.Value<Boolean>("insanitybot.tickets.ghost_mention_added_members"))
                 {
                     DiscordMessage msg = await ctx.Channel.SendMessageAsync(v.Mention);
                     _ = msg.DeleteAsync();

@@ -38,8 +38,9 @@ namespace InsanityBot.Commands.Moderation
             }
             catch
             {
-                await this.ExecuteSlowmodeCommand(ctx, channel, ((String)InsanityBot.Config["insanitybot.commands.slowmode.default_slowmode"])
-                    .ParseTimeSpan(), false);
+                await this.ExecuteSlowmodeCommand(ctx, channel, InsanityBot.Config.Value<String>(
+                    "insanitybot.commands.slowmode.default_slowmode")
+                        .ParseTimeSpan(), false);
             }
         }
 
@@ -136,7 +137,6 @@ namespace InsanityBot.Commands.Moderation
             => await this.ResetSlowmodeCommand(ctx, ctx.Channel, silent);
 
         [Command("reset")]
-        [Aliases("remove", "clear")]
         public async Task ResetSlowmodeCommand(CommandContext ctx,
             DiscordChannel channel, Boolean silent = false)
             => await this.ExecuteSlowmodeCommand(ctx, channel, new(0), silent, true);
