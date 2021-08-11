@@ -163,7 +163,7 @@ namespace InsanityBot.Tickets
 
             writer.Close();
 
-            if((Boolean)Configuration["insanitybot.tickets.transcripts.enable"])
+            if(Configuration.Value<Boolean>("insanitybot.tickets.transcripts.enable"))
             {
                 await this.Transcriber.Transcribe(ticket);
 
