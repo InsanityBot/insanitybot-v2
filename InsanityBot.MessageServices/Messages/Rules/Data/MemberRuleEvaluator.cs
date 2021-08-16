@@ -26,7 +26,7 @@ namespace InsanityBot.MessageServices.Messages.Rules.Data
 
         public Boolean EvaluateRoleIdRule(CommandContext ctx, JToken objectData)
         {
-            return ctx.Member?.Roles.Any(xm => xm.Id == objectData.Value<UInt64>() ?? false);
+            return ctx.Member?.Roles.Any(xm => xm.Id == objectData.Value<UInt64>()) ?? false;
         }
     }
 }
