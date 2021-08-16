@@ -11,9 +11,9 @@ namespace InsanityBot.MessageServices.Messages.Rules.Data
     {
         public Boolean EvaluateCommandRule(CommandContext ctx, JToken objectData)
         {
-            if(ctx.Command.Name == objectData.Value<String>())
+            if(ctx.Command?.Name == objectData.Value<String>())
                 return true;
-            if(ctx.Command.Aliases.Contains(objectData.Value<String>()))
+            if(ctx.Command?.Aliases.Contains(objectData.Value<String>()) ?? false)
                 return true;
             return false;
         }

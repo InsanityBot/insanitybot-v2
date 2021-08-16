@@ -10,7 +10,7 @@ namespace InsanityBot.MessageServices.Messages.Rules.Data
     {
         public Boolean EvaluatePrefixRule(CommandContext context, JToken objectData)
         {
-            if(context.Prefix == objectData.Value<String>())
+            if(context?.Prefix == objectData.Value<String>())
                 return true;
             return false;
         }

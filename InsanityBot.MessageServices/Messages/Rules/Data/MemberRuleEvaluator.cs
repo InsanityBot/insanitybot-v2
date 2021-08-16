@@ -11,22 +11,22 @@ namespace InsanityBot.MessageServices.Messages.Rules.Data
     {
         public Boolean EvaluateBotRule(CommandContext ctx, JToken objectData)
         {
-            return ctx.Member.IsBot == objectData.Value<Boolean>();
+            return ctx.Member?.IsBot == objectData.Value<Boolean>();
         }
 
         public Boolean EvaluateOwnerRule(CommandContext ctx, JToken objectData)
         {
-            return ctx.Member.IsOwner == objectData.Value<Boolean>();
+            return ctx.Member?.IsOwner == objectData.Value<Boolean>();
         }
 
         public Boolean EvaluateIdRule(CommandContext ctx, JToken objectData)
         {
-            return ctx.Member.Id == objectData.Value<UInt64>();
+            return ctx.Member?.Id == objectData.Value<UInt64>();
         }
 
         public Boolean EvaluateRoleIdRule(CommandContext ctx, JToken objectData)
         {
-            return ctx.Member.Roles.Any(xm => xm.Id == objectData.Value<UInt64>());
+            return ctx.Member?.Roles.Any(xm => xm.Id == objectData.Value<UInt64>() ?? false);
         }
     }
 }
