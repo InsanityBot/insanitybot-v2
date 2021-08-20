@@ -54,7 +54,7 @@
         "message_edit": true,
         "member_join": true,
         "member_leave": true,
-        "commands": true,
+        "commands": false,
         "members": {
           "use_mentions": true,
           "use_name_discriminator_format": false
@@ -81,29 +81,28 @@
       },
       "identifiers": {
         "commands": {
-          "modlog_channel_id": 0,
-          "admin_log_channel_id": 0,
-          "suggestion_channel_id": 0,
-          "acceptec_suggestions_channel_id": 0,
-          "denied_suggestions_channel_id": 0,
-          "suggestion_upvote_emote_id": 0,
-          "suggestion_downvote_emote_id": 0
+          "suggestion_channel": 0,
+          "acceptec_suggestions_channel": 0,
+          "denied_suggestions_channel": 0,
+          "suggestion_upvote_emote": 0,
+          "suggestion_downvote_emote": 0
         },
         "logging": {
+          "modlog_channel": 0,
           "message_delete_log_channel": 0,
           "message_edit_log_channel": 0,
           "member_join_log_channel": 0,
           "member_leave_log_channel": 0
         },
         "miscellaneous": {
-          "join_role_ids": [
+          "join_roles": [
             0
           ]
         },
         "moderation": {
-          "mute_role_id": 0,
-          "blacklist_role_id": 0,
-          "lock_exempt_role_id": 0
+          "mute_role": 0,
+          "blacklist_role": 0,
+          "lock_exempt_role": 0
         }
       },
       "tcp_port": 0
