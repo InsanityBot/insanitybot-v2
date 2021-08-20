@@ -29,5 +29,9 @@ namespace InsanityBot.MessageServices.Messages.Rules
         [JsonProperty("allowAction")]
         [JsonRequired]
         public Boolean Allow { get; set; }
+
+        [JsonProperty("channel")]
+        [JsonRequired]
+        public UInt64 Channel { get; set; }
     }
 }

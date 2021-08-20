@@ -58,6 +58,20 @@
         "members": {
           "use_mentions": true,
           "use_name_discriminator_format": false
+        },
+        "use_webhook": true,
+        "advanced": {
+          "enable": true,
+          "allow_rules_for": {
+            "message_delete": true,
+            "message_edit": true,
+            "member_join": true,
+            "member_leave": true,
+            "commands": true,
+            "command_execution": true
+          },
+          "exclusionist_rules": true,
+          "allow_crossposting": false
         }
       },
       "miscellaneous": {
