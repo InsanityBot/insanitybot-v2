@@ -31,7 +31,7 @@ namespace InsanityBot.Tickets.Closure
 
         private async Task CountdownElapsedAsync()
         {
-            DateTime compareAgainst = DateTime.Now;
+            DateTimeOffset compareAgainst = DateTimeOffset.Now;
 
             for(Int32 i = 0; i < InsanityBot.TicketDaemon.ClosingQueue.Queue.Count; i++)
             {

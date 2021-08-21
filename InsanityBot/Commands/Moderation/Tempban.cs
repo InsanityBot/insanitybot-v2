@@ -108,7 +108,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 BanStartingEvent();
 
-                Timer callbackTimer = new(DateTime.Now.Add(time), $"tempban_{member.Id}");
+                Timer callbackTimer = new(DateTimeOffset.Now.Add(time), $"tempban_{member.Id}");
                 moderationEmbedBuilder.AddField("Timer GUID", callbackTimer.Guid.ToString(), true);
                 TimeHandler.AddTimer(callbackTimer);
 

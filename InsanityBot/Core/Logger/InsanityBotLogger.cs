@@ -31,7 +31,7 @@ namespace InsanityBot.Core.Logger
 
                         try
                         {
-                            File.Move("./logs/latest.txt", $"./logs/log-{DateTime.Now:yyyy-MM-dd-hh-mm-dd}.txt");
+                            File.Move("./logs/latest.txt", $"./logs/log-{DateTimeOffset.Now:yyyy-MM-dd-hh-mm-dd}.txt");
                         }
                         catch
                         {

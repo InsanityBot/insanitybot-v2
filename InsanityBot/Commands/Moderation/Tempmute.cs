@@ -111,7 +111,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 MuteStartingEvent();
 
-                Timer callbackTimer = new(DateTime.Now.Add(time), $"tempmute_{member.Id}");
+                Timer callbackTimer = new(DateTimeOffset.Now.Add(time), $"tempmute_{member.Id}");
                 moderationEmbedBuilder.AddField("Timer GUID", callbackTimer.Guid.ToString(), true);
                 TimeHandler.AddTimer(callbackTimer);
 

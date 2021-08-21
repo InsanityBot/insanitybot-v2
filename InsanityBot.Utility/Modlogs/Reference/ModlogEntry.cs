@@ -6,7 +6,7 @@ namespace InsanityBot.Utility.Modlogs.Reference
     {
         public ModlogEntryType Type { get; set; }
 
-        public DateTime Time { get; set; }
+        public DateTimeOffset Time { get; set; }
 
         public String Reason { get; set; }
 

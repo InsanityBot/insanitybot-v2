@@ -114,7 +114,7 @@ namespace InsanityBot.Tickets.Closure
             {
                 Cancellable = cancellable,
                 ChannelId = channelId,
-                CloseDate = DateTime.Now + delay
+                CloseDate = DateTimeOffset.Now + delay
             });
 
             this.__channels.Add(channelId);
