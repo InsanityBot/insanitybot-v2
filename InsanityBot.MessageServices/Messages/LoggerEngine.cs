@@ -96,7 +96,10 @@ namespace InsanityBot.MessageServices.Messages
                 {
                     if(!_rules.Channels.ContainsKey(x.Channel))
                     {
-                        _rules.Channels.Add(x.Channel, guild.GetChannel(x.Channel));
+                        if(_config.SelectToken("use_webhooks").Value<Boolean>())
+                            _rules.Channels.Add(x.Channel, new LoggingWebhook(guild.GetChannel(x.Channel)));
+                        else
+                            _rules.Channels.Add(x.Channel, new LoggingChannel(guild.GetChannel(x.Channel)));
                     }
                 }
             }

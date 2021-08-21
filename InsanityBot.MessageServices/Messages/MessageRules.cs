@@ -14,7 +14,7 @@ namespace InsanityBot.MessageServices.Messages
     {
         public Dictionary<LogEvent, DiscordChannel> Defaults { get; set; }
         public Dictionary<LogEvent, LoggerRule[]> Rules { get; set; }
-        public Dictionary<UInt64, DiscordChannel> Channels { get; set; }
+        public Dictionary<UInt64, ILoggingGateway> Channels { get; set; }
 
         private readonly DiscordGuild _guild;
 
