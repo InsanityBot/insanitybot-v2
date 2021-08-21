@@ -36,12 +36,27 @@ namespace InsanityBot.MessageServices.Messages
             this._config = (JObject)config.Configuration.SelectToken("insanitybot.logging");
             this._channels = (JObject)config.Configuration.SelectToken("insanitybot.identifiers.logging");
 
-            client.MessageCreated += this.MessageCreated;
-            client.MessageUpdated += this.MessageUpdated;
-            client.MessagesBulkDeleted += this.MessagesBulkDeleted;
-            client.GuildMemberAdded += this.GuildMemberAdded;
-            client.GuildMemberRemoved += this.GuildMemberRemoved;
-            commandExtension.CommandExecuted += this.CommandExecuted;
+            if(_config.SelectToken("message_delete").Value<Boolean>())
+            {
+                client.MessageCreated += this.MessageCreated;
+                client.MessagesBulkDeleted += this.MessagesBulkDeleted;
+            }
+            if(_config.SelectToken("message_edit").Value<Boolean>())
+            {
+                client.MessageUpdated += this.MessageUpdated;
+            }
+            if(_config.SelectToken("member_join").Value<Boolean>())
+            {
+                client.GuildMemberAdded += this.GuildMemberAdded;
+            }
+            if(_config.SelectToken("member_leave").Value<Boolean>())
+            {
+                client.GuildMemberRemoved += this.GuildMemberRemoved;
+            }
+            if(_config.SelectToken("commands").Value<Boolean>())
+            {
+                commandExtension.CommandExecuted += this.CommandExecuted;
+            }
 
             if(!File.Exists("./config/logging.json"))
             {
