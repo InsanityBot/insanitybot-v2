@@ -70,7 +70,7 @@
             "commands": true,
             "command_execution": true
           },
-          "exclusionist_rules": true,
+          "defaults_overriden_by_rules": true,
           "allow_crossposting": false
         }
       },
@@ -82,7 +82,7 @@
       "identifiers": {
         "commands": {
           "suggestion_channel": 0,
-          "acceptec_suggestions_channel": 0,
+          "accepted_suggestions_channel": 0,
           "denied_suggestions_channel": 0,
           "suggestion_upvote_emote": 0,
           "suggestion_downvote_emote": 0
