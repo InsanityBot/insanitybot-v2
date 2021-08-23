@@ -61,7 +61,6 @@
         },
         "use_webhook": true,
         "advanced": {
-          "enable": true,
           "allow_rules_for": {
             "message_delete": true,
             "message_edit": true,
@@ -71,7 +70,8 @@
             "command_execution": true
           },
           "defaults_overriden_by_rules": true,
-          "allow_crossposting": false
+          "allow_crossposting": false,
+          "use_embeds": true
         }
       },
       "miscellaneous": {

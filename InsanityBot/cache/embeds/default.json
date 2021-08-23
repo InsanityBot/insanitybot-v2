@@ -325,5 +325,36 @@
     "color": "#e11584",
     "footer": "InsanityBot 2020-2021",
     "title": "Removed user from ticket"
+  },
+
+  "insanitybot.logging.delete_message": {
+    "color": "#aa0000",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Deleted message"
+  },
+  "insanitybot.logging.bulk_delete_messages": {
+    "color": "#aa0000",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Bulk-deleted messages"
+  },
+  "insanitybot.logging.edit_messages": {
+    "color": "#ffff33",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Edited message"
+  },
+  "insanitybot.logging.member_join": {
+    "color": "#5dbb63",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Member joined"
+  },
+  "insanitybot.logging.member_leave": {
+    "color": "#aa0000",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Member left"
+  },
+  "insanitybot.logging.command": {
+    "color": "#fe7d6a",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Command executed"
   }
 }
