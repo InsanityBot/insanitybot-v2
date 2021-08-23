@@ -10,5 +10,10 @@ namespace InsanityBot.MessageServices.Messages
         public Task SendMessage(DiscordEmbed embed);
         public Task SendMessage(String content);
         public Task SendMessage(DiscordMessageBuilder builder);
+
+        public static ILoggingGateway Empty
+        {
+            get;
+        }
     }
 }

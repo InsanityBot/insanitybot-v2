@@ -16,15 +16,20 @@ namespace InsanityBot.MessageServices.Messages
 
         public async Task SendMessage(DiscordEmbed embed)
         {
-            await underlying.SendMessageAsync(embed);
+            await underlying?.SendMessageAsync(embed);
         }
         public async Task SendMessage(String content)
         {
-            await underlying.SendMessageAsync(content);
+            await underlying?.SendMessageAsync(content);
         }
         public async Task SendMessage(DiscordMessageBuilder builder)
         {
-            await underlying.SendMessageAsync(builder);
+            await underlying?.SendMessageAsync(builder);
+        }
+
+        public static ILoggingGateway Empty
+        {
+            get => new LoggingChannel(null);
         }
     }
 }

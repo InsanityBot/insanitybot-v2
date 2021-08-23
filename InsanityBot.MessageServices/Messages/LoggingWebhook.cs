@@ -16,7 +16,7 @@ namespace InsanityBot.MessageServices.Messages
 
         public LoggingWebhook(DiscordChannel channel)
         {
-            var webhooks = channel.GetWebhooksAsync().GetAwaiter().GetResult();
+            var webhooks = channel?.GetWebhooksAsync().GetAwaiter().GetResult();
 
             if(!webhooks.Any(xm => xm.Name == "InsanityBot"))
             {
@@ -29,19 +29,24 @@ namespace InsanityBot.MessageServices.Messages
 
         public async Task SendMessage(DiscordEmbed embed)
         {
-            await webhook.ExecuteAsync(new DiscordWebhookBuilder()
+            await webhook?.ExecuteAsync(new DiscordWebhookBuilder()
                 .AddEmbed(embed));
         }
         public async Task SendMessage(String content)
         {
-            await webhook.ExecuteAsync(new DiscordWebhookBuilder()
+            await webhook?.ExecuteAsync(new DiscordWebhookBuilder()
                 .WithContent(content));
         }
         public async Task SendMessage(DiscordMessageBuilder builder)
         {
-            await webhook.ExecuteAsync(new DiscordWebhookBuilder()
+            await webhook?.ExecuteAsync(new DiscordWebhookBuilder()
                 .WithContent(builder.Content)
                 .AddEmbeds(builder.Embeds));
+        }
+
+        public static ILoggingGateway Empty
+        {
+            get => new LoggingWebhook(null);
         }
     }
 }
