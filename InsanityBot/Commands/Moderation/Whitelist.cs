@@ -4,7 +4,6 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
@@ -99,10 +98,10 @@ namespace InsanityBot.Commands.Moderation
                 _ = member.RevokeRoleAsync(InsanityBot.HomeGuild.GetRole(
                     InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.blacklist_role_id")),
                     WhitelistReason);
-                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
-                });
+                }, ctx);
             }
             catch(Exception e)
             {

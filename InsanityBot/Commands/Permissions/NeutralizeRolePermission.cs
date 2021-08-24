@@ -4,7 +4,6 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
@@ -109,10 +108,10 @@ namespace InsanityBot.Commands.Permissions
                         await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
                     }
 
-                    _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Administration, new DiscordMessageBuilder
+                    _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
                     {
                         Embed = moderationEmbedBuilder
-                    });
+                    }, ctx);
                 }
             }
         }

@@ -4,7 +4,6 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
@@ -102,10 +101,10 @@ namespace InsanityBot.Commands.Moderation
                 embedBuilder = InsanityBot.Embeds["insanitybot.moderation.warn"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.warn.success"], ctx, target));
 
-                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
-                });
+                }, ctx);
             }
             catch(Exception e)
             {

@@ -4,7 +4,6 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Modlogs; // unsafe interface to allow faster method chaining
 using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
@@ -109,10 +108,10 @@ namespace InsanityBot.Commands.Moderation
                     .WithDescription(GetMemberReason(InsanityBot.LanguageConfig["insanitybot.moderation.verbal_warn.reason"],
                         VerbalWarnReason, member));
 
-                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
-                });
+                }, ctx);
             }
             catch(Exception e)
             {

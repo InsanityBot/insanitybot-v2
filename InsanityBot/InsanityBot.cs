@@ -5,7 +5,6 @@ using DSharpPlus.Interactivity;
 
 using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.Core.Logger;
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.MessageServices.Embeds;
 using InsanityBot.MessageServices.Messages;
 using InsanityBot.Tickets;
@@ -42,7 +41,6 @@ namespace InsanityBot
 
         public static PermissionEngine PermissionEngine { get; set; }
         public static EmbedFormatterFactory EmbedFactory { get; set; }
-        public static ModlogMessageQueue ModlogQueue { get; set; }
         public static TicketDaemon TicketDaemon
         {
             get => _ticketDaemon;

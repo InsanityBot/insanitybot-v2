@@ -4,7 +4,6 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
@@ -117,10 +116,10 @@ namespace InsanityBot.Commands.Moderation
 
                     moderationEmbedBuilder.AddField("Messages", messageCount.ToString(), true);
 
-                    _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                    _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
                     {
                         Embed = moderationEmbedBuilder
-                    });
+                    }, ctx);
                 }
                 else // its a discord snowflake
                 {
@@ -143,10 +142,10 @@ namespace InsanityBot.Commands.Moderation
 
                     moderationEmbedBuilder.AddField("Messages", messages.Count.ToString(), true);
 
-                    _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                    _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
                     {
                         Embed = moderationEmbedBuilder
-                    });
+                    }, ctx);
                 }
             }
             catch(Exception e)

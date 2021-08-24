@@ -14,7 +14,6 @@ using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
 using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Datafixers;
 using InsanityBot.MessageServices.Embeds;
 using InsanityBot.Tickets;
@@ -325,9 +324,6 @@ namespace InsanityBot
         private static void InitializeAll()
         {
             TimeHandler.Start();
-            ModlogQueue = new(
-                (ModlogMessageType.Moderation, HomeGuild.GetChannel(Config.Value<UInt64>("insanitybot.identifiers.commands.modlog_channel_id"))),
-                (ModlogMessageType.Administration, HomeGuild.GetChannel(Config.Value<UInt64>("insanitybot.identifiers.commands.admin_log_channel_id"))));
 
             Embeds = new();
             Embeds.Initialize(Client.Logger);
