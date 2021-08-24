@@ -142,9 +142,7 @@ namespace InsanityBot.MessageServices.Messages
             {
                 DiscordEmbedBuilder embedBuilder = _embeds["insanitybot.logging.command"]
                     .AddField("Command", e.Command.Name, true)
-                    .AddField("Sender", _config.SelectToken("members.use_mentions").Value<Boolean>() ? e.Context.Member.Mention :
-                        (_config.SelectToken("members.use_name_discriminator_format").Value<Boolean>() ?
-                        $"{e.Context.Member.Username}#{e.Context.Member.Discriminator}" : e.Context.Member.Username), true);
+                    .AddField("Sender", GetMemberMention(e.Context.Member), true);
                 await gateway.SendMessage(embedBuilder.Build());
             }
             else
@@ -241,6 +239,13 @@ namespace InsanityBot.MessageServices.Messages
                 }
             }
             return _rules.Channels[_rules.Defaults[ev].Id];
+        }
+
+        private String GetMemberMention(DiscordUser member)
+        {
+            return _config.SelectToken("members.use_mentions").Value<Boolean>() ? member.Mention :
+                (_config.SelectToken("members.use_name_discriminator_format").Value<Boolean>() ?
+                $"{member.Username}#{member.Discriminator}" : member.Username);
         }
     }
 }
