@@ -96,13 +96,13 @@ namespace InsanityBot.MessageServices.Messages
         private void CreateDefaultRules(JObject channels, DiscordGuild guild)
         {
             _rules.Defaults.Add(LogEvent.MessageDelete,
-                guild.GetChannel(channels.SelectToken("message_delete_log_channel").Value<UInt64>()));
+                guild.GetChannel(channels.SelectToken("message_delete_channel").Value<UInt64>()));
             _rules.Defaults.Add(LogEvent.MessageEdit,
-                guild.GetChannel(channels.SelectToken("message_edit_log_channel").Value<UInt64>()));
+                guild.GetChannel(channels.SelectToken("message_edit_channel").Value<UInt64>()));
             _rules.Defaults.Add(LogEvent.MemberJoin,
-                guild.GetChannel(channels.SelectToken("member_join_log_channel").Value<UInt64>()));
+                guild.GetChannel(channels.SelectToken("member_join_channel").Value<UInt64>()));
             _rules.Defaults.Add(LogEvent.MemberLeave,
-                guild.GetChannel(channels.SelectToken("member_leave_log_channel").Value<UInt64>()));
+                guild.GetChannel(channels.SelectToken("member_leave_channel").Value<UInt64>()));
             _rules.Defaults.Add(LogEvent.CommandExecution,
                 guild.GetChannel(channels.SelectToken("modlog_channel").Value<UInt64>()));
         }
