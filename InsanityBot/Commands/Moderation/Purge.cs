@@ -89,7 +89,7 @@ namespace InsanityBot.Commands.Moderation
             DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.purge"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member?.Mention, true)
-                .AddField("Channel", ctx.Channel?.Mention)
+                .AddField("Channel", ctx.Channel?.Mention, true)
                 .AddField("Reason", ModlogEmbedReason, true);
 
             try
