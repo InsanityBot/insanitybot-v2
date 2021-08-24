@@ -45,7 +45,7 @@ namespace InsanityBot.MessageServices.Messages
 
             if(_config.SelectToken("message_delete").Value<Boolean>())
             {
-                client.MessageCreated += this.MessageCreated;
+                client.MessageDeleted += this.MessageDeleted;
                 client.MessagesBulkDeleted += this.MessagesBulkDeleted;
             }
             if(_config.SelectToken("message_edit").Value<Boolean>())
@@ -71,6 +71,11 @@ namespace InsanityBot.MessageServices.Messages
             _memberEvaluator = new();
             _prefixEvaluator = new();
             _embeds = embeds;
+
+            if(!Directory.Exists("./cache/messages"))
+            {
+                Directory.CreateDirectory("./cache/messages");
+            }
 
             if(!File.Exists("./config/logging.json"))
             {
@@ -151,29 +156,99 @@ namespace InsanityBot.MessageServices.Messages
             }
         }
 
-        private Task GuildMemberRemoved(DiscordClient sender, GuildMemberRemoveEventArgs e)
+        private async Task GuildMemberRemoved(DiscordClient sender, GuildMemberRemoveEventArgs e)
         {
-            throw new NotImplementedException();
+            CommandContext context = _contextBuilder.BuildContext(e);
+            ILoggingGateway gateway = GetGateway(context, LogEvent.MemberLeave);
+
+            if(_config.SelectToken("use_embeds").Value<Boolean>())
+            {
+                DiscordEmbedBuilder embedBuilder = _embeds["insanitybot.logging.member_leave"]
+                    .AddField("Member", GetMemberMention(e.Member), true);
+                await gateway.SendMessage(embedBuilder.Build());
+            }
+            else
+            {
+                await gateway.SendMessage($"Member {e.Member.Username} left.");
+            }
         }
 
-        private Task GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
+        private async Task GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
         {
-            throw new NotImplementedException();
+            CommandContext context = _contextBuilder.BuildContext(e);
+            ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
+
+            if(_config.SelectToken("use_embeds").Value<Boolean>())
+            {
+                DiscordEmbedBuilder embedBuilder = _embeds["insanitybot.logging.member_join"]
+                    .AddField("Member", GetMemberMention(e.Member), true);
+                await gateway.SendMessage(embedBuilder.Build());
+            }
+            else
+            {
+                await gateway.SendMessage($"Member {e.Member.Username} joined.");
+            }
         }
 
-        private Task MessagesBulkDeleted(DiscordClient sender, MessageBulkDeleteEventArgs e)
+        private async Task MessagesBulkDeleted(DiscordClient sender, MessageBulkDeleteEventArgs e)
         {
-            throw new NotImplementedException();
+            CommandContext context = _contextBuilder.BuildContext(e);
+            ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
+            Guid filename = Guid.NewGuid();
+
+            StreamWriter writer = new(File.Create($"./cache/messages/{filename}.md"));
+
+            writer.WriteLine("# Message Transcript for bulk message deletion");
+            foreach(var v in e.Messages)
+            {
+                writer.WriteLine($"[{v.Timestamp:dd/MM/yy-HH:mm:ss}] {v.Author.Username}: {v.Content}");
+            }
+            writer.Close();
+
+            DiscordMessageBuilder builder = new();
+            builder.WithFile("transcript.md", File.OpenRead($"./cache/messages/{filename}.md"));
+
+            if(_config.SelectToken("use_embeds").Value<Boolean>())
+            {
+                DiscordEmbedBuilder embedBuilder = _embeds["insanitybot.logging.member_join"]
+                    .AddField("Messages", e.Messages.Count.ToString(), true);
+                builder.WithEmbed(embedBuilder.Build());
+                await gateway.SendMessage(builder);
+            }
+            else
+            {
+                builder.WithContent($"{e.Messages.Count} messages were deleted.");
+                await gateway.SendMessage(builder);
+            }
         }
 
-        private Task MessageUpdated(DiscordClient sender, MessageUpdateEventArgs e)
+        private async Task MessageUpdated(DiscordClient sender, MessageUpdateEventArgs e)
         {
-            throw new NotImplementedException();
+            CommandContext context = _contextBuilder.BuildContext(e);
+            ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
+
+            if(_config.SelectToken("use_embeds").Value<Boolean>())
+            {
+                DiscordEmbedBuilder embedBuilder = _embeds["insanitybot.logging.member_join"]
+                    .AddField("Old", e.MessageBefore.Content, false)
+                    .AddField("New", e.Message.Content, false)
+                    .AddField("Link", e.Message.JumpLink.ToString(), true);
+                await gateway.SendMessage(embedBuilder.Build());
+            }
         }
 
-        private Task MessageCreated(DiscordClient sender, MessageCreateEventArgs e)
+        private async Task MessageDeleted(DiscordClient sender, MessageDeleteEventArgs e)
         {
-            throw new NotImplementedException();
+            CommandContext context = _contextBuilder.BuildContext(e);
+            ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
+
+            if(_config.SelectToken("use_embeds").Value<Boolean>())
+            {
+                DiscordEmbedBuilder embedBuilder = _embeds["insanitybot.logging.member_join"]
+                    .AddField("Text", e.Message.Content, false)
+                    .AddField("User", GetMemberMention(e.Message.Author), true);
+                await gateway.SendMessage(embedBuilder.Build());
+            }
         }
 
         private ILoggingGateway GetGateway(CommandContext context, LogEvent ev)
