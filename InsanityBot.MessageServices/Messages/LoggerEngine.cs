@@ -43,26 +43,29 @@ namespace InsanityBot.MessageServices.Messages
             this._config = (JObject)config.Configuration.SelectToken("insanitybot.logging");
             this._channels = (JObject)config.Configuration.SelectToken("insanitybot.identifiers.logging");
 
-            if(_config.SelectToken("message_delete").Value<Boolean>())
+            if(config.Value<Boolean>("insanitybot.modules.logging"))
             {
-                client.MessageDeleted += this.MessageDeleted;
-                client.MessagesBulkDeleted += this.MessagesBulkDeleted;
-            }
-            if(_config.SelectToken("message_edit").Value<Boolean>())
-            {
-                client.MessageUpdated += this.MessageUpdated;
-            }
-            if(_config.SelectToken("member_join").Value<Boolean>())
-            {
-                client.GuildMemberAdded += this.GuildMemberAdded;
-            }
-            if(_config.SelectToken("member_leave").Value<Boolean>())
-            {
-                client.GuildMemberRemoved += this.GuildMemberRemoved;
-            }
-            if(_config.SelectToken("commands").Value<Boolean>())
-            {
-                commandExtension.CommandExecuted += this.CommandExecuted;
+                if(_config.SelectToken("message_delete").Value<Boolean>())
+                {
+                    client.MessageDeleted += this.MessageDeleted;
+                    client.MessagesBulkDeleted += this.MessagesBulkDeleted;
+                }
+                if(_config.SelectToken("message_edit").Value<Boolean>())
+                {
+                    client.MessageUpdated += this.MessageUpdated;
+                }
+                if(_config.SelectToken("member_join").Value<Boolean>())
+                {
+                    client.GuildMemberAdded += this.GuildMemberAdded;
+                }
+                if(_config.SelectToken("member_leave").Value<Boolean>())
+                {
+                    client.GuildMemberRemoved += this.GuildMemberRemoved;
+                }
+                if(_config.SelectToken("commands").Value<Boolean>())
+                {
+                    commandExtension.CommandExecuted += this.CommandExecuted;
+                }
             }
 
             _contextBuilder = new(_extension);

@@ -7,6 +7,7 @@ using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.Core.Logger;
 using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.MessageServices.Embeds;
+using InsanityBot.MessageServices.Messages;
 using InsanityBot.Tickets;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Language;
@@ -48,7 +49,8 @@ namespace InsanityBot
             set => _ticketDaemon = value;
         }
         public static EmbedHandler Embeds { get; set; }
+        public static LoggerEngine MessageLogger { get; set; }
 
-        public static String Version => "2.0.0-dev.00039";
+        public static String Version => "2.0.0-dev.00040";
     }
 }

@@ -331,6 +331,8 @@ namespace InsanityBot
 
             Embeds = new();
             Embeds.Initialize(Client.Logger);
+
+            MessageLogger = new(CommandsExtension, Client.Logger, Config, Client, HomeGuild, Embeds);
         }
 
         private static async Task HandleTCPConnections(Int64 Port)
