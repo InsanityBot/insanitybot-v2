@@ -159,6 +159,11 @@ namespace InsanityBot.MessageServices.Messages
             LogContext context = _contextBuilder.BuildContext(e);
             ILoggingGateway gateway = GetGateway(context, LogEvent.Commands);
 
+            if(gateway == ILoggingGateway.Empty)
+            {
+                return;
+            }
+
             if(_config.SelectToken("use_embeds").Value<Boolean>())
             {
                 DiscordEmbedBuilder embedBuilder = _embeds["insanitybot.logging.command"]
@@ -177,6 +182,11 @@ namespace InsanityBot.MessageServices.Messages
             LogContext context = _contextBuilder.BuildContext(e);
             ILoggingGateway gateway = GetGateway(context, LogEvent.MemberLeave);
 
+            if(gateway == ILoggingGateway.Empty)
+            {
+                return;
+            }
+
             if(_config.SelectToken("use_embeds").Value<Boolean>())
             {
                 DiscordEmbedBuilder embedBuilder = _embeds["insanitybot.logging.member_leave"]
@@ -194,6 +204,11 @@ namespace InsanityBot.MessageServices.Messages
             LogContext context = _contextBuilder.BuildContext(e);
             ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
 
+            if(gateway == ILoggingGateway.Empty)
+            {
+                return;
+            }
+
             if(_config.SelectToken("use_embeds").Value<Boolean>())
             {
                 DiscordEmbedBuilder embedBuilder = _embeds["insanitybot.logging.member_join"]
@@ -209,7 +224,13 @@ namespace InsanityBot.MessageServices.Messages
         private async Task MessagesBulkDeleted(DiscordClient sender, MessageBulkDeleteEventArgs e)
         {
             LogContext context = _contextBuilder.BuildContext(e);
-            ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
+            ILoggingGateway gateway = GetGateway(context, LogEvent.MessageDelete);
+
+            if(gateway == ILoggingGateway.Empty)
+            {
+                return;
+            }
+
             Guid filename = Guid.NewGuid();
 
             StreamWriter writer = new(File.Create($"./cache/messages/{filename}.md"));
@@ -241,7 +262,12 @@ namespace InsanityBot.MessageServices.Messages
         private async Task MessageUpdated(DiscordClient sender, MessageUpdateEventArgs e)
         {
             LogContext context = _contextBuilder.BuildContext(e);
-            ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
+            ILoggingGateway gateway = GetGateway(context, LogEvent.MessageEdit);
+
+            if(gateway == ILoggingGateway.Empty)
+            {
+                return;
+            }
 
             if(_config.SelectToken("use_embeds").Value<Boolean>())
             {
@@ -256,7 +282,12 @@ namespace InsanityBot.MessageServices.Messages
         private async Task MessageDeleted(DiscordClient sender, MessageDeleteEventArgs e)
         {
             LogContext context = _contextBuilder.BuildContext(e);
-            ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
+            ILoggingGateway gateway = GetGateway(context, LogEvent.MessageEdit);
+
+            if(gateway == ILoggingGateway.Empty)
+            {
+                return;
+            }
 
             if(_config.SelectToken("use_embeds").Value<Boolean>())
             {
@@ -269,6 +300,15 @@ namespace InsanityBot.MessageServices.Messages
 
         private ILoggingGateway GetGateway(LogContext context, LogEvent ev)
         {
+            if(!_rules.Defaults.ContainsKey(ev))
+            {
+                return ILoggingGateway.Empty;
+            }
+            if(!_rules.Rules.ContainsKey(ev))
+            {
+                goto RETURN_DEFAULT;
+            }
+
             foreach(var v in _rules.Rules[ev])
             {
                 switch(v.Target)
@@ -329,6 +369,11 @@ namespace InsanityBot.MessageServices.Messages
                         break;
                 }
             }
+
+            RETURN_DEFAULT:
+
+            if(_rules.Defaults[ev] == null)
+                return ILoggingGateway.Empty;
             return _rules.Channels[_rules.Defaults[ev].Id];
         }
 
