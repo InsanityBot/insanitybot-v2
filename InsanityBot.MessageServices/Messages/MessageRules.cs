@@ -21,6 +21,9 @@ namespace InsanityBot.MessageServices.Messages
         public MessageRules(DiscordGuild guild)
         {
             _guild = guild;
+            Defaults = new();
+            Rules = new();
+            Channels = new();
         }
     }
 }

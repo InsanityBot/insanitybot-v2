@@ -88,7 +88,7 @@ namespace InsanityBot.MessageServices.Messages
             }
 
             logger.LogInformation(new EventId(2100, "LoggingServices"), "Logging override file found, generating ruleset...");
-            CreateDefaultRules(_config, guild);
+            CreateDefaultRules(_channels, guild);
             ApplyOverrides(guild);
             logger.LogInformation(new EventId(2100, "LoggingServices"), "Logging overrides were applied successfully.");
         }        
@@ -105,6 +105,18 @@ namespace InsanityBot.MessageServices.Messages
                 guild.GetChannel(channels.SelectToken("member_leave_channel").Value<UInt64>()));
             _rules.Defaults.Add(LogEvent.CommandExecution,
                 guild.GetChannel(channels.SelectToken("modlog_channel").Value<UInt64>()));
+
+            Boolean webhooks = _config.SelectToken("use_webhooks").Value<Boolean>();
+            foreach(var x in _rules.Defaults.Values)
+            {
+                if(x != null && !_rules.Channels.ContainsKey(x.Id))
+                {
+                    if(webhooks)
+                        _rules.Channels.Add(x.Id, new LoggingWebhook(x));
+                    else
+                        _rules.Channels.Add(x.Id, new LoggingChannel(x));
+                }
+            }
         }
 
         private void ApplyOverrides(DiscordGuild guild)

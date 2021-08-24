@@ -59,7 +59,7 @@
           "use_mentions": true,
           "use_name_discriminator_format": false
         },
-        "use_webhook": true,
+        "use_webhooks": true,
         "advanced": {
           "allow_rules_for": {
             "message_delete": true,
@@ -70,7 +70,6 @@
             "command_execution": true
           },
           "defaults_overriden_by_rules": true,
-          "allow_crossposting": false,
           "use_embeds": true
         }
       },
