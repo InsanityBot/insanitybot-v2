@@ -6,6 +6,7 @@ using DSharpPlus.EventArgs;
 using InsanityBot.MessageServices.Embeds;
 using InsanityBot.MessageServices.Messages.Rules;
 using InsanityBot.MessageServices.Messages.Rules.Data;
+using InsanityBot.MessageServices.Messages.Util;
 using InsanityBot.Utility.Config;
 
 using Microsoft.Extensions.Logging;
@@ -143,19 +144,19 @@ namespace InsanityBot.MessageServices.Messages
 
         public async Task LogMessage(DiscordEmbed embed, CommandContext ctx)
         {
-            ILoggingGateway gateway = GetGateway(ctx, LogEvent.CommandExecution);
+            ILoggingGateway gateway = GetGateway(new(ctx.Member, ctx.Channel, ctx.Command, ctx.Message), LogEvent.CommandExecution);
             await gateway.SendMessage(embed);
         }
 
         public async Task LogMessage(DiscordMessageBuilder messageBuilder, CommandContext ctx)
         {
-            ILoggingGateway gateway = GetGateway(ctx, LogEvent.CommandExecution);
+            ILoggingGateway gateway = GetGateway(new(ctx.Member, ctx.Channel, ctx.Command, ctx.Message), LogEvent.CommandExecution);
             await gateway.SendMessage(messageBuilder);
         }
 
         private async Task CommandExecuted(CommandsNextExtension sender, CommandExecutionEventArgs e)
         {
-            CommandContext context = _contextBuilder.BuildContext(e);
+            LogContext context = _contextBuilder.BuildContext(e);
             ILoggingGateway gateway = GetGateway(context, LogEvent.Commands);
 
             if(_config.SelectToken("use_embeds").Value<Boolean>())
@@ -173,7 +174,7 @@ namespace InsanityBot.MessageServices.Messages
 
         private async Task GuildMemberRemoved(DiscordClient sender, GuildMemberRemoveEventArgs e)
         {
-            CommandContext context = _contextBuilder.BuildContext(e);
+            LogContext context = _contextBuilder.BuildContext(e);
             ILoggingGateway gateway = GetGateway(context, LogEvent.MemberLeave);
 
             if(_config.SelectToken("use_embeds").Value<Boolean>())
@@ -190,7 +191,7 @@ namespace InsanityBot.MessageServices.Messages
 
         private async Task GuildMemberAdded(DiscordClient sender, GuildMemberAddEventArgs e)
         {
-            CommandContext context = _contextBuilder.BuildContext(e);
+            LogContext context = _contextBuilder.BuildContext(e);
             ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
 
             if(_config.SelectToken("use_embeds").Value<Boolean>())
@@ -207,7 +208,7 @@ namespace InsanityBot.MessageServices.Messages
 
         private async Task MessagesBulkDeleted(DiscordClient sender, MessageBulkDeleteEventArgs e)
         {
-            CommandContext context = _contextBuilder.BuildContext(e);
+            LogContext context = _contextBuilder.BuildContext(e);
             ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
             Guid filename = Guid.NewGuid();
 
@@ -239,7 +240,7 @@ namespace InsanityBot.MessageServices.Messages
 
         private async Task MessageUpdated(DiscordClient sender, MessageUpdateEventArgs e)
         {
-            CommandContext context = _contextBuilder.BuildContext(e);
+            LogContext context = _contextBuilder.BuildContext(e);
             ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
 
             if(_config.SelectToken("use_embeds").Value<Boolean>())
@@ -254,7 +255,7 @@ namespace InsanityBot.MessageServices.Messages
 
         private async Task MessageDeleted(DiscordClient sender, MessageDeleteEventArgs e)
         {
-            CommandContext context = _contextBuilder.BuildContext(e);
+            LogContext context = _contextBuilder.BuildContext(e);
             ILoggingGateway gateway = GetGateway(context, LogEvent.MemberJoin);
 
             if(_config.SelectToken("use_embeds").Value<Boolean>())
@@ -266,7 +267,7 @@ namespace InsanityBot.MessageServices.Messages
             }
         }
 
-        private ILoggingGateway GetGateway(CommandContext context, LogEvent ev)
+        private ILoggingGateway GetGateway(LogContext context, LogEvent ev)
         {
             foreach(var v in _rules.Rules[ev])
             {
@@ -301,29 +302,29 @@ namespace InsanityBot.MessageServices.Messages
                         switch(v.MemberTarget)
                         {
                             case MemberRuleTarget.Bot:
-                                if(_memberEvaluator.EvaluateBotRule(context, v.RuleParameter))
+                                if(_memberEvaluator.EvaluateBotRule(context.Member, v.RuleParameter))
                                     return v.Allow ? _rules.Channels[v.Channel] : ILoggingGateway.Empty;
                                 break;
                             case MemberRuleTarget.Id:
-                                if(_memberEvaluator.EvaluateIdRule(context, v.RuleParameter))
+                                if(_memberEvaluator.EvaluateIdRule(context.Member, v.RuleParameter))
                                     return v.Allow ? _rules.Channels[v.Channel] : ILoggingGateway.Empty;
                                 break;
                             case MemberRuleTarget.Owner:
-                                if(_memberEvaluator.EvaluateOwnerRule(context, v.RuleParameter))
+                                if(_memberEvaluator.EvaluateOwnerRule(context.Member, v.RuleParameter))
                                     return v.Allow ? _rules.Channels[v.Channel] : ILoggingGateway.Empty;
                                 break;
                             case MemberRuleTarget.Role:
-                                if(_memberEvaluator.EvaluateRoleIdRule(context, v.RuleParameter))
+                                if(_memberEvaluator.EvaluateRoleIdRule(context.Member, v.RuleParameter))
                                     return v.Allow ? _rules.Channels[v.Channel] : ILoggingGateway.Empty;
                                 break;
                         }
                         break;
                     case RuleTarget.Command:
-                        if(_commandEvaluator.EvaluateCommandRule(context, v.RuleParameter))
+                        if(_commandEvaluator.EvaluateCommandRule(context.Command, v.RuleParameter))
                             return v.Allow ? _rules.Channels[v.Channel] : ILoggingGateway.Empty;
                         break;
                     case RuleTarget.Prefix:
-                        if(_prefixEvaluator.EvaluatePrefixRule(context, v.RuleParameter))
+                        if(_prefixEvaluator.EvaluatePrefixRule(context.Prefix, v.RuleParameter))
                             return v.Allow ? _rules.Channels[v.Channel] : ILoggingGateway.Empty;
                         break;
                 }

@@ -8,9 +8,9 @@ namespace InsanityBot.MessageServices.Messages.Rules.Data
 {
     public class PrefixRuleEvaluator
     {
-        public Boolean EvaluatePrefixRule(CommandContext context, JToken objectData)
+        public Boolean EvaluatePrefixRule(String prefix, JToken objectData)
         {
-            if(context?.Prefix == objectData.Value<String>())
+            if(prefix == objectData.Value<String>())
                 return true;
             return false;
         }

@@ -1,4 +1,5 @@
 ﻿using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 
 using Newtonsoft.Json.Linq;
 
@@ -9,24 +10,24 @@ namespace InsanityBot.MessageServices.Messages.Rules.Data
 {
     public class MemberRuleEvaluator
     {
-        public Boolean EvaluateBotRule(CommandContext ctx, JToken objectData)
+        public Boolean EvaluateBotRule(DiscordMember member, JToken objectData)
         {
-            return ctx.Member?.IsBot == objectData.Value<Boolean>();
+            return member?.IsBot == objectData.Value<Boolean>();
         }
 
-        public Boolean EvaluateOwnerRule(CommandContext ctx, JToken objectData)
+        public Boolean EvaluateOwnerRule(DiscordMember member, JToken objectData)
         {
-            return ctx.Member?.IsOwner == objectData.Value<Boolean>();
+            return member?.IsOwner == objectData.Value<Boolean>();
         }
 
-        public Boolean EvaluateIdRule(CommandContext ctx, JToken objectData)
+        public Boolean EvaluateIdRule(DiscordMember member, JToken objectData)
         {
-            return ctx.Member?.Id == objectData.Value<UInt64>();
+            return member?.Id == objectData.Value<UInt64>();
         }
 
-        public Boolean EvaluateRoleIdRule(CommandContext ctx, JToken objectData)
+        public Boolean EvaluateRoleIdRule(DiscordMember member, JToken objectData)
         {
-            return ctx.Member?.Roles.Any(xm => xm.Id == objectData.Value<UInt64>()) ?? false;
+            return member?.Roles.Any(xm => xm.Id == objectData.Value<UInt64>()) ?? false;
         }
     }
 }

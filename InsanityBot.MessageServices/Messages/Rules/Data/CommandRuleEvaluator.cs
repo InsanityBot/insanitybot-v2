@@ -9,11 +9,11 @@ namespace InsanityBot.MessageServices.Messages.Rules.Data
 {
     public class CommandRuleEvaluator
     {
-        public Boolean EvaluateCommandRule(CommandContext ctx, JToken objectData)
+        public Boolean EvaluateCommandRule(Command cmd, JToken objectData)
         {
-            if(ctx.Command?.Name == objectData.Value<String>())
+            if(cmd?.Name == objectData.Value<String>())
                 return true;
-            if(ctx.Command?.Aliases.Contains(objectData.Value<String>()) ?? false)
+            if(cmd?.Aliases.Contains(objectData.Value<String>()) ?? false)
                 return true;
             return false;
         }
