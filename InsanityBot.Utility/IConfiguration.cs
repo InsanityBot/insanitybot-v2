@@ -2,9 +2,6 @@
 
 using Newtonsoft.Json.Linq;
 
-using System;
-using System.Collections.Generic;
-
 namespace InsanityBot.Utility
 {
     public interface IConfiguration : IDatafixable

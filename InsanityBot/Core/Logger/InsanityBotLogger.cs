@@ -1,12 +1,12 @@
-﻿using DSharpPlus;
+﻿using System;
+using System.IO;
+using System.Linq;
+
+using DSharpPlus;
 
 using InsanityBot.Utility.Config;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.IO;
-using System.Linq;
 
 namespace InsanityBot.Core.Logger
 {
@@ -20,7 +20,7 @@ namespace InsanityBot.Core.Logger
         {
             get
             {
-                if(logWriter == null)
+                if(this.logWriter == null)
                 {
                     if((Boolean)InsanityBot.LoggerConfig.Configuration["LogToFile"])
                     {
@@ -38,15 +38,15 @@ namespace InsanityBot.Core.Logger
                             // the file didnt exist, no worries
                         }
 
-                        logWriter = new(File.Create("./logs/latest.txt"));
-                        return logWriter;
+                        this.logWriter = new(File.Create("./logs/latest.txt"));
+                        return this.logWriter;
                     }
                     else
                     {
                         throw new ArgumentException("File logging is disabled yet was called.");
                     }
                 }
-                return logWriter;
+                return this.logWriter;
             }
         }
 
@@ -152,9 +152,9 @@ namespace InsanityBot.Core.Logger
             {
                 String ename = eventId.Name;
                 ename = ename?.Length > 12 ? ename?.Substring(0, 12) : ename;
-                LogWriter.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
+                this.LogWriter.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
 
-                LogWriter.Write(logLevel switch
+                this.LogWriter.Write(logLevel switch
                 {
                     LogLevel.Trace => "[Trace]",
                     LogLevel.Debug => "[Debug]",
@@ -166,27 +166,27 @@ namespace InsanityBot.Core.Logger
                     _ => "[?????] "
                 });
 
-                LogWriter.Write($" [{eventId.Id}/{ename}] ");
+                this.LogWriter.Write($" [{eventId.Id}/{ename}] ");
 
                 String message = formatter(state, exception);
-                LogWriter.WriteLine(message);
+                this.LogWriter.WriteLine(message);
 
                 if(exception != null)
                 {
-                    LogWriter.WriteLine(exception);
+                    this.LogWriter.WriteLine(exception);
                 }
 
-                LogWriter.Flush();
+                this.LogWriter.Flush();
             }
         }
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, String> formatter)
         {
-            LogConsole(logLevel, eventId, state, exception, formatter);
+            this.LogConsole(logLevel, eventId, state, exception, formatter);
 
             if(InsanityBot.LoggerConfig.Value<Boolean>("LogToFile"))
             {
-                LogFile(logLevel, eventId, state, exception, formatter);
+                this.LogFile(logLevel, eventId, state, exception, formatter);
             }
         }
     }

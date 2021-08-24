@@ -1,8 +1,8 @@
-﻿using DSharpPlus.Entities;
-
-using System;
+﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+
+using DSharpPlus.Entities;
 
 namespace InsanityBot.Tickets.Transcripts
 {

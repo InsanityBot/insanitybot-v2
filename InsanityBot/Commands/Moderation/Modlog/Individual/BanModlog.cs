@@ -1,4 +1,8 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
@@ -10,12 +14,7 @@ using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation.Modlog.Individual
 {

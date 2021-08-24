@@ -1,9 +1,15 @@
-﻿using CommandLine;
+﻿using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Exceptions;
-using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
@@ -15,7 +21,6 @@ using InsanityBot.Commands.Permissions;
 using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
 using InsanityBot.Datafixers;
-using InsanityBot.MessageServices.Embeds;
 using InsanityBot.Tickets;
 using InsanityBot.Tickets.Commands;
 using InsanityBot.Utility.Config;
@@ -25,13 +30,6 @@ using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 using static System.Convert;
 

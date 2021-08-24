@@ -1,11 +1,11 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using System;
+using System.Threading.Tasks;
+
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
 using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.Utility.Permissions;
-
-using System;
-using System.Threading.Tasks;
 
 namespace InsanityBot.Commands.Miscellaneous
 {

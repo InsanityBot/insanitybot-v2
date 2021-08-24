@@ -1,7 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
 
-using System;
-using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace InsanityBot.Utility.Config
 {
@@ -10,20 +9,11 @@ namespace InsanityBot.Utility.Config
         public String DataVersion { get; set; }
         public JObject Configuration { get; set; }
 
-        public Object this[String Identifier]
-        {
-            get => Configuration.SelectToken(Identifier).Value<Object>();
-        }
+        public Object this[String Identifier] => this.Configuration.SelectToken(Identifier).Value<Object>();
 
-        public T Value<T>(String identifier)
-        {
-            return Configuration.SelectToken(identifier).Value<T>();
-        }
+        public T Value<T>(String identifier) => this.Configuration.SelectToken(identifier).Value<T>();
 
-        public void SetValue(String identifier, Object value)
-        {
-            Configuration[identifier] = JToken.FromObject(value);
-        }
+        public void SetValue(String identifier, Object value) => this.Configuration[identifier] = JToken.FromObject(value);
 
         public TicketConfiguration()
         {

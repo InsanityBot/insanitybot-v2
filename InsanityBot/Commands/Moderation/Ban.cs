@@ -1,4 +1,7 @@
-﻿using CommandLine;
+﻿using System;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -9,9 +12,6 @@ using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
 
@@ -106,7 +106,7 @@ namespace InsanityBot.Commands.Moderation
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.ban.success"], ctx, member));
 
                 _ = InsanityBot.HomeGuild.BanMemberAsync(member, 0, BanReason);
-                _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder()
+                _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder()
                 {
                     Embed = moderationEmbedBuilder.Build()
                 }, ctx);

@@ -1,18 +1,17 @@
-﻿using DSharpPlus;
+﻿using System;
+
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 
 using InsanityBot.Core.Formatters.Embeds;
-using InsanityBot.Core.Logger;
 using InsanityBot.MessageServices.Embeds;
 using InsanityBot.MessageServices.Messages;
 using InsanityBot.Tickets;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
-
-using System;
 
 namespace InsanityBot
 {

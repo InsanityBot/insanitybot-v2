@@ -1,7 +1,7 @@
-﻿using DSharpPlus.Entities;
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
+
+using DSharpPlus.Entities;
 
 namespace InsanityBot.MessageServices.Messages
 {

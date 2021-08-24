@@ -1,8 +1,7 @@
-﻿using DSharpPlus.CommandsNext;
+﻿
+using System;
 
 using Newtonsoft.Json.Linq;
-
-using System;
 
 namespace InsanityBot.MessageServices.Messages.Rules.Data
 {
@@ -11,7 +10,10 @@ namespace InsanityBot.MessageServices.Messages.Rules.Data
         public Boolean EvaluatePrefixRule(String prefix, JToken objectData)
         {
             if(prefix == objectData.Value<String>())
+            {
                 return true;
+            }
+
             return false;
         }
     }

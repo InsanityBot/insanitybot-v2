@@ -1,4 +1,8 @@
-﻿using CommandLine;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -8,10 +12,6 @@ using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Permissions.Data;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
 
@@ -96,7 +96,7 @@ namespace InsanityBot.Commands.Permissions
                     InsanityBot.PermissionEngine.SetUserPermissions(permissions);
 
                     embedBuilder = InsanityBot.Embeds["insanitybot.admin.permissions.user.addrole"]
-                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.role_added"], ctx, member, 
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.role_added"], ctx, member,
                             InsanityBot.HomeGuild.GetRole(role)));
 
                     InsanityBot.Client.Logger.LogInformation(new EventId(9003, "Permissions"), $"Added role {role} to {member.Username}");
@@ -104,7 +104,7 @@ namespace InsanityBot.Commands.Permissions
                 catch(Exception e)
                 {
                     embedBuilder = InsanityBot.Embeds["insanitybot.error"]
-                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_add_role"], ctx, member, 
+                        .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_add_role"], ctx, member,
                             InsanityBot.HomeGuild.GetRole(role)));
 
                     InsanityBot.Client.Logger.LogCritical(new EventId(9003, "Permissions"), $"Administrative action failed: could not add " +
@@ -118,7 +118,7 @@ namespace InsanityBot.Commands.Permissions
                         await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
                     }
 
-                    _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
+                    _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                     {
                         Embed = moderationEmbedBuilder.Build()
                     }, ctx);

@@ -1,15 +1,15 @@
-﻿using DSharpPlus;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+using DSharpPlus;
 using DSharpPlus.Entities;
 
 using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace InsanityBot.MessageServices.Embeds
 {
@@ -20,9 +20,9 @@ namespace InsanityBot.MessageServices.Embeds
 
         public void Initialize(ILogger<BaseDiscordClient> logger)
         {
-            _defaultEmbeds = new();
-            _embeds = _defaultEmbeds.Embeds;
-            LoadPatches(logger);
+            this._defaultEmbeds = new();
+            this._embeds = this._defaultEmbeds.Embeds;
+            this.LoadPatches(logger);
         }
 
         public void LoadPatches(ILogger<BaseDiscordClient> logger)
@@ -46,10 +46,10 @@ namespace InsanityBot.MessageServices.Embeds
                 return;
             }
 
-            List<String> keys = (from e in _defaultEmbeds.Embeds
+            List<String> keys = (from e in this._defaultEmbeds.Embeds
                                  select e.Key).ToList();
 
-            foreach(var v in keys)
+            foreach(String v in keys)
             {
                 JToken j = overrides.SelectToken(v);
 
@@ -60,17 +60,17 @@ namespace InsanityBot.MessageServices.Embeds
 
                 if(j["color"] != null && j["color"].Type == JTokenType.String)
                 {
-                    _embeds[v].Color = new DiscordColor(j["color"].Value<String>());
+                    this._embeds[v].Color = new DiscordColor(j["color"].Value<String>());
                 }
 
                 if(j["footer"] != null && j["footer"].Type == JTokenType.String)
                 {
-                    _embeds[v].Footer = new() { Text = j["footer"].Value<String>() };
+                    this._embeds[v].Footer = new() { Text = j["footer"].Value<String>() };
                 }
 
                 if(j["title"] != null && j["title"].Type == JTokenType.String)
                 {
-                    _embeds[v].Title = j["title"].Value<String>();
+                    this._embeds[v].Title = j["title"].Value<String>();
                 }
             }
         }
@@ -81,9 +81,9 @@ namespace InsanityBot.MessageServices.Embeds
             {
                 if(s.StartsWith("default "))
                 {
-                    return new(_defaultEmbeds.Embeds[s[7..]].Build());
+                    return new(this._defaultEmbeds.Embeds[s[7..]].Build());
                 }
-                return new(_embeds[s].Build());
+                return new(this._embeds[s].Build());
             }
         }
     }

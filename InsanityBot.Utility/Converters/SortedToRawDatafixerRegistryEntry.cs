@@ -1,7 +1,7 @@
-﻿using InsanityBot.Utility.Datafixers.Reference;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+
+using InsanityBot.Utility.Datafixers.Reference;
 
 namespace InsanityBot.Utility.Converters
 {

@@ -1,6 +1,6 @@
-﻿using CommandLine;
+﻿using System;
 
-using System;
+using CommandLine;
 
 namespace InsanityBot
 {

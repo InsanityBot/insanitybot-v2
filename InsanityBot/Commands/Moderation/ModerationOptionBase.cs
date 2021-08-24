@@ -1,7 +1,7 @@
-﻿using CommandLine;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+
+using CommandLine;
 
 namespace InsanityBot.Commands.Moderation
 {

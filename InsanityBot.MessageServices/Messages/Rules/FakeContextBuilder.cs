@@ -1,9 +1,9 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using System;
+
+using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
 
 using InsanityBot.MessageServices.Messages.Util;
-
-using System;
 
 namespace InsanityBot.MessageServices.Messages.Rules
 {
@@ -11,10 +11,7 @@ namespace InsanityBot.MessageServices.Messages.Rules
     {
         private CommandsNextExtension CommandsExtension { get; set; }
 
-        public FakeContextBuilder(CommandsNextExtension extension)
-        {
-            this.CommandsExtension = extension;
-        }
+        public FakeContextBuilder(CommandsNextExtension extension) => this.CommandsExtension = extension;
 
         public LogContext BuildContext<T>(T eventArgs)
         {

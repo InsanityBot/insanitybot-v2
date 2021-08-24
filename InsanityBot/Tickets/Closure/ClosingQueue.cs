@@ -1,15 +1,15 @@
-﻿using DSharpPlus;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 using InsanityBot.Tickets.Commands;
 
 using Newtonsoft.Json;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace InsanityBot.Tickets.Closure
 {

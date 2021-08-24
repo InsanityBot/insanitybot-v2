@@ -1,4 +1,7 @@
-﻿using CommandLine;
+﻿using System;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -7,9 +10,6 @@ using DSharpPlus.Entities;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
 
@@ -39,7 +39,7 @@ namespace InsanityBot.Commands.Permissions
                 {
                     DiscordEmbedBuilder invalid = InsanityBot.Embeds["insanitybot.error"]
                         .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.permission_not_found"], ctx, member));
-                    
+
                     await ctx.Channel?.SendMessageAsync(invalid.Build());
                     return;
                 }
@@ -107,7 +107,7 @@ namespace InsanityBot.Commands.Permissions
                         await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
                     }
 
-                    _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
+                    _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                     {
                         Embed = moderationEmbedBuilder
                     }, ctx);

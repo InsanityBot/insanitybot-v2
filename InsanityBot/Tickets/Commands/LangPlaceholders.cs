@@ -1,11 +1,11 @@
-﻿using DSharpPlus;
+﻿using System;
+
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 using InsanityBot.Commands;
-
-using System;
 
 namespace InsanityBot.Tickets.Commands
 {

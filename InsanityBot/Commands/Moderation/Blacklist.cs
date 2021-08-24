@@ -1,4 +1,7 @@
-﻿using CommandLine;
+﻿using System;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -10,11 +13,7 @@ using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.Threading.Tasks;
-
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -101,7 +100,7 @@ namespace InsanityBot.Commands.Moderation
                 _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
                     InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.blacklist_role_id")),
                     BlacklistReason);
-                _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
+                _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder.Build()
                 }, ctx);

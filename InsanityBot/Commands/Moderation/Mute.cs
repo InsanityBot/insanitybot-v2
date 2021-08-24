@@ -1,4 +1,7 @@
-﻿using CommandLine;
+﻿using System;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -10,11 +13,7 @@ using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.Threading.Tasks;
-
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -70,7 +69,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.failure"], ctx, member));
-                
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                 await ctx.Channel?.SendMessageAsync(embed: failed.Build());
@@ -114,7 +113,7 @@ namespace InsanityBot.Commands.Moderation
                 _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
                     InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.mute_role_id")),
                     MuteReason);
-                _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
+                _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
                 }, ctx);
@@ -123,7 +122,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 embedBuilder = InsanityBot.Embeds["insanitybot.error"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.failure"], ctx, member));
-               
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally

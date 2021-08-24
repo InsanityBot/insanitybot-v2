@@ -1,4 +1,8 @@
-﻿using CommandLine;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -11,12 +15,8 @@ using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.IO;
-using System.Threading.Tasks;
-
-using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
+using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -121,7 +121,7 @@ namespace InsanityBot.Commands.Moderation
                 _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
                     InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.mute_role_id")),
                     MuteReason);
-                _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
+                _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
                 }, ctx);

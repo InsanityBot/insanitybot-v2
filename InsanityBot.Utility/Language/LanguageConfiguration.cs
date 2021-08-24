@@ -1,7 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
 
-using System;
-using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace InsanityBot.Utility.Language
 {
@@ -10,19 +9,10 @@ namespace InsanityBot.Utility.Language
         public String DataVersion { get; set; }
         public JObject Configuration { get; set; }
 
-        public LanguageConfiguration()
-        {
-            this.Configuration = new();
-        }
+        public LanguageConfiguration() => this.Configuration = new();
 
-        public String this[String Identifier]
-        {
-            get => Configuration.SelectToken(Identifier).Value<String>();
-        }
+        public String this[String Identifier] => this.Configuration.SelectToken(Identifier).Value<String>();
 
-        public void SetValue(String identifier, String value)
-        {
-            Configuration[identifier] = JToken.FromObject(value);
-        }
+        public void SetValue(String identifier, String value) => this.Configuration[identifier] = JToken.FromObject(value);
     }
 }

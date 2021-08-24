@@ -1,12 +1,12 @@
-﻿using DSharpPlus;
+﻿using System;
+using System.Collections.Generic;
+
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 
 using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.Tickets.Placeholders;
-
-using System;
-using System.Collections.Generic;
 
 namespace InsanityBot.Tickets
 {

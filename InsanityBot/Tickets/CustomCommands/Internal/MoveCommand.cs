@@ -1,7 +1,7 @@
-﻿using DSharpPlus.CommandsNext;
-using DSharpPlus.Entities;
+﻿using System;
 
-using System;
+using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 
 namespace InsanityBot.Tickets.CustomCommands.Internal
 {

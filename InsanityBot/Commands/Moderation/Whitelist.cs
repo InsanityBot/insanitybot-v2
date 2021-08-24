@@ -1,4 +1,7 @@
-﻿using CommandLine;
+﻿using System;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -8,11 +11,7 @@ using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.Threading.Tasks;
-
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -55,7 +54,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.whitelist.failure"], ctx, member));
-                
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                 await ctx.Channel?.SendMessageAsync(embed: failed.Build());
@@ -94,11 +93,11 @@ namespace InsanityBot.Commands.Moderation
             {
                 embedBuilder = InsanityBot.Embeds["insanitybot.moderation.whitelist"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.whitelist.success"], ctx, member));
-                 
+
                 _ = member.RevokeRoleAsync(InsanityBot.HomeGuild.GetRole(
                     InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.blacklist_role_id")),
                     WhitelistReason);
-                _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
+                _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
                 }, ctx);
@@ -107,7 +106,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 embedBuilder = InsanityBot.Embeds["insanitybot.error"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.whitelist.failure"], ctx, member));
-                
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally

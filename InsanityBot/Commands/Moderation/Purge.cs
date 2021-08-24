@@ -1,4 +1,9 @@
-﻿using CommandLine;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -7,11 +12,6 @@ using DSharpPlus.Entities;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -116,7 +116,7 @@ namespace InsanityBot.Commands.Moderation
 
                     moderationEmbedBuilder.AddField("Messages", messageCount.ToString(), true);
 
-                    _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
+                    _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                     {
                         Embed = moderationEmbedBuilder
                     }, ctx);
@@ -142,7 +142,7 @@ namespace InsanityBot.Commands.Moderation
 
                     moderationEmbedBuilder.AddField("Messages", messages.Count.ToString(), true);
 
-                    _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
+                    _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                     {
                         Embed = moderationEmbedBuilder
                     }, ctx);
@@ -152,7 +152,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 tmpEmbedBuilder = InsanityBot.Embeds["insanitybot.error"]
                     .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.failure"]);
-                
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally

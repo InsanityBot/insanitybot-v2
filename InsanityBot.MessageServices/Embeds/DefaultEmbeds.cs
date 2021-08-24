@@ -1,15 +1,15 @@
-﻿using DSharpPlus.Entities;
-
-using Newtonsoft.Json;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
+using DSharpPlus.Entities;
+
+using Newtonsoft.Json;
+
 namespace InsanityBot.MessageServices.Embeds
 {
-	internal class DefaultEmbeds
-	{
+    internal class DefaultEmbeds
+    {
         public Dictionary<String, DiscordEmbedBuilder> Embeds { get; set; }
 
         public DefaultEmbeds()
@@ -17,11 +17,11 @@ namespace InsanityBot.MessageServices.Embeds
             StreamReader reader = new("./cache/embeds/default.json");
             Dictionary<String, EmbedData> protoEmbeds = JsonConvert.DeserializeObject<Dictionary<String, EmbedData>>(reader.ReadToEnd());
 
-            Embeds = new();
+            this.Embeds = new();
 
-            foreach(var v in protoEmbeds)
+            foreach(KeyValuePair<String, EmbedData> v in protoEmbeds)
             {
-                Embeds.Add(v.Key, new DiscordEmbedBuilder
+                this.Embeds.Add(v.Key, new DiscordEmbedBuilder
                 {
                     Color = new DiscordColor(v.Value.Color),
                     Footer = new()
@@ -32,5 +32,5 @@ namespace InsanityBot.MessageServices.Embeds
                 });
             }
         }
-	}
+    }
 }

@@ -1,4 +1,7 @@
-﻿using CommandLine;
+﻿using System;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -8,11 +11,7 @@ using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.Threading.Tasks;
-
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -173,7 +172,7 @@ namespace InsanityBot.Commands.Moderation
                     _ = ctx.Channel?.SendMessageAsync(embed: nonSilent.Build());
                 }
 
-                _ = InsanityBot.MessageLogger.LogMessage( new DiscordMessageBuilder
+                _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
                 }, ctx);

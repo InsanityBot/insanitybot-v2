@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-
-using System;
+﻿using System;
 using System.IO;
+
+using Newtonsoft.Json;
 
 namespace InsanityBot.MessageServices.Messages
 {

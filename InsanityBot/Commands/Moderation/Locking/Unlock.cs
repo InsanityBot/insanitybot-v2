@@ -1,4 +1,8 @@
-﻿using CommandLine;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -8,10 +12,6 @@ using DSharpPlus.Entities;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
 
@@ -46,7 +46,7 @@ namespace InsanityBot.Commands.Moderation.Locking
             catch(Exception e)
             {
                 DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
-                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unlock.failure"], ctx)); 
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.unlock.failure"], ctx));
 
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 

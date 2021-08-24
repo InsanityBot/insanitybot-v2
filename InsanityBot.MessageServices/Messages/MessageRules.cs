@@ -1,12 +1,9 @@
-﻿using DSharpPlus.Entities;
+﻿using System;
+using System.Collections.Generic;
+
+using DSharpPlus.Entities;
 
 using InsanityBot.MessageServices.Messages.Rules;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsanityBot.MessageServices.Messages
 {
@@ -20,10 +17,10 @@ namespace InsanityBot.MessageServices.Messages
 
         public MessageRules(DiscordGuild guild)
         {
-            _guild = guild;
-            Defaults = new();
-            Rules = new();
-            Channels = new();
+            this._guild = guild;
+            this.Defaults = new();
+            this.Rules = new();
+            this.Channels = new();
         }
     }
 }

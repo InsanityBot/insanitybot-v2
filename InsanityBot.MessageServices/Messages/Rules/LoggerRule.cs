@@ -1,9 +1,9 @@
-﻿using InsanityBot.MessageServices.Messages.Rules.Data;
+﻿using System;
+
+using InsanityBot.MessageServices.Messages.Rules.Data;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
-using System;
 
 namespace InsanityBot.MessageServices.Messages.Rules
 {
