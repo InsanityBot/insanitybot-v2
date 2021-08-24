@@ -1,18 +1,17 @@
-﻿using CommandLine;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -90,7 +89,7 @@ namespace InsanityBot.Commands.Moderation
             DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.purge"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member?.Mention, true)
-                .AddField("Channel", ctx.Channel?.Mention)
+                .AddField("Channel", ctx.Channel?.Mention, true)
                 .AddField("Reason", ModlogEmbedReason, true);
 
             try
@@ -117,10 +116,10 @@ namespace InsanityBot.Commands.Moderation
 
                     moderationEmbedBuilder.AddField("Messages", messageCount.ToString(), true);
 
-                    _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                    _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                     {
                         Embed = moderationEmbedBuilder
-                    });
+                    }, ctx);
                 }
                 else // its a discord snowflake
                 {
@@ -143,17 +142,17 @@ namespace InsanityBot.Commands.Moderation
 
                     moderationEmbedBuilder.AddField("Messages", messages.Count.ToString(), true);
 
-                    _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                    _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                     {
                         Embed = moderationEmbedBuilder
-                    });
+                    }, ctx);
                 }
             }
             catch(Exception e)
             {
                 tmpEmbedBuilder = InsanityBot.Embeds["insanitybot.error"]
                     .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.failure"]);
-                
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally

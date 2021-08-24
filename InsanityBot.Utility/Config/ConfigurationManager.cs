@@ -1,16 +1,16 @@
-﻿using InsanityBot.Utility.Datafixers;
+﻿using System;
+using System.IO;
+
+using InsanityBot.Utility.Datafixers;
 
 using Newtonsoft.Json;
-
-using System;
-using System.IO;
 
 namespace InsanityBot.Utility.Config
 {
     public class ConfigurationManager
     {
         public T Deserialize<T>(String Filename)
-            where T: IConfiguration
+            where T : IConfiguration
         {
             using StreamReader reader = new(File.OpenRead(Filename));
 

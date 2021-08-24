@@ -1,9 +1,15 @@
-﻿using CommandLine;
+﻿using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Exceptions;
-using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
@@ -14,9 +20,7 @@ using InsanityBot.Commands.Moderation.Modlog;
 using InsanityBot.Commands.Permissions;
 using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Datafixers;
-using InsanityBot.MessageServices.Embeds;
 using InsanityBot.Tickets;
 using InsanityBot.Tickets.Commands;
 using InsanityBot.Utility.Config;
@@ -26,13 +30,6 @@ using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 using static System.Convert;
 
@@ -325,12 +322,11 @@ namespace InsanityBot
         private static void InitializeAll()
         {
             TimeHandler.Start();
-            ModlogQueue = new(
-                (ModlogMessageType.Moderation, HomeGuild.GetChannel(Config.Value<UInt64>("insanitybot.identifiers.commands.modlog_channel_id"))),
-                (ModlogMessageType.Administration, HomeGuild.GetChannel(Config.Value<UInt64>("insanitybot.identifiers.commands.admin_log_channel_id"))));
 
             Embeds = new();
             Embeds.Initialize(Client.Logger);
+
+            MessageLogger = new(CommandsExtension, Client.Logger, Config, Client, HomeGuild, Embeds);
         }
 
         private static async Task HandleTCPConnections(Int64 Port)

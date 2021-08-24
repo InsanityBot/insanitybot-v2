@@ -1,6 +1,6 @@
-﻿using DSharpPlus.Entities;
+﻿using System;
 
-using System;
+using DSharpPlus.Entities;
 
 namespace InsanityBot.Core.Formatters.Embeds
 {

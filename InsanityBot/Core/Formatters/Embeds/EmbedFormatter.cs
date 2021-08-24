@@ -1,12 +1,12 @@
-﻿using DSharpPlus.Entities;
+﻿using System;
+using System.Runtime.CompilerServices;
+using System.Text;
+
+using DSharpPlus.Entities;
 
 using InsanityBot.Core.Formatters.Abstractions;
 
 using Newtonsoft.Json;
-
-using System;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace InsanityBot.Core.Formatters.Embeds
 {

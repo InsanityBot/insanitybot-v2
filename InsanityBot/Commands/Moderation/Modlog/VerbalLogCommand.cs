@@ -1,4 +1,8 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Enums;
@@ -10,12 +14,7 @@ using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 using static InsanityBot.Commands.StringUtilities;
-using static System.Convert;
 
 namespace InsanityBot.Commands.Moderation.Modlog
 {
@@ -69,7 +68,7 @@ namespace InsanityBot.Commands.Moderation.Modlog
 
                 DiscordEmbedBuilder failedModlog = InsanityBot.Embeds["insanitybot.error"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.commands.verbal_log.failed"], ctx, user));
-                
+
                 await ctx.Channel?.SendMessageAsync(embed: failedModlog.Build());
             }
         }

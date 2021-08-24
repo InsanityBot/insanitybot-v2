@@ -1,13 +1,13 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+using DSharpPlus.CommandsNext;
 
 using InsanityBot.Tickets.CustomCommands.Internal;
 
 using Newtonsoft.Json;
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace InsanityBot.Tickets.CustomCommands
 {

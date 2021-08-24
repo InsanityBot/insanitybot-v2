@@ -5,7 +5,7 @@ namespace InsanityBot.Utility.Timers
 {
     public class Timer
     {
-        public DateTime Expiry { get; set; }
+        public DateTimeOffset Expiry { get; set; }
         public String Identifier { get; set; }
         public Guid Guid { get; set; }
 
@@ -17,7 +17,7 @@ namespace InsanityBot.Utility.Timers
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Boolean CheckExpiry()
         {
-            if(DateTime.UtcNow > this.Expiry.ToUniversalTime())
+            if(DateTimeOffset.UtcNow > this.Expiry.ToUniversalTime())
             {
                 CallExpiredEvent(this.Identifier, this.Guid);
                 return true;
@@ -25,7 +25,7 @@ namespace InsanityBot.Utility.Timers
             return false;
         }
 
-        public Timer(DateTime Expiry, String Identifier)
+        public Timer(DateTimeOffset Expiry, String Identifier)
         {
             this.Expiry = Expiry;
             this.Identifier = Identifier;

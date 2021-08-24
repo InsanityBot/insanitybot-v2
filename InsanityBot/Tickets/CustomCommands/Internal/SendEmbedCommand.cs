@@ -1,8 +1,8 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using System;
+
+using DSharpPlus.CommandsNext;
 
 using InsanityBot.Core.Formatters.Embeds;
-
-using System;
 
 namespace InsanityBot.Tickets.CustomCommands.Internal
 {

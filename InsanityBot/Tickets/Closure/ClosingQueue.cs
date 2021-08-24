@@ -1,15 +1,15 @@
-﻿using DSharpPlus;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 using InsanityBot.Tickets.Commands;
 
 using Newtonsoft.Json;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace InsanityBot.Tickets.Closure
 {
@@ -114,7 +114,7 @@ namespace InsanityBot.Tickets.Closure
             {
                 Cancellable = cancellable,
                 ChannelId = channelId,
-                CloseDate = DateTime.Now + delay
+                CloseDate = DateTimeOffset.Now + delay
             });
 
             this.__channels.Add(channelId);

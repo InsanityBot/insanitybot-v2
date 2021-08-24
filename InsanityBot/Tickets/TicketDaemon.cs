@@ -1,4 +1,12 @@
-﻿using DSharpPlus;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
@@ -13,14 +21,6 @@ using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InsanityBot.Tickets
 {
@@ -163,7 +163,7 @@ namespace InsanityBot.Tickets
 
             writer.Close();
 
-            if((Boolean)Configuration["insanitybot.tickets.transcripts.enable"])
+            if(Configuration.Value<Boolean>("insanitybot.tickets.transcripts.enable"))
             {
                 await this.Transcriber.Transcribe(ticket);
 

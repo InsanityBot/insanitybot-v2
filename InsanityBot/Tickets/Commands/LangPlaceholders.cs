@@ -1,11 +1,11 @@
-﻿using DSharpPlus;
+﻿using System;
+
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 using InsanityBot.Commands;
-
-using System;
 
 namespace InsanityBot.Tickets.Commands
 {
@@ -28,7 +28,7 @@ namespace InsanityBot.Tickets.Commands
                 .Replace("{TICKETCLOSETIME}", time.ToString());
         }
 
-        public static String ReplaceValues(this String value, DiscordClient client, MessageCreateEventArgs ticketMessage, DateTime closeTime)
+        public static String ReplaceValues(this String value, DiscordClient client, MessageCreateEventArgs ticketMessage, DateTimeOffset closeTime)
         {
             return value.Replace("{MENTION}", ticketMessage.Author.Mention)
                 .Replace("{USERNAME}", ticketMessage.Author.Username)

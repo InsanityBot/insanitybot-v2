@@ -1,7 +1,7 @@
-﻿using DSharpPlus.Entities;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+
+using DSharpPlus.Entities;
 
 namespace InsanityBot.Commands.Moderation.Locking
 {

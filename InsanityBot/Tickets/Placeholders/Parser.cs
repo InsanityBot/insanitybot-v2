@@ -1,9 +1,9 @@
-﻿using Emzi0767;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+
+using Emzi0767;
 
 namespace InsanityBot.Tickets.Placeholders
 {

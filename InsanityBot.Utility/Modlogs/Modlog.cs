@@ -1,12 +1,12 @@
-﻿using DSharpPlus.Entities;
+﻿using System;
+using System.IO;
+
+using DSharpPlus.Entities;
 
 using InsanityBot.Utility.Exceptions;
 using InsanityBot.Utility.Modlogs.Reference;
 
 using Newtonsoft.Json;
-
-using System;
-using System.IO;
 
 namespace InsanityBot.Utility.Modlogs
 {
@@ -107,7 +107,7 @@ namespace InsanityBot.Utility.Modlogs
                 user.Modlog.Add(new ModlogEntry
                 {
                     Type = type,
-                    Time = DateTime.UtcNow,
+                    Time = DateTimeOffset.UtcNow,
                     Reason = reason
                 });
                 user.ModlogEntryCount++;
@@ -141,7 +141,7 @@ namespace InsanityBot.Utility.Modlogs
             user.VerbalLog.Add(new VerbalModlogEntry
             {
                 Reason = reason,
-                Time = DateTime.UtcNow
+                Time = DateTimeOffset.UtcNow
             });
             user.VerbalLogEntryCount++;
             Serialize(user, member.Id);

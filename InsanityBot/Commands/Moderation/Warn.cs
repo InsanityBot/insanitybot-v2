@@ -1,18 +1,17 @@
-﻿using CommandLine;
+﻿using System;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
 
@@ -55,7 +54,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.warn.failure"], ctx, target));
-                
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                 await ctx.Channel?.SendMessageAsync(embed: failed.Build());
@@ -102,10 +101,10 @@ namespace InsanityBot.Commands.Moderation
                 embedBuilder = InsanityBot.Embeds["insanitybot.moderation.warn"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.warn.success"], ctx, target));
 
-                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
-                });
+                }, ctx);
             }
             catch(Exception e)
             {

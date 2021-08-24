@@ -1,16 +1,15 @@
-﻿using CommandLine;
+﻿using System;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
 
@@ -47,7 +46,7 @@ namespace InsanityBot.Commands.Permissions
                 {
                     DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
                         .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.permissions.error.could_not_parse"], ctx, member));
-                    
+
                     InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                     await ctx.Channel?.SendMessageAsync(failed.Build());
@@ -105,10 +104,10 @@ namespace InsanityBot.Commands.Permissions
                         await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
                     }
 
-                    _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Administration, new DiscordMessageBuilder
+                    _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                     {
                         Embed = moderationEmbedBuilder.Build()
-                    });
+                    }, ctx);
                 }
             }
         }

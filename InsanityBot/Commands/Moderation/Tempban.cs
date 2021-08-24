@@ -1,11 +1,13 @@
-﻿using CommandLine;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
 
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
@@ -13,13 +15,8 @@ using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.IO;
-using System.Reflection;
-using System.Threading.Tasks;
-
-using static InsanityBot.Commands.StringUtilities;
 using static System.Convert;
+using static InsanityBot.Commands.StringUtilities;
 
 namespace InsanityBot.Commands.Moderation
 {
@@ -68,7 +65,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 DiscordEmbedBuilder failed = InsanityBot.Embeds["insanitybot.error"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.ban.failure"], ctx, member));
-                
+
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
 
                 await ctx.Channel?.SendMessageAsync(embed: failed.Build());
@@ -108,7 +105,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 BanStartingEvent();
 
-                Timer callbackTimer = new(DateTime.Now.Add(time), $"tempban_{member.Id}");
+                Timer callbackTimer = new(DateTimeOffset.Now.Add(time), $"tempban_{member.Id}");
                 moderationEmbedBuilder.AddField("Timer GUID", callbackTimer.Guid.ToString(), true);
                 TimeHandler.AddTimer(callbackTimer);
 
@@ -118,10 +115,10 @@ namespace InsanityBot.Commands.Moderation
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.ban.success"], ctx, member));
 
                 _ = InsanityBot.HomeGuild.BanMemberAsync(member, 0, BanReason);
-                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
-                });
+                }, ctx);
 
             }
             catch

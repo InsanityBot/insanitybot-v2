@@ -1,8 +1,8 @@
-﻿using DSharpPlus.Entities;
+﻿using System;
+
+using DSharpPlus.Entities;
 
 using Newtonsoft.Json;
-
-using System;
 
 namespace InsanityBot.MessageServices.Embeds
 {

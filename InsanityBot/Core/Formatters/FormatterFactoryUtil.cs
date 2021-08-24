@@ -1,7 +1,7 @@
-﻿using InsanityBot.Core.Formatters.Abstractions;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+
+using InsanityBot.Core.Formatters.Abstractions;
 
 namespace InsanityBot.Core.Formatters
 {

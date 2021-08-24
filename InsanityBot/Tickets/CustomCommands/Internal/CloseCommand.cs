@@ -1,7 +1,7 @@
-﻿using DSharpPlus.CommandsNext;
-
-using System;
+﻿using System;
 using System.Threading;
+
+using DSharpPlus.CommandsNext;
 
 using TimeSpanParserUtil;
 

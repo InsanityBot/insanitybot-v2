@@ -1,18 +1,17 @@
-﻿using DSharpPlus;
+﻿using System;
+
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
 
 using InsanityBot.Core.Formatters.Embeds;
-using InsanityBot.Core.Logger;
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.MessageServices.Embeds;
+using InsanityBot.MessageServices.Messages;
 using InsanityBot.Tickets;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Language;
 using InsanityBot.Utility.Permissions;
-
-using System;
 
 namespace InsanityBot
 {
@@ -41,14 +40,14 @@ namespace InsanityBot
 
         public static PermissionEngine PermissionEngine { get; set; }
         public static EmbedFormatterFactory EmbedFactory { get; set; }
-        public static ModlogMessageQueue ModlogQueue { get; set; }
         public static TicketDaemon TicketDaemon
         {
             get => _ticketDaemon;
             set => _ticketDaemon = value;
         }
         public static EmbedHandler Embeds { get; set; }
+        public static LoggerEngine MessageLogger { get; set; }
 
-        public static String Version => "2.0.0-dev.00039";
+        public static String Version => "2.0.0-dev.00040";
     }
 }

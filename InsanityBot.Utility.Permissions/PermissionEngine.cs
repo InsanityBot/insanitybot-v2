@@ -3,19 +3,19 @@
 // uncomment this if you want to allow external handlers for permissions.
 // this requires a full recompile to apply. the feature is also disabled for a *reason*.
 
-using DSharpPlus;
-using DSharpPlus.Entities;
-
-using InsanityBot.Utility.Permissions.Data;
-
-using Newtonsoft.Json;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+
+using DSharpPlus;
+using DSharpPlus.Entities;
+
+using InsanityBot.Utility.Permissions.Data;
+
+using Newtonsoft.Json;
 
 namespace InsanityBot.Utility.Permissions
 {

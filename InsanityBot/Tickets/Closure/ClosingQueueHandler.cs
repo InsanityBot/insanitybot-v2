@@ -1,12 +1,12 @@
-﻿using DSharpPlus.Entities;
-
-using Microsoft.Extensions.Logging;
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Timers;
+
+using DSharpPlus.Entities;
+
+using Microsoft.Extensions.Logging;
 
 namespace InsanityBot.Tickets.Closure
 {
@@ -31,7 +31,7 @@ namespace InsanityBot.Tickets.Closure
 
         private async Task CountdownElapsedAsync()
         {
-            DateTime compareAgainst = DateTime.Now;
+            DateTimeOffset compareAgainst = DateTimeOffset.Now;
 
             for(Int32 i = 0; i < InsanityBot.TicketDaemon.ClosingQueue.Queue.Count; i++)
             {
@@ -55,7 +55,7 @@ namespace InsanityBot.Tickets.Closure
                         DiscordEmbedBuilder error = InsanityBot.Embeds["insanitybot.error"]
                             .WithDescription("Failed to delete the ticket. This could be an InsanityBot or a Discord API issue." +
                                 "\nPlease contact InsanityBot development at once and provide us with the console log.");
-                        
+
                         await channel?.SendMessageAsync(error.Build());
 
                         InsanityBot.TicketDaemon.ClosingQueue.Queue.Remove(q);

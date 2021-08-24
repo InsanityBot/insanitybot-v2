@@ -1,17 +1,16 @@
-﻿using CommandLine;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+
+using CommandLine;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Core.Services.Internal.Modlogs;
 using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
-
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
 using static InsanityBot.Commands.StringUtilities;
 
@@ -105,10 +104,10 @@ namespace InsanityBot.Commands.Moderation.Modlog
                         Text = "InsanityBot 2020-2021"
                     }
                 };
-                _ = InsanityBot.ModlogQueue.QueueMessage(ModlogMessageType.Moderation, new DiscordMessageBuilder
+                _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder.Build()
-                });
+                }, ctx);
             }
             catch(Exception e)
             {
