@@ -225,7 +225,15 @@ namespace InsanityBot.Tickets
 
             this.Tickets.Remove(ticket.TicketGuid);
 
-            await InsanityBot.HomeGuild.GetChannel(ticket.DiscordChannelId).DeleteAsync("Ticket closed");
+            DiscordChannel ticketChannel = InsanityBot.HomeGuild.GetChannel(ticket.DiscordChannelId);
+
+            DiscordEmbedBuilder logEmbed = InsanityBot.Embeds["insanitybot.ticketlog.close"]
+                .AddField("Channel", ticketChannel.Name);
+
+            await InsanityBot.MessageLogger.LogMessage(logEmbed.Build(), InsanityBot.CommandsExtension.CreateFakeContext(InsanityBot.Client.CurrentUser,
+                ticketChannel, "i.close", "i.", null));
+
+            await ticketChannel.DeleteAsync("Ticket closed");
         }
 
         public void SaveAll()

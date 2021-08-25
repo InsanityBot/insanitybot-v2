@@ -47,6 +47,11 @@ namespace InsanityBot.Tickets.Commands
             Guid ticketGuid = InsanityBot.TicketDaemon.CreateTicket(preset, ctx, topic, out DiscordChannel channel);
 
             DiscordEmbedBuilder embedBuilder;
+            DiscordEmbedBuilder logBuilder = InsanityBot.Embeds["insanitybot.ticketlog.new"]
+                .AddField("Creator", ctx.Member.Mention, true)
+                .AddField("Ticket", channel.Mention, true);
+
+            await InsanityBot.MessageLogger.LogMessage(logBuilder.Build(), ctx);
 
             try
             {

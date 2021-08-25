@@ -46,6 +46,12 @@ namespace InsanityBot.Tickets.Commands
             DiscordEmbedBuilder embedBuilder = InsanityBot.Embeds["insanitybot.tickets.close"]
                 .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.close"].ReplaceValues(ctx, ctx.Channel, closeTime));
 
+            DiscordEmbedBuilder logBuilder = InsanityBot.Embeds["insanitybot.ticketlog.close_queue"]
+                .AddField("Channel", ctx.Channel.Name, true)
+                .AddField("Time", closeTime.ToString(), true);
+
+            await InsanityBot.MessageLogger.LogMessage(logBuilder.Build(), ctx);
+
             await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
         }
     }
