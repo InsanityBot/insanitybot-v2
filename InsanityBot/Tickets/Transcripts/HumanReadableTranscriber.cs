@@ -23,7 +23,7 @@ namespace InsanityBot.Tickets.Transcripts
 
             await writer.WriteAsync($"## Transcript:\n\n");
 
-            foreach(DiscordMessage v in await channel.GetMessagesAfterAsync(0, 10000))
+            foreach(DiscordMessage v in await channel.GetMessagesAfterAsync(0, Int16.MaxValue))
             {
                 await writer.WriteAsync($"{v.Author.Username}#{v.Author.Discriminator}: {v.Content}\n\n");
             }
