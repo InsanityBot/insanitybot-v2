@@ -167,17 +167,24 @@ namespace InsanityBot.Tickets
             {
                 await this.Transcriber.Transcribe(ticket);
 
+                FileStream transcript = new($"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md", FileMode.Open);
+                transcript.Position = 0;
+
                 if(!(ticket.AddedUsers == null))
                 {
-
                     foreach(UInt64 v in ticket.AddedUsers)
                     {
                         DiscordMember member = await InsanityBot.HomeGuild.GetMemberAsync(v);
 
+                        if(member.IsBot)
+                        {
+                            continue;
+                        }
+
                         DiscordDmChannel dm = await member.CreateDmChannelAsync();
 
-                        DiscordMessageBuilder messageBuilder = new DiscordMessageBuilder().WithFile("transcript.md", new FileStream(
-                            $"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md", FileMode.Open));
+                        transcript.Position = 0;
+                        DiscordMessageBuilder messageBuilder = new DiscordMessageBuilder().WithFile("transcript.md", transcript);
 
                         try
                         {
@@ -197,8 +204,8 @@ namespace InsanityBot.Tickets
                 DiscordMember owner = await InsanityBot.HomeGuild.GetMemberAsync(ticket.Creator);
                 DiscordDmChannel ownerDm = await owner.CreateDmChannelAsync();
 
-                DiscordMessageBuilder ownerMessageBuilder = new DiscordMessageBuilder().WithFile("transcript.md", new FileStream(
-                            $"./cache/tickets/transcripts/{ticket.DiscordChannelId}-readable.md", FileMode.Open));
+                transcript.Position = 0;
+                DiscordMessageBuilder ownerMessageBuilder = new DiscordMessageBuilder().WithFile("transcript.md", transcript);
 
                 try
                 {
@@ -212,11 +219,21 @@ namespace InsanityBot.Tickets
                 {
                     throw;
                 }
+
+                transcript.Close();
             }
 
             this.Tickets.Remove(ticket.TicketGuid);
 
-            await InsanityBot.HomeGuild.GetChannel(ticket.DiscordChannelId).DeleteAsync("Ticket closed");
+            DiscordChannel ticketChannel = InsanityBot.HomeGuild.GetChannel(ticket.DiscordChannelId);
+
+            DiscordEmbedBuilder logEmbed = InsanityBot.Embeds["insanitybot.ticketlog.close"]
+                .AddField("Channel", ticketChannel.Name);
+
+            await InsanityBot.MessageLogger.LogMessage(logEmbed.Build(), InsanityBot.CommandsExtension.CreateFakeContext(InsanityBot.Client.CurrentUser,
+                ticketChannel, "i.close", "i.", null));
+
+            await ticketChannel.DeleteAsync("Ticket closed");
         }
 
         public void SaveAll()
@@ -278,7 +295,9 @@ namespace InsanityBot.Tickets
                 Creator = ticket.Creator,
                 DiscordChannelId = ticket.DiscordChannelId,
                 Settings = ticket.Settings,
-                TicketGuid = Guid.NewGuid()
+                TicketGuid = Guid.NewGuid(),
+                AddedUsers = new List<UInt64>(),
+                Staff = new List<UInt64>()
             };
 
             this.Tickets.Add(upgrade.TicketGuid, upgrade);

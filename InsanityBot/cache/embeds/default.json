@@ -290,7 +290,7 @@
     "footer": "InsanityBot 2020-2021"
   },
   "insanitybot.ticketlog.new": {
-    "color": "#b0fc38",
+    "color": "#f79ac0",
     "footer": "InsanityBot 2020-2021",
     "title": "Created ticket"
   },
@@ -299,32 +299,14 @@
     "footer": "InsanityBot 2020-2021"
   },
   "insanitybot.ticketlog.close_queue": {
-    "color": "#281e5d",
+    "color": "#f79ac0",
     "footer": "InsanityBot 2020-2021",
     "title": "Queued ticket closing"
   },
   "insanitybot.ticketlog.close": {
-    "color": "#281e5d",
+    "color": "#f79ac0",
     "footer": "InsanityBot 2020-2021",
     "title": "Closed ticket"
-  },
-  "insanitybot.tickets.add": {
-    "color": "#e11584",
-    "footer": "InsanityBot 2020-2021"
-  },
-  "insanitybot.ticketlog.add": {
-    "color": "#e11584",
-    "footer": "InsanityBot 2020-2021",
-    "title": "Added user to ticket"
-  },
-  "insanitybot.tickets.remove": {
-    "color": "#e11584",
-    "footer": "InsanityBot 2020-2021"
-  },
-  "insanitybot.ticketlog.remove": {
-    "color": "#e11584",
-    "footer": "InsanityBot 2020-2021",
-    "title": "Removed user from ticket"
   },
 
   "insanitybot.logging.delete_message": {

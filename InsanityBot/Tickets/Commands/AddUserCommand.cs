@@ -37,7 +37,13 @@ namespace InsanityBot.Tickets.Commands
                 _ = ctx.Channel?.AddOverwriteAsync(v, Permissions.AccessChannels);
 
                 DiscordTicket z = InsanityBot.TicketDaemon.Tickets[y.Key];
-                z.AddedUsers = z.AddedUsers.Append(v.Id).ToArray();
+
+                if(z.AddedUsers == null)
+                {
+                    z.AddedUsers = new List<UInt64>();
+                }
+
+                z.AddedUsers = z.AddedUsers.Append(v.Id);
                 InsanityBot.TicketDaemon.Tickets[y.Key] = z;
 
                 if(TicketDaemon.Configuration.Value<Boolean>("insanitybot.tickets.ghost_mention_added_members"))
