@@ -290,7 +290,7 @@
     "footer": "InsanityBot 2020-2021"
   },
   "insanitybot.ticketlog.new": {
-    "color": "#e11584",
+    "color": "#f79ac0",
     "footer": "InsanityBot 2020-2021",
     "title": "Created ticket"
   },
@@ -299,12 +299,12 @@
     "footer": "InsanityBot 2020-2021"
   },
   "insanitybot.ticketlog.close_queue": {
-    "color": "#e11584",
+    "color": "#f79ac0",
     "footer": "InsanityBot 2020-2021",
     "title": "Queued ticket closing"
   },
   "insanitybot.ticketlog.close": {
-    "color": "#e11584",
+    "color": "#f79ac0",
     "footer": "InsanityBot 2020-2021",
     "title": "Closed ticket"
   },
