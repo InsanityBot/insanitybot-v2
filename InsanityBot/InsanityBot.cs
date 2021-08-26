@@ -17,6 +17,8 @@ namespace InsanityBot
 {
     public partial class InsanityBot
     {
+        internal static event Action SaveLogger;
+
         private static TicketDaemon _ticketDaemon;
 
         public static CommandLineOptions CommandLineOptions { get; set; }

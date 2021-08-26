@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace InsanityBot.Core.Logger
 {
-    internal class InsanityBotLogger : ILogger, ILogger<BaseDiscordClient>
+    public class InsanityBotLogger : ILogger, ILogger<BaseDiscordClient>
     {
         private LoggerConfiguration Config { get; set; }
         private static readonly Object __lock = new();
@@ -22,6 +22,7 @@ namespace InsanityBot.Core.Logger
             {
                 if(this.logWriter == null)
                 {
+                    InsanityBot.SaveLogger += this.SaveFile;
                     if((Boolean)InsanityBot.LoggerConfig.Configuration["LogToFile"])
                     {
                         if(!Directory.Exists("./logs"))
@@ -133,50 +134,57 @@ namespace InsanityBot.Core.Logger
 
         public void LogFile<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, String> formatter)
         {
-            if(!this.IsEnabled(logLevel))
+            try
             {
-                return;
-            }
-
-            if(this.Config.EventExclusions.Contains(eventId.Name))
-            {
-                return;
-            }
-
-            if(this.Config.EventIdExclusions.Contains(eventId.Id))
-            {
-                return;
-            }
-
-            lock(__lock)
-            {
-                String ename = eventId.Name;
-                ename = ename?.Length > 12 ? ename?.Substring(0, 12) : ename;
-                this.LogWriter.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
-
-                this.LogWriter.Write(logLevel switch
+                if(!this.IsEnabled(logLevel))
                 {
-                    LogLevel.Trace => "[Trace]",
-                    LogLevel.Debug => "[Debug]",
-                    LogLevel.Information => "[Info]",
-                    LogLevel.Warning => "[Warn]",
-                    LogLevel.Error => "[Error]",
-                    LogLevel.Critical => "[Fatal]",
-                    LogLevel.None => "[None]",
-                    _ => "[?????] "
-                });
-
-                this.LogWriter.Write($" [{eventId.Id}/{ename}] ");
-
-                String message = formatter(state, exception);
-                this.LogWriter.WriteLine(message);
-
-                if(exception != null)
-                {
-                    this.LogWriter.WriteLine(exception);
+                    return;
                 }
 
-                this.LogWriter.Flush();
+                if(this.Config.EventExclusions.Contains(eventId.Name))
+                {
+                    return;
+                }
+
+                if(this.Config.EventIdExclusions.Contains(eventId.Id))
+                {
+                    return;
+                }
+
+                lock(__lock)
+                {
+                    String ename = eventId.Name;
+                    ename = ename?.Length > 12 ? ename?.Substring(0, 12) : ename;
+                    this.LogWriter.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
+
+                    this.LogWriter.Write(logLevel switch
+                    {
+                        LogLevel.Trace => "[Trace]",
+                        LogLevel.Debug => "[Debug]",
+                        LogLevel.Information => "[Info]",
+                        LogLevel.Warning => "[Warn]",
+                        LogLevel.Error => "[Error]",
+                        LogLevel.Critical => "[Fatal]",
+                        LogLevel.None => "[None]",
+                        _ => "[?????] "
+                    });
+
+                    this.LogWriter.Write($" [{eventId.Id}/{ename}] ");
+
+                    String message = formatter(state, exception);
+                    this.LogWriter.WriteLine(message);
+
+                    if(exception != null)
+                    {
+                        this.LogWriter.WriteLine(exception);
+                    }
+
+                    this.LogWriter.Flush();
+                }
+            }
+            catch
+            {
+                // sorry not sorry. theres some fuckery with this and reloading, will fix before final release
             }
         }
 
@@ -188,6 +196,25 @@ namespace InsanityBot.Core.Logger
             {
                 this.LogFile(logLevel, eventId, state, exception, formatter);
             }
+        }
+
+        public void SaveFile()
+        {
+            if(!Directory.Exists("./logs"))
+            {
+                Directory.CreateDirectory("./logs");
+            }
+
+            try
+            {
+                File.Move("./logs/latest.txt", $"./logs/log-{DateTimeOffset.Now:yyyy-MM-dd-hh-mm-dd}.txt");
+            }
+            catch
+            {
+                // the file didnt exist, no worries
+            }
+
+            logWriter.Close();
         }
     }
 }

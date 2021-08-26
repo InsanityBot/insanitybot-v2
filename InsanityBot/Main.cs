@@ -43,6 +43,8 @@ namespace InsanityBot
     {
         public static async Task Main(String[] args)
         {
+            Console.Title = $"InsanityBot v{Version}";
+
             //run command line parser
             Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithParsed(o =>
@@ -386,6 +388,20 @@ namespace InsanityBot
             state.SaveDaemonState(TicketDaemon);
 
             Environment.Exit(0);
+        }
+
+        internal static void UnloadAll()
+        {
+            TicketDaemon.SaveAll();
+            TicketDaemon.CommandHandler.Save();
+
+            SaveLogger();
+
+            Client.DisconnectAsync();
+
+            TicketDaemonState state = new();
+            state.SaveDaemonState(TicketDaemon);
+
         }
     }
 }

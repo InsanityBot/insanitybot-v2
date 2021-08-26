@@ -28,6 +28,9 @@ namespace InsanityBot.ConsoleCommands.Integrated
                     case "return":
                         new StopCommand().StopConsoleCommand();
                         break;
+                    case "reload":
+                        new ReloadCommand().ReloadConsoleCommand();
+                        break;
                     default:
                         break;
                 }
