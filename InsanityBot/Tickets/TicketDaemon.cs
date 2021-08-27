@@ -236,6 +236,16 @@ namespace InsanityBot.Tickets
             await ticketChannel.DeleteAsync("Ticket closed");
         }
 
+        public void RemoveTicket(UInt64 id)
+        {
+            foreach(var v in from x in Tickets
+                             where x.Value.DiscordChannelId == id
+                             select x.Key)
+            {
+                Tickets.Remove(v);
+            }
+        }
+
         public void SaveAll()
         {
 

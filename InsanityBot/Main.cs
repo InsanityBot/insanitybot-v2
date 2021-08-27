@@ -23,6 +23,7 @@ using InsanityBot.Core.Logger;
 using InsanityBot.Datafixers;
 using InsanityBot.Tickets;
 using InsanityBot.Tickets.Commands;
+using InsanityBot.Tickets.Validation;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
@@ -306,19 +307,28 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<NewTicketCommand>();
                 CommandsExtension.RegisterCommands<CloseTicketCommand>();
                 CommandsExtension.RegisterCommands<AddUserCommand>();
+                CommandsExtension.RegisterCommands<RemoveUserCommand>();
             }
         }
 
         private static void RegisterAllEvents()
         {
-            Utility.Timers.Timer.TimerExpiredEvent += Mute.InitializeUnmute;
-            Mute.UnmuteCompletedEvent += TimeHandler.ReenableTimer;
+            if(Config.Value<Boolean>("insanitybot.modules.moderation"))
+            {
+                Utility.Timers.Timer.TimerExpiredEvent += Mute.InitializeUnmute;
+                Mute.UnmuteCompletedEvent += TimeHandler.ReenableTimer;
 
-            Utility.Timers.Timer.TimerExpiredEvent += Ban.InitializeUnban;
-            Ban.UnbanCompletedEvent += TimeHandler.ReenableTimer;
+                Utility.Timers.Timer.TimerExpiredEvent += Ban.InitializeUnban;
+                Ban.UnbanCompletedEvent += TimeHandler.ReenableTimer;
 
-            Mute.MuteStartingEvent += TimeHandler.DisableTimer;
-            Ban.BanStartingEvent += TimeHandler.DisableTimer;
+                Mute.MuteStartingEvent += TimeHandler.DisableTimer;
+                Ban.BanStartingEvent += TimeHandler.DisableTimer;
+            }
+
+            if(Config.Value<Boolean>("insanitybot.modules.tickets"))
+            {
+                Client.GuildDownloadCompleted += new TicketCacheValidator().Validate;
+            }
         }
 
         private static void InitializeAll()
