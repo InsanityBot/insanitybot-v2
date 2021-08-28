@@ -12,22 +12,26 @@ namespace InsanityBot.Tickets.Validation
     {
         public Task Validate(DiscordClient sender, GuildDownloadCompletedEventArgs args)
         {
-            if(!args.Guilds.ContainsKey(InsanityBot.HomeGuild.Id))
-                return Task.CompletedTask;
-
-            List<UInt64> cacheIds = InsanityBot.TicketDaemon.Tickets.Select(xm => xm.Value.DiscordChannelId).ToList();
-            List<UInt64> channelIds = args.Guilds[InsanityBot.HomeGuild.Id].Channels.Select(xm => xm.Key).ToList();
-
-            foreach(var v in cacheIds)
+            _ = Task.Run(() =>
             {
-                if(!channelIds.Contains(v))
+                if(!args.Guilds.ContainsKey(InsanityBot.HomeGuild.Id))
+                    return;
+
+                List<UInt64> cacheIds = InsanityBot.TicketDaemon.Tickets.Select(xm => xm.Value.DiscordChannelId).ToList();
+                List<UInt64> channelIds = args.Guilds[InsanityBot.HomeGuild.Id].Channels.Select(xm => xm.Key).ToList();
+
+                foreach(var v in cacheIds)
                 {
-                    InsanityBot.TicketDaemon.RemoveTicket(v);
+                    if(!channelIds.Contains(v))
+                    {
+                        InsanityBot.TicketDaemon.RemoveTicket(v);
+                    }
                 }
-            }
 
-            InsanityBot.TicketDaemon.SaveAll();
+                InsanityBot.TicketDaemon.SaveAll();
 
+                return;
+            });
             return Task.CompletedTask;
         }
     }
