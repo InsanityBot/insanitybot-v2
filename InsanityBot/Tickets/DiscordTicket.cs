@@ -6,7 +6,7 @@ namespace InsanityBot.Tickets
     public struct DiscordTicket
     {
         public UInt64 Creator { get; set; }
-        public IEnumerable<UInt64> AddedUsers { get; set; }
+        public List<UInt64> AddedUsers { get; set; }
         public IEnumerable<UInt64> Staff { get; set; }
 
         public String Topic { get; set; }

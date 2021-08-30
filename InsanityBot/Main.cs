@@ -328,6 +328,7 @@ namespace InsanityBot
             if(Config.Value<Boolean>("insanitybot.modules.tickets"))
             {
                 Client.GuildDownloadCompleted += new TicketCacheValidator().Validate;
+                Client.GuildDownloadCompleted += new TicketPermissionCacheValidator().Validate; // order is important here
                 Client.ChannelDeleted += new ChannelDeleteValidator().Validate;
             }
         }
