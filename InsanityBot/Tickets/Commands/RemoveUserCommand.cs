@@ -39,7 +39,7 @@ namespace InsanityBot.Tickets.Commands
                 DiscordTicket z = InsanityBot.TicketDaemon.Tickets[y.Key];
                 z.AddedUsers = (from a in z.AddedUsers
                                 where a != v.Id
-                                select a).ToArray();
+                                select a).ToList();
                 InsanityBot.TicketDaemon.Tickets[y.Key] = z;
             }
         }

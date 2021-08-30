@@ -43,7 +43,7 @@ namespace InsanityBot.Tickets.Commands
                     z.AddedUsers = new List<UInt64>();
                 }
 
-                z.AddedUsers = z.AddedUsers.Append(v.Id);
+                z.AddedUsers.Add(v.Id);
                 InsanityBot.TicketDaemon.Tickets[y.Key] = z;
 
                 if(TicketDaemon.Configuration.Value<Boolean>("insanitybot.tickets.ghost_mention_added_members"))
