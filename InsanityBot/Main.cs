@@ -14,18 +14,10 @@ using DSharpPlus.Exceptions;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
-using InsanityBot.Commands.Miscellaneous;
-using InsanityBot.Commands.Moderation;
-using InsanityBot.Commands.Moderation.Locking;
-using InsanityBot.Commands.Moderation.Modlog;
-using InsanityBot.Commands.Permissions;
 using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
 using InsanityBot.Datafixers;
 using InsanityBot.Tickets;
-using InsanityBot.Tickets.Commands;
-using InsanityBot.Tickets.Commands.Admin;
-using InsanityBot.Tickets.Validation;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
 using InsanityBot.Utility.Language;
@@ -212,8 +204,14 @@ namespace InsanityBot
             RegisterAllEvents();
 
             //initialize various parts of InsanityBots framework
-            InitializeAll();
+            TimeHandler.Start();
 
+            Embeds = new();
+            Embeds.Initialize(Client.Logger);
+
+            MessageLogger = new(CommandsExtension, Client.Logger, Config, Client, HomeGuild, Embeds);
+
+            // startup success!
             Client.Logger.LogInformation(new EventId(1000, "Main"), $"Startup successful!");
 
             //start offthread TCP connection
@@ -272,79 +270,6 @@ namespace InsanityBot
             Client.Logger.LogError(new EventId(1001, "CommandError"), $"{e.Command} failed:\n" +
                 $"{e.Exception}: {e.Exception.Message}\n{e.Exception.StackTrace}");
             return Task.CompletedTask;
-        }
-
-        private static void RegisterAllCommands()
-        {
-            CommandsExtension.RegisterCommands<PermissionCommand>();
-
-            if(Config.Value<Boolean>("insanitybot.modules.miscellaneous"))
-            {
-                CommandsExtension.RegisterCommands<Say>();
-                CommandsExtension.RegisterCommands<Embed>();
-            }
-            if(Config.Value<Boolean>("insanitybot.modules.moderation"))
-            {
-                CommandsExtension.RegisterCommands<VerbalWarn>();
-                CommandsExtension.RegisterCommands<Warn>();
-                CommandsExtension.RegisterCommands<Mute>();
-                CommandsExtension.RegisterCommands<Blacklist>();
-                CommandsExtension.RegisterCommands<Whitelist>();
-                CommandsExtension.RegisterCommands<Kick>();
-                CommandsExtension.RegisterCommands<Ban>();
-
-                CommandsExtension.RegisterCommands<Modlog>();
-                CommandsExtension.RegisterCommands<ExportModlog>();
-                CommandsExtension.RegisterCommands<ClearModlog>();
-
-                CommandsExtension.RegisterCommands<Purge>();
-                CommandsExtension.RegisterCommands<Slowmode>();
-
-                CommandsExtension.RegisterCommands<Lock>();
-                CommandsExtension.RegisterCommands<Unlock>();
-                CommandsExtension.RegisterCommands<LockHelperCommands>();
-            }
-            if(Config.Value<Boolean>("insanitybot.modules.tickets"))
-            {
-                CommandsExtension.RegisterCommands<NewTicketCommand>();
-                CommandsExtension.RegisterCommands<CloseTicketCommand>();
-                CommandsExtension.RegisterCommands<AddUserCommand>();
-                CommandsExtension.RegisterCommands<RemoveUserCommand>();
-
-                CommandsExtension.RegisterCommands<ClearTicketCache>();
-            }
-        }
-
-        private static void RegisterAllEvents()
-        {
-            if(Config.Value<Boolean>("insanitybot.modules.moderation"))
-            {
-                Utility.Timers.Timer.TimerExpiredEvent += Mute.InitializeUnmute;
-                Mute.UnmuteCompletedEvent += TimeHandler.ReenableTimer;
-
-                Utility.Timers.Timer.TimerExpiredEvent += Ban.InitializeUnban;
-                Ban.UnbanCompletedEvent += TimeHandler.ReenableTimer;
-
-                Mute.MuteStartingEvent += TimeHandler.DisableTimer;
-                Ban.BanStartingEvent += TimeHandler.DisableTimer;
-            }
-
-            if(Config.Value<Boolean>("insanitybot.modules.tickets"))
-            {
-                Client.GuildDownloadCompleted += new TicketCacheValidator().Validate;
-                Client.GuildDownloadCompleted += new TicketPermissionCacheValidator().Validate; // order is important here
-                Client.ChannelDeleted += new ChannelDeleteValidator().Validate;
-            }
-        }
-
-        private static void InitializeAll()
-        {
-            TimeHandler.Start();
-
-            Embeds = new();
-            Embeds.Initialize(Client.Logger);
-
-            MessageLogger = new(CommandsExtension, Client.Logger, Config, Client, HomeGuild, Embeds);
         }
 
         private static async Task HandleTCPConnections(Int64 Port)
