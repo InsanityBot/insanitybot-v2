@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -26,7 +27,7 @@ namespace InsanityBot.Tickets
 {
     public class TicketDaemon
     {
-        internal Dictionary<Guid, DiscordTicket> Tickets { get; set; }
+        internal ConcurrentDictionary<Guid, DiscordTicket> Tickets { get; set; }
         internal Dictionary<Guid, DiscordTicketData> AdditionalData { get; set; }
         internal static TicketConfiguration Configuration { get; set; }
         internal CustomCommandHandler CommandHandler { get; set; }
@@ -71,7 +72,7 @@ namespace InsanityBot.Tickets
             }
             else
             {
-                this.Tickets = JsonConvert.DeserializeObject<Dictionary<Guid, DiscordTicket>>(File.ReadAllText("./cache/tickets/tickets.json"));
+                this.Tickets = JsonConvert.DeserializeObject<ConcurrentDictionary<Guid, DiscordTicket>>(File.ReadAllText("./cache/tickets/tickets.json"));
             }
 
             if(!File.Exists("./cache/tickets/data.json"))
@@ -223,7 +224,7 @@ namespace InsanityBot.Tickets
                 transcript.Close();
             }
 
-            this.Tickets.Remove(ticket.TicketGuid);
+            this.Tickets.Remove(ticket.TicketGuid, out ticket);
 
             DiscordChannel ticketChannel = InsanityBot.HomeGuild.GetChannel(ticket.DiscordChannelId);
 
@@ -240,9 +241,10 @@ namespace InsanityBot.Tickets
         {
             foreach(var v in from x in Tickets
                              where x.Value.DiscordChannelId == id
-                             select x.Key)
+                             select x)
             {
-                Tickets.Remove(v);
+                DiscordTicket t = v.Value;
+                Tickets.Remove(v.Key, out t);
             }
         }
 
@@ -310,7 +312,7 @@ namespace InsanityBot.Tickets
                 Staff = new List<UInt64>()
             };
 
-            this.Tickets.Add(upgrade.TicketGuid, upgrade);
+            this.Tickets.TryAdd(upgrade.TicketGuid, upgrade);
             return upgrade.TicketGuid;
         }
 
