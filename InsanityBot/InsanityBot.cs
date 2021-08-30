@@ -19,7 +19,7 @@ namespace InsanityBot
     {
         internal static event Action SaveLogger;
 
-        private static TicketDaemon _ticketDaemon;
+        internal static TicketDaemon _ticketDaemon;
 
         public static CommandLineOptions CommandLineOptions { get; set; }
 

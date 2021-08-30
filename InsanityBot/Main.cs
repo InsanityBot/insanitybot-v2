@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ using InsanityBot.Core.Logger;
 using InsanityBot.Datafixers;
 using InsanityBot.Tickets;
 using InsanityBot.Tickets.Commands;
+using InsanityBot.Tickets.Commands.Admin;
 using InsanityBot.Tickets.Validation;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -308,6 +310,8 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<CloseTicketCommand>();
                 CommandsExtension.RegisterCommands<AddUserCommand>();
                 CommandsExtension.RegisterCommands<RemoveUserCommand>();
+
+                CommandsExtension.RegisterCommands<ClearTicketCache>();
             }
         }
 
