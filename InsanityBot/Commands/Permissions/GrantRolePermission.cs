@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 
 using Microsoft.Extensions.Logging;
 
@@ -21,6 +21,7 @@ namespace InsanityBot.Commands.Permissions
         {
             [Command("grant")]
             [Aliases("give", "allow")]
+            [RequireAdminPermission("insanitybot.permissions.role.grant")]
             public async Task GrantPermissionCommand(CommandContext ctx, DiscordRole role,
                 [RemainingText]
                 String args)
@@ -63,12 +64,6 @@ namespace InsanityBot.Commands.Permissions
 
             private async Task ExecuteGrantPermission(CommandContext ctx, DiscordRole role, Boolean silent, String args)
             {
-                if(!ctx.Member.HasPermission("insanitybot.permissions.role.grant"))
-                {
-                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                    return;
-                }
-
                 if(silent)
                 {
                     await ctx.Message?.DeleteAsync();

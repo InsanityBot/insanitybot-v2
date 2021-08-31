@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 
 using Microsoft.Extensions.Logging;
 
@@ -21,6 +21,7 @@ namespace InsanityBot.Commands.Permissions
         {
             [Command("deny")]
             [Aliases("remove")]
+            [RequireAdminPermission("insanitybot.permissions.user.deny")]
             public async Task DenyPermissionCommand(CommandContext ctx, DiscordMember member,
                 [RemainingText]
                 String args)
@@ -64,12 +65,6 @@ namespace InsanityBot.Commands.Permissions
 
             private async Task ExecuteDenyPermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
             {
-                if(!ctx.Member.HasPermission("insanitybot.permissions.user.deny"))
-                {
-                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                    return;
-                }
-
                 if(silent)
                 {
                     await ctx.Message?.DeleteAsync();

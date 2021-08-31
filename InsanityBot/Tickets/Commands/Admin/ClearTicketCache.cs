@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 
 namespace InsanityBot.Tickets.Commands.Admin
 {
@@ -19,14 +15,9 @@ namespace InsanityBot.Tickets.Commands.Admin
         [RequirePrefixes("admin.")]
         [Command("full")]
         [Aliases("entire", "complete")]
-        public async Task ClearFullCache(CommandContext ctx)
+        [RequireAdminPermission("insanitybot.admin.ticket.clear_cache")]
+        public Task ClearFullCache(CommandContext ctx)
         {
-            if(!ctx.Member.HasPermission("insanitybot.admin.ticket.clear_cache"))
-            {
-                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                return;
-            }
-
             File.Delete("./cache/tickets/tickets.json");
             File.Delete("./cache/tickets/closequeue.json");
 
@@ -38,19 +29,16 @@ namespace InsanityBot.Tickets.Commands.Admin
 
             InsanityBot.Client.MessageCreated += InsanityBot.TicketDaemon.RouteCustomCommand;
             InsanityBot.Client.MessageCreated += InsanityBot.TicketDaemon.ClosingQueue.HandleCancellation;
+
+            return Task.CompletedTask;
         }
 
         [RequirePrefixes("admin.")]
         [Command("ticket")]
         [Aliases("tickets")]
-        public async Task ClearTickets(CommandContext ctx)
+        [RequireAdminPermission("insanitybot.admin.ticket.clear_cache")]
+        public Task ClearTickets(CommandContext ctx)
         {
-            if(!ctx.Member.HasPermission("insanitybot.admin.ticket.clear_cache"))
-            {
-                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                return;
-            }
-
             File.Delete("./cache/tickets/tickets.json");
 
             InsanityBot.TicketDaemon = new();
@@ -61,19 +49,16 @@ namespace InsanityBot.Tickets.Commands.Admin
 
             InsanityBot.Client.MessageCreated += InsanityBot.TicketDaemon.RouteCustomCommand;
             InsanityBot.Client.MessageCreated += InsanityBot.TicketDaemon.ClosingQueue.HandleCancellation;
+
+            return Task.CompletedTask;
         }
 
         [RequirePrefixes("admin.")]
         [Command("closequeue")]
         [Aliases("close")]
-        public async Task ClearClosequeue(CommandContext ctx)
+        [RequireAdminPermission("insanitybot.admin.ticket.clear_cache")]
+        public Task ClearClosequeue(CommandContext ctx)
         {
-            if(!ctx.Member.HasPermission("insanitybot.admin.ticket.clear_cache"))
-            {
-                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                return;
-            }
-
             File.Delete("./cache/tickets/closequeue.json");
 
             InsanityBot.TicketDaemon = new();
@@ -84,6 +69,8 @@ namespace InsanityBot.Tickets.Commands.Admin
 
             InsanityBot.Client.MessageCreated += InsanityBot.TicketDaemon.RouteCustomCommand;
             InsanityBot.Client.MessageCreated += InsanityBot.TicketDaemon.ClosingQueue.HandleCancellation;
+
+            return Task.CompletedTask;
         }
     }
 }

@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 
 using Microsoft.Extensions.Logging;
 
@@ -18,6 +18,7 @@ namespace InsanityBot.Commands.Moderation
     public partial class Ban
     {
         [Command("unban")]
+        [RequirePermission("insanitybot.moderation.unban")]
         public async Task UnbanCommand(CommandContext ctx,
             DiscordUser member,
 
@@ -80,13 +81,6 @@ namespace InsanityBot.Commands.Moderation
             Boolean automated = false,
             params Object[] additionals)
         {
-
-            if(!automated && !ctx.Member.HasPermission("insanitybot.moderation.unban"))
-            {
-                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
-                return;
-            }
-
             if(ctx == null && silent == false)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1144, "Unban"),

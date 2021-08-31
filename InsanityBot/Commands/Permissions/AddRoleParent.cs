@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 using InsanityBot.Utility.Permissions.Data;
 
 using Microsoft.Extensions.Logging;
@@ -23,6 +23,7 @@ namespace InsanityBot.Commands.Permissions
         {
             [Command("addrole")]
             [Aliases("add-role")]
+            [RequireAdminPermission("insanitybot.permissions.role.add_parent")]
             public async Task AddRoleCommand(CommandContext ctx, DiscordRole role,
                 [RemainingText]
                 String args)
@@ -67,12 +68,6 @@ namespace InsanityBot.Commands.Permissions
 
             private async Task ExecuteAddRole(CommandContext ctx, DiscordRole role, Boolean silent, UInt64 parent)
             {
-                if(!ctx.Member.HasPermission("insanitybot.permissions.role.add_parent"))
-                {
-                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                    return;
-                }
-
                 if(silent)
                 {
                     await ctx.Message?.DeleteAsync();

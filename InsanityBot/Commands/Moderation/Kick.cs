@@ -7,9 +7,9 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using InsanityBot.Core.Attributes;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Modlogs.SafeAccessInterface;
-using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +20,7 @@ namespace InsanityBot.Commands.Moderation
     internal class Kick : BaseCommandModule
     {
         [Command("kick")]
+        [RequirePermission("insanitybot.moderation.kick")]
         public async Task KickCommand(CommandContext ctx,
             DiscordMember member,
 
@@ -70,12 +71,6 @@ namespace InsanityBot.Commands.Moderation
             Boolean DmMember,
             Boolean Invite)
         {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.kick"))
-            {
-                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
-                return;
-            }
-
             //actually do something with the usedefault value
             String KickReason = Reason switch
             {

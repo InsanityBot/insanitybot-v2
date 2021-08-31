@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 
 using Microsoft.Extensions.Logging;
 
@@ -18,6 +18,7 @@ namespace InsanityBot.Commands.Moderation
     public partial class Mute
     {
         [Command("unmute")]
+        [RequirePermission("insanitybot.moderation.unmute")]
         public async Task UnmuteCommand(CommandContext ctx,
             DiscordMember member,
             String arguments = null)
@@ -79,13 +80,6 @@ namespace InsanityBot.Commands.Moderation
             Boolean automated = false,
             params Object[] additionals)
         {
-
-            if(!automated && !ctx.Member.HasPermission("insanitybot.moderation.unmute"))
-            {
-                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
-                return;
-            }
-
             if(ctx == null && silent == false)
             {
                 InsanityBot.Client.Logger.LogError(new EventId(1134, "Unmute"),
@@ -119,7 +113,7 @@ namespace InsanityBot.Commands.Moderation
             {
                 if(silent)
                 {
-                    _ = member.RevokeRoleAsync(InsanityBot.HomeGuild.GetRole(
+                    await member.RevokeRoleAsync(InsanityBot.HomeGuild.GetRole(
                         InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.mute_role_id")),
                         "Silent unmute");
 

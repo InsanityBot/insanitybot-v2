@@ -10,6 +10,8 @@ namespace InsanityBot
     {
         private static void RegisterAllEvents()
         {
+            CommandsExtension.CommandErrored += PermissionFailed;
+
             if(Config.Value<Boolean>("insanitybot.modules.moderation"))
             {
                 Timer.TimerExpiredEvent += Mute.InitializeUnmute;

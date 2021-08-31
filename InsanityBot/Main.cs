@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -262,6 +261,10 @@ namespace InsanityBot
             }
 
             if(e.Exception.GetType() == typeof(ArgumentNullException))
+            {
+                return Task.CompletedTask;
+            }
+            if(e.Exception.GetType() == typeof(ChecksFailedException))
             {
                 return Task.CompletedTask;
             }

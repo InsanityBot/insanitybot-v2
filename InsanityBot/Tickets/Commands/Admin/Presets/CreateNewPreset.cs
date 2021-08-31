@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 
 using Newtonsoft.Json;
 
@@ -20,14 +17,9 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
     {
         [Command("create")]
         [Aliases("new")]
+        [RequireAdminPermission("insanitybot.tickets.presets.create")]
         public async Task CreatePresetCommand(CommandContext ctx, String name)
         {
-            if(!ctx.Member.HasPermission("insanitybot.tickets.presets.create"))
-            {
-                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                return;
-            }
-
             TicketPreset preset = new()
             {
                 Id = name

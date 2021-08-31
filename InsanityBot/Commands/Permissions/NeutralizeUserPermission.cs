@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 
 using Microsoft.Extensions.Logging;
 
@@ -21,6 +21,7 @@ namespace InsanityBot.Commands.Permissions
         {
             [Command("neutralize")]
             [Aliases("revoke", "neutral", "nullify")]
+            [RequireAdminPermission("insanitybot.permissions.user.neutral")]
             public async Task NeutralizePermissionCommand(CommandContext ctx, DiscordMember member,
                 [RemainingText]
                 String args)
@@ -63,12 +64,6 @@ namespace InsanityBot.Commands.Permissions
 
             private async Task ExecuteNeutralizePermission(CommandContext ctx, DiscordMember member, Boolean silent, String permission)
             {
-                if(!ctx.Member.HasPermission("insanitybot.permissions.user.neutral"))
-                {
-                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                    return;
-                }
-
                 if(silent)
                 {
                     await ctx.Message?.DeleteAsync();

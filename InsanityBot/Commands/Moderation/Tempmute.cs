@@ -8,9 +8,9 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using InsanityBot.Core.Attributes;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Modlogs.SafeAccessInterface;
-using InsanityBot.Utility.Permissions;
 using InsanityBot.Utility.Timers;
 
 using Microsoft.Extensions.Logging;
@@ -24,7 +24,7 @@ namespace InsanityBot.Commands.Moderation
     {
         [Command("tempmute")]
         [Aliases("temp-mute")]
-        [Description("Temporarily mutes an user.")]
+        [RequirePermission("insanitybot.moderation.tempmute")]
         public async Task TempmuteCommand(CommandContext ctx,
 
             [Description("The user to mute")]
@@ -84,12 +84,6 @@ namespace InsanityBot.Commands.Moderation
             Boolean Silent,
             Boolean DmMember)
         {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.tempmute"))
-            {
-                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
-                return;
-            }
-
             String MuteReason = Reason switch
             {
                 "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"],
