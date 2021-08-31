@@ -19,7 +19,7 @@ namespace InsanityBot
     {
         internal static event Action SaveLogger;
 
-        private static TicketDaemon _ticketDaemon;
+        internal static TicketDaemon _ticketDaemon;
 
         public static CommandLineOptions CommandLineOptions { get; set; }
 
@@ -50,6 +50,6 @@ namespace InsanityBot
         public static EmbedHandler Embeds { get; set; }
         public static LoggerEngine MessageLogger { get; set; }
 
-        public static String Version => "2.0.0-dev.00041";
+        public static String Version => "2.0.0-dev.00042";
     }
 }

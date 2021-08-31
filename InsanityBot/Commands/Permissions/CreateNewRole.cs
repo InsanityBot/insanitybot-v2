@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +20,7 @@ namespace InsanityBot.Commands.Permissions
         public partial class RolePermissionCommand
         {
             [Command("create")]
+            [RequireAdminPermission("insanitybot.permissions.role.create")]
             public async Task CreatePermissionCommand(CommandContext ctx, DiscordRole role,
                 [RemainingText]
                 String args = "void")
@@ -55,12 +56,6 @@ namespace InsanityBot.Commands.Permissions
 
             private async Task ExecuteCreatePermission(CommandContext ctx, DiscordRole role, Boolean silent)
             {
-                if(!ctx.Member.HasPermission("insanitybot.permissions.role.create"))
-                {
-                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                    return;
-                }
-
                 if(silent)
                 {
                     await ctx.Message?.DeleteAsync();

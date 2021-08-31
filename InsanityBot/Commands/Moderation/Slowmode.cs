@@ -7,7 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 
 using Microsoft.Extensions.Logging;
 
@@ -19,6 +19,7 @@ namespace InsanityBot.Commands.Moderation
     public class Slowmode : BaseCommandModule
     {
         [GroupCommand]
+        [RequirePermission("insanitybot.moderation.slowmode")]
         public async Task SlowmodeCommand(CommandContext ctx,
             DiscordChannel channel,
 
@@ -72,12 +73,6 @@ namespace InsanityBot.Commands.Moderation
 
         private async Task ExecuteSlowmodeCommand(CommandContext ctx, DiscordChannel channel, TimeSpan slowmodeTime, Boolean silent, Boolean auto = false)
         {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.slowmode"))
-            {
-                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
-                return;
-            }
-
             if(silent)
             {
                 await ctx.Message?.DeleteAsync();
@@ -132,6 +127,7 @@ namespace InsanityBot.Commands.Moderation
 
         [Command("reset")]
         [Aliases("remove", "clear")]
+        [RequirePermission("insanitybot.moderation.slowmode")]
         public async Task ResetSlowmodeCommand(CommandContext ctx, Boolean silent = false)
             => await this.ResetSlowmodeCommand(ctx, ctx.Channel, silent);
 

@@ -8,11 +8,15 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using InsanityBot.Core.Attributes;
+using InsanityBot.Utility.Permissions;
+
 namespace InsanityBot.Tickets.Commands
 {
     public class RemoveUserCommand : BaseCommandModule
     {
         [Command("remove")]
+        [RequirePermission("insanitybot.tickets.remove")]
         public async Task RemoveUser(CommandContext ctx,
             params DiscordMember[] users)
         {
@@ -39,14 +43,21 @@ namespace InsanityBot.Tickets.Commands
                 DiscordTicket z = InsanityBot.TicketDaemon.Tickets[y.Key];
                 z.AddedUsers = (from a in z.AddedUsers
                                 where a != v.Id
-                                select a).ToArray();
+                                select a).ToList();
                 InsanityBot.TicketDaemon.Tickets[y.Key] = z;
             }
         }
 
-        public async Task AddRole(CommandContext ctx,
+        [Command("remove")]
+        public async Task RemoveRole(CommandContext ctx,
             params DiscordRole[] roles)
         {
+            if(!ctx.Member.HasPermission("insanitybot.tickets.remove"))
+            {
+                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                return;
+            }
+
             IEnumerable<KeyValuePair<Guid, DiscordTicket>> x = from t in InsanityBot.TicketDaemon.Tickets
                                                                where t.Value.DiscordChannelId == ctx.Channel?.Id
                                                                select t;

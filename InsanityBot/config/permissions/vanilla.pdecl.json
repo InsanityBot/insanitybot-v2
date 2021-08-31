@@ -97,6 +97,18 @@
     "Value": true
   },
   {
+    "Permission": "insanitybot.tickets.add",
+    "Value": true
+  },
+  {
+    "Permission": "insanitybot.tickets.remove",
+    "Value": true
+  },
+  {
+    "Permission": "insanitybot.tickets.presets.new",
+    "Value": false
+  },
+  {
     "Permission": "insanitybot.admin.lock_whitelist.add",
     "Value": false
   },
@@ -150,6 +162,11 @@
   },
   {
     "Permission": "insanitybot.permissions.role.create",
+    "Value": false
+  },
+
+  {
+    "Permission": "insanitybot.admin.tickets.clear_cache",
     "Value": false
   }
 ]

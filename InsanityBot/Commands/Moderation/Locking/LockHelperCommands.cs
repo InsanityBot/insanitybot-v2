@@ -5,7 +5,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 
 using Microsoft.Extensions.Logging;
 
@@ -20,17 +20,12 @@ namespace InsanityBot.Commands.Moderation.Locking
         public class Whitelist : BaseCommandModule
         {
             [Command("add")]
+            [RequireAdminPermission("insanitybot.admin.lock_whitelist.add")]
             public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.AddWhitelistedRoleCommand(ctx, role, ctx.Channel);
 
             [Command("add")]
             public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
-                if(!ctx.Member.HasPermission("insanitybot.admin.lock_whitelist.add"))
-                {
-                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                    return;
-                }
-
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.whitelist"];
 
@@ -82,17 +77,12 @@ namespace InsanityBot.Commands.Moderation.Locking
             }
 
             [Command("remove")]
+            [RequireAdminPermission("insanitybot.admin.lock_whitelist.remove")]
             public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveWhitelistedRoleCommand(ctx, role, ctx.Channel);
 
             [Command("remove")]
             public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
-                if(!ctx.Member.HasPermission("insanitybot.admin.lock_whitelist.remove"))
-                {
-                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                    return;
-                }
-
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.unwhitelist"];
 
@@ -139,17 +129,12 @@ namespace InsanityBot.Commands.Moderation.Locking
         public class Blacklist : BaseCommandModule
         {
             [Command("add")]
+            [RequireAdminPermission("insanitybot.admin.lock_blacklist.add")]
             public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.AddBlacklistedRoleCommand(ctx, role, ctx.Channel);
 
             [Command("add")]
             public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
-                if(!ctx.Member.HasPermission("insanitybot.admin.lock_blacklist.add"))
-                {
-                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                    return;
-                }
-
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.blacklist"];
 
@@ -204,14 +189,9 @@ namespace InsanityBot.Commands.Moderation.Locking
             public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveBlacklistedRoleCommand(ctx, role, ctx.Channel);
 
             [Command("remove")]
+            [RequireAdminPermission("insanitybot.admin.lock_blacklist.remove")]
             public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
             {
-                if(!ctx.Member.HasPermission("insanitybot.admin.lock_blacklist.remove"))
-                {
-                    await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_admin_permission"]);
-                    return;
-                }
-
                 DiscordEmbedBuilder embedBuilder = null;
                 DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.unblacklist"];
 

@@ -4,12 +4,11 @@ using System.Threading.Tasks;
 
 using CommandLine;
 
-using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Utility.Permissions;
+using InsanityBot.Core.Attributes;
 
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +19,7 @@ namespace InsanityBot.Commands.Moderation.Locking
     public class Unlock : BaseCommandModule
     {
         [Command("unlock")]
+        [RequirePermission("insanitybot.moderation.unlock")]
         public async Task UnlockCommand(CommandContext ctx) => await this.UnlockCommand(ctx, ctx.Channel, InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], false);
 
         [Command("unlock")]
@@ -59,12 +59,6 @@ namespace InsanityBot.Commands.Moderation.Locking
 
         private async Task UnlockCommand(CommandContext ctx, DiscordChannel channel, String reason = "usedefault", Boolean silent = false)
         {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.unlock"))
-            {
-                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
-                return;
-            }
-
             String UnlockReason = reason switch
             {
                 "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"], ctx),

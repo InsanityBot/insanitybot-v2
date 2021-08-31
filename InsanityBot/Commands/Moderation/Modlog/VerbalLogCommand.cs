@@ -8,9 +8,9 @@ using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 
+using InsanityBot.Core.Attributes;
 using InsanityBot.Utility.Modlogs.Reference;
 using InsanityBot.Utility.Modlogs.SafeAccessInterface;
-using InsanityBot.Utility.Permissions;
 
 using Microsoft.Extensions.Logging;
 
@@ -21,14 +21,10 @@ namespace InsanityBot.Commands.Moderation.Modlog
     public partial class Modlog
     {
         [Command("verballog")]
+        [RequirePermission("insanitybot.moderation.verballog")]
         public async Task VerbalLogCommand(CommandContext ctx,
             DiscordMember user)
         {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.verballog"))
-            {
-                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
-                return;
-            }
             try
             {
                 _ = user.TryFetchModlog(out UserModlog modlog);

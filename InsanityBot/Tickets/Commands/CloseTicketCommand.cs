@@ -6,6 +6,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using InsanityBot.Commands;
+using InsanityBot.Core.Attributes;
 
 namespace InsanityBot.Tickets.Commands
 {
@@ -14,6 +15,7 @@ namespace InsanityBot.Tickets.Commands
     {
 
         [Command("close")]
+        [RequirePermission("insanitybot.tickets.close")]
         public async Task CloseTicket(CommandContext ctx,
             [RemainingText]
             String args = "30s")

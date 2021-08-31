@@ -8,11 +8,15 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
+using InsanityBot.Core.Attributes;
+using InsanityBot.Utility.Permissions;
+
 namespace InsanityBot.Tickets.Commands
 {
     public class AddUserCommand : BaseCommandModule
     {
         [Command("add")]
+        [RequirePermission("insanitybot.tickets.add")]
         public async Task AddUser(CommandContext ctx,
             params DiscordMember[] users)
         {
@@ -43,7 +47,7 @@ namespace InsanityBot.Tickets.Commands
                     z.AddedUsers = new List<UInt64>();
                 }
 
-                z.AddedUsers = z.AddedUsers.Append(v.Id);
+                z.AddedUsers.Add(v.Id);
                 InsanityBot.TicketDaemon.Tickets[y.Key] = z;
 
                 if(TicketDaemon.Configuration.Value<Boolean>("insanitybot.tickets.ghost_mention_added_members"))
@@ -57,6 +61,12 @@ namespace InsanityBot.Tickets.Commands
         public async Task AddRole(CommandContext ctx,
             params DiscordRole[] roles)
         {
+            if(!ctx.Member.HasPermission("insanitybot.tickets.add"))
+            {
+                await ctx.Channel?.SendMessageAsync(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"]);
+                return;
+            }
+
             IEnumerable<KeyValuePair<Guid, DiscordTicket>> x = from t in InsanityBot.TicketDaemon.Tickets
                                                                where t.Value.DiscordChannelId == ctx.Channel?.Id
                                                                select t;
