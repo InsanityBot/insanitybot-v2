@@ -7,6 +7,7 @@ using InsanityBot.Commands.Moderation;
 using InsanityBot.Commands.Permissions;
 using InsanityBot.Tickets.Commands.Admin;
 using InsanityBot.Tickets.Commands;
+using InsanityBot.Tickets.Commands.Admin.Presets;
 
 namespace InsanityBot
 {
@@ -50,6 +51,8 @@ namespace InsanityBot
                 CommandsExtension.RegisterCommands<RemoveUserCommand>();
 
                 CommandsExtension.RegisterCommands<ClearTicketCache>();
+
+                CommandsExtension.RegisterCommands<PresetCommands>();
             }
         }
     }
