@@ -1,12 +1,12 @@
 ﻿using System;
 
 using InsanityBot.Commands.Miscellaneous;
+using InsanityBot.Commands.Moderation;
 using InsanityBot.Commands.Moderation.Locking;
 using InsanityBot.Commands.Moderation.Modlog;
-using InsanityBot.Commands.Moderation;
 using InsanityBot.Commands.Permissions;
-using InsanityBot.Tickets.Commands.Admin;
 using InsanityBot.Tickets.Commands;
+using InsanityBot.Tickets.Commands.Admin;
 using InsanityBot.Tickets.Commands.Admin.Presets;
 
 namespace InsanityBot

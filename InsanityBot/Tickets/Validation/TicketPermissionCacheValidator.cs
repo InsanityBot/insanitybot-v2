@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-using DSharpPlus.EventArgs;
 using DSharpPlus;
+using DSharpPlus.EventArgs;
 
 namespace InsanityBot.Tickets.Validation
 {
@@ -39,7 +38,7 @@ namespace InsanityBot.Tickets.Validation
 
                     foreach(var y in ticket.AddedUsers)
                     {
-                        if (!overrides.Contains(y))
+                        if(!overrides.Contains(y))
                         {
                             ticket.AddedUsers.Remove(v);
                         }

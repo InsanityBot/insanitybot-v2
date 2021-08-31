@@ -19,12 +19,16 @@ namespace InsanityBot
             {
                 if(v is RequirePermissionAttribute)
                 {
-                    await e.Context.Channel?.SendMessageAsync(Embeds["insanitybot.lacking_permission"].Build());
+                    await e.Context.Channel?.SendMessageAsync(Embeds["insanitybot.lacking_permission"]
+                        .WithDescription(LanguageConfig["insanitybot.error.lacking_permission"])
+                        .Build());
                     continue;
                 }
                 if(v is RequireAdminPermissionAttribute)
                 {
-                    await e.Context.Channel?.SendMessageAsync(Embeds["insanitybot.lacking_admin_permission"].Build());
+                    await e.Context.Channel?.SendMessageAsync(Embeds["insanitybot.lacking_admin_permission"]
+                        .WithDescription(LanguageConfig["insanitybot.error.lacking_admin_permission"])
+                        .Build());
                     continue;
                 }
             }
