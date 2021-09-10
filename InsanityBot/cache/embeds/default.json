@@ -317,6 +317,19 @@
     "footer": "InsanityBot 2020-2021",
     "title": "Created new preset"
   },
+  "insanitybot.tickets.presets.edit": {
+    "color": "#f79ac0",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.ticketlog.presets.edit": {
+    "color": "#f79ac0",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Edited preset"
+  },
+  "insanitybot.tickets.presets.view": {
+    "color": "#f79ac0",
+    "footer": "InsanityBot 2020-2021"
+  },
 
   "insanitybot.logging.delete_message": {
     "color": "#aa0000",
