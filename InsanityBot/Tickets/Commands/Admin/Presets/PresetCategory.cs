@@ -92,7 +92,11 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                         .Replace("{CATEGORY}", $"<#{preset.Category}>"));
 
                 await ctx.Channel.SendMessageAsync(response.Build());
-                await InsanityBot.MessageLogger.LogMessage(response.Build(), ctx);
+
+                DiscordEmbedBuilder ticketLog = InsanityBot.Embeds["insanitybot.ticketlog.presets.edit"]
+                    .AddField("Preset", presetId, true)
+                    .AddField("Category", $"<#{preset.Category}>", true);
+                await InsanityBot.MessageLogger.LogMessage(ticketLog.Build(), ctx);
             }
         }
     }
