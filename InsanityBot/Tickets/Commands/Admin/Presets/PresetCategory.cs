@@ -18,7 +18,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
         public class Category : BaseCommandModule
         {
             [GroupCommand]
-            [RequirePermission("insanitybot.tickets.presets.view")]
+            [RequireAdminPermission("insanitybot.tickets.presets.view")]
             public async Task GetCategory(CommandContext ctx, String presetId)
             {
                 if(!File.Exists($"./cache/tickets/presets/{presetId}.json"))
@@ -53,7 +53,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
             }
 
             [Command("set")]
-            [RequirePermission("insanitybot.tickets.presets.edit")]
+            [RequireAdminPermission("insanitybot.tickets.presets.edit")]
             public async Task SetCategory(CommandContext ctx, String presetId, UInt64 id)
             {
                 if(!File.Exists($"./cache/tickets/presets/{presetId}.json"))
