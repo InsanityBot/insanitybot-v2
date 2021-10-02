@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
 using InsanityBot.Core.Attributes;
@@ -14,9 +17,8 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
 {
     public partial class PresetCommands
     {
-        [Group("nameformat")]
-        [Aliases("name-format")]
-        public class PresetNameFormat
+        [Group("topic")]
+        public class PresetTopic : BaseCommandModule
         {
             [GroupCommand]
             [RequireAdminPermission("insanitybot.tickets.presets.view")]
@@ -49,13 +51,13 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                 DiscordEmbedBuilder response = InsanityBot.Embeds["insanitybot.tickets.presets.view"]
                     .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.category.get"]
                         .Replace("{PRESET}", presetId)
-                        .Replace("{FORMAT}", preset.NameFormat));
+                        .Replace("{TOPIC}", preset.Topic));
                 await ctx.Channel.SendMessageAsync(response.Build());
             }
 
             [Command("set")]
             [RequireAdminPermission("insanitybot.tickets.presets.edit")]
-            public async Task SetCategory(CommandContext ctx, String presetId, String format)
+            public async Task SetCategory(CommandContext ctx, String presetId, String topic)
             {
                 if(!File.Exists($"./cache/tickets/presets/{presetId}.json"))
                 {
@@ -73,7 +75,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                     preset = JsonConvert.DeserializeObject<TicketPreset>(reader.ReadToEnd());
                     reader.Close();
 
-                    preset = preset with { NameFormat = format };
+                    preset = preset with { Topic = topic };
 
                     StreamWriter writer = new($"./cache/tickets/presets/{presetId}.json");
                     writer.Write(JsonConvert.SerializeObject(preset, Formatting.Indented));
@@ -90,13 +92,13 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                 DiscordEmbedBuilder response = InsanityBot.Embeds["insanitybot.tickets.presets.edit"]
                     .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.category.set"]
                         .Replace("{PRESET}", presetId)
-                        .Replace("{FORMAT}", format));
+                        .Replace("{TOPIC}", topic));
 
                 await ctx.Channel.SendMessageAsync(response.Build());
 
                 DiscordEmbedBuilder ticketLog = InsanityBot.Embeds["insanitybot.ticketlog.presets.edit"]
                     .AddField("Preset", presetId, true)
-                    .AddField("Format", format, true);
+                    .AddField("Topic", topic, true);
                 await InsanityBot.MessageLogger.LogMessage(ticketLog.Build(), ctx);
             }
         }
