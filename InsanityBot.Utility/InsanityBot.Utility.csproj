@@ -6,9 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="DSharpPlus" Version="4.1.0" />
-    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.1.0" />
-    <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0" />
-    <PackageReference Include="DSharpPlus.Lavalink" Version="4.1.0" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.1.0">
+      <TreatAsUsed>true</TreatAsUsed>
+    </PackageReference>
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0">
+      <TreatAsUsed>true</TreatAsUsed>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
