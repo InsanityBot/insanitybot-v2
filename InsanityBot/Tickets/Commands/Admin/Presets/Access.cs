@@ -50,10 +50,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
 
                 DiscordEmbedBuilder response = InsanityBot.Embeds["insanitybot.tickets.presets.view"]
                     .WithTitle(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.get"]
-                        .Replace("{PRESET}", presetId))
-                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.get"]
-                        .Replace("{PRESET}", presetId)
-                        .Replace("{TOPIC}", preset.Topic));
+                        .Replace("{PRESET}", presetId));
 
                 StringBuilder desc = new();
                 desc.Append(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.roles"]);
@@ -71,6 +68,8 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                 {
                     desc.Append($"<@{v}>\n");
                 }
+
+                response.WithDescription(desc.ToString());
 
                 await ctx.Channel.SendMessageAsync(response.Build());
             }
@@ -113,7 +112,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                 }
 
                 DiscordEmbedBuilder response = InsanityBot.Embeds["insanitybot.tickets.presets.edit"]
-                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.set"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.setuser"]
                         .Replace("{PRESET}", presetId)
                         .Replace("{USER}", user.Mention));
 
@@ -163,7 +162,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                 }
 
                 DiscordEmbedBuilder response = InsanityBot.Embeds["insanitybot.tickets.presets.edit"]
-                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.set"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.setrole"]
                         .Replace("{PRESET}", presetId)
                         .Replace("{ROLE}", role.Mention));
 
@@ -216,7 +215,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                 }
 
                 DiscordEmbedBuilder response = InsanityBot.Embeds["insanitybot.tickets.presets.edit"]
-                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.set"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.setuser"]
                         .Replace("{PRESET}", presetId)
                         .Replace("{USER}", user.Mention));
 
@@ -269,7 +268,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                 }
 
                 DiscordEmbedBuilder response = InsanityBot.Embeds["insanitybot.tickets.presets.edit"]
-                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.set"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.setrole"]
                         .Replace("{PRESET}", presetId)
                         .Replace("{ROLE}", role.Mention));
 

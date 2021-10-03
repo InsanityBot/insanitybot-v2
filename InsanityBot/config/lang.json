@@ -175,6 +175,21 @@
           "category": {
             "get": "Preset {PRESET} currently uses category {CATEGORY}.",
             "set": "Preset {PRESET} was successfully set to use category {CATEGORY}."
+          },
+          "name": {
+            "get": "Preset {PRESET} currently uses format {NAME}.",
+            "set": "Preset {PRESET} was successfully set to use format {NAME}."
+          },
+          "topic": {
+            "get": "Preset {PRESET} currently uses default topic {TOPIC}.",
+            "set": "Preset {PRESET} was successfully set to use {TOPIC} as default."
+          },
+          "access": {
+            "get": "Access rules for preset {PRESET}", 
+            "roles": "Roles:",
+            "users": "Users:",
+            "setuser": "Access rules for preset {PRESET} were successfully configured to allow {USER}.",
+            "setrole": "Access rules for preset {PRESET} were successfully configured to allow {ROLE}."
           }
         }
       }
