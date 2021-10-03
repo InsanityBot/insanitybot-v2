@@ -30,7 +30,9 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
             writer.Write(JsonConvert.SerializeObject(preset, Formatting.Indented));
             writer.Close();
 
-            DiscordEmbedBuilder response = InsanityBot.Embeds["insanitybot.tickets.preset.new"];
+            DiscordEmbedBuilder response = InsanityBot.Embeds["insanitybot.tickets.preset.new"]
+                .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.new"]
+                    .Replace("{PRESET}", name));
             DiscordEmbedBuilder log = InsanityBot.Embeds["insanitybot.ticketlog.preset.new"]
                 .AddField("Admin", ctx.Member.Mention, true)
                 .AddField("Name", name, true);

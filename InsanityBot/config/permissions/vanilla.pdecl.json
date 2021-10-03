@@ -109,6 +109,14 @@
     "Value": false
   },
   {
+    "Permission": "insanitybot.tickets.presets.edit",
+    "Value": false
+  },
+  {
+    "Permission": "insanitybot.tickets.presets.view",
+    "Value": true
+  },
+  {
     "Permission": "insanitybot.admin.lock_whitelist.add",
     "Value": false
   },

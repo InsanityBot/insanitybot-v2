@@ -5,7 +5,7 @@
       "error": {
         "lacking_permission": "You are lacking permission to perform this command! Please contact your administrators if you believe this is an error.",
         "lacking_admin_permission": "You cannot execute this command as you are not a server administrator!",
-        "generic": "The command failed to execute. Please retry or contact your administrators"
+        "generic": "The command failed to execute. Please retry or contact your administrators."
       },
       "moderation": {
         "warn": {
@@ -166,6 +166,31 @@
         },
         "remove_user": {
           "not_a_ticket_channel": "{CHANNEL} is not a ticket channel, you cannot remove users from here."
+        },
+        "presets": {
+          "new": "New preset {PRESET} was created successfully.",
+          "error": {
+            "not_found": "Preset {PRESET} was not found."
+          },
+          "category": {
+            "get": "Preset {PRESET} currently uses category {CATEGORY}.",
+            "set": "Preset {PRESET} was successfully set to use category {CATEGORY}."
+          },
+          "name": {
+            "get": "Preset {PRESET} currently uses format {NAME}.",
+            "set": "Preset {PRESET} was successfully set to use format {NAME}."
+          },
+          "topic": {
+            "get": "Preset {PRESET} currently uses default topic {TOPIC}.",
+            "set": "Preset {PRESET} was successfully set to use {TOPIC} as default."
+          },
+          "access": {
+            "get": "Access rules for preset {PRESET}", 
+            "roles": "Roles:",
+            "users": "Users:",
+            "setuser": "Access rules for preset {PRESET} were successfully configured to allow {USER}.",
+            "setrole": "Access rules for preset {PRESET} were successfully configured to allow {ROLE}."
+          }
         }
       }
     }

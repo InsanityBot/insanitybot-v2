@@ -18,12 +18,12 @@
     "MetricMessageCount": true,
     "MetricMessagePerResolution": true,
 
-    "MentionClientOnResponse": true,
+    "MentionClientOnResponse": false,
     "MentionStaffRoleOnResponse": false,
     "MentionAssignedStaffOnResponse": false,
     "MentionAllClientsOnResponse": false,
 
-    "AutoAssignStaff": true,
+    "AutoAssignStaff": false,
     "AllowAddUsers": true
   },
   "CreationMessages": [

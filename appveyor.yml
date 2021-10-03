@@ -2,7 +2,7 @@ version: 2.0.0-dev-nightly.{build}
 skip_tags: true
 skip_commits:
   message: \[skip-ci]\
-max_jobs: 2
+max_jobs: 1
 
 image: Visual Studio 2019
 shallow_clone: true
