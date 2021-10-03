@@ -49,7 +49,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                 }
 
                 DiscordEmbedBuilder response = InsanityBot.Embeds["insanitybot.tickets.presets.view"]
-                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.category.get"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.topic.get"]
                         .Replace("{PRESET}", presetId)
                         .Replace("{TOPIC}", preset.Topic));
                 await ctx.Channel.SendMessageAsync(response.Build());
@@ -90,7 +90,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                 }
 
                 DiscordEmbedBuilder response = InsanityBot.Embeds["insanitybot.tickets.presets.edit"]
-                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.category.set"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.tickets.presets.topic.set"]
                         .Replace("{PRESET}", presetId)
                         .Replace("{TOPIC}", topic));
 

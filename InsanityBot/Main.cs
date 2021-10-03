@@ -214,7 +214,7 @@ namespace InsanityBot
             Client.Logger.LogInformation(new EventId(1000, "Main"), $"Startup successful!");
 
             //start offthread TCP connection
-            _ = HandleTCPConnections(Config.Value<Int64>("insanitybot.tcp_port"));
+            _ = HandleTCPConnections(Config.Value<UInt16>("insanitybot.tcp_port"));
 
             //start offthread XP management
             // if ((Boolean)Config["insanitybot.modules.experience"])
@@ -275,14 +275,14 @@ namespace InsanityBot
             return Task.CompletedTask;
         }
 
-        private static async Task HandleTCPConnections(Int64 Port)
+        private static async Task HandleTCPConnections(UInt16 Port)
         {
             if(Port == 0)
             {
                 return;
             }
 
-            TcpListener listener = new(IPAddress.Parse("0.0.0.0"), (Int32)Port);
+            TcpListener listener = new(IPAddress.Parse("0.0.0.0"), Port);
 
             try
             {
