@@ -11,6 +11,7 @@
         "tags": true,
         "tickets": true,
         "admin": true,
+        "slashcommands": true,
         "console": true
       },
       "commands": {
