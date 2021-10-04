@@ -21,7 +21,7 @@ namespace InsanityBot.SlashCommands.Moderation
         public async Task MuteCommand(InteractionContext ctx,
             
             [Option("member", "Mentioned member to mute")]
-            DiscordMember member,
+            DiscordUser user,
             
             [Option("reason", "Mute reason for this action")]
             String reason = "usedefault",
@@ -39,6 +39,8 @@ namespace InsanityBot.SlashCommands.Moderation
                         .AsEphemeral(true));
                 return; 
             }
+
+            DiscordMember member = await InsanityBot.HomeGuild.GetMemberAsync(user.Id);
 
             String muteReason = reason switch
             {

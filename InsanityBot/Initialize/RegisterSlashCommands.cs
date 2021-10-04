@@ -1,4 +1,6 @@
-﻿using InsanityBot.SlashCommands.Moderation;
+﻿using System;
+
+using InsanityBot.SlashCommands.Moderation;
 
 namespace InsanityBot
 {
@@ -6,8 +8,15 @@ namespace InsanityBot
     {
         private static void RegisterSlashCommands()
         {
-            SlashCommandsExtension.RegisterCommands<MuteSlash>(HomeGuild.Id);
-            SlashCommandsExtension.RegisterCommands<TestCommand>(HomeGuild.Id);
+            if(!Config.Value<Boolean>("insanitybot.modules.slashcommands"))
+            {
+                return;
+            }
+
+            if(Config.Value<Boolean>("insanitybot.modules.moderation"))
+            {
+                SlashCommandsExtension.RegisterCommands<MuteSlash>(Config.GuildId);
+            }
         }
     }
 }

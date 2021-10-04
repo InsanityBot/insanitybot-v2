@@ -148,6 +148,10 @@ namespace InsanityBot
 
             //create and connect client
             Client = new DiscordClient(ClientConfiguration);
+
+            SlashCommandsExtension = Client.UseSlashCommands();
+            RegisterSlashCommands();
+
             await Client.ConnectAsync();
 
             Client.Logger.LogInformation(new EventId(1000, "Main"), $"InsanityBot Version {Version}");
@@ -195,9 +199,6 @@ namespace InsanityBot
                 PaginationDeletion = PaginationDeletion.DeleteEmojis
             });
 
-            Client.UseSlashCommands();
-            SlashCommandsExtension = Client.GetSlashCommands();
-
             CommandsExtension.CommandErrored += CommandsExtension_CommandErrored;
 
             //start timer framework
@@ -205,7 +206,6 @@ namespace InsanityBot
 
             //register commands and events
             RegisterAllCommands();
-            RegisterSlashCommands();
             RegisterAllEvents();
 
             //initialize various parts of InsanityBots framework
