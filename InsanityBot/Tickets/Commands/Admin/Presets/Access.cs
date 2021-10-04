@@ -228,7 +228,6 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
             }
 
             [Command("revoke")]
-            [Aliases("remove")]
             [RequireAdminPermission("insanitybot.tickets.presets.edit")]
             public async Task RevokeAccess(CommandContext ctx, String presetId, DiscordRole role)
             {

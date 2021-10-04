@@ -12,6 +12,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Exceptions;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
+using DSharpPlus.SlashCommands;
 
 using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
@@ -189,9 +190,13 @@ namespace InsanityBot
 
             Interactivity = Client.UseInteractivity(new()
             {
+                AckPaginationButtons = true,
                 PaginationBehaviour = PaginationBehaviour.Ignore,
                 PaginationDeletion = PaginationDeletion.DeleteEmojis
             });
+
+            Client.UseSlashCommands();
+            SlashCommandsExtension = Client.GetSlashCommands();
 
             CommandsExtension.CommandErrored += CommandsExtension_CommandErrored;
 
@@ -200,6 +205,7 @@ namespace InsanityBot
 
             //register commands and events
             RegisterAllCommands();
+            RegisterSlashCommands();
             RegisterAllEvents();
 
             //initialize various parts of InsanityBots framework

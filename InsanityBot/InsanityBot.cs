@@ -4,6 +4,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity;
+using DSharpPlus.SlashCommands;
 
 using InsanityBot.Core.Formatters.Embeds;
 using InsanityBot.MessageServices.Embeds;
@@ -33,6 +34,8 @@ namespace InsanityBot
 
         public static CommandsNextExtension CommandsExtension { get; set; }
         public static CommandsNextConfiguration CommandConfiguration { get; set; }
+
+        public static SlashCommandsExtension SlashCommandsExtension { get; set; }
 
         public static InteractivityExtension Interactivity { get; set; }
 

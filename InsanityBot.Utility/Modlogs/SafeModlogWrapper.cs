@@ -21,7 +21,7 @@ namespace InsanityBot.Utility.Modlogs.SafeAccessInterface
 
             try
             {
-                (user as DiscordMember).AddModlogEntry(modlogEntry);
+                user.AddModlogEntry(modlogEntry);
                 return Task.FromResult(true);
             }
             catch(Exception e)
@@ -43,7 +43,7 @@ namespace InsanityBot.Utility.Modlogs.SafeAccessInterface
 
             try
             {
-                (user as DiscordMember).AddModlogEntry(type, reason);
+                user.AddModlogEntry(type, reason);
                 return Task.FromResult(true);
             }
             catch(Exception e)
@@ -65,7 +65,7 @@ namespace InsanityBot.Utility.Modlogs.SafeAccessInterface
 
             try
             {
-                (user as DiscordMember).AddVerbalModlogEntry(entry);
+                user.AddVerbalModlogEntry(entry);
                 return Task.FromResult(true);
             }
             catch(Exception e)
@@ -87,7 +87,7 @@ namespace InsanityBot.Utility.Modlogs.SafeAccessInterface
 
             try
             {
-                (user as DiscordMember).AddVerbalModlogEntry(reason);
+                user.AddVerbalModlogEntry(reason);
                 return Task.FromResult(true);
             }
             catch(Exception e)
@@ -110,7 +110,7 @@ namespace InsanityBot.Utility.Modlogs.SafeAccessInterface
 
             try
             {
-                modlog = (user as DiscordMember).GetUserModlog();
+                modlog = user.GetUserModlog();
                 return Task.FromResult(true);
             }
             catch(Exception e)
@@ -133,7 +133,7 @@ namespace InsanityBot.Utility.Modlogs.SafeAccessInterface
 
             try
             {
-                (user as DiscordMember).SetUserModlog(modlog);
+                user.SetUserModlog(modlog);
                 return Task.FromResult(true);
             }
             catch(Exception e)
