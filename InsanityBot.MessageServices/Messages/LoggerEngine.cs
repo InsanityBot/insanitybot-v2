@@ -154,24 +154,47 @@ namespace InsanityBot.MessageServices.Messages
         public async Task LogMessage(DiscordEmbed embed, CommandContext ctx)
         {
             ILoggingGateway gateway = this.GetGateway(new(ctx.Member, ctx.Channel, ctx.Command, ctx.Message), LogEvent.CommandExecution);
+
+            if(gateway == ILoggingGateway.Empty)
+            {
+                return;
+            }
+
             await gateway.SendMessage(embed);
         }
 
         public async Task LogMessage(DiscordMessageBuilder messageBuilder, CommandContext ctx)
         {
             ILoggingGateway gateway = this.GetGateway(new(ctx.Member, ctx.Channel, ctx.Command, ctx.Message), LogEvent.CommandExecution);
+
+            if(gateway == ILoggingGateway.Empty)
+            {
+                return;
+            }
+
             await gateway.SendMessage(messageBuilder);
         }
 
         public async Task LogMessage(DiscordEmbed embed, InteractionContext ctx)
         {
             ILoggingGateway gateway = this.GetGateway(new(ctx.Member, ctx.Channel, null, null), LogEvent.CommandExecution);
+
+            if(gateway == ILoggingGateway.Empty)
+            {
+                return;
+            }
+
             await gateway.SendMessage(embed);
         }
 
         public async Task LogMessage(DiscordMessageBuilder messageBuilder, InteractionContext ctx)
         {
             ILoggingGateway gateway = this.GetGateway(new(ctx.Member, ctx.Channel, null, null), LogEvent.CommandExecution);
+
+            if(gateway == ILoggingGateway.Empty)
+            {
+                return;
+            }
 
             await gateway?.SendMessage(messageBuilder);
         }
