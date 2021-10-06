@@ -25,7 +25,7 @@ namespace InsanityBot.MessageServices.Messages
     public class LoggerEngine
     {
         private readonly CommandsNextExtension _extension;
-        private readonly ILogger<BaseDiscordClient> _logger;
+        private readonly Boolean _webhook;
         private readonly JObject _config;
         private readonly JObject _channels;
         private readonly MessageRules _rules;
@@ -41,7 +41,7 @@ namespace InsanityBot.MessageServices.Messages
         {
             this._rules = new(guild);
             this._extension = commandExtension;
-            this._logger = logger;
+            this._webhook = config.Configuration.SelectToken("insanitybot.logging.use_webhooks").Value<Boolean>();
             this._config = (JObject)config.Configuration.SelectToken("insanitybot.logging");
             this._channels = (JObject)config.Configuration.SelectToken("insanitybot.identifiers.logging");
 
@@ -172,7 +172,8 @@ namespace InsanityBot.MessageServices.Messages
         public async Task LogMessage(DiscordMessageBuilder messageBuilder, InteractionContext ctx)
         {
             ILoggingGateway gateway = this.GetGateway(new(ctx.Member, ctx.Channel, null, null), LogEvent.CommandExecution);
-            await gateway.SendMessage(messageBuilder);
+
+            await gateway?.SendMessage(messageBuilder);
         }
 
         private async Task CommandExecuted(CommandsNextExtension sender, CommandExecutionEventArgs e)
@@ -340,35 +341,35 @@ namespace InsanityBot.MessageServices.Messages
                             case ChannelRuleTarget.Category:
                                 if(this._channelEvaluator.EvaluateCategoryRule(context.Channel, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : ILoggingGateway.Empty;
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case ChannelRuleTarget.FullName:
                                 if(this._channelEvaluator.EvaluateFullNameRule(context.Channel, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : ILoggingGateway.Empty;
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case ChannelRuleTarget.Id:
                                 if(this._channelEvaluator.EvaluateIdRule(context.Channel, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : ILoggingGateway.Empty;
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case ChannelRuleTarget.NameContains:
                                 if(this._channelEvaluator.EvaluateNameContainsRule(context.Channel, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : ILoggingGateway.Empty;
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case ChannelRuleTarget.NameStartsWith:
                                 if(this._channelEvaluator.EvaluateNameStartsWithRule(context.Channel, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : ILoggingGateway.Empty;
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
@@ -380,28 +381,28 @@ namespace InsanityBot.MessageServices.Messages
                             case MemberRuleTarget.Bot:
                                 if(this._memberEvaluator.EvaluateBotRule(context.Member, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : ILoggingGateway.Empty;
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case MemberRuleTarget.Id:
                                 if(this._memberEvaluator.EvaluateIdRule(context.Member, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : ILoggingGateway.Empty;
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case MemberRuleTarget.Owner:
                                 if(this._memberEvaluator.EvaluateOwnerRule(context.Member, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : ILoggingGateway.Empty;
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case MemberRuleTarget.Role:
                                 if(this._memberEvaluator.EvaluateRoleIdRule(context.Member, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : ILoggingGateway.Empty;
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
@@ -410,14 +411,14 @@ namespace InsanityBot.MessageServices.Messages
                     case RuleTarget.Command:
                         if(this._commandEvaluator.EvaluateCommandRule(context.Command, v.RuleParameter))
                         {
-                            return v.Allow ? this._rules.Channels[v.Channel] : ILoggingGateway.Empty;
+                            return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                         }
 
                         break;
                     case RuleTarget.Prefix:
                         if(this._prefixEvaluator.EvaluatePrefixRule(context.Prefix, v.RuleParameter))
                         {
-                            return v.Allow ? this._rules.Channels[v.Channel] : ILoggingGateway.Empty;
+                            return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                         }
 
                         break;
@@ -428,7 +429,7 @@ namespace InsanityBot.MessageServices.Messages
 
             if(this._rules.Defaults[ev] == null)
             {
-                return ILoggingGateway.Empty;
+                return (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
             }
 
             return this._rules.Channels[this._rules.Defaults[ev].Id];

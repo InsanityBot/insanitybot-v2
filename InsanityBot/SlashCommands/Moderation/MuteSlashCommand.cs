@@ -65,6 +65,11 @@ namespace InsanityBot.SlashCommands.Moderation
                 _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
                     InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.mute_role")),
                     muteReason);
+
+                if(InsanityBot.MessageLogger == null) Console.Write("msg");
+                if(moderationEmbedBuilder == null) Console.Write("emb");
+                if(ctx == null) Console.Write("ctx");
+
                 _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
