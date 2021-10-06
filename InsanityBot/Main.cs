@@ -17,6 +17,7 @@ using DSharpPlus.SlashCommands;
 using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
 using InsanityBot.Datafixers;
+using InsanityBot.MessageServices.Messages;
 using InsanityBot.Tickets;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -216,6 +217,7 @@ namespace InsanityBot
             Embeds.Initialize(Client.Logger);
 
             MessageLogger = new(CommandsExtension, Client.Logger, Config, Client, HomeGuild, Embeds);
+            LoggerEngine.HomeGuild = HomeGuild;
 
             // startup success!
             Client.Logger.LogInformation(new EventId(1000, "Main"), $"Startup successful!");

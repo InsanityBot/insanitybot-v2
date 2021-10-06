@@ -24,7 +24,6 @@ namespace InsanityBot.MessageServices.Messages
 {
     public class LoggerEngine
     {
-        private readonly CommandsNextExtension _extension;
         private readonly Boolean _webhook;
         private readonly JObject _config;
         private readonly JObject _channels;
@@ -36,11 +35,12 @@ namespace InsanityBot.MessageServices.Messages
         private readonly PrefixRuleEvaluator _prefixEvaluator;
         private readonly EmbedHandler _embeds;
 
+        public static DiscordGuild HomeGuild { get; set; }
+
         public LoggerEngine(CommandsNextExtension commandExtension, ILogger<BaseDiscordClient> logger, MainConfiguration config,
             DiscordClient client, DiscordGuild guild, EmbedHandler embeds)
         {
             this._rules = new(guild);
-            this._extension = commandExtension;
             this._webhook = config.Configuration.SelectToken("insanitybot.logging.use_webhooks").Value<Boolean>();
             this._config = (JObject)config.Configuration.SelectToken("insanitybot.logging");
             this._channels = (JObject)config.Configuration.SelectToken("insanitybot.identifiers.logging");
@@ -70,7 +70,7 @@ namespace InsanityBot.MessageServices.Messages
                 }
             }
 
-            this._contextBuilder = new(this._extension);
+            this._contextBuilder = new();
             this._channelEvaluator = new();
             this._commandEvaluator = new();
             this._memberEvaluator = new();
@@ -316,11 +316,20 @@ namespace InsanityBot.MessageServices.Messages
 
             if(this._config.SelectToken("use_embeds").Value<Boolean>())
             {
-                DiscordEmbedBuilder embedBuilder = this._embeds["insanitybot.logging.member_join"]
-                    .AddField("Old", e.MessageBefore.Content, false)
-                    .AddField("New", e.Message.Content, false)
-                    .AddField("Link", e.Message.JumpLink.ToString(), true);
-                await gateway.SendMessage(embedBuilder.Build());
+                try
+                {
+                    DiscordEmbedBuilder embedBuilder = this._embeds["insanitybot.logging.member_join"]
+                        .AddField("Old", e.MessageBefore.Content, false)
+                        .AddField("New", e.Message.Content, false)
+                        .AddField("Link", e.Message.JumpLink.ToString(), true);
+                    await gateway.SendMessage(embedBuilder.Build());
+                }
+                catch(ArgumentException)
+                { }
+                catch
+                {
+                    throw;
+                }
             }
         }
 

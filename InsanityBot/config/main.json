@@ -70,9 +70,9 @@
             "commands": true,
             "command_execution": true
           },
-          "defaults_overriden_by_rules": true,
-          "use_embeds": true
-        }
+          "defaults_overriden_by_rules": true
+        },
+        "use_embeds": true
       },
       "miscellaneous": {
         "join_roles": true,
