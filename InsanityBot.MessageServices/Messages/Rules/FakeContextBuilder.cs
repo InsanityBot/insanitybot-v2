@@ -13,11 +13,11 @@ namespace InsanityBot.MessageServices.Messages.Rules
         {
             if(eventArgs is MessageDeleteEventArgs a)
             {
-                return new(LoggerEngine.HomeGuild.Members[a.Message.Author.Id], a.Channel, null, a.Message);
+                return new(a.Message.Author, a.Channel, null, a.Message);
             }
             if(eventArgs is MessageUpdateEventArgs b)
             {
-                return new(LoggerEngine.HomeGuild.Members[b.Message.Author.Id], b.Channel, null, b.Message);
+                return new(b.Message.Author, b.Channel, null, b.Message);
             }
             if(eventArgs is MessageBulkDeleteEventArgs c)
             {

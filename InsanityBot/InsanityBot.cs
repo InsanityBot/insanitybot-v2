@@ -53,6 +53,6 @@ namespace InsanityBot
         public static EmbedHandler Embeds { get; set; }
         public static LoggerEngine MessageLogger { get; set; }
 
-        public static String Version => "2.0.0-dev.00043";
+        public static String Version => "2.0.0-dev.00044";
     }
 }
