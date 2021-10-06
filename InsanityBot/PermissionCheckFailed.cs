@@ -15,7 +15,7 @@ namespace InsanityBot
         {
             IReadOnlyList<CheckBaseAttribute> failedChecks = ((ChecksFailedException)e.Exception).FailedChecks;
 
-            foreach(var v in failedChecks)
+            foreach(CheckBaseAttribute v in failedChecks)
             {
                 if(v is RequirePermissionAttribute)
                 {

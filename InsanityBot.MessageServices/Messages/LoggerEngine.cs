@@ -373,35 +373,35 @@ namespace InsanityBot.MessageServices.Messages
                             case ChannelRuleTarget.Category:
                                 if(this._channelEvaluator.EvaluateCategoryRule(context.Channel, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case ChannelRuleTarget.FullName:
                                 if(this._channelEvaluator.EvaluateFullNameRule(context.Channel, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case ChannelRuleTarget.Id:
                                 if(this._channelEvaluator.EvaluateIdRule(context.Channel, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case ChannelRuleTarget.NameContains:
                                 if(this._channelEvaluator.EvaluateNameContainsRule(context.Channel, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case ChannelRuleTarget.NameStartsWith:
                                 if(this._channelEvaluator.EvaluateNameStartsWithRule(context.Channel, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
@@ -413,28 +413,28 @@ namespace InsanityBot.MessageServices.Messages
                             case MemberRuleTarget.Bot:
                                 if(this._memberEvaluator.EvaluateBotRule(context.Member, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case MemberRuleTarget.Id:
                                 if(this._memberEvaluator.EvaluateIdRule(context.Member, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case MemberRuleTarget.Owner:
                                 if(this._memberEvaluator.EvaluateOwnerRule(context.Member, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
                             case MemberRuleTarget.Role:
                                 if(this._memberEvaluator.EvaluateRoleIdRule(context.Member, v.RuleParameter))
                                 {
-                                    return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                                    return v.Allow ? this._rules.Channels[v.Channel] : (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                                 }
 
                                 break;
@@ -443,14 +443,14 @@ namespace InsanityBot.MessageServices.Messages
                     case RuleTarget.Command:
                         if(this._commandEvaluator.EvaluateCommandRule(context.Command, v.RuleParameter))
                         {
-                            return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                            return v.Allow ? this._rules.Channels[v.Channel] : (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                         }
 
                         break;
                     case RuleTarget.Prefix:
                         if(this._prefixEvaluator.EvaluatePrefixRule(context.Prefix, v.RuleParameter))
                         {
-                            return v.Allow ? this._rules.Channels[v.Channel] : (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                            return v.Allow ? this._rules.Channels[v.Channel] : (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
                         }
 
                         break;
@@ -461,7 +461,7 @@ namespace InsanityBot.MessageServices.Messages
 
             if(this._rules.Defaults[ev] == null)
             {
-                return (_webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
+                return (this._webhook ? LoggingWebhook.Empty : LoggingChannel.Empty);
             }
 
             return this._rules.Channels[this._rules.Defaults[ev].Id];

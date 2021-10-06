@@ -15,11 +15,13 @@ namespace InsanityBot.Tickets.Validation
             _ = Task.Run(() =>
             {
                 if(!args.Guilds.ContainsKey(InsanityBot.HomeGuild.Id))
+                {
                     return;
+                }
 
                 List<UInt64> cacheIds = InsanityBot.TicketDaemon.Tickets.Select(xm => xm.Value.DiscordChannelId).ToList();
 
-                foreach(var v in cacheIds)
+                foreach(UInt64 v in cacheIds)
                 {
                     DiscordTicket ticket = InsanityBot.TicketDaemon.Tickets
                         .Where(xm => xm.Value.DiscordChannelId == v)
@@ -36,14 +38,14 @@ namespace InsanityBot.Tickets.Validation
                         continue;
                     }
 
-                    foreach(var y in ticket.AddedUsers)
+                    foreach(UInt64 y in ticket.AddedUsers)
                     {
                         if(!overrides.Contains(y))
                         {
                             ticket.AddedUsers.Remove(v);
                         }
                     }
-                    foreach(var z in overrides)
+                    foreach(UInt64 z in overrides)
                     {
                         if(!ticket.AddedUsers.Contains(z))
                         {

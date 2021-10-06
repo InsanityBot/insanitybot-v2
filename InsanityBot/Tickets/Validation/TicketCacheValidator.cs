@@ -15,12 +15,14 @@ namespace InsanityBot.Tickets.Validation
             _ = Task.Run(() =>
             {
                 if(!args.Guilds.ContainsKey(InsanityBot.HomeGuild.Id))
+                {
                     return;
+                }
 
                 List<UInt64> cacheIds = InsanityBot.TicketDaemon.Tickets.Select(xm => xm.Value.DiscordChannelId).ToList();
                 List<UInt64> channelIds = args.Guilds[InsanityBot.HomeGuild.Id].Channels.Select(xm => xm.Key).ToList();
 
-                foreach(var v in cacheIds)
+                foreach(UInt64 v in cacheIds)
                 {
                     if(!channelIds.Contains(v))
                     {

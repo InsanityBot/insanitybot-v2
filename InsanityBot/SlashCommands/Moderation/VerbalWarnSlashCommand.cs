@@ -5,7 +5,7 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
-using InsanityBot.Utility.Modlogs.Reference;
+using InsanityBot.Utility.Modlogs;
 using InsanityBot.Utility.Modlogs.SafeAccessInterface;
 using InsanityBot.Utility.Permissions;
 
@@ -15,21 +15,21 @@ using static InsanityBot.SlashCommands.StringUtilities;
 
 namespace InsanityBot.SlashCommands.Moderation
 {
-    public class MuteSlashCommand : ApplicationCommandModule
+    public class VerbalWarnSlashCommand : ApplicationCommandModule
     {
-        [SlashCommand("mute", "Mutes an user")]
-        public async Task MuteCommand(InteractionContext ctx,
+        [SlashCommand("verbalwarn", "Verbal-warns the selected user.")]
+        public async Task VerbalWarnCommand(InteractionContext ctx,
 
-            [Option("member", "Mentioned member to mute")]
+            [Option("target", "The selected user.")]
             DiscordUser user,
 
-            [Option("reason", "Mute reason for this action")]
-            String reason = "usedefault",
+            [Option("reason", "The modlog reason for this action.")]
+            String reason,
 
-            [Option("silent", "Keeps the mute silent")]
+            [Option("silent", "Defines whether or not this action should be performed silently.")]
             Boolean silent = false)
         {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.mute"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.verbal_warn"))
             {
                 await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder()
@@ -46,7 +46,7 @@ namespace InsanityBot.SlashCommands.Moderation
 
             DiscordMember member = await InsanityBot.HomeGuild.GetMemberAsync(user.Id);
 
-            String muteReason = reason switch
+            String warnReason = reason switch
             {
                 "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"],
                     ctx, member),
@@ -54,21 +54,19 @@ namespace InsanityBot.SlashCommands.Moderation
             };
 
             DiscordEmbedBuilder embedBuilder = null;
-            DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.mute"];
+            DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.verbalwarn"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member?.Mention, true)
                 .AddField("Member", member.Mention, true)
-                .AddField("Reason", muteReason, true);
+                .AddField("Reason", warnReason, true);
 
             try
             {
-                _ = member.TryAddModlogEntry(ModlogEntryType.mute, muteReason);
-                embedBuilder = InsanityBot.Embeds["insanitybot.moderation.mute"]
-                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.success"], ctx, member));
+                _ = member.TryAddVerballogEntry(warnReason);
 
-                await member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
-                    InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.mute_role")),
-                    muteReason);
+                embedBuilder = InsanityBot.Embeds["insanitybot.moderation.verbalwarn"]
+                    .WithDescription(GetMemberReason(InsanityBot.LanguageConfig["insanitybot.moderation.verbal_warn.reason"],
+                        warnReason, member));
 
                 _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
@@ -78,7 +76,7 @@ namespace InsanityBot.SlashCommands.Moderation
             catch(Exception e)
             {
                 embedBuilder = InsanityBot.Embeds["insanitybot.error"]
-                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.failure"], ctx, member));
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.verbal_warn.failure"], ctx, member));
 
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
@@ -86,6 +84,16 @@ namespace InsanityBot.SlashCommands.Moderation
             {
                 await ctx.EditResponseAsync(new DiscordWebhookBuilder()
                         .AddEmbed(embedBuilder));
+
+                if(InsanityBot.Config.Value<Boolean>("insanitybot.commands.moderation.convert_minor_warns_into_full_warn"))
+                {
+                    if((member.GetUserModlog().VerbalLogEntryCount %
+                        InsanityBot.Config.Value<Int64>("insanitybot.commands.moderation.minor_warns_equal_full_warn")) == 0)
+                    {
+                        await new WarnSlashCommand().WarnCommand(ctx, member, "Too many verbal warns, count since last warn exceeded " +
+                            $"{InsanityBot.Config.Value<Int64>("insanitybot.commands.moderation.minor_warns_equal_full_warn")}", silent);
+                    }
+                }
             }
         }
     }

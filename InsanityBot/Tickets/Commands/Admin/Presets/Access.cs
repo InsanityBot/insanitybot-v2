@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -56,7 +55,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                 desc.Append(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.roles"]);
                 desc.Append('\n');
 
-                foreach(var v in preset.AccessRules.AllowedRoles)
+                foreach(UInt64 v in preset.AccessRules.AllowedRoles)
                 {
                     desc.Append($"<@&{v}>\n");
                 }
@@ -64,7 +63,7 @@ namespace InsanityBot.Tickets.Commands.Admin.Presets
                 desc.Append(InsanityBot.LanguageConfig["insanitybot.tickets.presets.access.users"]);
                 desc.Append('\n');
 
-                foreach(var v in preset.AccessRules.AllowedUsers)
+                foreach(UInt64 v in preset.AccessRules.AllowedUsers)
                 {
                     desc.Append($"<@{v}>\n");
                 }

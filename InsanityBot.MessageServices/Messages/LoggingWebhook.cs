@@ -15,7 +15,7 @@ namespace InsanityBot.MessageServices.Messages
         {
             if(channel == null)
             {
-                webhook = null;
+                this.webhook = null;
                 return;
             }
 
