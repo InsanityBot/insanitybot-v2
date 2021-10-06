@@ -40,6 +40,10 @@ namespace InsanityBot.SlashCommands.Moderation
                 return;
             }
 
+            await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder()
+                    .AsEphemeral(silent));
+
             DiscordMember member = await InsanityBot.HomeGuild.GetMemberAsync(user.Id);
 
             String kickReason = reason switch
@@ -78,9 +82,8 @@ namespace InsanityBot.SlashCommands.Moderation
             }
             finally
             {
-                await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder()
-                    .AddEmbed(embedBuilder.Build())
-                    .AsEphemeral(silent));
+                await ctx.EditResponseAsync(new DiscordWebhookBuilder()
+                        .AddEmbed(embedBuilder));
             }
         }
     }

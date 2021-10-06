@@ -200,6 +200,7 @@ namespace InsanityBot
             });
 
             CommandsExtension.CommandErrored += CommandsExtension_CommandErrored;
+            SlashCommandsExtension.SlashCommandErrored += SlashCommandsExtension_SlashCommandErrored;
 
             //start timer framework
             TimeHandler.Start();
@@ -251,6 +252,13 @@ namespace InsanityBot
 
             //abort main thread, who needs it anyway
             Thread.Sleep(-1);
+        }
+
+        private static Task SlashCommandsExtension_SlashCommandErrored(SlashCommandsExtension sender, DSharpPlus.SlashCommands.EventArgs.SlashCommandErrorEventArgs e)
+        {
+            Client.Logger.LogError(new EventId(1001, "CommandError"), $"{e.Context.CommandName} failed:\n" +
+                $"{e.Exception}: {e.Exception.Message}\n{e.Exception.StackTrace}");
+            return Task.CompletedTask;
         }
 
         private static Task CommandsExtension_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)
