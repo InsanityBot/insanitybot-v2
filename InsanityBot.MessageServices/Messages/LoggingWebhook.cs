@@ -13,6 +13,12 @@ namespace InsanityBot.MessageServices.Messages
 
         public LoggingWebhook(DiscordChannel channel)
         {
+            if(channel == null)
+            {
+                webhook = null;
+                return;
+            }
+
             IReadOnlyList<DiscordWebhook> webhooks = channel?.GetWebhooksAsync().GetAwaiter().GetResult();
 
             if(!webhooks.Any(xm => xm.Name == "InsanityBot"))
@@ -26,16 +32,31 @@ namespace InsanityBot.MessageServices.Messages
 
         public async Task SendMessage(DiscordEmbed embed)
         {
+            if(this.webhook == null)
+            {
+                return;
+            }
+
             await this.webhook?.ExecuteAsync(new DiscordWebhookBuilder()
                 .AddEmbed(embed));
         }
         public async Task SendMessage(String content)
         {
+            if(this.webhook == null)
+            {
+                return;
+            }
+
             await this.webhook?.ExecuteAsync(new DiscordWebhookBuilder()
                 .WithContent(content));
         }
         public async Task SendMessage(DiscordMessageBuilder builder)
         {
+            if(this.webhook == null)
+            {
+                return;
+            }
+
             await this.webhook?.ExecuteAsync(new DiscordWebhookBuilder()
                 .WithContent(builder.Content)
                 .AddEmbeds(builder.Embeds));

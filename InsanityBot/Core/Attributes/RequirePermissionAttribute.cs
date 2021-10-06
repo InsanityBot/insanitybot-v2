@@ -13,14 +13,8 @@ namespace InsanityBot.Core.Attributes
     {
         internal String Permission { get; private set; }
 
-        public RequirePermissionAttribute(String permission)
-        {
-            this.Permission = permission;
-        }
+        public RequirePermissionAttribute(String permission) => this.Permission = permission;
 
-        public override Task<Boolean> ExecuteCheckAsync(CommandContext ctx, Boolean help)
-        {
-            return Task.FromResult(ctx.Member.HasPermission(Permission));
-        }
+        public override Task<Boolean> ExecuteCheckAsync(CommandContext ctx, Boolean help) => Task.FromResult(ctx.Member.HasPermission(this.Permission));
     }
 }

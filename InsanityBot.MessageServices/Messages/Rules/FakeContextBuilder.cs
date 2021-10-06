@@ -9,10 +9,6 @@ namespace InsanityBot.MessageServices.Messages.Rules
 {
     public class FakeContextBuilder
     {
-        private CommandsNextExtension CommandsExtension { get; set; }
-
-        public FakeContextBuilder(CommandsNextExtension extension) => this.CommandsExtension = extension;
-
         public LogContext BuildContext<T>(T eventArgs)
         {
             if(eventArgs is MessageDeleteEventArgs a)

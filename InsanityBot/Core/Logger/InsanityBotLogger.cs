@@ -214,7 +214,7 @@ namespace InsanityBot.Core.Logger
                 // the file didnt exist, no worries
             }
 
-            logWriter.Close();
+            this.logWriter.Close();
         }
     }
 }
