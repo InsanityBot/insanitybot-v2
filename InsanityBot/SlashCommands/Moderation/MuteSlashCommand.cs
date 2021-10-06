@@ -15,21 +15,21 @@ using static InsanityBot.SlashCommands.StringUtilities;
 
 namespace InsanityBot.SlashCommands.Moderation
 {
-    public class KickSlash : ApplicationCommandModule
+    public class MuteSlashCommand : ApplicationCommandModule
     {
-        [SlashCommand("kick", "Kicks the selected user.")]
-        public async Task KickCommand(InteractionContext ctx,
-
-            [Option("target", "The selected user.")]
+        [SlashCommand("mute", "Mutes an user")]
+        public async Task MuteCommand(InteractionContext ctx,
+            
+            [Option("member", "Mentioned member to mute")]
             DiscordUser user,
-
-            [Option("reason", "The modlog reason for this action.")]
+            
+            [Option("reason", "Mute reason for this action")]
             String reason = "usedefault",
-
-            [Option("silent", "Defines whether or not this action should be performed silently.")]
+            
+            [Option("silent", "Keeps the mute silent")]
             Boolean silent = false)
         {
-            if(!ctx.Member.HasPermission("insanitybot.moderation.kick"))
+            if(!ctx.Member.HasPermission("insanitybot.moderation.mute"))
             {
                 await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder()
@@ -37,12 +37,12 @@ namespace InsanityBot.SlashCommands.Moderation
                             .WithDescription(InsanityBot.LanguageConfig["insanitybot.error.lacking_permission"])
                             .Build())
                         .AsEphemeral(true));
-                return;
+                return; 
             }
 
             DiscordMember member = await InsanityBot.HomeGuild.GetMemberAsync(user.Id);
 
-            String kickReason = reason switch
+            String muteReason = reason switch
             {
                 "usedefault" => GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.no_reason_given"],
                     ctx, member),
@@ -50,19 +50,21 @@ namespace InsanityBot.SlashCommands.Moderation
             };
 
             DiscordEmbedBuilder embedBuilder = null;
-            DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.kick"];
+            DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.mute"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member?.Mention, true)
                 .AddField("Member", member.Mention, true)
-                .AddField("Reason", kickReason, true);
+                .AddField("Reason", muteReason, true);
 
             try
             {
-                _ = member.TryAddModlogEntry(ModlogEntryType.kick, kickReason);
-                embedBuilder = InsanityBot.Embeds["insanitybot.moderation.kick"]
-                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.success"], ctx, member));
+                _ = member.TryAddModlogEntry(ModlogEntryType.mute, muteReason);
+                embedBuilder = InsanityBot.Embeds["insanitybot.moderation.mute"]
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.success"], ctx, member));
 
-                _ = member.RemoveAsync(kickReason);
+                _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
+                    InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.mute_role")),
+                    muteReason);
                 _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
                     Embed = moderationEmbedBuilder
@@ -71,15 +73,14 @@ namespace InsanityBot.SlashCommands.Moderation
             catch(Exception e)
             {
                 embedBuilder = InsanityBot.Embeds["insanitybot.error"]
-                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.kick.failure"],
-                        ctx, member));
+                    .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.failure"], ctx, member));
 
                 InsanityBot.Client.Logger.LogError($"{e}: {e.Message}");
             }
             finally
             {
                 await ctx.FollowUpAsync(new DiscordFollowupMessageBuilder()
-                    .AddEmbed(embedBuilder.Build())
+                    .AddEmbed(embedBuilder)
                     .AsEphemeral(silent));
             }
         }

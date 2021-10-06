@@ -15,8 +15,8 @@ namespace InsanityBot
 
             if(Config.Value<Boolean>("insanitybot.modules.moderation"))
             {
-                SlashCommandsExtension.RegisterCommands<MuteSlash>(Config.GuildId);
-                SlashCommandsExtension.RegisterCommands<KickSlash>(Config.GuildId);
+                SlashCommandsExtension.RegisterCommands<MuteSlashCommand>(Config.GuildId);
+                SlashCommandsExtension.RegisterCommands<KickSlashCommand>(Config.GuildId);
             }
         }
     }

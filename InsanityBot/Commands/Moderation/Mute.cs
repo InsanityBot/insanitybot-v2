@@ -105,7 +105,7 @@ namespace InsanityBot.Commands.Moderation
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.success"], ctx, member));
 
                 _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
-                    InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.mute_role_id")),
+                    InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.mute_role")),
                     MuteReason);
                 _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
