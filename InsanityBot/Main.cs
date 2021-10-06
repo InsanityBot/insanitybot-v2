@@ -17,6 +17,7 @@ using DSharpPlus.SlashCommands;
 using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
 using InsanityBot.Datafixers;
+using InsanityBot.MessageServices.Messages;
 using InsanityBot.Tickets;
 using InsanityBot.Utility.Config;
 using InsanityBot.Utility.Datafixers;
@@ -148,6 +149,10 @@ namespace InsanityBot
 
             //create and connect client
             Client = new DiscordClient(ClientConfiguration);
+
+            SlashCommandsExtension = Client.UseSlashCommands();
+            RegisterSlashCommands();
+
             await Client.ConnectAsync();
 
             Client.Logger.LogInformation(new EventId(1000, "Main"), $"InsanityBot Version {Version}");
@@ -195,17 +200,14 @@ namespace InsanityBot
                 PaginationDeletion = PaginationDeletion.DeleteEmojis
             });
 
-            Client.UseSlashCommands();
-            SlashCommandsExtension = Client.GetSlashCommands();
-
             CommandsExtension.CommandErrored += CommandsExtension_CommandErrored;
+            SlashCommandsExtension.SlashCommandErrored += SlashCommandsExtension_SlashCommandErrored;
 
             //start timer framework
             TimeHandler.Start();
 
             //register commands and events
             RegisterAllCommands();
-            RegisterSlashCommands();
             RegisterAllEvents();
 
             //initialize various parts of InsanityBots framework
@@ -215,6 +217,7 @@ namespace InsanityBot
             Embeds.Initialize(Client.Logger);
 
             MessageLogger = new(CommandsExtension, Client.Logger, Config, Client, HomeGuild, Embeds);
+            LoggerEngine.HomeGuild = HomeGuild;
 
             // startup success!
             Client.Logger.LogInformation(new EventId(1000, "Main"), $"Startup successful!");
@@ -251,6 +254,13 @@ namespace InsanityBot
 
             //abort main thread, who needs it anyway
             Thread.Sleep(-1);
+        }
+
+        private static Task SlashCommandsExtension_SlashCommandErrored(SlashCommandsExtension sender, DSharpPlus.SlashCommands.EventArgs.SlashCommandErrorEventArgs e)
+        {
+            Client.Logger.LogError(new EventId(1001, "CommandError"), $"{e.Context.CommandName} failed:\n" +
+                $"{e.Exception}: {e.Exception.Message}\n{e.Exception.StackTrace}");
+            return Task.CompletedTask;
         }
 
         private static Task CommandsExtension_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)

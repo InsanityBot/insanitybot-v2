@@ -239,12 +239,12 @@ namespace InsanityBot.Tickets
 
         public void RemoveTicket(UInt64 id)
         {
-            foreach(var v in from x in Tickets
-                             where x.Value.DiscordChannelId == id
-                             select x)
+            foreach(KeyValuePair<Guid, DiscordTicket> v in from x in this.Tickets
+                                                           where x.Value.DiscordChannelId == id
+                                                           select x)
             {
                 DiscordTicket t = v.Value;
-                Tickets.Remove(v.Key, out t);
+                this.Tickets.Remove(v.Key, out t);
             }
         }
 
@@ -289,7 +289,7 @@ namespace InsanityBot.Tickets
             {
                 if(e.Message.Content.StartsWith(v.Value<String>()))
                 {
-                    command = e.Message.Content.Substring(v.Value<String>().Length);
+                    command = e.Message.Content[v.Value<String>().Length..];
                     break;
                 }
                 return Task.CompletedTask;
