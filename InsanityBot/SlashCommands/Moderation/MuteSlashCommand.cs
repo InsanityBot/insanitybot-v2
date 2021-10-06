@@ -66,13 +66,9 @@ namespace InsanityBot.SlashCommands.Moderation
                 embedBuilder = InsanityBot.Embeds["insanitybot.moderation.mute"]
                     .WithDescription(GetFormattedString(InsanityBot.LanguageConfig["insanitybot.moderation.mute.success"], ctx, member));
 
-                _ = member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
+                await member.GrantRoleAsync(InsanityBot.HomeGuild.GetRole(
                     InsanityBot.Config.Value<UInt64>("insanitybot.identifiers.moderation.mute_role")),
                     muteReason);
-
-                if(InsanityBot.MessageLogger == null) Console.Write("msg");
-                if(moderationEmbedBuilder == null) Console.Write("emb");
-                if(ctx == null) Console.Write("ctx");
 
                 _ = InsanityBot.MessageLogger.LogMessage(new DiscordMessageBuilder
                 {
