@@ -16,7 +16,6 @@ using DSharpPlus.SlashCommands;
 
 using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
-using InsanityBot.Datafixers;
 using InsanityBot.MessageServices.Messages;
 using InsanityBot.Tickets;
 using InsanityBot.Utility.Config;
@@ -50,9 +49,8 @@ namespace InsanityBot
 
 
             // initialize datafixers
-#if DEBUG
+#if NO
             DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
-#else
 			DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Warning;
 #endif
 
