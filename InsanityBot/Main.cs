@@ -16,7 +16,6 @@ using DSharpPlus.SlashCommands;
 
 using InsanityBot.ConsoleCommands.Integrated;
 using InsanityBot.Core.Logger;
-using InsanityBot.Datafixers;
 using InsanityBot.MessageServices.Messages;
 using InsanityBot.Tickets;
 using InsanityBot.Utility.Config;
@@ -50,9 +49,8 @@ namespace InsanityBot
 
 
             // initialize datafixers
-#if DEBUG
+#if NO
             DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Debug;
-#else
 			DatafixerLogger.MinimalLevel = Helium.Commons.Logging.LogLevel.Warning;
 #endif
 
@@ -266,21 +264,21 @@ namespace InsanityBot
         private static Task CommandsExtension_CommandErrored(CommandsNextExtension sender, CommandErrorEventArgs e)
         {
 #if !DEBUG
-            if(e.Exception.GetType() == typeof(CommandNotFoundException))
+            if(e.Exception is CommandNotFoundException)
             {
                 return Task.CompletedTask;
             }
 
-            if(e.Exception.GetType() == typeof(ArgumentException))
+            if(e.Exception is ArgumentException)
             {
                 return Task.CompletedTask;
             }
 
-            if(e.Exception.GetType() == typeof(ArgumentNullException))
+            if(e.Exception is ArgumentNullException)
             {
                 return Task.CompletedTask;
             }
-            if(e.Exception.GetType() == typeof(ChecksFailedException))
+            if(e.Exception is ChecksFailedException)
             {
                 return Task.CompletedTask;
             }

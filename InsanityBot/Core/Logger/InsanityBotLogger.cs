@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 using DSharpPlus;
 
@@ -28,15 +29,6 @@ namespace InsanityBot.Core.Logger
                         if(!Directory.Exists("./logs"))
                         {
                             Directory.CreateDirectory("./logs");
-                        }
-
-                        try
-                        {
-                            File.Move("./logs/latest.txt", $"./logs/log-{DateTimeOffset.Now:yyyy-MM-dd-hh-mm-dd}.txt");
-                        }
-                        catch
-                        {
-                            // the file didnt exist, no worries
                         }
 
                         this.logWriter = new(File.Create("./logs/latest.txt"));
@@ -78,8 +70,6 @@ namespace InsanityBot.Core.Logger
 
             lock(__lock)
             {
-                String ename = eventId.Name;
-                ename = ename?.Length > 12 ? ename?.Substring(0, 12) : ename;
                 Console.Write($"[{DateTimeOffset.Now.ToString((String)this.Config.Configuration["TimestampFormat"])}] ");
 
                 switch(logLevel)
@@ -121,7 +111,7 @@ namespace InsanityBot.Core.Logger
                 });
                 Console.ResetColor();
 
-                Console.Write($" [{eventId.Id}/{ename}] ");
+                Console.Write($" [{eventId.Id}/{eventId.Name}] ");
 
                 String message = formatter(state, exception);
                 Console.WriteLine(message);
@@ -194,7 +184,7 @@ namespace InsanityBot.Core.Logger
 
             if(InsanityBot.LoggerConfig.Value<Boolean>("LogToFile"))
             {
-                this.LogFile(logLevel, eventId, state, exception, formatter);
+                _ = Task.Run(() => LogFile(logLevel, eventId, state, exception, formatter));
             }
         }
 
