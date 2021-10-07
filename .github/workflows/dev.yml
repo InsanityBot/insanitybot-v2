@@ -3,8 +3,8 @@ name: Debug
 on: 
   push:
   pull_request:
-    branches-ignore:
-      - 'main'
+    branches:
+      - '!main'
 
 env:
   DOTNET_VERSION: '5.0.401'
