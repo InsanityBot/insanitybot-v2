@@ -80,6 +80,5 @@
 		<ProjectReference Include="..\InsanityBot.MessageServices\InsanityBot.MessageServices.csproj" />
 		<ProjectReference Include="..\InsanityBot.Utility.Permissions\InsanityBot.Utility.Permissions.csproj" />
 		<ProjectReference Include="..\InsanityBot.Utility\InsanityBot.Utility.csproj" />
-		<ProjectReference Include="..\Insanitybot.Datafixers\Insanitybot.Datafixers.csproj" />
 	</ItemGroup>
 </Project>

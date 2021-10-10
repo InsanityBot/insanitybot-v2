@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -208,6 +209,9 @@ namespace InsanityBot
             RegisterAllCommands();
             RegisterAllEvents();
 
+            Process.GetCurrentProcess().EnableRaisingEvents = true;
+            Process.GetCurrentProcess().Exited += InsanityBotExited;
+
             //initialize various parts of InsanityBots framework
             TimeHandler.Start();
 
@@ -252,6 +256,11 @@ namespace InsanityBot
 
             //abort main thread, who needs it anyway
             Thread.Sleep(-1);
+        }
+
+        private static void InsanityBotExited(Object sender, EventArgs e)
+        {
+            Shutdown();
         }
 
         private static Task SlashCommandsExtension_SlashCommandErrored(SlashCommandsExtension sender, DSharpPlus.SlashCommands.EventArgs.SlashCommandErrorEventArgs e)
