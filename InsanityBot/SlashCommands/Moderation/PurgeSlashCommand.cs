@@ -41,8 +41,33 @@ namespace InsanityBot.SlashCommands.Moderation
             DiscordEmbedBuilder embedBuilder = null;
             DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.purge"];
 
+            DiscordChannel channel;
+
+            if(ctx.Channel != null)
+            {
+                channel = ctx.Channel;
+            }
+            else if(InsanityBot.HomeGuild.Channels.ContainsKey(ctx.Interaction.ChannelId))
+            {
+                channel = InsanityBot.HomeGuild.Channels[ctx.Interaction.ChannelId];
+            }
+            else if(InsanityBot.HomeGuild.Threads.ContainsKey(ctx.Interaction.ChannelId))
+            {
+                channel = InsanityBot.HomeGuild.Threads[ctx.Interaction.ChannelId];
+            }
+            else
+            {
+                embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+                    .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.failure"]);
+
+                await ctx.EditResponseAsync(new DiscordWebhookBuilder()
+                        .AddEmbed(embedBuilder));
+
+                return;
+            }
+
             moderationEmbedBuilder.AddField("Moderator", ctx.Member?.Mention, true)
-                .AddField("Channel", ctx.Channel.Mention, true);
+                .AddField("Channel", channel.Mention, true);
 
             try
             {
@@ -56,12 +81,12 @@ namespace InsanityBot.SlashCommands.Moderation
 
                     for(Byte b = 0; b < batches; b++)
                     {
-                        messageBuffer = await ctx.Channel?.GetMessagesAsync(100);
-                        _ = ctx.Channel?.DeleteMessagesAsync(messageBuffer);
+                        messageBuffer = await channel.GetMessagesAsync(100);
+                        _ = channel.DeleteMessagesAsync(messageBuffer);
                     }
 
-                    messageBuffer = await ctx.Channel?.GetMessagesAsync(leftover);
-                    _ = ctx.Channel?.DeleteMessagesAsync(messageBuffer);
+                    messageBuffer = await channel.GetMessagesAsync(leftover);
+                    _ = channel.DeleteMessagesAsync(messageBuffer);
 
                     embedBuilder = InsanityBot.Embeds["insanitybot.moderation.purge"]
                         .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"]);
@@ -75,19 +100,19 @@ namespace InsanityBot.SlashCommands.Moderation
                 }
                 else // its a discord snowflake
                 {
-                    DiscordMessage message = await ctx.Channel?.GetMessageAsync(Convert.ToUInt64(messageCount));
+                    DiscordMessage message = await channel.GetMessageAsync(Convert.ToUInt64(messageCount));
 
                     if(message == null)
                     {
                         DiscordEmbedBuilder error = InsanityBot.Embeds["insanitybot.error"]
                             .WithDescription("Invalid message snowflake.");
 
-                        await ctx.Channel?.SendMessageAsync(error.Build());
+                        await channel.SendMessageAsync(error.Build());
                         return;
                     }
 
-                    IReadOnlyList<DiscordMessage> messages = await ctx.Channel?.GetMessagesAfterAsync(Convert.ToUInt64(messageCount), Int16.MaxValue);
-                    _ = ctx.Channel?.DeleteMessagesAsync(messages);
+                    IReadOnlyList<DiscordMessage> messages = await channel.GetMessagesAfterAsync(Convert.ToUInt64(messageCount), Int16.MaxValue);
+                    _ = channel.DeleteMessagesAsync(messages);
 
                     embedBuilder = InsanityBot.Embeds["insanitybot.moderation.purge"]
                         .WithDescription(InsanityBot.LanguageConfig["insanitybot.moderation.purge.success"]);
