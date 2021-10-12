@@ -75,7 +75,7 @@ namespace InsanityBot.SlashCommands.Moderation
                 if(messageCount < Int16.MaxValue)
                 {
                     Byte batches = (Byte)(messageCount / 100),
-                        leftover = (Byte)((messageCount % 100) + 1);
+                        leftover = (Byte)(messageCount % 100);
 
                     IReadOnlyList<DiscordMessage> messageBuffer = null;
 
