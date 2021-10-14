@@ -77,14 +77,14 @@ Prerequisites:
 
 ## Support
 
-The fastest way to get support is via our [Discord server](https://discord.gg/8TKJaGs). Alternatively you can open a GitHub issue [here](https://github.com/InsanityNetwork/InsanityBot/issues/new/choose), however, you will likely have to wait longer to get a reply.
+The fastest way to get support is via our [Discord server](https://discord.gg/8TKJaGs). Alternatively you can open a GitHub issue [here](https://github.com/InsanityBot/InsanityBot/issues/new/choose), however, you will likely have to wait longer to get a reply.
 
 ***NOTE:** We reserve the right to refuse support to anyone. We also do not support MacOS. You are free to use MacOS, but you are on your own.*
 
 ## Licence, Copyright & TOS
 
-[InsanityBot](https://github.com/InsanityNetwork/InsanityBot) is licenced under the [`MIT Licence`](https://github.com/InsanityNetwork/InsanityBot/blob/master/LICENSE).
+[InsanityBot](https://github.com/InsanityBot/InsanityBot) is licenced under the [`MIT Licence`](https://github.com/InsanityNetwork/InsanityBot/blob/main/LICENSE).
 <br /><br />
-Our TOS can be viewed [here](https://bot.insanity.network/tos/).
+Our TOS can be viewed [here](./TOS).
 <br /><br />
 Copyright &copy; 2020 - 2021 ExaInsanity
