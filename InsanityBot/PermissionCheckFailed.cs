@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
@@ -13,7 +14,8 @@ namespace InsanityBot
     {
         private static async Task PermissionFailed(CommandsNextExtension _, CommandErrorEventArgs e)
         {
-            IReadOnlyList<CheckBaseAttribute> failedChecks = ((ChecksFailedException)e.Exception).FailedChecks;
+            List<CheckBaseAttribute> failedChecks = (e.Exception as ChecksFailedException)?.FailedChecks.ToList()
+                ?? new List<CheckBaseAttribute>();
 
             foreach(CheckBaseAttribute v in failedChecks)
             {
