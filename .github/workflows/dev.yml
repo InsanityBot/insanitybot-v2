@@ -36,4 +36,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: InsanityBot
-        path: InsanityBot/bin/Debug/net5.0/
+        path: InsanityBot/bin/Debug/net6.0/
