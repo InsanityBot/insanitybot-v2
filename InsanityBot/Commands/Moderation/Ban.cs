@@ -91,7 +91,7 @@ namespace InsanityBot.Commands.Moderation
             DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.modlog.ban"];
 
             moderationEmbedBuilder.AddField("Moderator", ctx.Member?.Mention, true)
-                .AddField("Member", member.Mention, true)
+                .AddField("Member", member.ToString(), true)
                 .AddField("Reason", BanReason, true);
 
             try

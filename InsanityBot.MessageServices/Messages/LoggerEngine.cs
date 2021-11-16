@@ -283,7 +283,8 @@ namespace InsanityBot.MessageServices.Messages
             writer.WriteLine("# Message Transcript for bulk message deletion");
             foreach(DiscordMessage v in e.Messages)
             {
-                writer.WriteLine($"[{v.Timestamp:dd/MM/yy-HH:mm:ss}] {v.Author.Username}: {v.Content}");
+                writer.WriteLine($"[{v.Timestamp:dd/MM/yy-HH:mm:ss}] {v.Author?.Username ?? "Webhook"}: " +
+                    $"{(String.IsNullOrWhiteSpace(v.Content) ? "<embed>" : v.Content)}");
             }
             writer.Close();
 
@@ -345,9 +346,14 @@ namespace InsanityBot.MessageServices.Messages
 
             if(this._config.SelectToken("use_embeds").Value<Boolean>())
             {
-                DiscordEmbedBuilder embedBuilder = this._embeds["insanitybot.logging.member_join"]
-                    .AddField("Text", e.Message.Content, false)
-                    .AddField("User", this.GetMemberMention(e.Message.Author), true);
+                /*DiscordEmbedBuilder embedBuilder = this._embeds["insanitybot.logging.member_join"]
+                    .AddField("Text", String.IsNullOrWhiteSpace(e.Message.Content) ? e.Message.Content : "<embed>", false)
+                    .AddField("User", this.GetMemberMention(e.Message.Author), true);*/
+
+                DiscordEmbedBuilder embedBuilder = this._embeds["insanitybot.logging.delete_message"];
+                embedBuilder.AddField("Text", String.IsNullOrWhiteSpace(e.Message.Content) ? "<embed>" : e.Message.Content, false);
+                embedBuilder.AddField("User", this.GetMemberMention(e.Message.Author), true);
+
                 await gateway.SendMessage(embedBuilder.Build());
             }
         }
@@ -469,9 +475,9 @@ namespace InsanityBot.MessageServices.Messages
 
         private String GetMemberMention(DiscordUser member)
         {
-            return this._config.SelectToken("members.use_mentions").Value<Boolean>() ? member.Mention :
+            return this._config.SelectToken("members.use_mentions").Value<Boolean>() ? member?.Mention :
                 (this._config.SelectToken("members.use_name_discriminator_format").Value<Boolean>() ?
-                $"{member.Username}#{member.Discriminator}" : member.Username);
+                $"{member?.Username}#{member?.Discriminator}" : member?.Username);
         }
     }
 }
