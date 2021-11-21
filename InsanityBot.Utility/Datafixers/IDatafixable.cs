@@ -1,9 +1,7 @@
-﻿using System;
+﻿namespace InsanityBot.Utility.Datafixers;
+using System;
 
-namespace InsanityBot.Utility.Datafixers
+public interface IDatafixable
 {
-    public interface IDatafixable
-    {
-        public String DataVersion { get; set; }
-    }
+	public String DataVersion { get; set; }
 }

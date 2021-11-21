@@ -1,20 +1,18 @@
-﻿using System;
+﻿namespace InsanityBot.Core.Attributes;
+using System;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-using InsanityBot.Utility.Permissions;
+using global::InsanityBot.Utility.Permissions;
 
-namespace InsanityBot.Core.Attributes
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+public class RequirePermissionAttribute : CheckBaseAttribute
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public class RequirePermissionAttribute : CheckBaseAttribute
-    {
-        internal String Permission { get; private set; }
+	internal String Permission { get; private set; }
 
-        public RequirePermissionAttribute(String permission) => this.Permission = permission;
+	public RequirePermissionAttribute(String permission) => this.Permission = permission;
 
-        public override Task<Boolean> ExecuteCheckAsync(CommandContext ctx, Boolean help) => Task.FromResult(ctx.Member.HasPermission(this.Permission));
-    }
+	public override Task<Boolean> ExecuteCheckAsync(CommandContext ctx, Boolean help) => Task.FromResult(ctx.Member.HasPermission(this.Permission));
 }

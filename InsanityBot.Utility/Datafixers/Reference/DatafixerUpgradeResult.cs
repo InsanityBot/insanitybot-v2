@@ -1,12 +1,10 @@
-﻿using System;
+﻿namespace InsanityBot.Utility.Datafixers.Reference;
+using System;
 
-namespace InsanityBot.Utility.Datafixers.Reference
+public enum DatafixerUpgradeResult : Int16
 {
-    public enum DatafixerUpgradeResult : Int16
-    {
-        Success,
-        PartialSuccess,
-        Failure,
-        AlreadyUpgraded
-    }
+	Success,
+	PartialSuccess,
+	Failure,
+	AlreadyUpgraded
 }

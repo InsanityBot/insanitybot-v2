@@ -1,10 +1,9 @@
-﻿namespace InsanityBot.MessageServices.Messages.Rules.Data
+﻿namespace InsanityBot.MessageServices.Messages.Rules.Data;
+
+public enum MemberRuleTarget
 {
-    public enum MemberRuleTarget
-    {
-        Bot,
-        Owner,
-        Role,
-        Id
-    }
+	Bot,
+	Owner,
+	Role,
+	Id
 }

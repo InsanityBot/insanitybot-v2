@@ -1,11 +1,9 @@
-﻿using System;
+﻿namespace InsanityBot.Utility.Permissions.Data;
+using System;
 
-namespace InsanityBot.Utility.Permissions.Data
+public enum PermissionValue : SByte
 {
-    public enum PermissionValue : SByte
-    {
-        Allowed = 1,
-        Denied = -1,
-        Inherited = 0
-    }
+	Allowed = 1,
+	Denied = -1,
+	Inherited = 0
 }

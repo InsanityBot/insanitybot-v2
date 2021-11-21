@@ -1,12 +1,11 @@
-﻿namespace InsanityBot.MessageServices.Messages
+﻿namespace InsanityBot.MessageServices.Messages;
+
+public enum LogEvent
 {
-    public enum LogEvent
-    {
-        MessageDelete,
-        MessageEdit,
-        MemberJoin,
-        MemberLeave,
-        Commands,
-        CommandExecution
-    }
+	MessageDelete,
+	MessageEdit,
+	MemberJoin,
+	MemberLeave,
+	Commands,
+	CommandExecution
 }

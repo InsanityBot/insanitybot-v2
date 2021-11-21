@@ -1,21 +1,19 @@
-﻿using System;
+﻿namespace InsanityBot.ConsoleCommands.Integrated;
+using System;
 
-namespace InsanityBot.ConsoleCommands.Integrated
+internal class ReloadCommand
 {
-    internal class ReloadCommand
-    {
-        public void ReloadConsoleCommand()
-        {
-            Console.WriteLine("This will fully reload the entire bot. Do you really wish to proceed?");
+	public void ReloadConsoleCommand()
+	{
+		Console.WriteLine("This will fully reload the entire bot. Do you really wish to proceed?");
 
-            if(Console.ReadLine().ToLower() == "n")
-            {
-                return;
-            }
+		if(Console.ReadLine().ToLower() == "n")
+		{
+			return;
+		}
 
-            InsanityBot.UnloadAll();
-            _ = InsanityBot.Main(Array.Empty<String>());
-            GC.Collect();
-        }
-    }
+		InsanityBot.UnloadAll();
+		_ = InsanityBot.Main(Array.Empty<String>());
+		GC.Collect();
+	}
 }

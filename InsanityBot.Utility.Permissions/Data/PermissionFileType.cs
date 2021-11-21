@@ -1,9 +1,8 @@
-﻿namespace InsanityBot.Utility.Permissions.Data
+﻿namespace InsanityBot.Utility.Permissions.Data;
+
+public enum PermissionFileType
 {
-    public enum PermissionFileType
-    {
-        Permissions,
-        Mappings,
-        Declaration
-    }
+	Permissions,
+	Mappings,
+	Declaration
 }

@@ -1,7 +1,6 @@
-﻿namespace InsanityBot.Core.Formatters.Abstractions
+﻿namespace InsanityBot.Core.Formatters.Abstractions;
+
+public interface IFormatterFactory
 {
-    public interface IFormatterFactory
-    {
-        public ITypelessFormatter GetFormatter();
-    }
+	public ITypelessFormatter GetFormatter();
 }

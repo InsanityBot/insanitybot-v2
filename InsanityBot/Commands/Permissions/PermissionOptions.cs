@@ -1,15 +1,13 @@
-﻿using System;
+﻿namespace InsanityBot.Commands.Permissions;
+using System;
 
 using CommandLine;
 
-namespace InsanityBot.Commands.Permissions
+public class PermissionOptions
 {
-    public class PermissionOptions
-    {
-        [Option('s', "silent", Default = false, Required = false)]
-        public Boolean Silent { get; set; }
+	[Option('s', "silent", Default = false, Required = false)]
+	public Boolean Silent { get; set; }
 
-        [Option('p', "permission", Required = true)]
-        public String Permission { get; set; }
-    }
+	[Option('p', "permission", Required = true)]
+	public String Permission { get; set; }
 }

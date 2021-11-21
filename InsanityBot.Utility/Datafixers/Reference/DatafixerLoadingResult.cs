@@ -1,11 +1,9 @@
-﻿using System;
+﻿namespace InsanityBot.Utility.Datafixers.Reference;
+using System;
 
-namespace InsanityBot.Utility.Datafixers.Reference
+public enum DatafixerLoadingResult : Int16
 {
-    public enum DatafixerLoadingResult : Int16
-    {
-        Success,
-        CouldNotLoad,
-        ExceededTime
-    }
+	Success,
+	CouldNotLoad,
+	ExceededTime
 }

@@ -1,237 +1,235 @@
-﻿using System;
+﻿namespace InsanityBot.Commands.Moderation.Locking;
+using System;
 using System.Threading.Tasks;
 
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 
-using InsanityBot.Core.Attributes;
+using global::InsanityBot.Core.Attributes;
 
 using Microsoft.Extensions.Logging;
 
-using static InsanityBot.Commands.StringUtilities;
+using static global::InsanityBot.Commands.StringUtilities;
 
-namespace InsanityBot.Commands.Moderation.Locking
+[Group("lock-settings")]
+public class LockHelperCommands : BaseCommandModule
 {
-    [Group("lock-settings")]
-    public class LockHelperCommands : BaseCommandModule
-    {
-        [Group("whitelist")]
-        public class Whitelist : BaseCommandModule
-        {
-            [Command("add")]
-            [RequireAdminPermission("insanitybot.admin.lock_whitelist.add")]
-            public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.AddWhitelistedRoleCommand(ctx, role, ctx.Channel);
+	[Group("whitelist")]
+	public class Whitelist : BaseCommandModule
+	{
+		[Command("add")]
+		[RequireAdminPermission("insanitybot.admin.lock_whitelist.add")]
+		public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.AddWhitelistedRoleCommand(ctx, role, ctx.Channel);
 
-            [Command("add")]
-            public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
-            {
-                DiscordEmbedBuilder embedBuilder = null;
-                DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.whitelist"];
+		[Command("add")]
+		public async Task AddWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
+		{
+			DiscordEmbedBuilder embedBuilder = null;
+			DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.whitelist"];
 
-                moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
-                    .AddField("Role", role.Mention, true)
-                    .AddField("Channel", channel.Mention, true);
+			moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
+				.AddField("Role", role.Mention, true)
+				.AddField("Channel", channel.Mention, true);
 
-                try
-                {
-                    ChannelData data = channel.GetCachedChannelData();
+			try
+			{
+				ChannelData data = channel.GetCachedChannelData();
 
-                    if(data.LockedRoles.Contains(role.Id))
-                    {
-                        data.LockedRoles.Remove(role.Id);
-                    }
+				if(data.LockedRoles.Contains(role.Id))
+				{
+					data.LockedRoles.Remove(role.Id);
+				}
 
-                    if(data.WhitelistedRoles.Contains(role.Id))
-                    {
-                        embedBuilder = InsanityBot.Embeds["insanitybot.error"]
-                            .WithDescription(GetFormattedString(
-                                InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.already_present"], role, channel));
-                    }
-                    else
-                    {
-                        embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.whitelist"]
-                            .WithDescription(GetFormattedString(
-                                InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.success"], role, channel));
+				if(data.WhitelistedRoles.Contains(role.Id))
+				{
+					embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+						.WithDescription(GetFormattedString(
+							InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.already_present"], role, channel));
+				}
+				else
+				{
+					embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.whitelist"]
+						.WithDescription(GetFormattedString(
+							InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.success"], role, channel));
 
-                        data.WhitelistedRoles.Add(role.Id);
-                        channel.SerializeLockingOverwrites(data);
+					data.WhitelistedRoles.Add(role.Id);
+					channel.SerializeLockingOverwrites(data);
 
-                        InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Added role {role.Id} to channel whitelist");
-                    }
-                }
-                catch(Exception e)
-                {
-                    embedBuilder = InsanityBot.Embeds["insanitybot.error"]
-                        .WithDescription(GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.failure"], role, channel));
+					InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Added role {role.Id} to channel whitelist");
+				}
+			}
+			catch(Exception e)
+			{
+				embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+					.WithDescription(GetFormattedString(
+						InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.add.failure"], role, channel));
 
-                    InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
-                        $"Administrative action failed: could not add {role.Id} to channel whitelist. Please contact the InsanityBot team immediately.\n" +
-                        $"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
-                }
-                finally
-                {
-                    await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
-                }
-            }
+				InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
+					$"Administrative action failed: could not add {role.Id} to channel whitelist. Please contact the InsanityBot team immediately.\n" +
+					$"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
+			}
+			finally
+			{
+				await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
+			}
+		}
 
-            [Command("remove")]
-            [RequireAdminPermission("insanitybot.admin.lock_whitelist.remove")]
-            public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveWhitelistedRoleCommand(ctx, role, ctx.Channel);
+		[Command("remove")]
+		[RequireAdminPermission("insanitybot.admin.lock_whitelist.remove")]
+		public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveWhitelistedRoleCommand(ctx, role, ctx.Channel);
 
-            [Command("remove")]
-            public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
-            {
-                DiscordEmbedBuilder embedBuilder = null;
-                DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.unwhitelist"];
+		[Command("remove")]
+		public async Task RemoveWhitelistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
+		{
+			DiscordEmbedBuilder embedBuilder = null;
+			DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.unwhitelist"];
 
-                moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
-                    .AddField("Role", role.Mention, true)
-                    .AddField("Channel", channel.Mention, true);
+			moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
+				.AddField("Role", role.Mention, true)
+				.AddField("Channel", channel.Mention, true);
 
-                try
-                {
-                    ChannelData data = channel.GetCachedChannelData();
+			try
+			{
+				ChannelData data = channel.GetCachedChannelData();
 
-                    if(data.WhitelistedRoles.Contains(role.Id))
-                    {
-                        data.WhitelistedRoles.Remove(role.Id);
-                    }
+				if(data.WhitelistedRoles.Contains(role.Id))
+				{
+					data.WhitelistedRoles.Remove(role.Id);
+				}
 
-                    embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.unwhitelist"]
-                        .WithDescription(GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.remove.success"], role, channel));
+				embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.unwhitelist"]
+					.WithDescription(GetFormattedString(
+						InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.remove.success"], role, channel));
 
-                    channel.SerializeLockingOverwrites(data);
+				channel.SerializeLockingOverwrites(data);
 
-                    InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Removed role {role.Id} from channel whitelist");
+				InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Removed role {role.Id} from channel whitelist");
 
-                }
-                catch(Exception e)
-                {
-                    embedBuilder = InsanityBot.Embeds["insanitybot.error"]
-                        .WithDescription(GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.remove.failure"], role, channel));
+			}
+			catch(Exception e)
+			{
+				embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+					.WithDescription(GetFormattedString(
+						InsanityBot.LanguageConfig["insanitybot.commands.lock.whitelist.remove.failure"], role, channel));
 
-                    InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
-                        $"Administrative action failed: could not remove {role.Id} from channel whitelist. Please contact the InsanityBot team immediately.\n" +
-                        $"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
-                }
-                finally
-                {
-                    await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
-                }
-            }
-        }
+				InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
+					$"Administrative action failed: could not remove {role.Id} from channel whitelist. Please contact the InsanityBot team immediately.\n" +
+					$"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
+			}
+			finally
+			{
+				await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
+			}
+		}
+	}
 
-        [Group("blacklist")]
-        public class Blacklist : BaseCommandModule
-        {
-            [Command("add")]
-            [RequireAdminPermission("insanitybot.admin.lock_blacklist.add")]
-            public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.AddBlacklistedRoleCommand(ctx, role, ctx.Channel);
+	[Group("blacklist")]
+	public class Blacklist : BaseCommandModule
+	{
+		[Command("add")]
+		[RequireAdminPermission("insanitybot.admin.lock_blacklist.add")]
+		public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.AddBlacklistedRoleCommand(ctx, role, ctx.Channel);
 
-            [Command("add")]
-            public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
-            {
-                DiscordEmbedBuilder embedBuilder = null;
-                DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.blacklist"];
+		[Command("add")]
+		public async Task AddBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
+		{
+			DiscordEmbedBuilder embedBuilder = null;
+			DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.blacklist"];
 
-                moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
-                    .AddField("Role", role.Mention, true)
-                    .AddField("Channel", channel.Mention, true);
+			moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
+				.AddField("Role", role.Mention, true)
+				.AddField("Channel", channel.Mention, true);
 
-                try
-                {
-                    ChannelData data = channel.GetCachedChannelData();
+			try
+			{
+				ChannelData data = channel.GetCachedChannelData();
 
-                    if(data.WhitelistedRoles.Contains(role.Id))
-                    {
-                        data.WhitelistedRoles.Remove(role.Id);
-                    }
+				if(data.WhitelistedRoles.Contains(role.Id))
+				{
+					data.WhitelistedRoles.Remove(role.Id);
+				}
 
-                    if(data.LockedRoles.Contains(role.Id))
-                    {
-                        embedBuilder = InsanityBot.Embeds["insanitybot.error"]
-                            .WithDescription(GetFormattedString(
-                                InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.already_present"], role, channel));
-                    }
-                    else
-                    {
-                        embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.blacklist"]
-                            .WithDescription(GetFormattedString(
-                                InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.success"], role, channel));
+				if(data.LockedRoles.Contains(role.Id))
+				{
+					embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+						.WithDescription(GetFormattedString(
+							InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.already_present"], role, channel));
+				}
+				else
+				{
+					embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.blacklist"]
+						.WithDescription(GetFormattedString(
+							InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.success"], role, channel));
 
-                        data.LockedRoles.Add(role.Id);
-                        channel.SerializeLockingOverwrites(data);
+					data.LockedRoles.Add(role.Id);
+					channel.SerializeLockingOverwrites(data);
 
-                        InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Added role {role.Id} to channel blacklist");
-                    }
-                }
-                catch(Exception e)
-                {
-                    embedBuilder = InsanityBot.Embeds["insanitybot.error"]
-                        .WithDescription(GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.failure"], role, channel));
+					InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Added role {role.Id} to channel blacklist");
+				}
+			}
+			catch(Exception e)
+			{
+				embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+					.WithDescription(GetFormattedString(
+						InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.add.failure"], role, channel));
 
-                    InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
-                        $"Administrative action failed: could not add {role.Id} to channel blacklist. Please contact the InsanityBot team immediately.\n" +
-                        $"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
-                }
-                finally
-                {
-                    await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
-                }
-            }
+				InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
+					$"Administrative action failed: could not add {role.Id} to channel blacklist. Please contact the InsanityBot team immediately.\n" +
+					$"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
+			}
+			finally
+			{
+				await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
+			}
+		}
 
-            [Command("remove")]
-            public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveBlacklistedRoleCommand(ctx, role, ctx.Channel);
+		[Command("remove")]
+		public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role) => await this.RemoveBlacklistedRoleCommand(ctx, role, ctx.Channel);
 
-            [Command("remove")]
-            [RequireAdminPermission("insanitybot.admin.lock_blacklist.remove")]
-            public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
-            {
-                DiscordEmbedBuilder embedBuilder = null;
-                DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.unblacklist"];
+		[Command("remove")]
+		[RequireAdminPermission("insanitybot.admin.lock_blacklist.remove")]
+		public async Task RemoveBlacklistedRoleCommand(CommandContext ctx, DiscordRole role, DiscordChannel channel)
+		{
+			DiscordEmbedBuilder embedBuilder = null;
+			DiscordEmbedBuilder moderationEmbedBuilder = InsanityBot.Embeds["insanitybot.adminlog.lock.unblacklist"];
 
-                moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
-                    .AddField("Role", role.Mention, true)
-                    .AddField("Channel", channel.Mention, true);
+			moderationEmbedBuilder.AddField("Administrator", ctx.Member?.Mention, true)
+				.AddField("Role", role.Mention, true)
+				.AddField("Channel", channel.Mention, true);
 
-                try
-                {
-                    ChannelData data = channel.GetCachedChannelData();
+			try
+			{
+				ChannelData data = channel.GetCachedChannelData();
 
-                    if(data.LockedRoles.Contains(role.Id))
-                    {
-                        data.LockedRoles.Remove(role.Id);
-                    }
+				if(data.LockedRoles.Contains(role.Id))
+				{
+					data.LockedRoles.Remove(role.Id);
+				}
 
-                    embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.unblacklist"]
-                        .WithDescription(GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.remove.success"], role, channel));
+				embedBuilder = InsanityBot.Embeds["insanitybot.admin.lock.unblacklist"]
+					.WithDescription(GetFormattedString(
+						InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.remove.success"], role, channel));
 
-                    channel.SerializeLockingOverwrites(data);
+				channel.SerializeLockingOverwrites(data);
 
-                    InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Removed role {role.Id} from channel blacklist");
+				InsanityBot.Client.Logger.LogInformation(new EventId(2000, "LockAdmin"), $"Removed role {role.Id} from channel blacklist");
 
-                }
-                catch(Exception e)
-                {
-                    embedBuilder = InsanityBot.Embeds["insanitybot.error"]
-                        .WithDescription(GetFormattedString(
-                            InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.remove.failure"], role, channel));
+			}
+			catch(Exception e)
+			{
+				embedBuilder = InsanityBot.Embeds["insanitybot.error"]
+					.WithDescription(GetFormattedString(
+						InsanityBot.LanguageConfig["insanitybot.commands.lock.blacklist.remove.failure"], role, channel));
 
-                    InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
-                        $"Administrative action failed: could not remove {role.Id} from channel blacklist. Please contact the InsanityBot team immediately.\n" +
-                        $"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
-                }
-                finally
-                {
-                    await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
-                }
-            }
-        }
-    }
+				InsanityBot.Client.Logger.LogCritical(new EventId(2000, "LockAdmin"),
+					$"Administrative action failed: could not remove {role.Id} from channel blacklist. Please contact the InsanityBot team immediately.\n" +
+					$"Please also provide them with the following information:\n\n{e}: {e.Message}\n{e.StackTrace}");
+			}
+			finally
+			{
+				await ctx.Channel?.SendMessageAsync(embedBuilder.Build());
+			}
+		}
+	}
 }

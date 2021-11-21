@@ -1,35 +1,33 @@
-﻿using System;
+﻿namespace InsanityBot;
+using System;
 
-using InsanityBot.Commands.Moderation;
-using InsanityBot.Tickets.Validation;
-using InsanityBot.Utility.Timers;
+using global::InsanityBot.Commands.Moderation;
+using global::InsanityBot.Tickets.Validation;
+using global::InsanityBot.Utility.Timers;
 
-namespace InsanityBot
+public partial class InsanityBot
 {
-    public partial class InsanityBot
-    {
-        private static void RegisterAllEvents()
-        {
-            CommandsExtension.CommandErrored += PermissionFailed;
+	private static void RegisterAllEvents()
+	{
+		CommandsExtension.CommandErrored += PermissionFailed;
 
-            if(Config.Value<Boolean>("insanitybot.modules.moderation"))
-            {
-                Timer.TimerExpiredEvent += Mute.InitializeUnmute;
-                Mute.UnmuteCompletedEvent += TimeHandler.ReenableTimer;
+		if(Config.Value<Boolean>("insanitybot.modules.moderation"))
+		{
+			Timer.TimerExpiredEvent += Mute.InitializeUnmute;
+			Mute.UnmuteCompletedEvent += TimeHandler.ReenableTimer;
 
-                Timer.TimerExpiredEvent += Ban.InitializeUnban;
-                Ban.UnbanCompletedEvent += TimeHandler.ReenableTimer;
+			Timer.TimerExpiredEvent += Ban.InitializeUnban;
+			Ban.UnbanCompletedEvent += TimeHandler.ReenableTimer;
 
-                Mute.MuteStartingEvent += TimeHandler.DisableTimer;
-                Ban.BanStartingEvent += TimeHandler.DisableTimer;
-            }
+			Mute.MuteStartingEvent += TimeHandler.DisableTimer;
+			Ban.BanStartingEvent += TimeHandler.DisableTimer;
+		}
 
-            if(Config.Value<Boolean>("insanitybot.modules.tickets"))
-            {
-                Client.GuildDownloadCompleted += new TicketCacheValidator().Validate;
-                Client.GuildDownloadCompleted += new TicketPermissionCacheValidator().Validate; // order is important here
-                Client.ChannelDeleted += new ChannelDeleteValidator().Validate;
-            }
-        }
-    }
+		if(Config.Value<Boolean>("insanitybot.modules.tickets"))
+		{
+			Client.GuildDownloadCompleted += new TicketCacheValidator().Validate;
+			Client.GuildDownloadCompleted += new TicketPermissionCacheValidator().Validate; // order is important here
+			Client.ChannelDeleted += new ChannelDeleteValidator().Validate;
+		}
+	}
 }
