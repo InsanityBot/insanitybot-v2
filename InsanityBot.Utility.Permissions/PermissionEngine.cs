@@ -1,8 +1,9 @@
-﻿namespace InsanityBot.Utility.Permissions;
-#define INSANITYBOT_DO_NOT_OVERRIDE_ENGINE
+﻿#define INSANITYBOT_DO_NOT_OVERRIDE_ENGINE
 //#undef INSANITYBOT_DO_NOT_OVERRIDE_ENGINE
 // uncomment this if you want to allow external handlers for permissions.
 // this requires a full recompile to apply. the feature is also disabled for a *reason*.
+
+namespace InsanityBot.Utility.Permissions;
 
 using System;
 using System.Collections.Generic;
