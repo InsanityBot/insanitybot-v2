@@ -192,6 +192,13 @@
             "setrole": "Access rules for preset {PRESET} were successfully configured to allow {ROLE}."
           }
         }
+      },
+      "miscellaneous": {
+        "timed_role": {
+          "failure_invalid_time": "Failed to apply {ROLE} to {USER}: invalid time specified.",
+          "failure": "Failed to apply {ROLE} to {USER}.",
+          "success": "Successfully applied {ROLE} to {USER}."
+        }
       }
     }
   }
