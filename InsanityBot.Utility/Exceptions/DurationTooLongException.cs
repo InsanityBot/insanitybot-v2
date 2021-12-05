@@ -1,11 +1,9 @@
-﻿using System;
+﻿namespace InsanityBot.Utility.Exceptions;
+using System;
 
-namespace InsanityBot.Utility.Exceptions
+public class DurationTooLongException : Exception
 {
-    public class DurationTooLongException : Exception
-    {
-        public DurationTooLongException(String message) : base(message)
-        {
-        }
-    }
+	public DurationTooLongException(String message) : base(message)
+	{
+	}
 }

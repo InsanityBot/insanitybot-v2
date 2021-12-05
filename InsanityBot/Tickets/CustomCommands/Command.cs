@@ -1,11 +1,9 @@
-﻿using System;
+﻿namespace InsanityBot.Tickets.CustomCommands;
+using System;
 
-namespace InsanityBot.Tickets.CustomCommands
+public record Command
 {
-    public record Command
-    {
-        public String Trigger { get; init; }
-        public InternalCommand InternalCommand { get; init; }
-        public Object Parameter { get; init; }
-    }
+	public String Trigger { get; init; }
+	public InternalCommand InternalCommand { get; init; }
+	public Object Parameter { get; init; }
 }

@@ -1,9 +1,8 @@
-﻿namespace InsanityBot
+﻿namespace InsanityBot;
+
+public partial class InsanityBot
 {
-    public partial class InsanityBot
-    {
-        public static void RegisterDatafixers()
-        {
-        }
-    }
+	public static void RegisterDatafixers()
+	{
+	}
 }

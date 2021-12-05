@@ -1,45 +1,43 @@
-﻿using System;
+﻿namespace InsanityBot.Core.Logger;
+using System;
 
 using DSharpPlus;
 
-using InsanityBot.Utility.Config;
+using global::InsanityBot.Utility.Config;
 
 using Microsoft.Extensions.Logging;
 
-namespace InsanityBot.Core.Logger
+internal class LoggerProvider : ILoggerProvider
 {
-    internal class LoggerProvider : ILoggerProvider
-    {
-        public LoggerConfiguration Configuration { get; }
-        private Boolean __disposed = false;
+	public LoggerConfiguration Configuration { get; }
+	private Boolean __disposed = false;
 
-        public LoggerProvider(BaseDiscordClient client) : this(InsanityBot.LoggerConfig)
-        {
+	public LoggerProvider(BaseDiscordClient client) : this(InsanityBot.LoggerConfig)
+	{
 
-        }
+	}
 
-        public LoggerProvider(DiscordWebhookClient client) : this(InsanityBot.LoggerConfig)
-        {
+	public LoggerProvider(DiscordWebhookClient client) : this(InsanityBot.LoggerConfig)
+	{
 
-        }
+	}
 
-        public LoggerProvider(LoggerConfiguration config) => this.Configuration = config;
+	public LoggerProvider(LoggerConfiguration config) => this.Configuration = config;
 
-        public ILogger CreateLogger(String categoryName)
-        {
-            if(this.__disposed)
-            {
-                throw new InvalidOperationException("This InsanityBot Logger Provider is already disposed.");
-            }
+	public ILogger CreateLogger(String categoryName)
+	{
+		if(this.__disposed)
+		{
+			throw new InvalidOperationException("This InsanityBot Logger Provider is already disposed.");
+		}
 
-            if(categoryName != typeof(BaseDiscordClient).FullName && categoryName != typeof(DiscordWebhookClient).FullName)
-            {
-                throw new ArgumentException($"This provider can only provide instances of loggers for {typeof(BaseDiscordClient).FullName} or {typeof(DiscordWebhookClient).FullName}.", nameof(categoryName));
-            }
+		if(categoryName != typeof(BaseDiscordClient).FullName && categoryName != typeof(DiscordWebhookClient).FullName)
+		{
+			throw new ArgumentException($"This provider can only provide instances of loggers for {typeof(BaseDiscordClient).FullName} or {typeof(DiscordWebhookClient).FullName}.", nameof(categoryName));
+		}
 
-            return new InsanityBotLogger(this.Configuration);
-        }
+		return new InsanityBotLogger(this.Configuration);
+	}
 
-        public void Dispose() => this.__disposed = true;
-    }
+	public void Dispose() => this.__disposed = true;
 }

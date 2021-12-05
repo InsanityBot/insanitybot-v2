@@ -1,8 +1,7 @@
-﻿namespace InsanityBot.Commands
+﻿namespace InsanityBot.Commands;
+
+public enum TemporaryPunishmentType
 {
-    public enum TemporaryPunishmentType
-    {
-        Mute,
-        Ban
-    }
+	Mute,
+	Ban
 }

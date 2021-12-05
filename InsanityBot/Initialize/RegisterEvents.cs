@@ -1,35 +1,42 @@
-﻿using System;
+﻿namespace InsanityBot;
+using System;
 
-using InsanityBot.Commands.Moderation;
-using InsanityBot.Tickets.Validation;
-using InsanityBot.Utility.Timers;
+using global::InsanityBot.Commands.Moderation;
+using global::InsanityBot.Tickets.Validation;
+using global::InsanityBot.Utility.Timers;
 
-namespace InsanityBot
+using global::InsanityBot.Commands.Miscellaneous;
+
+public partial class InsanityBot
 {
-    public partial class InsanityBot
-    {
-        private static void RegisterAllEvents()
-        {
-            CommandsExtension.CommandErrored += PermissionFailed;
+	private static void RegisterAllEvents()
+	{
+		CommandsExtension.CommandErrored += PermissionFailed;
 
-            if(Config.Value<Boolean>("insanitybot.modules.moderation"))
-            {
-                Timer.TimerExpiredEvent += Mute.InitializeUnmute;
-                Mute.UnmuteCompletedEvent += TimeHandler.ReenableTimer;
+		if(Config.Value<Boolean>("insanitybot.modules.miscellaneous"))
+		{
+			Timer.TimerExpiredEvent += TimedRole.RemoveRole;
+			TimedRole.TimeRoleCompletedEvent += TimeHandler.ReenableTimer;
+			TimedRole.TimeRoleStartingEvent += TimeHandler.DisableTimer;
+		}
 
-                Timer.TimerExpiredEvent += Ban.InitializeUnban;
-                Ban.UnbanCompletedEvent += TimeHandler.ReenableTimer;
+		if(Config.Value<Boolean>("insanitybot.modules.moderation"))
+		{
+			Timer.TimerExpiredEvent += Mute.InitializeUnmute;
+			Mute.UnmuteCompletedEvent += TimeHandler.ReenableTimer;
 
-                Mute.MuteStartingEvent += TimeHandler.DisableTimer;
-                Ban.BanStartingEvent += TimeHandler.DisableTimer;
-            }
+			Timer.TimerExpiredEvent += Ban.InitializeUnban;
+			Ban.UnbanCompletedEvent += TimeHandler.ReenableTimer;
 
-            if(Config.Value<Boolean>("insanitybot.modules.tickets"))
-            {
-                Client.GuildDownloadCompleted += new TicketCacheValidator().Validate;
-                Client.GuildDownloadCompleted += new TicketPermissionCacheValidator().Validate; // order is important here
-                Client.ChannelDeleted += new ChannelDeleteValidator().Validate;
-            }
-        }
-    }
+			Mute.MuteStartingEvent += TimeHandler.DisableTimer;
+			Ban.BanStartingEvent += TimeHandler.DisableTimer;
+		}
+
+		if(Config.Value<Boolean>("insanitybot.modules.tickets"))
+		{
+			Client.GuildDownloadCompleted += new TicketCacheValidator().Validate;
+			Client.GuildDownloadCompleted += new TicketPermissionCacheValidator().Validate; // order is important here
+			Client.ChannelDeleted += new ChannelDeleteValidator().Validate;
+		}
+	}
 }

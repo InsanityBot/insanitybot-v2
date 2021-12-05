@@ -1,11 +1,10 @@
-﻿namespace InsanityBot.MessageServices.Messages.Rules.Data
+﻿namespace InsanityBot.MessageServices.Messages.Rules.Data;
+
+public enum ChannelRuleTarget
 {
-    public enum ChannelRuleTarget
-    {
-        Id,
-        FullName,
-        NameContains,
-        NameStartsWith,
-        Category
-    }
+	Id,
+	FullName,
+	NameContains,
+	NameStartsWith,
+	Category
 }

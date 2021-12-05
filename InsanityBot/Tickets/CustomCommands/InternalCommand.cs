@@ -1,10 +1,9 @@
-﻿namespace InsanityBot.Tickets.CustomCommands
+﻿namespace InsanityBot.Tickets.CustomCommands;
+
+public enum InternalCommand
 {
-    public enum InternalCommand
-    {
-        Move,
-        Close,
-        SendMessage,
-        SendEmbed
-    }
+	Move,
+	Close,
+	SendMessage,
+	SendEmbed
 }

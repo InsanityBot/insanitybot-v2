@@ -1,6 +1,5 @@
-﻿namespace InsanityBot.Tickets.Transcripts
+﻿namespace InsanityBot.Tickets.Transcripts;
+
+internal class TranscriptManager
 {
-    internal class TranscriptManager
-    {
-    }
 }

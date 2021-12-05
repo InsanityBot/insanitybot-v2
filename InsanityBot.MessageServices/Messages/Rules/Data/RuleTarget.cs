@@ -1,10 +1,9 @@
-﻿namespace InsanityBot.MessageServices.Messages.Rules.Data
+﻿namespace InsanityBot.MessageServices.Messages.Rules.Data;
+
+public enum RuleTarget
 {
-    public enum RuleTarget
-    {
-        Channel,
-        Command,
-        Member,
-        Prefix
-    }
+	Channel,
+	Command,
+	Member,
+	Prefix
 }

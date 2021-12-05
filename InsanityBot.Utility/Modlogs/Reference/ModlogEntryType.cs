@@ -1,13 +1,11 @@
-﻿using System;
+﻿namespace InsanityBot.Utility.Modlogs.Reference;
+using System;
 
-namespace InsanityBot.Utility.Modlogs.Reference
+public enum ModlogEntryType : Byte
 {
-    public enum ModlogEntryType : Byte
-    {
-        warn,
-        mute,
-        blacklist,
-        kick,
-        ban
-    }
+	warn,
+	mute,
+	blacklist,
+	kick,
+	ban
 }
