@@ -63,25 +63,25 @@ public class PermissionEngine
 	public DeleteUserPermissionsDelegate DeleteUserPermissions { get; internal set; }
 	public DeleteRolePermissionsDelegate DeleteRolePermissions { get; internal set; }
 #else
-        public UpdateUserPermissionsDelegate UpdateUserPermissions { get; set; }
-        public UpdateRolePermissionsDelegate UpdateRolePermissions { get; set; }
-        public GrantUserPermissionsDelegate GrantUserPermissions { get; set; }
-        public GrantRolePermissionsDelegate GrantRolePermissions { get; set; }
-        public RevokeUserPermissionsDelegate RevokeUserPermissions { get; set; }
-        public RevokeRolePermissionsDelegate RevokeRolePermissions { get; set; }
-        public NeutralizeUserPermissionsDelegate NeutralizeUserPermissions { get; set; }
-        public NeutralizeRolePermissionsDelegate NeutralizeRolePermissions { get; set; }
-        public SetUserAdministratorDelegate SetUserAdministrator { get; set; }
-        public SetRoleAdministratorDelegate SetRoleAdministrator { get; set; }
-        public CreateUserPermissionsDelegate CreateUserPermissions { get; set; }
-        public CreateRolePermissionsDelegate CreateRolePermissions { get; set; }
-        public GetUserPermissionsDelegate GetUserPermissions { get; set; }
-        public GetRolePermissionsDelegate GetRolePermissions { get; set; }
-        public SetUserPermissionsDelegate SetUserPermissions { get; set; }
-        public SetRolePermissionsDelegate SetRolePermissions { get; set; }
-        public ApplyMappingsDelegate ApplyMappings { get; set; }
-        public DeleteUserPermissionsDelegate DeleteUserPermissions { get; set; }
-        public DeleteRolePermissionsDelegate DeleteRolePermissions { get; set; }
+		public UpdateUserPermissionsDelegate UpdateUserPermissions { get; set; }
+		public UpdateRolePermissionsDelegate UpdateRolePermissions { get; set; }
+		public GrantUserPermissionsDelegate GrantUserPermissions { get; set; }
+		public GrantRolePermissionsDelegate GrantRolePermissions { get; set; }
+		public RevokeUserPermissionsDelegate RevokeUserPermissions { get; set; }
+		public RevokeRolePermissionsDelegate RevokeRolePermissions { get; set; }
+		public NeutralizeUserPermissionsDelegate NeutralizeUserPermissions { get; set; }
+		public NeutralizeRolePermissionsDelegate NeutralizeRolePermissions { get; set; }
+		public SetUserAdministratorDelegate SetUserAdministrator { get; set; }
+		public SetRoleAdministratorDelegate SetRoleAdministrator { get; set; }
+		public CreateUserPermissionsDelegate CreateUserPermissions { get; set; }
+		public CreateRolePermissionsDelegate CreateRolePermissions { get; set; }
+		public GetUserPermissionsDelegate GetUserPermissions { get; set; }
+		public GetRolePermissionsDelegate GetRolePermissions { get; set; }
+		public SetUserPermissionsDelegate SetUserPermissions { get; set; }
+		public SetRolePermissionsDelegate SetRolePermissions { get; set; }
+		public ApplyMappingsDelegate ApplyMappings { get; set; }
+		public DeleteUserPermissionsDelegate DeleteUserPermissions { get; set; }
+		public DeleteRolePermissionsDelegate DeleteRolePermissions { get; set; }
 #endif
 	#endregion
 

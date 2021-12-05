@@ -20,6 +20,7 @@ public partial class InsanityBot
 		{
 			CommandsExtension.RegisterCommands<Say>();
 			CommandsExtension.RegisterCommands<Embed>();
+			CommandsExtension.RegisterCommands<TimedRole>();
 		}
 		if(Config.Value<Boolean>("insanitybot.modules.moderation"))
 		{

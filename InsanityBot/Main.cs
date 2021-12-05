@@ -1,5 +1,7 @@
 ﻿#if !DEBUG
+#pragma warning disable IDE0065
 using DSharpPlus.CommandsNext.Exceptions;
+#pragma warning restore IDE0065
 #endif
 
 namespace InsanityBot;

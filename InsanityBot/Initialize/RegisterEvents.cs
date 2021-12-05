@@ -5,11 +5,20 @@ using global::InsanityBot.Commands.Moderation;
 using global::InsanityBot.Tickets.Validation;
 using global::InsanityBot.Utility.Timers;
 
+using global::InsanityBot.Commands.Miscellaneous;
+
 public partial class InsanityBot
 {
 	private static void RegisterAllEvents()
 	{
 		CommandsExtension.CommandErrored += PermissionFailed;
+
+		if(Config.Value<Boolean>("insanitybot.modules.miscellaneous"))
+		{
+			Timer.TimerExpiredEvent += TimedRole.RemoveRole;
+			TimedRole.TimeRoleCompletedEvent += TimeHandler.ReenableTimer;
+			TimedRole.TimeRoleStartingEvent += TimeHandler.DisableTimer;
+		}
 
 		if(Config.Value<Boolean>("insanitybot.modules.moderation"))
 		{

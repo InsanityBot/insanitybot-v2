@@ -7,6 +7,10 @@
     "Permission": "insanitybot.miscellaneous.say.embed",
     "Value": false
   },
+  {
+    "Permission": "insanitybot.miscellaneous.timedrole",
+    "Value": false
+  },
 
   {
     "Permission": "insanitybot.moderation.verbal_warn",

@@ -360,5 +360,15 @@
     "color": "#fe7d6a",
     "footer": "InsanityBot 2020-2021",
     "title": "Command executed"
+  },
+
+  "insanitybot.misc.timedrole": {
+    "color": "#880e4f",
+    "footer": "InsanityBot 2020-2021"
+  },
+  "insanitybot.misclog.timedrole": {
+    "color": "#880e4f",
+    "footer": "InsanityBot 2020-2021",
+    "title": "Role temporarily granted"
   }
 }
